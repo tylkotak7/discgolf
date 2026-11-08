@@ -3,12 +3,28 @@
 <head>
 <script>window.FB_CFG={apiKey:"AIzaSyDWIhbCYrM9mSoqtG4VADxPelAgSOBtcbs",authDomain:"discgolf-8c7ad.firebaseapp.com",projectId:"discgolf-8c7ad",storageBucket:"discgolf-8c7ad.firebasestorage.app",messagingSenderId:"406072667442",appId:"1:406072667442:web:5d6e70a165a76c03a6bb2b"};</script><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0b1a10"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="icon-192.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Discgolf PL"><script>
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
-let _bip=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();_bip=e;const b=document.getElementById('pwab');if(b)b.hidden=false});
+let _bip=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();_bip=e;window._bip=e;const b=document.getElementById('pwab');if(b)b.hidden=false});
 addEventListener('DOMContentLoaded',()=>{const st=window.matchMedia('(display-mode: fullscreen),(display-mode: standalone)').matches||navigator.standalone;if(st)return;const go=document.getElementById('go');if(!go)return;
  const b=document.createElement('button');b.id='pwab';b.className='pwab';b.innerHTML='📲 Dodaj grę do ekranu głównego';go.parentNode.insertBefore(b,go.nextSibling);
  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);b.hidden=!ios&&!_bip;
  b.onclick=async()=>{if(_bip){_bip.prompt();const r=await _bip.userChoice;if(r.outcome=='accepted')b.hidden=true;_bip=null}else if(ios)alert('Na iPhonie: dotknij „Udostępnij” (kwadrat ze strzałką) i wybierz „Dodaj do ekranu początkowego”.')}});
-</script><style>#menu.m2 .pwab{display:block;width:100%;margin:-4px 0 12px;padding:11px;border-radius:16px;border:1px dashed rgba(164,255,184,.55);background:rgba(63,209,106,.12);color:#a4ffb8;font:900 15px 'Baloo 2',system-ui}#menu.m2 .pwab[hidden]{display:none}</style>
+</script><style>#menu.m2 .pwab{display:block;width:100%;margin:-4px 0 12px;padding:11px;border-radius:16px;border:1px dashed rgba(164,255,184,.55);background:rgba(63,209,106,.12);color:#a4ffb8;font:900 15px 'Baloo 2',system-ui}#menu.m2 .pwab[hidden]{display:none}</style><script>
+addEventListener('load',()=>setTimeout(()=>{try{
+ const st=matchMedia('(display-mode: fullscreen),(display-mode: standalone)').matches||navigator.standalone;if(st)return;
+ const last=+localStorage.getItem('dg_pwa_ask')||0;if(Date.now()-last<20*3600e3)return;
+ const ua=navigator.userAgent,ios=/iphone|ipad|ipod/i.test(ua),sam=/SamsungBrowser/i.test(ua),fx=/Firefox/i.test(ua);
+ const how=ios?'W Safari dotknij <b>Udostępnij</b> (kwadrat ze strzałką ⬆️) i wybierz <b>„Dodaj do ekranu początkowego”</b>.'
+  :sam?'Dotknij <b>≡ menu</b> (prawy dolny róg) → <b>„Dodaj stronę do”</b> → <b>„Ekran startowy”</b>. Możesz też dotknąć ikony <b>⬇ instalacji</b> w pasku adresu.'
+  :fx?'Dotknij <b>⋮</b> → <b>„Zainstaluj”</b> lub <b>„Dodaj do ekranu głównego”</b>.'
+  :'Dotknij <b>⋮</b> (prawy górny róg) → <b>„Zainstaluj aplikację”</b> lub <b>„Dodaj do ekranu głównego”</b>.';
+ const d=document.createElement('div');d.id='pwask';d.innerHTML='<div class="pk"><img src="icon-192.png" alt=""><b>Zainstaluj DGPL na telefonie</b><p>Gra uruchomi się z ikony jak aplikacja – na pełnym ekranie, bez paska przeglądarki i szybciej.</p><div class="ph" id="pwhow" hidden>'+how+'</div><button id="pwyes">📲 Zainstaluj</button><button id="pwno">Może później</button></div>';document.body.appendChild(d);
+ const yes=d.querySelector('#pwyes'),hw=d.querySelector('#pwhow');
+ yes.onclick=async()=>{if(window._bip){window._bip.prompt();try{const r=await window._bip.userChoice;if(r.outcome=='accepted'){d.remove();return}}catch(e){}window._bip=null}else{hw.hidden=false;yes.textContent='✔ Zrobione / rozumiem';yes.onclick=()=>{localStorage.setItem('dg_pwa_ask',Date.now());d.remove()}}};
+ d.querySelector('#pwno').onclick=()=>{localStorage.setItem('dg_pwa_ask',Date.now());d.remove()};
+}catch(e){}},2500));
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e});
+</script><style>#pwask{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,8,4,.6);font-family:'Baloo 2',system-ui}#pwask .pk{width:min(100vw,440px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 16px);color:#fff;text-align:center;animation:cshUp .25s ease-out}#pwask img{width:72px;height:72px;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.4)}#pwask b{display:block;font-size:21px;margin:8px 0 2px}#pwask p{margin:0 0 12px;color:#cfe5d5;font:600 14px system-ui;line-height:1.45}#pwask .ph{background:rgba(255,211,90,.12);border:1px solid rgba(255,211,90,.4);border-radius:14px;padding:10px;margin:0 0 10px;font:600 14px system-ui;color:#fff3c4;line-height:1.5}#pwask .ph b{display:inline;font:800 14px system-ui;margin:0;color:#ffd35a}#pwask button{display:block;width:100%;padding:13px;border-radius:16px;border:0;font:900 17px 'Baloo 2',system-ui;margin-bottom:8px}#pwyes{background:linear-gradient(135deg,#a4ffb8,#3fd16a);color:#08210f}#pwno{background:rgba(255,255,255,.08)!important;color:#cfe5d5;border:1px solid rgba(255,255,255,.15)!important}</style>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Disc Golf</title>
@@ -452,6 +468,14 @@ body.playing canvas{border-radius:0!important;box-shadow:none!important}
 #menu.m2 .evp .evst{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}#menu.m2 .evp .evst div{background:rgba(255,255,255,.07);border-radius:12px;padding:6px 4px;text-align:center;font:700 10.5px system-ui;color:#a9c9b1}#menu.m2 .evp .evst b{display:block;font:900 16px 'Baloo 2',system-ui;color:#fff}
 #menu.m2 .evp .evpr{font:700 11.5px system-ui;color:#ffe27a;background:rgba(255,211,90,.1);border-radius:10px;padding:6px 8px;margin-bottom:8px;line-height:1.5}
 #end.e2 .evres .carol ol{margin:4px 0 0;padding-left:20px;color:#e3f2e7;font:700 13px system-ui;line-height:1.7}#end.e2 .evres .carol li span{display:inline-block;min-width:70%}#end.e2 .evres .carol li em{font-style:normal;font-weight:900;color:#ffd35a}#end.e2 .evres .carol li.me{color:#7dff9a}#end.e2 .evres .carol small{color:#a9c9b1}
+#menu.m2 .evban{position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;width:100%;margin:2px 0 12px;padding:10px 12px;border-radius:20px;border:2px solid #ffd35a;background:linear-gradient(120deg,#5a3c00,#b77900 55%,#ffcf3a);color:#fff;text-align:left;box-shadow:0 8px 24px rgba(255,190,40,.35)}
+#menu.m2 .evban::after{content:'';position:absolute;top:0;bottom:0;left:0;width:50px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);animation:evsh 3s ease-in-out infinite}@keyframes evsh{0%{transform:translateX(-80px)}50%,100%{transform:translateX(480px)}}
+#menu.m2 .evban .ei{font-size:34px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.4))}#menu.m2 .evban .et{flex:1;display:flex;flex-direction:column;min-width:0}#menu.m2 .evban small{font:800 10.5px system-ui;letter-spacing:.06em;color:#fff3c4}#menu.m2 .evban b{font:900 18px 'Baloo 2',system-ui;line-height:1.1;text-shadow:0 2px 0 rgba(0,0,0,.25)}#menu.m2 .evban em{font:700 11.5px system-ui;font-style:normal;color:#fff}
+#menu.m2 .evban .ego2{flex:0 0 auto;padding:8px 12px;border-radius:14px;background:#fff;color:#5a3c00;font:900 15px 'Baloo 2',system-ui}#menu.m2 .evban.used{border-color:rgba(255,211,90,.6);background:linear-gradient(120deg,#3a2a08,#7a5a10);box-shadow:none}#menu.m2 .evban.used::after{display:none}
+#ld{background:radial-gradient(120% 80% at 50% 20%,#1d4a2a,#06120a)!important;gap:12px!important}
+#ldc{width:min(78vw,300px);display:flex;flex-direction:column;align-items:center;gap:10px}#ldc .ldh{text-align:center;font-family:'Baloo 2',system-ui}#ldc small{display:block;font:800 11px system-ui;letter-spacing:.1em;text-transform:uppercase;color:#9fe0b0}#ldc b{display:block;font-size:30px;line-height:1.05}#ldc em{font-style:normal;font:800 15px 'Baloo 2',system-ui;color:#ffd35a}
+#ldmap{width:min(52vw,210px)!important;height:auto!important;aspect-ratio:360/560;position:static!important;border-radius:16px!important;border:3px solid rgba(255,255,255,.85);box-shadow:0 12px 30px rgba(0,0,0,.5)!important;flex:0 0 auto!important;transform:rotate(-2deg)}
+#ldc .ldbar{width:100%;height:8px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden}#ldc .ldbar i{display:block;height:100%;width:0;border-radius:4px;background:linear-gradient(90deg,#a4ffb8,#3fd16a)}
 </style>
 </head>
 <body>
@@ -2164,6 +2188,39 @@ async function evRewards(){if(!DB||!UID)return;const S=evS(),pid=evId()-1;if(S.c
  let coins=k<=3?EVPR[k-1].c:k<=10?25:10,disc=k<=3?EVPR[k-1]:null;SV.coins+=coins;SV.coinsTotal=(SV.coinsTotal||0)+coins;SV.ltd=SV.ltd||[];if(disc&&!SV.ltd.includes(disc.d))SV.ltd.push(disc.d);try{persist();upd()}catch(e){}
  const box=document.createElement('div');box.id='rsbox';box.innerHTML='<div class="qc"><b>🏅 Event #'+(pid+1)+' zakończony!</b><p>'+evDef(pid).n+'<br>Twoje miejsce: <b>'+k+' / '+l.length+'</b><br>Nagroda: <b>+'+coins+' 🪙</b>'+(disc?'<br>🎁 Specjalny dysk: <b>'+disc.dn+'</b> (załóż go w Bagu)':'')+'</p><div><button data-r="no" style="flex:1;background:linear-gradient(135deg,#ffe680,#ffb000);color:#2a1600;border:0">Odbierz</button></div></div>';document.body.appendChild(box);box.onclick=e=>{if(e.target.dataset.r)box.remove()}}
 (function poll(n){if(DB&&UID)evRewards();else if(n<20)setTimeout(()=>poll(n+1),1500)})(0);
+/* ===================== P39: baner eventu + poprawka powitania/nicku ===================== */
+/* powitanie tylko dla nowych graczy, nick zapamiętany też w zapisie gry */
+(function(){try{if(pname&&pname!='Gracz'){SV.nick=pname;persist()}else if(SV.nick){pname=SV.nick;localStorage.setItem('dg_name',pname);upd()}
+ if(SV.rounds>0||SV.brand||(SV.ach&&Object.keys(SV.ach).length)){localStorage.setItem('dg_onb','1');SV.onb=1;persist()}
+ if(SV.onb)localStorage.setItem('dg_onb','1')}catch(e){}})();
+const _ob39=onboard;onboard=function(){try{if(SV.nick&&(!pname||pname=='Gracz')){pname=SV.nick}if((SV.onb||localStorage.getItem('dg_onb')=='1')&&pname&&pname!='Gracz'){rsOffer();return}}catch(e){}
+ if((SV.rounds>0||SV.brand)&&(!pname||pname=='Gracz')){try{localStorage.setItem('dg_onb','1')}catch(e){}}_ob39()};
+setInterval(()=>{try{if(pname&&pname!='Gracz'&&SV.nick!==pname){SV.nick=pname;SV.onb=1;persist()}}catch(e){}},2000);
+/* baner eventu w menu */
+function evBanner(){const go=$('go');if(!go)return;let b=$('evban');if(!b){b=document.createElement('button');b.id='evban';b.className='evban';const cards=$('cdots')||$('cards');(cards&&cards.parentNode==go.parentNode?cards:go).after?cards.after(b):go.parentNode.insertBefore(b,go);
+  b.onclick=()=>{const eb=document.querySelector('#modeseg [data-mode=event]');if(eb)eb.click();if(!evUsedToday()){setTimeout(()=>{const g=$('go');if(g)(g.onpointerdown||g.onclick||(()=>g.click()))()},60)}else setTimeout(()=>{const p=$('evp');if(p)p.scrollIntoView({behavior:'smooth',block:'center'})},50)}}
+ const id=evId(),d=evDef(id),used=evUsedToday(),S=evS(),left=evEnd(id)-Date.now();
+ b.classList.toggle('used',used);b.innerHTML='<span class="ei">🏅</span><span class="et"><small>EVENT #'+(id+1)+' · jeszcze '+fmtLeft(left)+'</small><b>'+d.i+' '+d.n+'</b><em>'+(used?'✔ Dzisiejsza próba zaliczona'+(S.best!=null?' · najlepszy '+fsc(S.best):''):'🔥 Twoja próba dziś czeka!'+(S.best!=null?' · najlepszy '+fsc(S.best):''))+'</em></span><span class="ego2">'+(used?'Ranking':'▶ Graj')+'</span>'}
+evBanner();setInterval(()=>{if($('menu').style.display!='none')evBanner()},30000);
+const _eb39=$('eb').onclick;$('eb').onclick=()=>{_eb39&&_eb39();evBanner()};
+const _q39=quitToMenu;quitToMenu=function(){_q39();evBanner()};
+/* ===================== P40: ekran ładowania z mapką dołka ===================== */
+let LDH=null;
+const _ens40=ensureBG;ensureBG=function(h,cb){if(!bgOf(h,season=='winter')&&!bgBusy){LDH=h;ldDraw(h)}return _ens40(h,cb)};
+function ldDraw(h){const ld=$('ld');if(!ld)return;let c=$('ldc');if(!c){c=document.createElement('div');c.id='ldc';c.innerHTML='<div class="ldh"><small id="ldco"></small><b id="ldt"></b><em id="ldm"></em></div><canvas id="ldmap" width="360" height="560"></canvas><div class="ldbar"><i></i></div>';const sp=ld.querySelector('.sp');ld.insertBefore(c,sp);if(sp)sp.style.display='none';const t=ld.querySelector('.sp+div');if(t)t.style.display='none'}
+ const idx=holes&&holes.indexOf(h),hn=idx>=0?idx+1:1,nm=h===TRN?'Przysieczyn trening':holes===MZ?'Międzybłocie · MP Long':h.name||'Złotów DiscGolfPark',M0=h.M||.2,dist=Math.round(Math.hypot(h.tee[0]-h.b[0],h.tee[1]-h.b[1])*M0),wn=season=='winter',au=season=='autumn';
+ $('ldco').textContent=nm+' · '+(SLAB[season]||'');$('ldt').textContent=(holes&&holes.length>1?'Dołek '+hn:'Pole treningowe');$('ldm').textContent='par '+h.par+' · '+dist+' m';
+ const x=$('ldmap').getContext('2d');x.setTransform(1,0,0,1,0,0);const gr=x.createLinearGradient(0,0,0,560);gr.addColorStop(0,wn?'#dfe9ee':au?'#7a8a3a':'#3f7a3a');gr.addColorStop(1,wn?'#c4d3db':au?'#5a6a2a':'#2c5c2c');x.fillStyle=gr;x.fillRect(0,0,360,560);
+ for(const m of h.mead||[]){x.fillStyle=wn?'rgba(255,255,255,.5)':'rgba(150,170,60,.45)';x.fillRect(m[0],m[1],m[2]-m[0],m[3]-m[1])}
+ x.lineCap='round';x.lineJoin='round';for(const r of h.roads||[]){x.strokeStyle=wn?'#b8c2c8':'#b59a6a';x.lineWidth=r.w;x.beginPath();r.pts.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke()}
+ for(const r of h.rivers||[]){x.fillStyle=wn?'#9cc8dc':'#3f7fb0';x.fillRect(r[0],r[1],r[2]-r[0],r[3]-r[1])}for(const w of h.water||[]){x.fillStyle=wn?'#9cc8dc':'#3f7fb0';x.beginPath();x.ellipse(w[0]+w[2]/2,w[1]+w[3]/2,w[2]/2,w[3]/2,0,0,7);x.fill()}
+ if(h.path){x.strokeStyle=wn?'rgba(255,255,255,.9)':au?'rgba(190,200,110,.85)':'rgba(140,200,110,.85)';x.lineWidth=(h.cw||80)*.8;x.beginPath();h.path.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke()}
+ const tc=wn?['#2c5a44','#3c6a54']:au?['#c86a22','#d9a52b','#8a3a18','#2c5a34']:['#1f5a2a','#2a6a32','#174a22'];(h.trees||[]).forEach((t,i)=>{x.fillStyle='rgba(0,0,0,.25)';x.beginPath();x.arc(t[0]+3,t[1]+3,t[2]*.9,0,7);x.fill();x.fillStyle=tc[i%tc.length];x.beginPath();x.arc(t[0],t[1],t[2]*.9,0,7);x.fill()});
+ if(h.path){x.setLineDash([8,8]);x.strokeStyle='#fff';x.lineWidth=3;x.beginPath();h.path.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke();x.setLineDash([])}
+ for(const o of h.md||[]){x.strokeStyle='#e62828';x.lineWidth=3;x.setLineDash([5,4]);x.beginPath();x.moveTo(o.m[0],o.m[1]);x.lineTo(o.e[0],o.e[1]);x.stroke();x.setLineDash([])}
+ x.fillStyle='#e8c07a';x.strokeStyle='#3a2a10';x.lineWidth=2;x.fillRect(h.tee[0]-10,h.tee[1]-7,20,14);x.strokeRect(h.tee[0]-10,h.tee[1]-7,20,14);
+ x.fillStyle='rgba(255,210,63,.35)';x.beginPath();x.arc(h.b[0],h.b[1],20,0,7);x.fill();x.fillStyle='#ffd23f';x.strokeStyle='#3a2a00';x.lineWidth=3;x.beginPath();x.arc(h.b[0],h.b[1],9,0,7);x.fill();x.stroke();
+ const bar=ld.querySelector('.ldbar i');if(bar){bar.style.transition='none';bar.style.width='0';void bar.offsetWidth;bar.style.transition='width 2.2s cubic-bezier(.2,.7,.3,1)';bar.style.width='92%'}}
 </script>
 </body>
 </html>
