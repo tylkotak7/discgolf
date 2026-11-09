@@ -2074,9 +2074,9 @@ const _csTxt=s=>s;
 async function staOnline(){const el=$('staon');if(!el)return;if(!DB){el.innerHTML='<small>🌍 Ranking online niedostępny w tej wersji</small>';return}
  const esc=v=>String(v||'?').replace(/[<>&"]/g,'').slice(0,12),f=s=>s==0?'E':(s>0?'+':'')+s;let html='';
  try{const q=await DB.collection('sc_'+statL).orderBy('s').limit(300).get();const l=q.docs.map(d=>Object.assign({},d.data(),{id:d.id})).sort((a,b)=>(+a.s||0)-(+b.s||0)||(+a.t||0)-(+b.t||0));window.__onTop=window.__onTop||{};window.__onTop[statL]=l[0]||null;try{onRec()}catch(x){}l.length=Math.min(l.length,10);
-  const SI={summer:'☀️',winter:'❄️',autumn:'🍂'};html+='<b>🌍 Top 10 online · '+CN2[statL][0]+' · wszystkie pory roku</b>'+(l.length?'<ol>'+l.map(e=>'<li><span>'+esc(e.n)+' <small>'+(SI[sOf(e)]||'')+'</small></span><em>'+f(+e.s||0)+'</em><i>'+(+e.t||'')+' rz.</i></li>').join('')+'</ol>':'<small>Brak wyników – zagraj pierwszy!</small>')}catch(e){html+='<small>Nie udało się wczytać rankingu</small>'}
+  const SI={summer:'☀️',winter:'❄️',autumn:'🍂'};html+='<b>🌍 Top 10 online · '+CN2[statL][0]+' · wszystkie pory roku</b>'+(l.length?'<ol>'+l.map(e=>'<li class="pfl" data-pn="'+esc(e.n)+'"><span>'+esc(e.n)+' <small>'+(SI[sOf(e)]||'')+'</small></span><em>'+f(+e.s||0)+'</em><i>'+(+e.t||'')+' rz.</i></li>').join('')+'</ol>':'<small>Brak wyników – zagraj pierwszy!</small>')}catch(e){html+='<small>Nie udało się wczytać rankingu</small>'}
  try{const l=await dTop();if(l){const[c,i,h]=dHole();html+='<b style="margin-top:10px">📅 Dołek dnia · '+c+' '+(i+1)+' · par '+h.par+'</b>'+(l.length?'<ol>'+l.slice(0,10).map(x=>'<li class="'+(x.id===UID?'me':'')+'"><span>'+esc(x.n)+'</span><em>'+(+x.s||0)+'</em><i>rzuty</i></li>').join('')+'</ol>':'<small>Nikt jeszcze dziś nie grał</small>')}}catch(e){}
- el.innerHTML=html}
+ el.innerHTML=html;el.querySelectorAll('[data-pn]').forEach(x=>x.onclick=()=>{try{openProfile(x.dataset.pn)}catch(e){console.warn(e)}})}
 const _rs33=renderSta;renderSta=function(){_rs33();const b=$('sbody');if(!b)return;b.insertAdjacentHTML('afterbegin','<div class="staon" id="staon"><small>🌍 Ładowanie rankingu online…</small></div>');staOnline()};
 /* ---------- podział: Gra / Wyzwania ---------- */
 (function(){const ms=$('modeseg');if(!ms)return;ms.classList.add('mgrid');const l1=document.createElement('span');l1.className='mlab g1';l1.textContent='🎮 Gra';const l2=document.createElement('span');l2.className='mlab g2';l2.textContent='⭐ Wyzwania';ms.prepend(l2);ms.prepend(l1);
@@ -2512,9 +2512,9 @@ const wkNow=()=>Math.floor((Date.now()-WK0)/WKMS),wkNo=w=>w+1,wkEnd=w=>WK0+(w+1)
 const wkRange=w=>{const a=new Date(WK0+w*WKMS+3600e3),b=new Date(WK0+(w+1)*WKMS-3600e3+3600e3-1),f=d=>String(d.getUTCDate()).padStart(2,'0')+'.'+String(d.getUTCMonth()+1).padStart(2,'0');return f(a)+'–'+f(new Date(WK0+(w+1)*WKMS-1))};
 const CPT=[100,85,72,61,52,44,37,31,26,22,18,15,12,10,8,6,5,4,3,2];
 const escH=t=>String(t==null?'':t).replace(/[<>&"]/g,'').slice(0,14);
-function wkEnsure(C,W){W=W==null?wkNow():W;if(!C.wk||C.wk.w!==W){if(C.wk&&C.wk.s&&C.wk.s.some(v=>v!=null))C.pwk=C.wk;C.wk={w:W,sd:C.div,s:[null,null,null],t:[null,null,null],st:{a:0,h:{},d:{},b:null}}}return C.wk}
+function wkEnsure(C,W){W=W==null?wkNow():W;{const nd=divOf(C.rating);if(C.rating!=null&&nd>C.div){C.div=nd;if(C.wk&&C.wk.w===W)C.wk.sd=nd;try{persist()}catch(e){}}}if(!C.wk||C.wk.w!==W){if(C.wk&&C.wk.s&&C.wk.s.some(v=>v!=null))C.pwk=C.wk;C.wk={w:W,sd:C.div,s:[null,null,null],t:[null,null,null],st:{a:0,h:{},d:{},b:null}}}return C.wk}
 function nextEv(C){const k=wkEnsure(C);for(let i=0;i<3;i++)if(k.s[i]==null)return i;return -1}
-async function carSync2(){const C=car();if(!DB||!UID)return;const k=C.wk||{},p=C.pwk||{};try{await DB.doc('kariera/'+UID).set({n:String(pname||'Gracz').slice(0,12),r:C.rating==null?0:C.rating,dv:DIVS[C.div].n,w:(C.titles||[]).length,t:(C.hist||[]).length,ss:wkNo(wkNow()),at:Date.now(),
+async function carSync2(){const C=car();if(!DB||!UID)return;const k=C.wk||{},p=C.pwk||{};try{await DB.doc('kariera/'+UID).set({n:String(pname||'Gracz').slice(0,12),r:C.rating==null?0:C.rating,dv:DIVS[C.div].n,w:(C.titles||[]).length,t:(C.hist||[]).length,ss:wkNo(wkNow()),at:Date.now(),ch:pfChar(),lv:(xpInfo().lv||1),
   wk:k.w==null?-1:k.w,sd:k.sd==null?C.div:k.sd,se:k.s||[null,null,null],pwk:p.w==null?-1:p.w,psd:p.sd==null?0:p.sd,pse:p.s||[null,null,null],md:(C.medals||[]).length})}catch(e){console.warn('carSync2',e)}}
 async function seasonDocs(){if(!DB)return null;try{const q=await DB.collection('kariera').orderBy('at','desc').limit(400).get();return q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(e){try{const q=await DB.collection('kariera').limit(400).get();return q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(x){return null}}}
 function seasonTable(docs,W,div,mine){const E=[];(docs||[]).forEach(d=>{if(d.id===UID)return;let sd,se;if(d.wk===W){sd=d.sd;se=d.se}else if(d.pwk===W){sd=d.psd;se=d.pse}else return;if(sd!==div||!Array.isArray(se)||!se.some(v=>v!=null))return;E.push({id:d.id,n:escH(d.n||'?'),se,r:d.r})});
@@ -2532,13 +2532,13 @@ carAfter=function(){const C=car(),W=wkNow(),k=wkEnsure(C,W),e=Math.max(0,Math.mi
  const strokes=scores.reduce((a,b)=>a+b,0);k.s[e]=total;k.t[e]=strokes;
  const st=k.st;scores.forEach((v,i)=>{if(v==1)st.a++;const p=holes[i]?holes[i].par:3;const h=st.h[i]||[0,0];h[0]+=v-p;h[1]++;st.h[i]=h});for(const d in RDISC)st.d[d]=(st.d[d]||0)+RDISC[d];if(st.b==null||total<st.b)st.b=total;
  const rr=rateScore(total,n),old=C.rating;C.rounds.push(rr);C.rounds=C.rounds.slice(-20);C.rating=calcRating(C.rounds);(C.hist=C.hist||[]).push({r:C.rating,rr,p:0,e:ev.n,s:wkNo(W)});C.hist=C.hist.slice(-40);
- const nd=divOf(C.rating);let up='';if(nd>C.div){up='<br>⬆️ <b>Rating '+C.rating+' – awans do '+DIVS[nd].n+'</b> (od następnego sezonu w tabeli '+DIVS[nd].n+')';C.div=nd}
+ const nd=divOf(C.rating);let up='';if(nd>C.div){up='<br>⬆️ <b>Rating '+C.rating+' – awans do '+DIVS[nd].n+'!</b> Od razu grasz w tabeli '+DIVS[nd].n+(nd-C.div>1?' 🚀 przeskok o 2 dywizje':'');C.div=nd;k.sd=nd;try{unlock&&0}catch(x){}}
  const nx=nextEv(C);if(nx>=0)C.ev=nx;try{persist()}catch(x){}
  carSync2().then(()=>carLiveFill('carlive',W,k.sd,e));
  return '<div class="carres"><div class="crh">'+ev.i+' '+ev.n+' · '+DIVS[k.sd].n+' · sezon '+wkNo(W)+'</div><div class="crr">Rating rundy: <b>'+rr+'</b> · Twój rating: '+(old==null?'nowy':old)+' → <b>'+C.rating+'</b>'+(old==null?'':' ('+(C.rating>=old?'+':'')+(C.rating-old)+')')+up+'</div><div id="carlive" class="crl2"><small>🌍 Ładowanie tabeli online…</small></div><div class="crs">'+(nx>=0?'Następny turniej tygodnia: '+EVS[nx].i+' <b>'+EVS[nx].n+'</b>':'✅ Rozegrałeś cały tydzień! Tabela zamyka się w niedzielę o północy – w poniedziałek szatnia i nowy sezon.')+'</div></div>'};
 async function carLiveFill(id,W,div,ev){const el=document.getElementById(id);if(!el)return;const C=car(),docs=await seasonDocs(),T=seasonTable(docs,W,div,C.wk&&C.wk.w===W?C.wk:null);
  if(!docs){el.innerHTML='<small>📴 Brak połączenia – wynik zapisany, tabela pojawi się online później</small>';return}
- const me=T.find(x=>x.me);el.innerHTML=(ev!=null&&me&&me['pl'+ev]?'<div class="crp">'+EVS[ev].n+': <b>'+me['pl'+ev]+'.</b> miejsce / '+me['n'+ev]+' graczy</div>':'')+'<ol class="crl">'+T.slice(0,10).map(x=>'<li class="'+(x.me?'me':'')+'"><span>'+x.n+'</span><b>'+x.p+' pkt</b></li>').join('')+'</ol>'+(T.length<2?'<small>Na razie grasz sam w '+DIVS[div].n+' – wyślij link kumplom! 🥏</small>':'')}
+ const me=T.find(x=>x.me);try{if(ev!=null&&me&&me['pl'+ev]==1&&me['n'+ev]>=2)unlock('c_win');if(ev!=null&&me&&me['pl'+ev]<=3&&me['n'+ev]>=3)unlock('c_pod')}catch(x){}el.innerHTML=(ev!=null&&me&&me['pl'+ev]?'<div class="crp">'+EVS[ev].n+': <b>'+me['pl'+ev]+'.</b> miejsce / '+me['n'+ev]+' graczy</div>':'')+'<ol class="crl">'+T.slice(0,10).map(x=>'<li class="'+(x.me?'me':'')+'"><span>'+x.n+'</span><b>'+x.p+' pkt</b></li>').join('')+'</ol>'+(T.length<2?'<small>Na razie grasz sam w '+DIVS[div].n+' – wyślij link kumplom! 🥏</small>':'')}
 /* --- szatnia po sezonie --- */
 async function szatnia(){const C=car(),W=wkNow();let k=null;if(C.wk&&C.wk.w<W&&!C.wk.cl&&C.wk.s.some(v=>v!=null))k=C.wk;else if(C.pwk&&C.pwk.w<W&&!C.pwk.cl&&C.pwk.s.some(v=>v!=null))k=C.pwk;if(!k)return;
  const docs=await seasonDocs();const T=seasonTable(docs,k.w,k.sd,k);const me=T.find(x=>x.me)||{p:0};const pl=docs?T.indexOf(me)+1:0,N=docs?T.length:0;
@@ -2580,10 +2580,10 @@ try{renderCareer()}catch(e){}
  g.innerHTML='<b style="font:900 15px \'Baloo 2\';color:#ffd35a">🏅 Gablota kariery</b>'+(M.length?'<div class="kmed">'+M.map(m=>'<div><i>'+(m.pl==1?'🥇':m.pl==2?'🥈':m.pl==3?'🥉':'🎖️')+'</i><small>Sezon '+m.s+' · '+m.dv+(m.pl?' · '+m.pl+'/'+m.n:'')+'</small></div>').join('')+'</div>':'<p style="font:600 12px system-ui;color:#8fae98;margin:6px 0 0">Zagraj tydzień w karierze – medal z szatni trafi tutaj.</p>')}catch(e){}}}
 /* --- OPCJE --- */
 function renderOpt(){const el=$('optv');if(!el)return;
- if(!el.dataset.built){el.dataset.built=1;el.innerHTML='<div class="kcc"><h4>👤 Gracz</h4><div class="orow"><input id="onick" maxlength="12" placeholder="Twój nick"><button id="onsave">Zapisz</button></div></div>'+
+ if(!el.dataset.built){el.dataset.built=1;el.innerHTML='<div class="kcc"><h4>👤 Gracz</h4><div class="orow"><input id="optnick" maxlength="12" placeholder="Twój nick"><button id="onsave">Zapisz</button></div></div>'+
   '<div class="kcc"><h4>🔧 Gra</h4><div class="otog" id="otog"></div><div id="ogfx"></div></div><div class="kcc"><h4>📲 Aplikacja i zapis</h4><div id="oapp"></div><p class="kinfo">Wersja '+((document.querySelector('meta[name=dgv]')||{}).content||'')+' · Złotów DiscGolfPark</p></div>';
-  $('onsave').onclick=()=>{const v=$('onick').value.replace(/[<>&"]/g,'').trim().slice(0,12);if(!v){toast('Wpisz nick');return}pname=v;SV.nick=v;try{localStorage.setItem('dg_name',v)}catch(e){}persist();try{upd()}catch(e){}carSync2();toast('✅ Nick zapisany: '+v)}}
- $('onick').value=pname||SV.nick||'';
+  $('onsave').onclick=()=>{const v=$('optnick').value.replace(/[<>&"]/g,'').trim().slice(0,12);if(!v){toast('Wpisz nick');return}pname=v;SV.nick=v;try{localStorage.setItem('dg_name',v)}catch(e){}persist();try{upd()}catch(e){}carSync2();toast('✅ Nick zapisany: '+v)}}
+ $('optnick').value=pname||SV.nick||'';
  const tg=[['🔊 Dźwięk',()=>SND.on,()=>{SND.on=!SND.on;try{localStorage.setItem('dg_snd',SND.on?'on':'off')}catch(x){}try{aud()}catch(x){}}],['👻 Duch najlepszej rundy',()=>GHOST_ON,()=>{GHOST_ON=!GHOST_ON;try{localStorage.setItem('dg_ghost',GHOST_ON?'on':'off')}catch(x){}}]];
  $('otog').innerHTML=tg.map((t,i)=>'<button class="otb'+(t[1]()?' on':'')+'" data-i="'+i+'"><span>'+t[0]+'</span><i>'+(t[1]()?'WŁ':'WYŁ')+'</i></button>').join('');
  $('otog').querySelectorAll('.otb').forEach(b=>b.onclick=()=>{tg[+b.dataset.i][2]();renderOpt()});
@@ -2831,7 +2831,7 @@ function chTxt(c){return c=='ace3'?'3 ACE ('+Math.min(3,aceCount())+'/3)':c=='cl
  const SHK={};let swayOn=true;
  const _sh=silHit;silHit=function(d,h){const before=d.lastId,bn=d.lastN;_sh(d,h);if(d.lastId&&(d.lastId!==before||d.lastN!==bn)){SHK[d.lastId]=performance.now();try{const t=h._sil.tl[d.lastId];if(t&&!GFXLOW())burst(t[0],t[1],'leaf')}catch(e){}}};
  function sway(h,bg){if(!h._sil||!bg||GFXLOW())return;const S=h._sil,now=performance.now(),t=now/1000,ws=Math.min(1.4,.35+(typeof ws!=='undefined'?0:0)+(window.ws||0)*.12),wdx=Math.sin(window.wa||0),wdy=-Math.cos(window.wa||0)*.3,k=bg.width/W,vx0=-CAM.ox/CAM.s-20,vx1=vx0+CAM.cw/CAM.s+40;
-  for(let i=1;i<S.tl.length;i++){const T=S.tl[i];if(!T)continue;const cx=T[0],cy=T[1],r=T[2]*1.7;if(cx<vx0||cx>vx1)continue;let ox=Math.sin(t*1.3+cx*.07+cy*.05)*.85*ws,oy=0;
+  for(let i=1;i<S.tl.length;i++){const T=S.tl[i];if(!T)continue;const cx=T[0],cy=T[1],r=T[2]*1.7;if(cx<vx0||cx>vx1)continue;{const F=disc||lie;if(!SHK[i]&&F&&Math.abs(cx-F.x)+Math.abs(cy-F.y)>190)continue}let ox=Math.sin(t*1.3+cx*.07+cy*.05)*.85*ws,oy=0;
    const s0=SHK[i];if(s0){const a=(now-s0)/1000;if(a>.7)delete SHK[i];else{const e=(1-a/.7);ox+=Math.sin(a*42)*3.4*e;oy+=Math.cos(a*37)*1.2*e}}
    if(Math.abs(ox)<.08&&!s0)continue;const x0=cx-r,y0=cy-r*1.15,w=r*2,hh=r*2.1;try{g.drawImage(bg,x0*k,y0*k,w*k,hh*k,x0+ox*wdx*(s0?0:1)+(s0?ox:0),y0+oy+ox*wdy,w,hh)}catch(e){}}}
  /* --- detale (wypalane w tle raz) --- */
@@ -2896,6 +2896,115 @@ function onRec(){const el=document.querySelector('#sbody .recs');if(!el)return;c
 {const _f=finish;finish=function(){let sc=null,k=layout,se=season;try{if(M_()=='round'&&!CAREER&&!DAILY&&(k in CN2)&&scores.length>=holes.length)sc=scores.slice()}catch(e){}const r=_f.apply(this,arguments);
   if(sc&&DB)try{DB.collection('hs_'+k).add({sc,se,at:Date.now()}).then(()=>{delete GST[k]}).catch(e=>console.warn('hs add',e))}catch(e){}return r}}
 (function(){const st=document.createElement('style');st.textContent=`.gsw{display:flex;gap:6px;margin:0 0 8px}.gsw button{flex:1;padding:8px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#cfe5d5;font:800 12px 'Baloo 2',system-ui}.gsw button.on{background:#3fd16a;color:#08210f;border-color:#3fd16a}.recs .recon{border-right:1px solid rgba(255,211,90,.3)}`;document.head.appendChild(st)})();
+
+
+/* ===================== P66: profil gracza · dźwięki pola i muzyka · lepsze lądowanie dysku ===================== */
+function pfChar(){const c=SV.char||{};const o={};for(const k of['g','skin','shirt','cap','hc','hair','beard','pants','hat'])if(c[k]!=null)o[k]=c[k];return o}
+/* --- synchronizacja profilu (bez kariery) --- */
+async function pfSync(){if(!DB||!UID||!DB.doc)return;try{const C=car();const ref=DB.doc('kariera/'+UID),d={n:String(pname||SV.nick||'Gracz').slice(0,12),r:C.rating==null?0:C.rating,dv:DIVS[C.div].n,ch:pfChar(),lv:xpInfo().lv||1,pat:Date.now()};
+ if(window.firebase&&ref.set.length>=1)await ref.set(d,{merge:true});else{const ex=await ref.get().catch(()=>null);const old=ex&&ex.exists?ex.data():{};await ref.set(Object.assign({},old,d))}}catch(e){console.warn('pfSync',e)}}
+setTimeout(pfSync,5000);
+/* --- okno profilu --- */
+(function(){const st=document.createElement('style');st.textContent=`.pfl{cursor:pointer}.pfl span{text-decoration:underline dotted rgba(255,255,255,.35);text-underline-offset:3px}
+#pfbox{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:rgba(0,8,4,.74);font-family:'Baloo 2',system-ui}#pfbox .pc{width:min(92vw,380px);max-height:88vh;overflow:auto;background:linear-gradient(160deg,#1d3a28,#0e1d15);border:1px solid rgba(255,255,255,.18);border-radius:22px;padding:14px;color:#fff;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+#pfbox .av{width:120px;height:150px;margin:-4px auto 0}#pfbox .av svg{width:100%;height:100%}#pfbox h3{margin:0;font:900 24px 'Baloo 2',system-ui}#pfbox .sub{font:700 12px system-ui;color:#a9c9b1;margin-bottom:8px}#pfbox .dv{display:inline-block;padding:2px 10px;border-radius:10px;font:900 13px 'Baloo 2',system-ui;color:#132;margin:0 3px}
+#pfbox .g{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}#pfbox .g div{background:rgba(255,255,255,.07);border-radius:12px;padding:6px 3px;font:700 10px system-ui;color:#a9c9b1}#pfbox .g b{display:block;font:900 18px 'Baloo 2',system-ui;color:#fff}
+#pfbox h4{margin:8px 0 4px;text-align:left;font:900 14px 'Baloo 2',system-ui;color:#ffd35a}#pfbox .rw{display:flex;justify-content:space-between;background:rgba(255,255,255,.05);border-radius:10px;padding:6px 9px;margin-bottom:4px;font:700 12px system-ui;color:#cfe5d5}#pfbox .rw b{color:#fff}#pfbox button.x{margin-top:10px;width:100%;padding:11px;border-radius:14px;border:0;background:#3fd16a;color:#08210f;font:900 15px 'Baloo 2',system-ui}`;document.head.appendChild(st)})();
+window.openProfile=async function(name){if(!name)return;const old=document.getElementById('pfbox');if(old)old.remove();const box=document.createElement('div');box.id='pfbox';box.innerHTML='<div class="pc"><h3>'+name+'</h3><div class="sub">🌍 Ładowanie profilu…</div></div>';box.onclick=e=>{if(e.target===box||e.target.classList.contains('x'))box.remove()};document.body.appendChild(box);
+ const f=v=>v==0?'E':(v>0?'+':'')+v,COURSES=[['zlotow','Złotów'],['z22','Złotów 22'],['miedzy','Międzybłocie']];let kd=null,best=[],rounds=0,last=0;
+ try{if(DB){const q=await DB.collection('kariera').limit(400).get();const L=q.docs.map(d=>Object.assign({},d.data(),{id:d.id})).filter(x=>String(x.n||'')==name).sort((a,b)=>(b.pat||b.at||0)-(a.pat||a.at||0));kd=L[0]||null}}catch(e){}
+ for(const[k,nm]of COURSES){try{if(!DB)break;const q=await DB.collection('sc_'+k).orderBy('s').limit(400).get();const L=q.docs.map(d=>d.data()).filter(x=>String(x.n||'')==name);rounds+=L.length;L.forEach(x=>{if((+x.at||0)>last)last=+x.at});if(L.length){const b=L.reduce((a,c)=>(+c.s<+a.s?c:a));best.push([nm,+b.s,+b.t||0,L.length])}}catch(e){}}
+ const me=String(pname||SV.nick||'')==name,ch=kd&&kd.ch?Object.assign({},SV.char,kd.ch):me?SV.char:Object.assign({},SV.char,{cap:0,shirt:0}),rt=kd&&kd.r?kd.r:me?car().rating:null,dvn=rt?DIVS[divOf(rt)].n:null,DC={MA4:'#9fe0b0',MA3:'#8ec5ff',Open:'#ffd35a'},lv=kd&&kd.lv?kd.lv:me?xpInfo().lv:null;
+ const ld=last?new Date(last):null,lds=ld?String(ld.getDate()).padStart(2,'0')+'.'+String(ld.getMonth()+1).padStart(2,'0')+'.'+ld.getFullYear():'–';
+ box.querySelector('.pc').innerHTML='<div class="av">'+avatarSVG(ch)+'</div><h3>'+name+'</h3><div class="sub">'+(lv?'poziom '+lv:'')+(dvn?' <span class="dv" style="background:'+DC[dvn]+'">'+dvn+'</span>':'')+(rt?' rating <b style="color:#fff">'+rt+'</b>':'')+'</div>'+
+  '<div class="g"><div><b>'+rounds+'</b>rund online</div><div><b>'+(best.length?f(Math.min(...best.map(x=>x[1]))):'–')+'</b>najlepszy wynik</div><div><b>'+(kd&&kd.w?kd.w:0)+'</b>tytuły</div></div>'+
+  '<h4>🏆 Rekordy na polach</h4>'+(best.length?best.map(x=>'<div class="rw"><span>'+x[0]+' · '+x[3]+' rund</span><b>'+f(x[1])+' <small style="color:#a9c9b1">('+x[2]+' rz.)</small></b></div>').join(''):'<div class="rw"><span>Brak rund online</span></div>')+
+  '<div class="rw" style="margin-top:6px"><span>Ostatnia gra</span><b>'+lds+'</b></div>'+(!DB?'<div class="sub" style="margin-top:6px">Profile online działają w wersji na GitHubie</div>':'')+'<button class="x">Zamknij</button>'};
+/* top kariery też klikalny */
+{const _ct=carTopRender;carTopRender=async function(){await _ct.apply(this,arguments);try{document.querySelectorAll('#carol li').forEach(li=>{const sp=li.querySelector('span');if(!sp)return;const n=(sp.childNodes[0]&&sp.childNodes[0].textContent||'').trim();if(!n)return;li.classList.add('pfl');li.onclick=()=>openProfile(n)})}catch(e){}}}
+/* --- MUZYKA (generowana) --- */
+const MUS={on:true,g:null,next:0,step:0,timer:null};try{MUS.on=localStorage.getItem('dg_mus')!=='off'}catch(e){}
+function musStart(){const c=SND.ctx;if(!c||MUS.timer)return;MUS.g=c.createGain();MUS.g.gain.value=0;const lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2200;MUS.g.connect(lp);lp.connect(SND.m);MUS.next=c.currentTime+.1;MUS.step=0;
+ const CH=[[57,60,64,67],[53,57,60,64],[48,52,55,60],[55,59,62,67]],PENT=[69,72,74,76,79,81,84],hz=m=>440*Math.pow(2,(m-69)/12),BEAT=.42;
+ const note=(t,m,d,v,type)=>{const o=c.createOscillator(),gn=c.createGain();o.type=type;o.frequency.value=hz(m);gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(v,t+Math.min(.08,d*.2));gn.gain.exponentialRampToValueAtTime(.0005,t+d);o.connect(gn);gn.connect(MUS.g);o.start(t);o.stop(t+d+.05)};
+ MUS.timer=setInterval(()=>{const want=MUS.on&&SND.on&&c.state=='running';MUS.g.gain.setTargetAtTime(want?(playing?.09:.13):0,c.currentTime,.6);if(!want)return;
+  while(MUS.next<c.currentTime+.6){const t=MUS.next,st=MUS.step,bar=Math.floor(st/8)%4,ch=CH[bar];
+   if(st%8==0){ch.forEach((m,i)=>note(t+i*.02,m-12,BEAT*8,.035,'sine'));note(t,ch[0]-24,BEAT*8,.05,'triangle')}
+   const r=Math.abs(Math.sin(st*12.9898+bar*7.1)*43758.5)%1;if(st%2==0&&r<.62){const m=PENT[Math.floor(r*PENT.length*1.6)%PENT.length];note(t,m,BEAT*1.6,.032,'triangle');if(r<.18)note(t+BEAT*.5,m+(r<.09?2:-3),BEAT*1.2,.022,'sine')}
+   if(st%4==2&&r>.7)note(t,ch[2]+12,BEAT*.8,.014,'sine');
+   MUS.next+=BEAT;MUS.step++}},150)}
+addEventListener('pointerdown',()=>{setTimeout(()=>{try{if(SND.ctx&&MUS.on)musStart()}catch(e){}},50)},{capture:true});
+/* --- dźwięki pola: wiatr wg siły, rzeka, auta --- */
+{const _at=ambTick;let wat=null,car=null,carT=0;ambTick=function(){_at.apply(this,arguments);try{const c=SND.ctx,h=holes&&holes[hi];if(!c||!SND.amb)return;const want=SND.on&&playing&&c.state=='running';
+ const w=Math.min(1,(window.ws||0)/5),base=ATM=='deszcz'?.09:season=='winter'?.035:.022;SND.amb.gn.gain.setTargetAtTime(want?base+w*.05:0,c.currentTime,.6);SND.amb.fl.frequency.setTargetAtTime((ATM=='deszcz'?3200:season=='winter'?500:800)+w*900,c.currentTime,.6);
+ const riv=want&&h&&((h.rivers&&h.rivers.length)||(h.water&&h.water.length))&&season!='winter';
+ if(riv&&!wat){const s=c.createBufferSource();s.buffer=nbuf(2);s.loop=true;const bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=1100;bp.Q.value=.6;const gn=c.createGain();gn.gain.value=0;s.connect(bp);bp.connect(gn);gn.connect(SND.m);s.start();wat={s,gn,bp}}
+ if(wat){wat.gn.gain.setTargetAtTime(riv?.03:0,c.currentTime,.5);wat.bp.frequency.setTargetAtTime(900+Math.sin(performance.now()/700)*300,c.currentTime,.3);if(!riv&&wat.gn.gain.value<.002){try{wat.s.stop()}catch(e){}wat=null}}
+ const now=performance.now();if(want&&h&&(h.carRoad!=null||(h.roads||[]).some(r=>r.w>=20))&&now>carT){carT=now+9000+Math.random()*12000;const t=c.currentTime,o=c.createOscillator(),gn=c.createGain(),lp=c.createBiquadFilter();o.type='sawtooth';o.frequency.setValueAtTime(70,t);o.frequency.linearRampToValueAtTime(95,t+1.6);o.frequency.linearRampToValueAtTime(60,t+3.4);lp.type='lowpass';lp.frequency.value=260;gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(.05,t+1.6);gn.gain.linearRampToValueAtTime(0,t+3.4);o.connect(lp);lp.connect(gn);gn.connect(SND.m);o.start(t);o.stop(t+3.5)}
+ if(want&&season=='autumn'&&now>(ambTick._lf||0)){ambTick._lf=now+6000+Math.random()*8000;noise(c.currentTime,.5,'highpass',3500,.6,.018)}}catch(e){}}}
+setInterval(()=>{try{ambTick()}catch(e){}},700);
+/* opcja muzyki */
+{const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);try{const og=$('otog');if(!og||og.querySelector('[data-mus]'))return;const b=document.createElement('button');b.className='otb'+(MUS.on?' on':'');b.dataset.mus=1;b.innerHTML='<span>🎵 Muzyka</span><i>'+(MUS.on?'WŁ':'WYŁ')+'</i>';b.onclick=()=>{MUS.on=!MUS.on;try{localStorage.setItem('dg_mus',MUS.on?'on':'off')}catch(e){}if(MUS.on){aud();musStart()}b.className='otb'+(MUS.on?' on':'');b.querySelector('i').textContent=MUS.on?'WŁ':'WYŁ'};og.appendChild(b)}catch(e){}}}
+/* --- LEPSZE LĄDOWANIE: toczenie po drodze, odbicie (skip), ślad w śniegu --- */
+{const ds=(p,a,e)=>{const vx=e[0]-a[0],vy=e[1]-a[1],l2=vx*vx+vy*vy||1,f=Math.max(0,Math.min(1,((p[0]-a[0])*vx+(p[1]-a[1])*vy)/l2));return Math.hypot(p[0]-a[0]-vx*f,p[1]-a[1]-vy*f)};
+ const onRoad=(h,x,y)=>(h.roads||[]).some(r=>r.pts.some((a,i)=>i&&ds([x,y],r.pts[i-1],a)<r.w/2));
+ const _alt=altNow;altNow=function(d){if(d&&d.gnd)return .4;return _alt(d)};
+ const _st=step;step=function(){const d=disc,h=holes&&holes[hi];try{if(d&&h&&!d.tom&&d.D){const K=KSf(),nv=d.v*d.D.dec;if(nv<.5*K&&d.v>=.5*K&&!d._ld){d._ld=1;
+   const fw=Math.abs(h.lat([d.x,d.y]))<(h.cwf?h.cwf(Math.min(1,h.along([d.x,d.y])/h.L)):60)/2;
+   if(onRoad(h,d.x,d.y)&&season!='winter'){d.gnd=1;d.v=1.25*K;d.a+=(Math.random()-.5)*.9;d.D=Object.assign({},d.D,{dec:.955});try{pill('🛞 Dysk toczy się po drodze!');sfx.land()}catch(e){}}
+   else if(fw&&d.v0>7.5*K&&Math.random()<.45&&season!='winter'&&!(h.rivers||[]).length){d.gnd=1;d.v=.95*K;d.a+=(Math.random()-.5)*.25;d.D=Object.assign({},d.D,{dec:.94});try{sfx.land();burst(d.x,d.y,'puff')}catch(e){}}
+   else if(season=='winter'){d.v=Math.max(d.v,.6*K);d.gnd=1;d.D=Object.assign({},d.D,{dec:.93})}}}}catch(e){}
+  return _st.apply(this,arguments)}}
+
+
+/* ===================== P67: tabliczki mando ze strzałką · osiągnięcia kariery · nowa gablota pucharów ===================== */
+/* --- tabliczki mando na drzewach --- */
+(function(){const _dw=drawWorld;drawWorld=function(){_dw.apply(this,arguments);try{const h=holes&&holes[hi];if(!h||!h.md||!playing)return;g.save();worldT();
+ for(const o of h.md){let dx=o.m[0]-o.e[0],dy=o.m[1]-o.e[1];const l=Math.hypot(dx,dy)||1;dx/=l;dy/=l;const x=o.m[0],y=o.m[1]-9,W2=15,H2=10;
+  g.fillStyle='rgba(6,20,8,.35)';g.fillRect(x-W2/2+1.5,y-H2/2+1.5,W2,H2);g.fillStyle='#5a3a1e';g.fillRect(x-.6,y+H2/2-1,1.2,6);
+  g.fillStyle='#fff';g.strokeStyle='#d62828';g.lineWidth=1.4;g.beginPath();g.roundRect?g.roundRect(x-W2/2,y-H2/2,W2,H2,1.5):g.rect(x-W2/2,y-H2/2,W2,H2);g.fill();g.stroke();
+  g.save();g.translate(x,y+.4);g.rotate(Math.atan2(dy,dx));g.fillStyle='#d62828';g.beginPath();g.moveTo(-5,-1.3);g.lineTo(1.5,-1.3);g.lineTo(1.5,-3.4);g.lineTo(5.4,0);g.lineTo(1.5,3.4);g.lineTo(1.5,1.3);g.lineTo(-5,1.3);g.closePath();g.fill();g.restore();
+  g.fillStyle='#d62828';g.font='900 3.6px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('MANDO',x,y-H2/2-2.6)}
+ g.restore()}catch(e){}}})();
+/* --- osiągnięcia kariery --- */
+Object.assign(AD,{c_first:{n:'Debiut w karierze',d:'Zagraj pierwszy turniej kariery.',i:'🎽'},c_win:{n:'Zwycięzca turnieju',d:'Wygraj turniej kariery online (min. 2 graczy).',i:'🥇'},c_pod:{n:'Na podium',d:'Zajmij miejsce 1–3 w turnieju kariery (min. 3 graczy).',i:'🏅'},
+ c_week:{n:'Pełny tydzień',d:'Rozegraj wszystkie 3 turnieje jednego tygodnia.',i:'📅'},c_ma3:{n:'Awans do MA3',d:'Osiągnij rating 850+.',i:'⬆️'},c_open:{n:'Awans do Open',d:'Osiągnij rating 920+.',i:'🚀'},c_r950:{n:'Elita',d:'Osiągnij rating 950+.',i:'💎'},
+ c_season:{n:'Mistrz sezonu',d:'Wygraj sezon w swojej dywizji.',i:'👑'},c_pod3:{n:'Seria podiów',d:'3 sezony z rzędu na podium.',i:'🔥'},c_5w:{n:'Stały bywalec',d:'Zagraj w 5 sezonach kariery.',i:'🗓️'}});
+Object.assign(RAR,{c_first:1,c_week:1,c_ma3:2,c_pod:2,c_5w:2,c_win:3,c_open:3,c_season:3,c_r950:3,c_pod3:3});
+const CAR_IDS=['c_first','c_week','c_ma3','c_pod','c_5w','c_win','c_open','c_r950','c_season','c_pod3'];
+function chkCar(){try{const C=car(),r=C.rating||0,M=C.medals||[];if((C.hist||[]).length)unlock('c_first');if(C.wk&&C.wk.s&&C.wk.s.every(v=>v!=null))unlock('c_week');if(C.pwk&&C.pwk.s&&C.pwk.s.every(v=>v!=null))unlock('c_week');
+ if(r>=850||C.div>=1)unlock('c_ma3');if(r>=920||C.div>=2)unlock('c_open');if(r>=950)unlock('c_r950');if((C.titles||[]).length)unlock('c_season');
+ const ws=[...new Set(M.map(m=>m.w))];if(ws.length>=5)unlock('c_5w');const P=M.slice().sort((a,b)=>a.w-b.w);let run=0;for(let i=0;i<P.length;i++){if(P[i].pl>=1&&P[i].pl<=3&&(i==0||P[i].w==P[i-1].w+1||run==0))run=(i>0&&P[i-1].pl>=1&&P[i-1].pl<=3&&P[i].w==P[i-1].w+1)?run+1:1;else run=0;if(run>=3)unlock('c_pod3')}}catch(e){}}
+setInterval(chkCar,4000);setTimeout(chkCar,2500);
+/* --- nowa gablota pucharów --- */
+(function(){const st=document.createElement('style');st.textContent=`#trov{margin-top:6px}
+#trov .tsum{display:flex;gap:10px;align-items:center;background:linear-gradient(135deg,rgba(255,211,90,.18),rgba(255,211,90,.05));border:1px solid rgba(255,211,90,.4);border-radius:18px;padding:12px;margin-bottom:10px}
+#trov .tsum .big{font:900 34px/1 'Baloo 2',system-ui;color:#ffd35a}#trov .tsum .big small{font-size:16px;color:#cfe5d5}#trov .tsum .tb{flex:1}#trov .tsum .tb b{display:block;font:900 15px 'Baloo 2',system-ui;color:#fff}
+#trov .bar{height:9px;border-radius:5px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:5px}#trov .bar i{display:block;height:100%;background:linear-gradient(90deg,#3fd16a,#ffd35a)}
+#trov .rz{display:flex;gap:5px;margin-top:6px}#trov .rz span{font:800 10px system-ui;padding:2px 7px;border-radius:8px;background:rgba(0,0,0,.25)}
+#trov .sec{margin-bottom:12px;border-radius:18px;padding:10px 10px 4px;background:linear-gradient(180deg,rgba(40,24,10,.55),rgba(20,12,5,.7));border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+#trov .sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}#trov .sh b{font:900 16px 'Baloo 2',system-ui;color:#fff}#trov .sh em{font:800 11px system-ui;font-style:normal;color:#ffd35a}
+#trov .row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:6px 2px 10px;border-bottom:6px solid #6b4423;box-shadow:0 5px 0 -2px #3e2612;margin-bottom:10px}
+#trov .cup{all:unset;cursor:pointer;text-align:center;position:relative}#trov .cup .c{width:52px;height:56px;margin:0 auto;position:relative;display:flex;align-items:flex-end;justify-content:center}
+#trov .cup .c svg{width:52px;height:56px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.5))}#trov .cup .ic{position:absolute;top:9px;left:50%;transform:translateX(-50%);font-size:17px}
+#trov .cup small{display:block;font:800 9.5px/1.15 'Baloo 2',system-ui;color:#fff;margin-top:2px;min-height:22px}#trov .cup.lock .c{filter:grayscale(1) brightness(.35)}#trov .cup.lock small{color:#7f9b88}#trov .cup.lock:after{content:'🔒';position:absolute;top:14px;left:50%;transform:translateX(-50%);font-size:15px}
+#trov .cup.sel .c{transform:scale(1.12)}#trov .info{background:rgba(10,24,14,.8);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:10px;font:600 13px system-ui;color:#cfe5d5;margin-bottom:10px;min-height:44px}#trov .info b{color:#fff;font:900 15px 'Baloo 2',system-ui}`;document.head.appendChild(st);
+ const MET={1:['#e0a46a','#8a5226','Brąz'],2:['#e6ecf1','#8a98a5','Srebro'],3:['#ffd35a','#b8860b','Złoto']};
+ const cup=r=>{const[a,b]=MET[r]||MET[1];return '<svg viewBox="0 0 52 56"><defs><linearGradient id="cg'+r+'" x1="0" x2="1"><stop offset="0" stop-color="'+b+'"/><stop offset=".45" stop-color="'+a+'"/><stop offset="1" stop-color="'+b+'"/></linearGradient></defs><path d="M10 6 h32 v6 q0 18 -16 22 q-16 -4 -16 -22z" fill="url(#cg'+r+')"/><path d="M10 9 q-7 0 -7 7 q0 8 10 9 M42 9 q7 0 7 7 q0 8 -10 9" fill="none" stroke="'+b+'" stroke-width="2.4"/><rect x="23" y="33" width="6" height="8" fill="'+b+'"/><rect x="15" y="41" width="22" height="5" rx="1.5" fill="url(#cg'+r+')"/><rect x="12" y="46" width="28" height="7" rx="2" fill="#3e2612"/><path d="M14 9 q2 12 8 17" stroke="rgba(255,255,255,.55)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>'};
+ const GR=[['🥏 Gra','first birdie eagle ace turkey birds5 under even m5 m10 clean r25 far fh longputt'],['🌲 Pole i przygody','zlotow trees splash ob3 winter quad style'],['🏆 Kariera',CAR_IDS.join(' ')],['🎒 Kolekcja','vet rich coll']];
+ renderTro=function(){const v=$('v-tro');if(!v)return;let el=$('trov');if(!el){el=document.createElement('div');el.id='trov';const vh=v.querySelector('.vh');(vh||v).after(el)}
+  v.querySelectorAll(':scope > *').forEach(x=>{if(x.id!=='trov'&&!x.classList.contains('vh'))x.style.display='none'});
+  const all=Object.keys(AD),got=all.filter(k=>SV.ach[k]),used=new Set();const secs=GR.map(([t,ids])=>{const L=ids.split(' ').filter(k=>AD[k]);L.forEach(k=>used.add(k));return[t,L]});const rest=all.filter(k=>!used.has(k));if(rest.length)secs.push(['✨ Inne',rest]);
+  const cnt=r=>got.filter(k=>(RAR[k]||1)==r).length+'/'+all.filter(k=>(RAR[k]||1)==r).length;
+  const a=selA&&AD[selA];
+  el.innerHTML='<div class="tsum"><div class="big">'+got.length+'<small>/'+all.length+'</small></div><div class="tb"><b>Twoja gablota</b><div class="bar"><i style="width:'+Math.round(got.length/all.length*100)+'%"></i></div><div class="rz"><span style="color:#ffd35a">🥇 '+cnt(3)+'</span><span style="color:#e6ecf1">🥈 '+cnt(2)+'</span><span style="color:#e0a46a">🥉 '+cnt(1)+'</span></div></div></div>'+
+   '<div class="info">'+(a?'<b>'+a.i+' '+a.n+'</b> · '+(MET[RAR[selA]||1][2])+'<br>'+a.d+'<br><small style="color:'+(SV.ach[selA]?'#7dff9a':'#ffd35a')+'">'+(SV.ach[selA]?'✅ Zdobyte '+new Date(SV.ach[selA]).toLocaleDateString('pl-PL'):'🔒 Jeszcze nie zdobyte')+'</small>':'Dotknij pucharu, żeby zobaczyć opis.')+'</div>'+
+   secs.map(([t,L])=>{const g2=L.filter(k=>SV.ach[k]).length;let rows='';for(let i=0;i<L.length;i+=4)rows+='<div class="row">'+L.slice(i,i+4).map(k=>'<button class="cup'+(SV.ach[k]?'':' lock')+(selA==k?' sel':'')+'" data-a="'+k+'"><div class="c">'+cup(RAR[k]||1)+'<span class="ic">'+AD[k].i+'</span></div><small>'+AD[k].n+'</small></button>').join('')+'</div>';return '<div class="sec"><div class="sh"><b>'+t+'</b><em>'+g2+'/'+L.length+'</em></div>'+rows+(t.indexOf('Kariera')>=0?medRow():'')+'</div>'}).join('');
+  el.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{selA=b.dataset.a;renderTro();const i=el.querySelector('.info');if(i)i.scrollIntoView({block:'nearest',behavior:'smooth'})});
+  try{const tc=$('tcount');if(tc)tc.textContent='🏆 '+got.length+'/'+all.length}catch(e){}
+};
+ function medRow(){const M=(car().medals||[]).slice().reverse();return '<div class="sh" style="margin-top:2px"><b style="font-size:13px">🏅 Medale sezonów</b><em>'+M.length+'</em></div><div class="row" style="grid-template-columns:repeat(5,1fr)">'+(M.length?M.slice(0,15).map(m=>'<div class="cup"><div class="c" style="height:36px;font-size:28px;align-items:center">'+(m.pl==1?'🥇':m.pl==2?'🥈':m.pl==3?'🥉':'🎖️')+'</div><small>S'+m.s+' · '+m.dv+'</small></div>').join(''):'<small style="grid-column:1/-1;font:600 11px system-ui;color:#a9c9b1;text-align:center">Medale z szatni po każdym tygodniu kariery</small>')+'</div>'}
+})();
 
 </script>
 </body>
