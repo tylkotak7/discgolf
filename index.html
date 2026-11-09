@@ -2073,8 +2073,8 @@ const _csTxt=s=>s;
 /* ---------- statystyki: top 10 online ---------- */
 async function staOnline(){const el=$('staon');if(!el)return;if(!DB){el.innerHTML='<small>🌍 Ranking online niedostępny w tej wersji</small>';return}
  const esc=v=>String(v||'?').replace(/[<>&"]/g,'').slice(0,12),f=s=>s==0?'E':(s>0?'+':'')+s;let html='';
- try{const q=await DB.collection('sc_'+statL).orderBy('s').limit(300).get();const l=q.docs.map(d=>Object.assign({},d.data(),{id:d.id})).filter(e=>sOf(e)==season).sort((a,b)=>(+a.s||0)-(+b.s||0)||(+a.t||0)-(+b.t||0)).slice(0,10);
-  html+='<b>🌍 Top 10 online · '+CN2[statL][0]+' · '+SLAB[season]+'</b>'+(l.length?'<ol>'+l.map(e=>'<li><span>'+esc(e.n)+(e.d?'<small>'+esc(e.d).slice(0,0)+'</small>':'')+'</span><em>'+f(+e.s||0)+'</em><i>'+(+e.t||'')+' rz.</i></li>').join('')+'</ol>':'<small>Brak wyników w tej porze roku – zagraj pierwszy!</small>')}catch(e){html+='<small>Nie udało się wczytać rankingu</small>'}
+ try{const q=await DB.collection('sc_'+statL).orderBy('s').limit(300).get();const l=q.docs.map(d=>Object.assign({},d.data(),{id:d.id})).sort((a,b)=>(+a.s||0)-(+b.s||0)||(+a.t||0)-(+b.t||0));window.__onTop=window.__onTop||{};window.__onTop[statL]=l[0]||null;try{onRec()}catch(x){}l.length=Math.min(l.length,10);
+  const SI={summer:'☀️',winter:'❄️',autumn:'🍂'};html+='<b>🌍 Top 10 online · '+CN2[statL][0]+' · wszystkie pory roku</b>'+(l.length?'<ol>'+l.map(e=>'<li><span>'+esc(e.n)+' <small>'+(SI[sOf(e)]||'')+'</small></span><em>'+f(+e.s||0)+'</em><i>'+(+e.t||'')+' rz.</i></li>').join('')+'</ol>':'<small>Brak wyników – zagraj pierwszy!</small>')}catch(e){html+='<small>Nie udało się wczytać rankingu</small>'}
  try{const l=await dTop();if(l){const[c,i,h]=dHole();html+='<b style="margin-top:10px">📅 Dołek dnia · '+c+' '+(i+1)+' · par '+h.par+'</b>'+(l.length?'<ol>'+l.slice(0,10).map(x=>'<li class="'+(x.id===UID?'me':'')+'"><span>'+esc(x.n)+'</span><em>'+(+x.s||0)+'</em><i>rzuty</i></li>').join('')+'</ol>':'<small>Nikt jeszcze dziś nie grał</small>')}}catch(e){}
  el.innerHTML=html}
 const _rs33=renderSta;renderSta=function(){_rs33();const b=$('sbody');if(!b)return;b.insertAdjacentHTML('afterbegin','<div class="staon" id="staon"><small>🌍 Ładowanie rankingu online…</small></div>');staOnline()};
@@ -2876,6 +2876,26 @@ function chTxt(c){return c=='ace3'?'3 ACE ('+Math.min(3,aceCount())+'/3)':c=='cl
   const ch=$('condchip');if(ch&&ch.parentNode!==$('owxb'))$('owxb').appendChild(ch)};
  setTimeout(()=>{try{renderOpt()}catch(e){}},2300);
 })();
+
+
+/* ===================== P65: historia pola – statystyki wszystkich graczy · rekord pola online ===================== */
+const GST={};let GSTm='all';
+async function gstFetch(k){if(!DB)return null;try{const q=await DB.collection('hs_'+k).limit(2000).get();const L=q.docs.map(d=>d.data()).filter(x=>Array.isArray(x.sc));const H=CN2[k][1](),par=H.map(h=>h.par);
+ const S={rounds:0,best:null,h:{},n:L.length};for(const r of L){if(r.sc.length<H.length)continue;S.rounds++;let tot=0;r.sc.forEach((v,i)=>{if(i>=H.length)return;const p=par[i],d=v-p;tot+=d;const x=S.h[i]||(S.h[i]={n:0,s:0,a:0,b:0,p:0,g:0,d:0});x.n++;x.s+=v;if(v==1)x.a++;else if(d<0)x.b++;else if(d==0)x.p++;else if(d==1)x.g++;else x.d++});if(S.best==null||tot<S.best)S.best=tot}
+ return S}catch(e){console.warn('hs',e);return null}}
+function onRec(){const el=document.querySelector('#sbody .recs');if(!el)return;const t=(window.__onTop||{})[statL];if(!t)return;if(el.querySelector('.recon'))return;
+ const f=v=>v==0?'E':(v>0?'+':'')+v,dt=t.at?new Date(+t.at):null,ds=dt&&!isNaN(dt)?String(dt.getDate()).padStart(2,'0')+'.'+String(dt.getMonth()+1).padStart(2,'0')+'.'+dt.getFullYear():'',SI={summer:'☀️',winter:'❄️',autumn:'🍂'};
+ const box=el.querySelector('div');if(box){const sp=box.querySelector('span');if(sp){const lb=sp.childNodes[0];if(lb&&lb.nodeType==3)lb.textContent='Twój rekord'}box.insertAdjacentHTML('afterbegin','<span class="recon" style="flex:1"><small style="display:block;font:700 11px system-ui;color:#cfe5d5">🌍 Rekord pola</small><b>'+f(+t.s||0)+'</b><small style="display:block;font:800 12px system-ui;color:#fff">'+String(t.n||'?').replace(/[<>&"]/g,'').slice(0,12)+' '+(SI[sOf(t)]||'')+'</small><small style="display:block;font:700 10px system-ui;color:#ffd35a">'+ds+' · '+(+t.t||'')+' rzutów</small></span>')}}
+{const _rs=renderSta;renderSta=function(){const k=statL in CN2?statL:'zlotow';const G=GST[k],own=SV.stats[k];let sw=false;
+  if(GSTm=='all'&&G&&G.rounds){SV.stats[k]=G;sw=true}
+  try{_rs.apply(this,arguments)}finally{if(sw){if(own)SV.stats[k]=own;else delete SV.stats[k]}}
+  const b=$('sbody');if(b){const sg=b.querySelector('.sg');if(sg&&!b.querySelector('.gsw')){sg.insertAdjacentHTML('beforebegin','<div class="gsw"><button data-m="all" class="'+(GSTm=='all'?'on':'')+'">🌍 Wszyscy gracze'+(G?' · '+G.rounds+' rund':'')+'</button><button data-m="me" class="'+(GSTm=='me'?'on':'')+'">👤 Moje</button></div>'+(GSTm=='all'&&!(G&&G.rounds)?'<p class="sthint" style="margin:0 0 8px">'+(DB?'Historia pola online dopiero się buduje – liczą się rundy od tej wersji. Na razie pokazuję Twoje.':'Statystyki wszystkich graczy działają w wersji online (GitHub).')+'</p>':''));b.querySelectorAll('.gsw button').forEach(x=>x.onclick=()=>{GSTm=x.dataset.m;renderSta()})}}
+  try{onRec()}catch(e){}
+  if(DB&&!G&&!gstFetch._b){gstFetch._b=1;gstFetch(k).then(r=>{gstFetch._b=0;GST[k]=r||{rounds:0,h:{},best:null};if(statL==k)renderSta()})}}}
+/* zapis wyników dołek po dołku do historii pola */
+{const _f=finish;finish=function(){let sc=null,k=layout,se=season;try{if(M_()=='round'&&!CAREER&&!DAILY&&(k in CN2)&&scores.length>=holes.length)sc=scores.slice()}catch(e){}const r=_f.apply(this,arguments);
+  if(sc&&DB)try{DB.collection('hs_'+k).add({sc,se,at:Date.now()}).then(()=>{delete GST[k]}).catch(e=>console.warn('hs add',e))}catch(e){}return r}}
+(function(){const st=document.createElement('style');st.textContent=`.gsw{display:flex;gap:6px;margin:0 0 8px}.gsw button{flex:1;padding:8px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#cfe5d5;font:800 12px 'Baloo 2',system-ui}.gsw button.on{background:#3fd16a;color:#08210f;border-color:#3fd16a}.recs .recon{border-right:1px solid rgba(255,211,90,.3)}`;document.head.appendChild(st)})();
 
 </script>
 </body>
