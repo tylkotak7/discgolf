@@ -1191,10 +1191,10 @@ if(disc){const tr=disc.trail;g.lineCap='round';for(let i=Math.max(1,tr.length-90
 const al=altNow(disc);discAt3(disc.x,disc.y,al,discs[di].col,true);txt(Math.round(Math.hypot(disc.x-lie.x,disc.y-lie.y)*M)+' m',disc.x+12,disc.y-al*(1+RK)-8,15)}
 else if(playing&&!UP)discAt3(lie.x,lie.y,0,discs[di].col,false);
 live3(h,wn);
-if(drag){const dx=drag.sx-drag.x,dy=drag.sy-drag.y,l=Math.min(Math.hypot(dx,dy),110),a=Math.atan2(dx,-dy),D=discs[di],v0=l/110*D.v*(hand<0?.95:1),est=Math.max(0,(v0-0.5)/(1-D.dec)*.2*.97),len=Math.max(14,est/M*.9),ex=lie.x+Math.sin(a)*len,ey=lie.y-Math.cos(a)*len,ac=wn?'#e5392f':'#ffffff';
-g.save();g.lineCap='round';g.strokeStyle='rgba(0,0,0,.28)';g.lineWidth=5;g.setLineDash([2,9]);g.beginPath();g.moveTo(lie.x+1.5,lie.y+2);g.lineTo(ex+1.5,ey+2);g.stroke();g.strokeStyle=ac;g.lineWidth=3.4;g.beginPath();g.moveTo(lie.x,lie.y);g.lineTo(ex,ey);g.stroke();g.setLineDash([]);
+if(drag){const dx=drag.sx-drag.x,dy=drag.sy-drag.y,l=Math.min(Math.hypot(dx,dy),110),a=Math.atan2(dx,-dy),D=discs[di],v0=l/110*D.v*(hand<0?.95:1),est=Math.max(0,(v0-0.5)/(1-D.dec)*.2*.97),len=Math.max(14,est/M*.9),PV=PREV(a,l,len),ex=PV.ex,ey=PV.ey,ac=wn?'#e5392f':'#ffffff';
+g.save();g.lineCap='round';g.strokeStyle='rgba(0,0,0,.28)';g.lineWidth=5;g.setLineDash([2,9]);PVdraw(PV,ac);g.setLineDash([]);
 g.strokeStyle=ac;g.lineWidth=2.2;g.beginPath();g.arc(ex,ey,7,0,7);g.stroke();const pc=l/110;g.strokeStyle='rgba(0,0,0,.35)';g.lineWidth=5;g.beginPath();g.arc(lie.x,lie.y,15,0,7);g.stroke();g.strokeStyle=pc<.5?'#7ddc5a':pc<.85?'#ffd23f':'#ff7a3d';g.lineWidth=3.4;g.beginPath();g.arc(lie.x,lie.y,15,-1.57,-1.57+pc*6.283);g.stroke();
-txt('~'+Math.round(est)+' m',ex,ey-12,15,'center');g.restore()}}
+txt(PV.ob?'🚫 OB':'~'+Math.round(PV.d!=null?PV.d:est)+' m',ex,ey-12,15,'center');g.restore()}}
 
 /* ================= MENU 2 ================= */
 Object.assign(AD,{eagle:{n:'Orzeł',d:'Zrób eagle, czyli 2 rzuty pod par na dołku.',i:'🦅'},under:{n:'Pod kreską',d:'Skończ rundę poniżej pary.',i:'📉'},even:{n:'Równiutko',d:'Skończ rundę dokładnie na parze.',i:'⚖️'},m5:{n:'Na fali',d:'Runda z wynikiem -5 lub lepszym.',i:'🌊'},
@@ -3083,5 +3083,44 @@ setInterval(chkCar,4000);setTimeout(chkCar,2500);
  const fixTxt=()=>{document.querySelectorAll('.wxn').forEach(p=>p.textContent='W Rundzie domyślnie lato i słońce. W Karierze pogoda jest losowa.')};
  try{const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);fixTxt()}}catch(e){}fixTxt();
 }catch(e){console.warn('P71',e)}})();
+</script>
+<script>/* ===================== P72: grafika + gameplay 2D ===================== */
+/* --- przewidywany tor lotu (krzywa) --- */
+function PREV(a,l,len){try{if(typeof TOMA!=='undefined'&&TOMA)throw 0;const D=discs[di],K=KSf(),v0=Math.min(l,110)/110*D.v*(hand<0?.95:1)*K;if(v0<.6*K)throw 0;
+ const d={x:lie.x,y:lie.y,a,v:v0,v0,h:hand},pts=[[d.x,d.y]];let n=0;
+ while(d.v>=.5*K&&n<900){const f=1-d.v/d.v0;d.a+=D.turn*d.h*((curve==2?(f<.5?1.1:-.45-(f-.5)*1.1):curve)*0.012*(0.3+f*1.5)-0.004*f);d.x+=Math.sin(d.a)*d.v+wx*0.05*K;d.y-=Math.cos(d.a)*d.v-wy*0.05*K;d.v*=D.dec;n++;if(d.x<0||d.x>W||d.y<0||d.y>H){d.x=Math.max(0,Math.min(W,d.x));d.y=Math.max(0,Math.min(H,d.y));pts.push([d.x,d.y]);return{pts,ex:d.x,ey:d.y,d:Math.hypot(d.x-lie.x,d.y-lie.y)*M,ob:true}}if(n%2==0)pts.push([d.x,d.y])}
+ pts.push([d.x,d.y]);return{pts,ex:d.x,ey:d.y,d:Math.hypot(d.x-lie.x,d.y-lie.y)*M}}
+ catch(e){return{pts:[[lie.x,lie.y],[lie.x+Math.sin(a)*len,lie.y-Math.cos(a)*len]],ex:lie.x+Math.sin(a)*len,ey:lie.y-Math.cos(a)*len,d:null}}}
+function PVdraw(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.setLineDash([2,8]);g.lineCap='round';
+ g.strokeStyle='rgba(0,0,0,.28)';g.lineWidth=5;g.beginPath();g.moveTo(P[0][0]+1.5,P[0][1]+2);for(let i=1;i<n;i++)g.lineTo(P[i][0]+1.5,P[i][1]+2);g.stroke();
+ /* pewna część toru pełna, dalsza (fade/turn) coraz bledsza */
+ const cut=Math.max(1,Math.floor(n*.6));g.strokeStyle=ac;g.lineWidth=3.4;g.beginPath();g.moveTo(P[0][0],P[0][1]);for(let i=1;i<=cut;i++)g.lineTo(P[i][0],P[i][1]);g.stroke();
+ for(let i=cut+1;i<n;i++){g.globalAlpha=Math.max(.18,1-(i-cut)/(n-cut)*.8);g.beginPath();g.moveTo(P[i-1][0],P[i-1][1]);g.lineTo(P[i][0],P[i][1]);g.stroke()}g.globalAlpha=1;
+ if(PV.ob){g.setLineDash([]);g.strokeStyle='#ff4a3d';g.lineWidth=3;g.beginPath();g.moveTo(PV.ex-6,PV.ey-6);g.lineTo(PV.ex+6,PV.ey+6);g.moveTo(PV.ex+6,PV.ey-6);g.lineTo(PV.ex-6,PV.ey+6);g.stroke()}else if(PV.d!=null){g.strokeStyle=ac;g.globalAlpha=.35;g.lineWidth=1.5;g.setLineDash([]);g.beginPath();g.arc(PV.ex,PV.ey,12,0,7);g.stroke();g.globalAlpha=1}}
+(function(){
+ /* --- cienie chmur, ptaki, motyle --- */
+ const CL=[];const cloudSpr=(seed)=>{const c=document.createElement('canvas');c.width=320;c.height=220;const x=c.getContext('2d');let s=seed;const r=()=>(s=(s*16807)%2147483647)/2147483647;
+  for(let i=0;i<9;i++){const cx=60+r()*200,cy=60+r()*100,rr=40+r()*55,gr=x.createRadialGradient(cx,cy,0,cx,cy,rr);gr.addColorStop(0,'rgba(0,0,0,1)');gr.addColorStop(.6,'rgba(0,0,0,.55)');gr.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=gr;x.beginPath();x.arc(cx,cy,rr,0,7);x.fill()}return c};
+ for(let i=0;i<4;i++)CL.push({c:cloudSpr(1234+i*977),o:i*260+Math.random()*120,y:(i*173)%620-80,s:1+(i%2)*.4});
+ const BIRDS={t:8+Math.random()*10,f:null};const BF=[];
+ const wHide=()=>{try{return GFXLOW()||(typeof ATM!=='undefined'&&(ATM=='deszcz'||ATM=='mgła'))}catch(e){return false}};
+ const _dw=drawWorld;drawWorld=function(){_dw.apply(this,arguments);try{if(!playing||wHide())return;const t=performance.now()/1000,h=holes[hi];
+  /* chmury */const vx=Math.cos((typeof wa!='undefined'?wa:0)-Math.PI/2),vy=Math.sin((typeof wa!='undefined'?wa:0)-Math.PI/2),sp=4+(typeof ws!='undefined'?ws:2)*2.2;
+  g.save();g.globalAlpha=season=='winter'?.07:.11;for(const c of CL){const span=W+700,px=((c.o+t*sp*vx*c.s)%span+span)%span-350,py=(((c.y+t*sp*vy*c.s)%(H+500))+H+500)%(H+500)-250;g.drawImage(c.c,px,py,320*c.s*1.3,220*c.s*1.3)}g.restore();
+  /* ptaki */BIRDS.t-=1/60;if(!BIRDS.f&&BIRDS.t<=0){const n=3+(Math.random()*4|0),dir=Math.random()<.5?1:-1,y0=60+Math.random()*(H-160);BIRDS.f={x:dir>0?-40:W+40,y:y0,dx:dir*(1.1+Math.random()*.5),dy:(Math.random()-.5)*.35,n,ph:Math.random()*6}}
+  if(BIRDS.f){const F=BIRDS.f;F.x+=F.dx;F.y+=F.dy;g.save();for(let i=0;i<F.n;i++){const ox=-Math.sign(F.dx)*Math.abs(i-(F.n-1)/2)*9-Math.sign(F.dx)*i*2,oy=(i-(F.n-1)/2)*8,bx=F.x+ox,by=F.y+oy,fl=Math.sin(t*11+i*1.3+F.ph);
+    g.fillStyle='rgba(0,0,0,.13)';g.beginPath();g.ellipse(bx+26,by+38,3.2,1.3,0,0,7);g.fill();
+    g.strokeStyle='rgba(32,30,34,.92)';g.lineWidth=1.3;g.lineCap='round';g.beginPath();g.moveTo(bx-5,by-fl*3);g.quadraticCurveTo(bx-2,by-1-fl*1.2,bx,by);g.quadraticCurveTo(bx+2,by-1-fl*1.2,bx+5,by-fl*3);g.stroke()}g.restore();
+   if(F.x<-80||F.x>W+80){BIRDS.f=null;BIRDS.t=18+Math.random()*25}}
+  /* motyle latem przy fairwayu */if(season!='winter'){if(BF._h!==hi){BF.length=0;BF._h=hi;const P=h.path||[];for(let i=0;i<3;i++){const p=P.length?P[(Math.random()*P.length)|0]:[W/2,H/2];BF.push({x:p[0]+(Math.random()-.5)*40,y:p[1]+(Math.random()-.5)*40,a:Math.random()*6,c:['#ffd23f','#ffffff','#ff9ecb','#9fd3ff'][i%4],ph:Math.random()*6})}}
+   for(const b of BF){b.a+=(Math.random()-.5)*.35;b.x+=Math.cos(b.a)*.35;b.y+=Math.sin(b.a)*.35;if(b.x<10||b.x>W-10||b.y<10||b.y>H-10)b.a+=Math.PI;const fl=Math.abs(Math.sin(t*14+b.ph));g.save();g.translate(b.x,b.y-6);g.fillStyle='rgba(0,0,0,.12)';g.beginPath();g.ellipse(2,7,1.6,.8,0,0,7);g.fill();
+    g.fillStyle=b.c;g.beginPath();g.ellipse(-1.6*fl-.4,0,1.8*fl+.3,1.4,0,0,7);g.ellipse(1.6*fl+.4,0,1.8*fl+.3,1.4,0,0,7);g.fill();g.fillStyle='#333';g.fillRect(-.3,-1.2,.6,2.4);g.restore()}}
+ }catch(e){}};
+ /* --- tap-in do 3 m --- */
+ const st=document.createElement('style');st.textContent='#tapin{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 118px);transform:translateX(-50%);z-index:30;display:none;border:0;border-radius:18px;padding:12px 24px;font:900 17px system-ui;color:#fff;background:linear-gradient(180deg,#4fd97a,#1f9e4c);box-shadow:0 6px 22px rgba(31,158,76,.55);animation:tpin 1.2s ease-in-out infinite}@keyframes tpin{50%{transform:translateX(-50%) scale(1.06)}}';document.head.appendChild(st);
+ const bt=document.createElement('button');bt.id='tapin';bt.textContent='👆 Tap in';document.body.appendChild(bt);
+ setInterval(()=>{let show=false;try{show=playing&&!done&&!disc&&!drag&&next<=0&&throws>0&&holes[hi]&&dm(lie)<=3&&!(typeof GRP!='undefined'&&GRP.length)}catch(e){}bt.style.display=show?'block':'none'},200);
+ bt.onclick=e=>{e.stopPropagation();try{if(!playing||disc||done||dm(lie)>3)return;throws++;try{sfx.chains()}catch(x){}pill('👆 Tap in!');hole()}catch(x){console.warn(x)}bt.style.display='none'};
+})();
 </script></body>
 </html>
