@@ -730,11 +730,11 @@ const gVS=`#version 300 es
 layout(location=0)in vec3 aP;layout(location=3)in vec4 iA;uniform mat4 uVP;uniform float uT;uniform vec3 uCam;uniform sampler2D uSpl;uniform vec4 uExt;uniform sampler2D uHgt;uniform vec4 uHE;uniform float uWind;out vec3 vC;out vec3 vW;out float vY;
 ${NOISE}
 void main(){vec2 base=iA.xy;vec2 cc=floor(uCam.xz/uExt.z*0.);float R=iA.w;vec2 off=uCam.xz-mod(uCam.xz,R*2.);vec2 wp=base+off;wp=mod(wp-uCam.xz+R,R*2.)-R+uCam.xz;
- vec2 uv=(wp-uExt.xy)/uExt.zw;vec4 s=texture(uSpl,uv);float fw=s.r,rd=s.g,ro=s.b;float hgt=mix(.10,.38,ro)*(1.-fw*.75)*(1.-rd);float r=hash(wp*3.7);if(rd>.3||r>(.4+ro*.6+fw*.6))hgt=0.;
+ vec2 uv=(wp-uExt.xy)/uExt.zw;vec4 s=texture(uSpl,uv);float fw=s.r,rd=s.g,ro=s.b;float hgt=mix(.12,.46,ro)*(1.-fw*.72)*(1.-rd);float r=hash(wp*3.7);if(rd>.3||r>(.5+ro*.5+fw*.5))hgt=0.;
  float dist=length(wp-uCam.xz);hgt*=smoothstep(R,R*.7,dist);float gy=texture(uHgt,(wp-uHE.xy)/uHE.zw).r;
  float ang=r*6.283;vec2 dir=vec2(cos(ang),sin(ang));float bend=(sin(uT*2.+wp.x*.4+wp.y*.3)*.5+.6)*uWind;
- float r2=hash(wp*5.3),wdt=mix(.022,.034,r2)*(1.+ro*.25);hgt*=mix(.75,1.3,hash(wp*9.1));vec2 lean=vec2(cos(ang+1.3),sin(ang+1.3))*(r2-.5)*.6;vec3 p=vec3(wp.x+dir.x*aP.x*wdt,gy+aP.y*hgt,wp.y+dir.y*aP.x*wdt);p.xz+=lean*aP.y*aP.y*hgt;p.x+=aP.y*aP.y*hgt*.35*bend;p.z+=aP.y*aP.y*hgt*.2*bend;
- vec3 base3=mix(vec3(.23,.37,.12),vec3(.40,.52,.18),hash(wp*1.3));base3=mix(base3,vec3(.48,.47,.24),step(.86,hash(wp*2.9))*ro);base3=mix(base3,vec3(.32,.52,.18),fw);vC=base3*mix(.42,1.15,aP.y)+vec3(.06,.05,0.)*aP.y*aP.y*hash(wp*4.1);float fl=step(.988,hash(wp*7.7))*step(.35,ro)*(1.-fw);if(fl>.5&&aP.y>.7)vC=hash(wp*3.3)>.5?vec3(.95,.93,.85):vec3(.95,.8,.2);vW=p;vY=aP.y;gl_Position=uVP*vec4(p,1.);}`;
+ float r2=hash(wp*5.3),wdt=mix(.013,.024,r2)*(1.+ro*.25);hgt*=mix(.75,1.3,hash(wp*9.1));vec2 lean=vec2(cos(ang+1.3),sin(ang+1.3))*(r2-.5)*.6;vec3 p=vec3(wp.x+dir.x*aP.x*wdt,gy+aP.y*hgt,wp.y+dir.y*aP.x*wdt);p.xz+=lean*aP.y*aP.y*hgt;p.x+=aP.y*aP.y*hgt*.35*bend;p.z+=aP.y*aP.y*hgt*.2*bend;
+ vec3 base3=mix(vec3(.23,.37,.12),vec3(.40,.52,.18),hash(wp*1.3));base3=mix(base3,vec3(.48,.47,.24),step(.86,hash(wp*2.9))*ro);base3=mix(base3,vec3(.32,.52,.18),fw);vC=base3*mix(.30,1.22,aP.y)+vec3(.09,.07,0.)*aP.y*aP.y*hash(wp*4.1);float fl=step(.988,hash(wp*7.7))*step(.35,ro)*(1.-fw);if(fl>.5&&aP.y>.7)vC=hash(wp*3.3)>.5?vec3(.95,.93,.85):vec3(.95,.8,.2);vW=p;vY=aP.y;gl_Position=uVP*vec4(p,1.);}`;
 const gFS=`#version 300 es
 precision highp float;in vec3 vC;in vec3 vW;in float vY;out vec4 o;${NOISE}${LIGHT}void main(){vec3 vd=normalize(vW-uCam);o=vec4(light(vC,vW,normalize(vec3(-vd.x*.35,1.,-vd.z*.35)),.75+.25*vY),1.);float bl=pow(max(dot(vd,uSun),0.),3.)*vY;o.rgb+=vC*vec3(.5,.65,.2)*bl*.6;}`;
 /* sky */
@@ -760,24 +760,24 @@ function cylAB(g,a,b,r0,r1,seg,col){const d=V.sub(b,a),L=V.len(d),u=V.mul(d,1/L)
   const i0=pushV(g,A,n0,col),i1=pushV(g,B,n1,col),i2=pushV(g,C,n1,col),i3=pushV(g,E,n0,col);g.i.push(i0,i2,i1,i0,i3,i2)}}
 const TPR={};/* unit-space collision prims per tree type */
 function treeMesh(ty){const g=G(),P=[];const H=(a,b)=>hash(a*7.1+ty.length,b*3.3+ty.charCodeAt(0));
- if(ty=='spruce'){const R=.18;cyl(g,0,0,0,.02,.004,1,7,[.28,.19,.12]);P.push({k:'seg',a:[0,0,0],b:[0,.97,0],r:.014});const N=11;
-  for(let k=0;k<N;k++){const y=.07+k*.082,f=Math.max(.06,1-(y-.05)/.95),Rk=R*Math.pow(f,.85)*(.92+H(k,1)*.18);const c=[.08+k*.008+H(k,2)*.02,.2+k*.012+H(k,3)*.03,.11+H(k,4)*.02];
-   const seg=13,ring=[];for(let i=0;i<=seg;i++){const a=i/seg*6.283+k*.7,rr=Rk*(.8+H(i%seg,k)*.4);ring.push([Math.cos(a)*rr,y-.018-H(i%seg,k+9)*.03,Math.sin(a)*rr])}
-   for(let i=0;i<seg;i++){tri(g,ring[i],[0,y+.12,0],ring[i+1],c);tri(g,ring[i],ring[i+1],[0,y-.05,0],[c[0]*.55,c[1]*.55,c[2]*.55])}}
+ if(ty=='spruce'){const R=.2;cyl(g,0,0,0,.022,.004,1,8,[.28,.19,.12]);P.push({k:'seg',a:[0,0,0],b:[0,.97,0],r:.015});const N=15;
+  for(let k=0;k<N;k++){const y=.06+k*.061,f=Math.max(.05,1-(y-.04)/.96),Rk=R*Math.pow(f,.88)*(.9+H(k,1)*.2);const c=[.07+k*.006+H(k,2)*.02,.18+k*.01+H(k,3)*.03,.10+H(k,4)*.02],c2=[c[0]*1.3+.02,c[1]*1.28+.03,c[2]*1.1],cd=[c[0]*.5,c[1]*.5,c[2]*.5];
+   const seg=16,inn=[],out=[],top=[0,y+.1,0],bot=[0,y-.05,0];for(let i=0;i<=seg;i++){const a=i/seg*6.283+k*.9,rr=Rk*(.78+H(i%seg,k)*.44);inn.push([Math.cos(a)*rr*.52,y+.03,Math.sin(a)*rr*.52]);out.push([Math.cos(a)*rr,y-.03-H(i%seg,k+9)*.04,Math.sin(a)*rr])}
+   for(let i=0;i<seg;i++){tri(g,inn[i],top,inn[i+1],c);tri(g,out[i],inn[i],inn[i+1],c2);tri(g,out[i],inn[i+1],out[i+1],c2);tri(g,out[i],out[i+1],bot,cd)}}
   P.push({k:'cone',y0:.04,y1:1,r:R*1.02,d:2.4})}
  else if(ty=='pine'){const t0=[0,0,0],t1=[.012,.45,.004],t2=[-.006,.82,.006];cylAB(g,t0,t1,.017,.013,7,[.40,.26,.17]);cylAB(g,t1,t2,.013,.008,7,[.62,.38,.22]);P.push({k:'seg',a:t0,b:t1,r:.015},{k:'seg',a:t1,b:t2,r:.011});
-  for(let k=0;k<6;k++){const a=k/6*6.283+H(k,1),dd=.07+H(k,2)*.05,y=.7+H(k,3)*.14,sy=.62+H(k,4)*.15;const st=[t2[0]*(sy/.82),sy,t2[2]],en=[Math.cos(a)*dd,y,Math.sin(a)*dd];cylAB(g,st,en,.006,.004,5,[.5,.32,.2]);P.push({k:'seg',a:st,b:en,r:.005});
-   const r=.058+H(k,5)*.022,ry=.034+H(k,6)*.012;sphere(g,en[0],en[1]+.012,en[2],r,ry,6,[.13+H(k,7)*.04,.27+H(k,8)*.05,.12],.55);P.push({k:'sph',c:[en[0],en[1]+.012,en[2]],r:r*.92,ry:ry*1.15,d:1.5})}
-  sphere(g,0,.88,0,.06,.045,6,[.16,.31,.14],.5);P.push({k:'sph',c:[0,.88,0],r:.055,ry:.05,d:1.5})}
+  for(let k=0;k<8;k++){const a=k/8*6.283+H(k,1),dd=.07+H(k,2)*.06,y=.68+H(k,3)*.16,sy=.62+H(k,4)*.15;const st=[t2[0]*(sy/.82),sy,t2[2]],en=[Math.cos(a)*dd,y,Math.sin(a)*dd];cylAB(g,st,en,.006,.004,5,[.5,.32,.2]);P.push({k:'seg',a:st,b:en,r:.005});
+   const r=.052+H(k,5)*.022,ry=.032+H(k,6)*.012,cc=[.12+H(k,7)*.04,.26+H(k,8)*.06,.11];sphere(g,en[0],en[1]+.012,en[2],r,ry,8,cc,.6);P.push({k:'sph',c:[en[0],en[1]+.012,en[2]],r:r*.92,ry:ry*1.15,d:1.5});const e2=[en[0]*.62,en[1]+.035,en[2]*.62],r2=r*.75;sphere(g,e2[0],e2[1],e2[2],r2,ry*.85,7,[cc[0]*1.2,cc[1]*1.15,cc[2]],.6);P.push({k:'sph',c:e2,r:r2*.9,ry:ry,d:1.5})}
+  sphere(g,0,.88,0,.06,.045,8,[.16,.31,.14],.55);P.push({k:'sph',c:[0,.88,0],r:.055,ry:.05,d:1.5})}
  else if(ty=='oak'){const bk=[.30,.23,.16];cyl(g,0,0,0,.055,.034,.06,8,bk);cyl(g,0,.06,0,.034,.026,.36,8,bk);P.push({k:'seg',a:[0,0,0],b:[0,.42,0],r:.032});
-  const N=13,top=[];for(let k=0;k<N;k++){const a=k/N*6.283*2.1+H(k,1),dd=k==N-1?0:.05+H(k,2)*.13,y=k==N-1?.84:.5+H(k,3)*.3*(1-dd/.2);top.push([Math.cos(a)*dd,y,Math.sin(a)*dd])}
-  for(let k=0;k<6;k++){const e=top[k*2],st=[0,.3+H(k,4)*.1,0];const en=[e[0]*.85,e[1]-.04,e[2]*.85];cylAB(g,st,en,.013,.007,6,bk);P.push({k:'seg',a:st,b:en,r:.01})}
-  top.forEach((c,k)=>{const r=.085+H(k,5)*.04,ry=r*(.8+H(k,6)*.15);sphere(g,c[0],c[1],c[2],r,ry,6,[.16+H(k,7)*.07,.31+H(k,8)*.08,.11+H(k,9)*.03],.5);P.push({k:'sph',c,r:r*.9,ry:ry*.95,d:1.7})})}
+  const N=20,top=[];for(let k=0;k<N;k++){const a=k/N*6.283*2.6+H(k,1),dd=k==N-1?0:.04+H(k,2)*.15,y=k==N-1?.84:.5+H(k,3)*.3*(1-dd/.2);top.push([Math.cos(a)*dd,y,Math.sin(a)*dd])}
+  for(let k=0;k<8;k++){const e=top[k*2],st=[0,.3+H(k,4)*.1,0];const en=[e[0]*.85,e[1]-.04,e[2]*.85];cylAB(g,st,en,.013,.007,6,bk);P.push({k:'seg',a:st,b:en,r:.01})}
+  top.forEach((c,k)=>{const r=.072+H(k,5)*.04,ry=r*(.8+H(k,6)*.15);sphere(g,c[0],c[1],c[2],r,ry,8,[.16+H(k,7)*.07,.31+H(k,8)*.08,.11+H(k,9)*.03],.5);P.push({k:'sph',c,r:r*.9,ry:ry*.95,d:1.7})})}
  else{let x=0,z=0;const bands=17;for(let k=0;k<bands;k++){const y0=k*.045,r0=.019-.011*(y0/.78),r1=.019-.011*((y0+.045)/.78);const lean=.025;const a=[lean*y0,y0,0],b=[lean*(y0+.037),y0+.037,0],c=[lean*(y0+.045),y0+.045,0];
    cylAB(g,a,b,r0,r0*.98,7,[.88,.87,.82]);cylAB(g,b,c,r0*.98,r1,7,H(k,1)>.4?[.13,.12,.11]:[.8,.79,.74])}P.push({k:'seg',a:[0,0,0],b:[.019,.77,0],r:.015});
   for(let k=0;k<5;k++){const a=k/5*6.283+H(k,2),st=[.012,.42+k*.06,0],en=[Math.cos(a)*.1,.55+k*.07,Math.sin(a)*.1];cylAB(g,st,en,.005,.003,5,[.6,.58,.54]);P.push({k:'seg',a:st,b:en,r:.004})}
-  for(let k=0;k<11;k++){const a=k/11*6.283*1.7+H(k,3),dd=.03+H(k,4)*.1,y=.52+H(k,5)*.38*(1-dd/.18);const r=.058+H(k,6)*.03,ry=r*(1.25+H(k,7)*.3);
-   sphere(g,Math.cos(a)*dd+.015,y,Math.sin(a)*dd,r,ry,6,[.34+H(k,8)*.08,.52+H(k,9)*.08,.18],.5);P.push({k:'sph',c:[Math.cos(a)*dd+.015,y,Math.sin(a)*dd],r:r*.9,ry:ry*.95,d:1.0})}}
+  for(let k=0;k<16;k++){const a=k/16*6.283*2.3+H(k,3),dd=.03+H(k,4)*.12,y=.5+H(k,5)*.4*(1-dd/.2);const r=.05+H(k,6)*.028,ry=r*(1.35+H(k,7)*.35);
+   sphere(g,Math.cos(a)*dd+.015,y,Math.sin(a)*dd,r,ry,8,[.34+H(k,8)*.08,.52+H(k,9)*.08,.18],.5);P.push({k:'sph',c:[Math.cos(a)*dd+.015,y,Math.sin(a)*dd],r:r*.9,ry:ry*.95,d:1.0})}}
  TPR[ty]=P;return g}
 function segD(p,a,b){const vx=b[0]-a[0],vy=b[1]-a[1],vz=b[2]-a[2],l2=vx*vx+vy*vy+vz*vz||1;const f=Math.max(0,Math.min(1,((p[0]-a[0])*vx+(p[1]-a[1])*vy+(p[2]-a[2])*vz)/l2));const q=[a[0]+vx*f,a[1]+vy*f,a[2]+vz*f];return{d:Math.hypot(p[0]-q[0],p[1]-q[1],p[2]-q[2]),q}}
 /* returns {t,hard,n,prim} | {t,soft:density} | null */
@@ -798,7 +798,7 @@ const PLY=playerMesh();const ARM=(()=>{const g=G();box(g,0,-.6,0,.13,.62,.13,[.2
 const DISC=(()=>{const g=G();cyl(g,0,-.012,0,.105,.105,.024,22,[1,1,1],true);cyl(g,0,-.014,0,.1,.105,.004,22,[.75,.75,.75]);cyl(g,0,.0125,0,.07,.07,.0015,22,[.86,.86,.86],true);box(g,.035,.0125,0,.05,.003,.022,[.25,.25,.28]);box(g,-.04,.0125,.01,.018,.003,.035,[1.15,1.15,1.15]);return mesh(g.v,g.i)})();
 
 /* ---------------- grass instances ---------------- */
-const GR_R=22,GR_N=40000;const GRASS=(()=>{const v=[];const Q=[[-1,0],[1,0],[-.78,.4],[.78,.4],[-.45,.74],[.45,.74],[0,1]],seg=[Q[0],Q[1],Q[2],Q[1],Q[3],Q[2],Q[2],Q[3],Q[4],Q[3],Q[5],Q[4],Q[4],Q[5],Q[6]];for(const s of seg)v.push(s[0],s[1],0,0,1,0,1,1,1);const inst=[];for(let k=0;k<GR_N;k++)inst.push(hash(k,11)*GR_R*2-GR_R,hash(k,12)*GR_R*2-GR_R,0,GR_R,0,1,1,1);return mesh(v,null,inst)})();
+const GR_R=22,GR_N=70000;const GRASS=(()=>{const v=[];const Q=[[-1,0],[1,0],[-.72,.36],[.72,.36],[-.38,.72],[.38,.72],[0,1]],seg=[Q[0],Q[1],Q[2],Q[1],Q[3],Q[2],Q[2],Q[3],Q[4],Q[3],Q[5],Q[4],Q[4],Q[5],Q[6]];for(const s of seg)v.push(s[0],s[1],0,0,1,0,1,1,1);const inst=[];for(let k=0;k<GR_N;k++)inst.push(hash(k,11)*GR_R*2-GR_R,hash(k,12)*GR_R*2-GR_R,0,GR_R,0,1,1,1);return mesh(v,null,inst)})();
 /* sky quad */const SKY=(()=>{const vao=gl.createVertexArray();gl.bindVertexArray(vao);buf(new Float32Array([-1,-1,3,-1,-1,3]));gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);gl.bindVertexArray(null);return vao})();
 /* ================= ŚWIAT DOŁKA: budowany z danych mapy 2D, osobno dla każdego dołka (cache) ================= 
 */const WORLDS=[];
