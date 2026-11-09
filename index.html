@@ -3035,6 +3035,53 @@ setInterval(chkCar,4000);setTimeout(chkCar,2500);
  const _b=build3;build3=function(h,wn){try{return _b.apply(this,arguments)}catch(e){console.warn('build3 fallback',e);if(!warned){warned=true;setTimeout(()=>{try{toast('⚠️ Przeglądarka blokuje grafikę – włączam prostszy tryb. W Brave wyłącz „Osłony” (lew w pasku) dla tej strony.')}catch(x){}},400)}h._sil=null;h._col=null;return fallbackBG(h,wn)}};
 })();
 
+
+/* ===================== P69: Top 5 na Starcie – Złotów i Złotów 22 obok siebie ===================== */
+(function(){let TAB=null;const st=document.createElement('style');st.textContent=`.mtabs{display:flex;gap:6px;margin:2px 0 8px}.mtabs button{flex:1;padding:7px 4px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#cfe5d5;font:800 13px 'Baloo 2',system-ui}.mtabs button.on{background:#ffd35a;color:#2a1c00;border-color:#ffd35a}`;document.head.appendChild(st);
+ const TABS=[['zlotow','Złotów','dg_topz'],['z22','Złotów 22','dg_topz22']];
+ menuTop=async function(){const el=$('mtop'),hel=$('mh');if(!el||!hel)return;if(!TAB)TAB=layout=='z22'?'z22':'zlotow';
+  let tb=document.getElementById('mtabs');if(!tb){tb=document.createElement('div');tb.id='mtabs';tb.className='mtabs';hel.after(tb)}
+  tb.innerHTML=TABS.map(t=>'<button data-t="'+t[0]+'" class="'+(t[0]==TAB?'on':'')+'">'+t[1]+'</button>').join('');tb.querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation();TAB=b.dataset.t;menuTop()});
+  const T=TABS.find(t=>t[0]==TAB);let loc=[];try{loc=JSON.parse(localStorage.getItem(T[2])||'[]')}catch(e){}
+  const srt=a=>a.slice().sort((x,y)=>(+x.s||0)-(+y.s||0)||(+x.t||0)-(+y.t||0));
+  hel.textContent='🏆 Top 5 · wszystkie pory roku';try{_rt28(el,null,srt(loc))}catch(e){}
+  if(!DB)return;try{const q=await DB.collection('sc_'+TAB).orderBy('s').limit(200).get();const l=srt(q.docs.map(d=>Object.assign({},d.data(),{id:d.id})));if(T[0]!==TAB)return;hel.textContent='🏆 Top 5 online · wszystkie pory roku';_rt28(el,null,l)}catch(e){}};
+ try{menuTop()}catch(e){}
+})();
+
+
+/* ===================== P70: postać obraca się w kierunku rzutu / kosza ===================== */
+(function(){let FA=0,FT=0;
+ const want=()=>{const h=holes&&holes[hi];if(drag&&!disc){const dx=drag.sx-drag.x,dy=drag.sy-drag.y;if(Math.hypot(dx,dy)>8)return Math.atan2(dx,-dy)}
+  if(disc&&disc.trail&&disc.trail.length<40)return disc._a0!=null?disc._a0:(disc._a0=disc.a);if(h&&lie)return Math.atan2(h.b[0]-lie.x,-(h.b[1]-lie.y));return 0};
+ const _pd=playerDraw;playerDraw=function(x,y,hold){if(!UP||!playing)return _pd.apply(this,arguments);let t=want(),d=t-FA;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;FA+=d*.25;
+  const sn=Math.sin(FA),cs=Math.cos(FA),mir=sn<-.12,front=cs<-.35,sq=.82+.18*Math.abs(cs);
+  let bt=null;if(mir&&typeof BRS!='undefined'&&SV.brand&&BRS[SV.brand]){bt=BRS[SV.brand];BRS[SV.brand]=''}g.save();g.translate(x,y);g.scale((mir?-1:1)*sq,1);g.translate(-x,-y);let r;try{r=_pd.apply(this,arguments)}finally{if(bt!=null)BRS[SV.brand]=bt}g.restore();if(bt!=null){const br=Math.sin(performance.now()/1000*2.2)*.25,sh=-25.5+br;g.save();g.translate(x,y);g.scale(sq,1);g.fillStyle='rgba(255,255,255,.75)';g.font='900 2.6px system-ui';g.textAlign='center';g.fillText(bt.split(' ')[0],0,sh+5.5);g.restore()}
+  if(front){try{const c=SV.char,sk=SKIN[c.skin],br=Math.sin(performance.now()/1000*2.2)*.25,hy=-25.5+br-4.4;g.save();g.translate(x,y);g.scale((mir?-1:1)*sq,1);
+   const hg=g.createRadialGradient(-1,hy,.5,0,hy+1,5);hg.addColorStop(0,shd(sk,1.1));hg.addColorStop(1,shd(sk,.86));g.fillStyle=hg;g.beginPath();g.ellipse(0,hy+1.3,4.3,3.7,0,0,7);g.fill();
+   g.fillStyle='#2a1d14';g.beginPath();g.arc(-1.7,hy+.7,.65,0,7);g.arc(1.7,hy+.7,.65,0,7);g.fill();g.fillStyle='rgba(220,120,100,.35)';g.beginPath();g.arc(-2.8,hy+2.2,.9,0,7);g.arc(2.8,hy+2.2,.9,0,7);g.fill();
+   g.strokeStyle='#7a3b2a';g.lineWidth=.6;g.lineCap='round';g.beginPath();g.moveTo(-1.3,hy+2.7);g.quadraticCurveTo(0,hy+3.6,1.3,hy+2.7);g.stroke();
+   const cp=CAP[c.cap];if(c.hat==0&&cp){g.fillStyle=shd(cp,.72);g.beginPath();g.ellipse(0,hy-2.2,5.6,1.5,0,0,Math.PI);g.fill()}g.restore()}catch(e){}}
+  return r};
+ const _ld=load;load=function(){const r=_ld.apply(this,arguments);try{const h=holes[hi];FA=Math.atan2(h.b[0]-lie.x,-(h.b[1]-lie.y))}catch(e){}return r};
+})();
+
 </script>
-</body>
+
+<style>#evban,.evban,#daily,.daily,#modeseg .mlab,#modeseg button[data-mode=daily],#modeseg button[data-mode=event],#modeseg button[data-mode=putt]{display:none!important}
+#modeseg.mgrid{display:flex!important;gap:8px}#modeseg.mgrid button{flex:1}</style>
+<script>/* P71: tylko Runda + Kariera (usunięte: Wyzwania, Dołek dnia, Event, Wyzwania dnia) */
+(function(){try{
+ const clean=()=>{const ms=document.getElementById('modeseg');if(ms){ms.querySelectorAll('button[data-mode=daily],button[data-mode=event],button[data-mode=putt],.mlab').forEach(e=>e.remove());ms.classList.remove('mgrid');ms.style.display='flex';ms.style.gap='8px'}
+  ['evban','daily'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove()});
+  try{if(DAILY||EVENT){DAILY=false;EVENT=false;const r=ms&&ms.querySelector('button[data-mode=round]');if(r)r.click()}}catch(e){}};
+ clean();setTimeout(clean,400);setTimeout(clean,1500);
+ try{if(typeof TIPS!=='undefined'&&TIPS.splice){for(let i=TIPS.length-1;i>=0;i--)if(/Dołek dnia|Event|Wyzwani/.test(TIPS[i]))TIPS.splice(i,1)}}catch(e){}
+ try{dTop=async()=>null}catch(e){}
+ try{if(typeof renderDaily==='function'){renderDaily=function(){const e=document.getElementById('daily');if(e)e.remove()}}}catch(e){}
+ try{if(typeof renderEvent==='function'){const _re=renderEvent;renderEvent=function(){try{_re()}catch(e){}const e=document.getElementById('evban');if(e)e.remove()}}}catch(e){}
+ const fixTxt=()=>{document.querySelectorAll('.wxn').forEach(p=>p.textContent='W Rundzie domyślnie lato i słońce. W Karierze pogoda jest losowa.')};
+ try{const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);fixTxt()}}catch(e){}fixTxt();
+}catch(e){console.warn('P71',e)}})();
+</script></body>
 </html>
