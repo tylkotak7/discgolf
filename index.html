@@ -3144,5 +3144,18 @@ function PVdraw(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.lineCap='round'
  setInterval(()=>{let show=false;try{show=playing&&!done&&!disc&&!drag&&next<=0&&throws>0&&holes[hi]&&dm(lie)<=3&&!(typeof GRP!='undefined'&&GRP.length)}catch(e){}bt.style.display=show?'block':'none'},200);
  bt.onclick=e=>{e.stopPropagation();try{if(!playing||disc||done||dm(lie)>3)return;throws++;try{sfx.chains()}catch(x){}pill('👆 Tap in!');hole()}catch(x){console.warn(x)}bt.style.display='none'};
 })();
+</script>
+<script>/* P75: Top 5 na Starcie – Złotów i Złotów 22 widoczne od razu, jedno pod drugim */
+(function(){try{const st=document.createElement('style');st.textContent='.mtlab{font:800 12px "Baloo 2",system-ui;color:#ffd35a;margin:6px 0 2px;letter-spacing:.02em}#mtabs{display:none!important}';document.head.appendChild(st);
+ const LS=[['zlotow','⛳ Złotów · 12 dołków','dg_topz'],['z22','🧪 Złotów 22 · beta','dg_topz22']];
+ const srt=a=>a.slice().sort((x,y)=>(+x.s||0)-(+y.s||0)||(+x.t||0)-(+y.t||0));
+ menuTop=async function(){const el=$('mtop'),hel=$('mh');if(!el||!hel)return;const tb=document.getElementById('mtabs');if(tb)tb.remove();
+  let l1=document.getElementById('mtl1');if(!l1){l1=document.createElement('div');l1.id='mtl1';l1.className='mtlab';l1.textContent=LS[0][1];el.before(l1)}
+  let e2=document.getElementById('mtop22');if(!e2){const l2=document.createElement('div');l2.id='mtl2';l2.className='mtlab';l2.textContent=LS[1][1];e2=el.cloneNode(false);e2.id='mtop22';el.after(l2);l2.after(e2)}
+  const els=[el,e2];hel.textContent='🏆 Top 5 · wszystkie pory roku';
+  LS.forEach((T,i)=>{let loc=[];try{loc=JSON.parse(localStorage.getItem(T[2])||'[]')}catch(e){}try{renderTop(els[i],null,srt(loc))}catch(e){}});
+  if(!DB)return;let ok=false;await Promise.all(LS.map(async(T,i)=>{try{const q=await DB.collection('sc_'+T[0]).orderBy('s').limit(200).get();renderTop(els[i],null,srt(q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))));ok=true}catch(e){}}));
+  if(ok)hel.textContent='🏆 Top 5 online · wszystkie pory roku'};
+ try{menuTop()}catch(e){}}catch(e){console.warn('P75',e)}})();
 </script></body>
 </html>
