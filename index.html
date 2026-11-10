@@ -2358,7 +2358,8 @@ function drawMarks(){if(MKH!==hi||!MARKS.length)return;for(const m of MARKS){con
   {const L=h.L,P=[];for(let u=-20;u<=L+50;u+=40)P.push(h.rel(u,50));h.roads[0].pts=P;const rx=Math.max(...P.map(q=>q[0]));if(h.mead[0])h.mead[0][0]=rx+12;if(h.rivers[0])h.rivers[0][0]=rx+100;h._tx=rx+38}
   for(const p of[[bx-46,by-40,14],[bx-8,by-50,15],[bx+34,by-42,14]])h.trees.push(p);
   /* łąka przy rzece: tylko 3 samotne drzewa */for(const[y,dx,r]of[[150,-6,11],[330,6,10],[470,-3,12]])h.trees.push([h._tx+dx,y,r]);
-  /* drzewko bliżej fairwaya; lewy pas lasu poza kadrem (kamera w prawo), w zamian szersza łąka przy rzece */h.trees.push([152,345,13]);h.camDx=36},
+  /* drzewko bliżej fairwaya; lewy pas lasu poza kadrem (kamera w prawo), w zamian szersza łąka przy rzece */h.trees.push([152,345,13]);h.camDx=36;
+  /* dodatkowe drzewa wg zaznaczeń: lewa krawędź fairwaya + kępa na łące */for(const t of[[162,156,12],[168,212,12],[151,287,12],[133,421,12],[278,272,11],[293,298,12],[271,316,10]])h.trees.push(t)},
  9:h=>{mv(h,[[[173,181],[165,181]],[[191,221],[183,221]],[[173,212],[165,212]]]);const[bx,by]=h.b;h.deco=(h.deco||[]).concat([{k:'teex',x:bx-20,y:by-96,r:20}])}};
  window.ZFIX=F;for(const k in F){try{const h=ZL[k];F[k](h);delete h._fill;delete h._col}catch(e){console.warn('zfix',k,e)}}
  try{BGC.clear()}catch(e){}})();
