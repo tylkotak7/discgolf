@@ -3088,15 +3088,18 @@ setInterval(chkCar,4000);setTimeout(chkCar,2500);
 /* --- przewidywany tor lotu (krzywa) --- */
 function PREV(a,l,len){try{if(typeof TOMA!=='undefined'&&TOMA)throw 0;const D=discs[di],K=KSf(),v0=Math.min(l,110)/110*D.v*(hand<0?.95:1)*K;if(v0<.6*K)throw 0;
  const d={x:lie.x,y:lie.y,a,v:v0,v0,h:hand},pts=[[d.x,d.y]];let n=0;
- while(d.v>=.5*K&&n<900){const f=1-d.v/d.v0;d.a+=D.turn*d.h*((curve==2?(f<.5?1.1:-.45-(f-.5)*1.1):curve)*0.012*(0.3+f*1.5)-0.004*f);d.x+=Math.sin(d.a)*d.v+wx*0.05*K;d.y-=Math.cos(d.a)*d.v-wy*0.05*K;d.v*=D.dec;n++;if(d.x<0||d.x>W||d.y<0||d.y>H){d.x=Math.max(0,Math.min(W,d.x));d.y=Math.max(0,Math.min(H,d.y));pts.push([d.x,d.y]);return{pts,ex:d.x,ey:d.y,d:Math.hypot(d.x-lie.x,d.y-lie.y)*M,ob:true}}if(n%2==0)pts.push([d.x,d.y])}
- pts.push([d.x,d.y]);return{pts,ex:d.x,ey:d.y,d:Math.hypot(d.x-lie.x,d.y-lie.y)*M}}
+ while(d.v>=.5*K&&n<900){const f=1-d.v/d.v0;d.a+=D.turn*d.h*((curve==2?(f<.5?1.1:-.45-(f-.5)*1.1):curve)*0.012*(0.3+f*1.5)-0.004*f);d.x+=Math.sin(d.a)*d.v+wx*0.05*K;d.y-=Math.cos(d.a)*d.v-wy*0.05*K;d.v*=D.dec;n++;if(d.x<0||d.x>W||d.y<0||d.y>H){d.x=Math.max(0,Math.min(W,d.x));d.y=Math.max(0,Math.min(H,d.y));pts.push([d.x,d.y]);return PVsoft({pts,ex:d.x,ey:d.y,d:Math.hypot(d.x-lie.x,d.y-lie.y)*M,ob:true},a)}if(n%2==0)pts.push([d.x,d.y])}
+ pts.push([d.x,d.y]);return PVsoft({pts,ex:d.x,ey:d.y,d:Math.hypot(d.x-lie.x,d.y-lie.y)*M},a)}
  catch(e){return{pts:[[lie.x,lie.y],[lie.x+Math.sin(a)*len,lie.y-Math.cos(a)*len]],ex:lie.x+Math.sin(a)*len,ey:lie.y-Math.cos(a)*len,d:null}}}
-function PVdraw(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.setLineDash([2,8]);g.lineCap='round';
+/* łagodzenie krzywej: pierwsze 20% = prosta linia celowania, dalej tylko ~40% faktycznego skrętu */
+function PVsoft(R,a){const P=R.pts,n=P.length;if(n<3)return R;let s=0;const S=[0];for(let i=1;i<n;i++){s+=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);S.push(s)}
+ const sx=Math.sin(a),sy=-Math.cos(a),Q=P.map((p,i)=>{const t=S[i]/(s||1),k=t<.2?0:.42*Math.pow((t-.2)/.8,1.15),bx=P[0][0]+sx*S[i],by=P[0][1]+sy*S[i];return[bx+(p[0]-bx)*k,by+(p[1]-by)*k]});
+ const E=Q[n-1];R.pts=Q;R.ex=Math.max(4,Math.min(W-4,E[0]));R.ey=Math.max(4,Math.min(H-4,E[1]));R.d=Math.hypot(E[0]-lie.x,E[1]-lie.y)*M;return R}
+function PVdraw(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.lineCap='round';g.setLineDash([2,9]);
  g.strokeStyle='rgba(0,0,0,.28)';g.lineWidth=5;g.beginPath();g.moveTo(P[0][0]+1.5,P[0][1]+2);for(let i=1;i<n;i++)g.lineTo(P[i][0]+1.5,P[i][1]+2);g.stroke();
- /* pewna część toru pełna, dalsza (fade/turn) coraz bledsza */
- const cut=Math.max(1,Math.floor(n*.6));g.strokeStyle=ac;g.lineWidth=3.4;g.beginPath();g.moveTo(P[0][0],P[0][1]);for(let i=1;i<=cut;i++)g.lineTo(P[i][0],P[i][1]);g.stroke();
- for(let i=cut+1;i<n;i++){g.globalAlpha=Math.max(.18,1-(i-cut)/(n-cut)*.8);g.beginPath();g.moveTo(P[i-1][0],P[i-1][1]);g.lineTo(P[i][0],P[i][1]);g.stroke()}g.globalAlpha=1;
- if(PV.ob){g.setLineDash([]);g.strokeStyle='#ff4a3d';g.lineWidth=3;g.beginPath();g.moveTo(PV.ex-6,PV.ey-6);g.lineTo(PV.ex+6,PV.ey+6);g.moveTo(PV.ex+6,PV.ey-6);g.lineTo(PV.ex-6,PV.ey+6);g.stroke()}else if(PV.d!=null){g.strokeStyle=ac;g.globalAlpha=.35;g.lineWidth=1.5;g.setLineDash([]);g.beginPath();g.arc(PV.ex,PV.ey,12,0,7);g.stroke();g.globalAlpha=1}}
+ const cut=Math.max(1,Math.floor(n*.2));g.strokeStyle=ac;g.lineWidth=3.4;g.beginPath();g.moveTo(P[0][0],P[0][1]);for(let i=1;i<=cut;i++)g.lineTo(P[i][0],P[i][1]);g.stroke();
+ g.globalAlpha=.6;g.lineWidth=2.8;g.beginPath();g.moveTo(P[cut][0],P[cut][1]);for(let i=cut+1;i<n;i++)g.lineTo(P[i][0],P[i][1]);g.stroke();g.globalAlpha=1;
+ if(PV.ob){g.setLineDash([]);g.strokeStyle='#ff4a3d';g.lineWidth=3;g.beginPath();g.moveTo(PV.ex-6,PV.ey-6);g.lineTo(PV.ex+6,PV.ey+6);g.moveTo(PV.ex+6,PV.ey-6);g.lineTo(PV.ex-6,PV.ey+6);g.stroke()}}
 (function(){
  /* --- cienie chmur, ptaki, motyle --- */
  const CL=[];const cloudSpr=(seed)=>{const c=document.createElement('canvas');c.width=320;c.height=220;const x=c.getContext('2d');let s=seed;const r=()=>(s=(s*16807)%2147483647)/2147483647;
