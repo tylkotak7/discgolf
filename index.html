@@ -1329,7 +1329,7 @@ const CAM={s:1,x:W/2,ox:0,oy:0,cw:360,ch:560,us:1,uy:0};
 function fitScreen(){const cw=innerWidth,ch=innerHeight,ct=$('ctl'),ctlH=ct&&ct.offsetHeight?ch-ct.getBoundingClientRect().top+4:110;CAM.cw=cw;CAM.ch=ch;cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);
 let s=(ch-ctlH-8)/H;CAM.s=s;CAM.oy=0;CAM.us=Math.min(cw/W,ch/H);CAM.uy=(ch-H*CAM.us)/2;CAM.ux=(cw-W*CAM.us)/2}
 addEventListener('resize',()=>setTimeout(fitScreen,60));
-function camUpdate(){const vw=CAM.cw/CAM.s,h=holes[hi];if(drag&&!disc){CAM.ox=CAM.cw/2-CAM.x*CAM.s;return}let fx=W/2;if(h&&lie){fx=disc?disc.x:drag?lie.x:lie.x*.6+h.b[0]*.4}const lo=vw/2,hi2=W-vw/2,tx=vw>=W?W/2:Math.max(lo,Math.min(hi2,fx));CAM.x+=(tx-CAM.x)*(disc?.12:.08);if(!isFinite(CAM.x))CAM.x=W/2;CAM.ox=CAM.cw/2-CAM.x*CAM.s}
+function camUpdate(){const vw=CAM.cw/CAM.s,h=holes[hi];if(drag&&!disc){CAM.ox=CAM.cw/2-CAM.x*CAM.s;return}let fx=W/2;if(h&&lie){fx=(disc?disc.x:drag?lie.x:lie.x*.6+h.b[0]*.4)+(h.camDx||0)}const lo=vw/2,hi2=W-vw/2,tx=vw>=W?W/2:Math.max(lo,Math.min(hi2,fx));CAM.x+=(tx-CAM.x)*(disc?.12:.08);if(!isFinite(CAM.x))CAM.x=W/2;CAM.ox=CAM.cw/2-CAM.x*CAM.s}
 function worldT(){g.setTransform(dpr*CAM.s,0,0,dpr*CAM.s,dpr*CAM.ox,dpr*CAM.oy)}
 function uiT(){g.setTransform(dpr*CAM.us,0,0,dpr*CAM.us,dpr*CAM.ux,dpr*CAM.uy)}
 function pt(e){const r=cv.getBoundingClientRect();return{x:((e.clientX-r.left)-CAM.ox)/CAM.s,y:((e.clientY-r.top)-CAM.oy)/CAM.s}}
@@ -2355,9 +2355,10 @@ function drawMarks(){if(MKH!==hi||!MARKS.length)return;for(const m of MARKS){con
    for(let i=2;i<Q.length;i++){const a=Q[i-1],e=Q[i];for(let f=.3;f<1;f+=.45){const x=a[0]+(e[0]-a[0])*f,y=a[1]+(e[1]-a[1])*f,r=Math.abs(Math.sin(x*2.3+y*1.9)*999)%1;h.trees.push([x+(r<.5?-1:1)*(7+r*5),y+(r-.5)*8,12+r*3|0])}}}},
  7:h=>{del(h,[[147,311],[139,350],[175,240],[189,261]]);const[bx,by]=h.b;thin(h,(x,y)=>y<by+30&&y>by-70&&Math.abs(x-bx)<90?.85:0)},
  8:h=>{setW(8,90);const[bx,by]=h.b;del(h,[[279,318]]);for(const t of h.trees)if(t[0]<150&&t[1]>95)t[0]+=20;
-  {const L=h.L,P=[];for(let u=-20;u<=L+50;u+=40)P.push(h.rel(u,50));h.roads[0].pts=P;const rx=Math.max(...P.map(q=>q[0]));if(h.mead[0])h.mead[0][0]=rx+12;if(h.rivers[0])h.rivers[0][0]=rx+66;h._tx=rx+34}
+  {const L=h.L,P=[];for(let u=-20;u<=L+50;u+=40)P.push(h.rel(u,50));h.roads[0].pts=P;const rx=Math.max(...P.map(q=>q[0]));if(h.mead[0])h.mead[0][0]=rx+12;if(h.rivers[0])h.rivers[0][0]=rx+100;h._tx=rx+38}
   for(const p of[[bx-46,by-40,14],[bx-8,by-50,15],[bx+34,by-42,14]])h.trees.push(p);
-  for(let y=10;y<H+10;y+=34){const r=Math.abs(Math.sin(y*12.9898)*43758.5453)%1;if(r<.4)continue;h.trees.push([h._tx+(r-.5)*6,y+(r-.5)*10,9+r*2|0])}},
+  /* łąka przy rzece: tylko 3 samotne drzewa */for(const[y,dx,r]of[[150,-6,11],[330,6,10],[470,-3,12]])h.trees.push([h._tx+dx,y,r]);
+  /* drzewko bliżej fairwaya; lewy pas lasu poza kadrem (kamera w prawo), w zamian szersza łąka przy rzece */h.trees.push([152,345,13]);h.camDx=36},
  9:h=>{mv(h,[[[173,181],[165,181]],[[191,221],[183,221]],[[173,212],[165,212]]]);const[bx,by]=h.b;h.deco=(h.deco||[]).concat([{k:'teex',x:bx-20,y:by-96,r:20}])}};
  window.ZFIX=F;for(const k in F){try{const h=ZL[k];F[k](h);delete h._fill;delete h._col}catch(e){console.warn('zfix',k,e)}}
  try{BGC.clear()}catch(e){}})();
