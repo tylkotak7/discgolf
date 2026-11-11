@@ -25,7 +25,11 @@ addEventListener('load',()=>setTimeout(()=>{try{
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e});
 </script><style>#pwask{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,8,4,.6);font-family:'Baloo 2',system-ui}#pwask .pk{width:min(100vw,440px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 16px);color:#fff;text-align:center;animation:cshUp .25s ease-out}#pwask img{width:72px;height:72px;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.4)}#pwask b{display:block;font-size:21px;margin:8px 0 2px}#pwask p{margin:0 0 12px;color:#cfe5d5;font:600 14px system-ui;line-height:1.45}#pwask .ph{background:rgba(255,211,90,.12);border:1px solid rgba(255,211,90,.4);border-radius:14px;padding:10px;margin:0 0 10px;font:600 14px system-ui;color:#fff3c4;line-height:1.5}#pwask .ph b{display:inline;font:800 14px system-ui;margin:0;color:#ffd35a}#pwask button{display:block;width:100%;padding:13px;border-radius:16px;border:0;font:900 17px 'Baloo 2',system-ui;margin-bottom:8px}#pwyes{background:linear-gradient(135deg,#a4ffb8,#3fd16a);color:#08210f}#pwno{background:rgba(255,255,255,.08)!important;color:#cfe5d5;border:1px solid rgba(255,255,255,.15)!important}</style>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>/* P73: duże przyciski także gdy telefon/apka podaje bardzo szeroki viewport */(function(){try{var m=document.querySelector('meta[name=viewport]');if(matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2){m.setAttribute('content','width=420, viewport-fit=cover');document.documentElement.dataset.vfix=1}}catch(e){}})()</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>/* P73: duże przyciski i lekka grafika także gdy przeglądarka podaje bardzo szeroki ekran (np. tryb "wersja na komputer") */
+window.UIZ=1;(function(){var m=document.querySelector('meta[name=viewport]');function wide(){try{return matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2}catch(e){return false}}
+ try{if(wide())m.setAttribute('content','width=420, viewport-fit=cover')}catch(e){}
+ window.vfix=function(){try{var z=wide()?innerWidth/420:1;if(Math.abs(z-window.UIZ)>.02){window.UIZ=z;document.documentElement.style.zoom=z==1?'':z;try{fitScreen()}catch(e){}}}catch(e){}};
+ addEventListener('load',function(){setTimeout(vfix,50);setTimeout(vfix,600)});addEventListener('resize',function(){setTimeout(vfix,80)});document.addEventListener('DOMContentLoaded',vfix)})()</script>
 <title>Disc Golf</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -1326,13 +1330,13 @@ document.querySelectorAll('#menu [data-v]').forEach(b=>b.onclick=()=>showView(b.
 
 /* ================= PEŁNY EKRAN + KAMERA ================= */
 const CAM={s:1,x:W/2,ox:0,oy:0,cw:360,ch:560,us:1,uy:0};
-function fitScreen(){const cw=innerWidth,ch=innerHeight,ct=$('ctl'),ctlH=ct&&ct.offsetHeight?ch-ct.getBoundingClientRect().top+4:110;CAM.cw=cw;CAM.ch=ch;cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);
+function fitScreen(){const Z=window.UIZ||1,cw=innerWidth/Z,ch=innerHeight/Z,ct=$('ctl'),rk=(()=>{try{const r=cv.getBoundingClientRect();return r.width>10&&cv.offsetWidth>10?r.width/cv.offsetWidth:1}catch(e){return 1}})(),ctlH=ct&&ct.offsetHeight?ch-ct.getBoundingClientRect().top/rk+4:110;CAM.cw=cw;CAM.ch=ch;cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);
 let s=(ch-ctlH-8)/H;CAM.s=s;CAM.oy=0;CAM.us=Math.min(cw/W,ch/H);CAM.uy=(ch-H*CAM.us)/2;CAM.ux=(cw-W*CAM.us)/2}
 addEventListener('resize',()=>setTimeout(fitScreen,60));
 function camUpdate(){const vw=CAM.cw/CAM.s,h=holes[hi];if(drag&&!disc){CAM.ox=CAM.cw/2-CAM.x*CAM.s;return}let fx=W/2;if(h&&lie){fx=(disc?disc.x:drag?lie.x:lie.x*.6+h.b[0]*.4)+(h.camDx||0)}const lo=vw/2,hi2=W-vw/2,tx=vw>=W?W/2:Math.max(lo,Math.min(hi2,fx));CAM.x+=(tx-CAM.x)*(disc?.12:.08);if(!isFinite(CAM.x))CAM.x=W/2;CAM.ox=CAM.cw/2-CAM.x*CAM.s}
 function worldT(){g.setTransform(dpr*CAM.s,0,0,dpr*CAM.s,dpr*CAM.ox,dpr*CAM.oy)}
 function uiT(){g.setTransform(dpr*CAM.us,0,0,dpr*CAM.us,dpr*CAM.ux,dpr*CAM.uy)}
-function pt(e){const r=cv.getBoundingClientRect();return{x:((e.clientX-r.left)-CAM.ox)/CAM.s,y:((e.clientY-r.top)-CAM.oy)/CAM.s}}
+function pt(e){const r=cv.getBoundingClientRect(),k=r.width>10&&CAM.cw?CAM.cw/r.width:1;return{x:((e.clientX-r.left)*k-CAM.ox)/CAM.s,y:((e.clientY-r.top)*k-CAM.oy)/CAM.s}}
 /* ================= EFEKTY WYNIKÓW ================= */
 let RES=null;
 const RESD={ace:{t:'ACE!',t2:'HOLE IN ONE',c:['#fff6c2','#ffc93a','#e68a00'],rib:['#d32f2f','#8e1b1b'],ray:'255,205,70',p:'fire'},
@@ -2387,7 +2391,7 @@ function drawMarks(){if(MKH!==hi||!MARKS.length)return;for(const m of MARKS){con
 
 /* ---------- P47b: ekran – ponowne dopasowanie, gdy przeglądarka poda złe wymiary ---------- */
 (function(){const F0=fitScreen;fitScreen=function(){F0.apply(this,arguments);const ok=CAM.s>0.3&&isFinite(CAM.s)&&cv.width>10&&cv.height>10;if(!ok){clearTimeout(fitScreen.t);fitScreen.t=setTimeout(fitScreen,250)}};
- setInterval(()=>{try{if(!playing)return;const w=innerWidth,h=innerHeight;if(w>50&&h>50&&(Math.abs(w-CAM.cw)>1||Math.abs(h-CAM.ch)>1||!(CAM.s>0.3)))fitScreen()}catch(e){}},600);
+ setInterval(()=>{try{if(!playing)return;const w=innerWidth/(window.UIZ||1),h=innerHeight/(window.UIZ||1);if(w>50&&h>50&&(Math.abs(w-CAM.cw)>1||Math.abs(h-CAM.ch)>1||!(CAM.s>0.3)))fitScreen()}catch(e){}},600);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(()=>{try{fitScreen()}catch(e){}},120)});
  addEventListener('orientationchange',()=>setTimeout(()=>{try{fitScreen()}catch(e){}},300));
  addEventListener('pageshow',()=>setTimeout(()=>{try{fitScreen()}catch(e){}},120));})();
@@ -3157,5 +3161,26 @@ function PVdraw(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.lineCap='round'
   if(!DB)return;let ok=false;await Promise.all(LS.map(async(T,i)=>{try{const q=await DB.collection('sc_'+T[0]).orderBy('s').limit(200).get();renderTop(els[i],null,srt(q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))));ok=true}catch(e){}}));
   if(ok)hel.textContent='🏆 Top 5 online · wszystkie pory roku'};
  try{menuTop()}catch(e){}}catch(e){console.warn('P75',e)}})();
+</script>
+<script>/* P76: strażnik mapy – gdy tło dołka się nie zbuduje/zniknie, odbuduj je (albo pokaż tło zapasowe) i zapisz przyczynę */
+(function(){
+ const logE=(k,e)=>{try{localStorage.setItem('dg_bgerr',JSON.stringify({k,m:String(e&&e.message||e).slice(0,160),s:String(e&&e.stack||'').slice(0,300),t:Date.now(),ua:navigator.userAgent.slice(0,90),w:innerWidth+'x'+innerHeight+'@'+devicePixelRatio}))}catch(x){}};
+ try{const _ld=ldDraw;ldDraw=function(h){try{_ld(h)}catch(e){logE('ldDraw',e)}}}catch(e){}
+ try{const _b=build3;build3=function(h,wn){try{const c=_b(h,wn);if(!c||!c.width)throw new Error('puste tło');return c}catch(e){logE('build3',e);return fallbackBG(h,wn)}}}catch(e){}
+ try{const _dw=drawWorld;drawWorld=function(){try{_dw.apply(this,arguments)}catch(e){if(!drawWorld._e){drawWorld._e=1;logE('drawWorld',e)}}}}catch(e){}
+ let miss=0,tick=0;const tc=document.createElement('canvas');tc.width=tc.height=8;
+ setInterval(()=>{try{if(!playing||!holes||!holes[hi]){miss=0;return}const h=holes[hi],wn=season=='winter',bg=bgOf(h,wn);
+   if(bg){miss=0;if(++tick%6==0){try{const x=tc.getContext('2d',{willReadFrequently:true});x.clearRect(0,0,8,8);x.drawImage(bg,0,0,8,8);const d=x.getImageData(0,0,8,8).data;let a=0;for(let i=3;i<d.length;i+=4)a+=d[i];if(a==0){logE('blank',{message:'tło puste – odbudowa'});BGC.delete(h)}}catch(e){}}return}
+   if(++miss<3)return;miss=0;bgBusy=false;let c=null;try{BGC.clear()}catch(e){}
+   try{AUT3=season=='autumn';c=build3(h,wn)}catch(e){logE('watchdog',e)}try{AUT3=false}catch(e){}
+   if(!c){try{c=fallbackBG(h,wn)}catch(e){logE('fallback',e)}}
+   if(c){const e=[];e[bgIdx(wn)]=c;BGC.set(h,e);try{$('ld').style.display='none'}catch(x){}if(!localStorage.getItem('dg_bgerr'))logE('stuck',{message:'mapa nie zbudowała się sama – odbudowana przez strażnika'})}
+ }catch(e){}},800);
+ try{cv.addEventListener('contextlost',e=>{try{e.preventDefault()}catch(x){}logE('ctxlost',{message:'utrata kontekstu canvas'})});cv.addEventListener('contextrestored',()=>{try{BGC.clear();fitScreen()}catch(x){}})}catch(e){}
+ /* diagnostyka w Opcjach */
+ try{const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);try{const v=document.getElementById('optv');if(!v||document.getElementById('bgdiag'))return;const r=JSON.parse(localStorage.getItem('dg_bgerr')||'null');if(!r)return;const d=document.createElement('div');d.id='bgdiag';d.style.cssText='margin:10px 4px;padding:10px;border-radius:12px;background:rgba(255,255,255,.06);font:600 11px system-ui;color:#cfe5d5;word-break:break-word';
+   d.innerHTML='<b>🛠 Diagnostyka mapy</b> (wyślij screen autorowi)<br>'+new Date(r.t).toLocaleString('pl-PL')+' · '+r.k+' · '+String(r.m).replace(/[<>&]/g,'')+'<br><small>'+String(r.s).replace(/[<>&]/g,'').slice(0,220)+'<br>'+r.w+' · '+String(r.ua).replace(/[<>&]/g,'')+'</small> <button id="bgdx" style="margin-left:6px;border:0;border-radius:8px;padding:3px 8px">wyczyść</button>';v.appendChild(d);
+   document.getElementById('bgdx').onclick=()=>{localStorage.removeItem('dg_bgerr');d.remove()}}catch(e){}}}catch(e){}
+})();
 </script></body>
 </html>
