@@ -11,7 +11,7 @@ addEventListener('DOMContentLoaded',()=>{const st=window.matchMedia('(display-mo
 </script><style>#menu.m2 .pwab{display:block;width:100%;margin:-4px 0 12px;padding:11px;border-radius:16px;border:1px dashed rgba(164,255,184,.55);background:rgba(63,209,106,.12);color:#a4ffb8;font:900 15px 'Baloo 2',system-ui}#menu.m2 .pwab[hidden]{display:none}</style><script>
 addEventListener('load',()=>setTimeout(()=>{try{
  const st=matchMedia('(display-mode: fullscreen),(display-mode: standalone)').matches||navigator.standalone;if(st)return;
- const last=+localStorage.getItem('dg_pwa_ask')||0;if(Date.now()-last<20*3600e3)return;
+ const last=+localStorage.getItem('dg_pwa_ask')||0;if(Date.now()-last<20*3600e3)return;try{const sv=JSON.parse(localStorage.getItem('dgpl_save')||'{}');if(!((sv.rounds|0)>=1))return}catch(e){return}
  const ua=navigator.userAgent,ios=/iphone|ipad|ipod/i.test(ua),sam=/SamsungBrowser/i.test(ua),fx=/Firefox/i.test(ua);
  const how=ios?'W Safari dotknij <b>Udostępnij</b> (kwadrat ze strzałką ⬆️) i wybierz <b>„Dodaj do ekranu początkowego”</b>.'
   :sam?'Dotknij <b>≡ menu</b> (prawy dolny róg) → <b>„Dodaj stronę do”</b> → <b>„Ekran startowy”</b>. Możesz też dotknąć ikony <b>⬇ instalacji</b> w pasku adresu.'
@@ -760,7 +760,7 @@ const D=discs[di],PW=Math.min(l,110)/110,v0=PW*D.v*(hand<0?.95:1)*KSf(),ERR=0;{c
 function segX(ax,ay,bx,by,cx,cy,dx,dy){const d1=(bx-ax)*(cy-ay)-(by-ay)*(cx-ax),d2=(bx-ax)*(dy-ay)-(by-ay)*(dx-ax),d3=(dx-cx)*(ay-cy)-(dy-cy)*(ax-cx),d4=(dx-cx)*(by-cy)-(dy-cy)*(bx-cx);return d1*d2<0&&d3*d4<0}
 function stop(t,s,c){throws++;if(String(t).indexOf('Woda')>=0)unlock('splash');if(String(t).indexOf('OB')>=0){roundOB++;if(roundOB>=3)unlock('ob3')}disc=null;say(t,s,c,100);hud()}
 function step(){const h=holes[hi],d=disc,f=1-d.v/d.v0,D=d.D;
-d.a+=D.turn*d.h*((curve==2?(f<.5?1.1:-.45-(f-.5)*1.1):curve)*0.012*(0.3+f*1.5)-0.004*f);d.x+=Math.sin(d.a)*d.v+wx*0.05*KSf();d.y-=Math.cos(d.a)*d.v-wy*0.05*KSf();d.v*=D.dec;d.trail.push([d.x,d.y,altNow(d)]);
+d.a+=D.turn*d.h*((curve==2?(f<.5?1.1:-.45-(f-.5)*1.1):curve)*0.012*(0.3+f*1.5)-0.004*f);d.x+=Math.sin(d.a)*d.v+wx*0.072*KSf();d.y-=Math.cos(d.a)*d.v-wy*0.072*KSf();d.v*=D.dec;d.trail.push([d.x,d.y,altNow(d)]);
 if(h.md&&h.md.length&&d.trail.length>1){const p0=d.trail[d.trail.length-2];for(const o of h.md)if(segX(p0[0],p0[1],d.x,d.y,o.m[0],o.m[1],o.e[0],o.e[1])){if(o.dz){lie={x:o.dz[0],y:o.dz[1]};return stop('🚩 Mando!','+1 kara · rzut z Drop Zone','#c0392b')}return stop('🚩 Mando!','+1 kara · rzut powtórzony','#c0392b')}}
 if(Math.hypot(d.x-h.b[0],d.y-h.b[1])<13&&d.v<5.5*KSf())return hole();
 if(h._sil&&!h.noSil){silHit(d,h)}else{const p0s=d.trail.length>1?d.trail[d.trail.length-2]:null;for(const t of (h._col||h.trees)){const HR=t[2]+2.6,hv=t[3]||0,cd=(px,py)=>{const qy=Math.max(t[1]-hv,Math.min(t[1]+hv,py));return[Math.hypot(px-t[0],py-qy),qy]};let c0=cd(d.x,d.y);if(c0[0]>=HR&&p0s){const sx=d.x-p0s[0],sy=d.y-p0s[1],LL=Math.hypot(sx,sy);if(LL>1.5&&Math.hypot(p0s[0]-t[0],p0s[1]-t[1])<LL+HR+hv+2){const n=Math.ceil(LL/1.5);for(let k=1;k<n;k++){const px=p0s[0]+sx*k/n,py=p0s[1]+sy*k/n,c=cd(px,py);if(c[0]<HR){d.x=px;d.y=py;c0=c;break}}}}const tcy=c0[1],dx=d.x-t[0],dy=d.y-tcy,dist=c0[0];if(dist<HR){const nx=dx/(dist||1),ny=dy/(dist||1),vx=Math.sin(d.a),vy=-Math.cos(d.a),dp=vx*nx+vy*ny,rx=vx-2*dp*nx,ry=vy-2*dp*ny,kk=(Math.random()-.5)*1.1,qx=rx*Math.cos(kk)-ry*Math.sin(kk),qy=rx*Math.sin(kk)+ry*Math.cos(kk),fx=qx*.65+vx*.35,fy=qy*.65+vy*.35;d.a=Math.atan2(fx,-fy);d.k=(d.k||0)+1;d.v=(d.k>3?.3:Math.max(.55,Math.min(1.6,.8+d.v/KSf()*.12)*Math.pow(.7,d.k-1)))*KSf();d.x=t[0]+nx*(HR+1.6);d.y=tcy+ny*(HR+1.6);pill('🌲 Drzewo!');SV.trees++;if(SV.trees>=25)unlock('trees');break}}}
@@ -1522,7 +1522,7 @@ function drawGhost(){const G=gGet();if(!G||!G.h[hi]||M_()!='round')return;const 
   const e=P[n-1];g.fillStyle='rgba(230,220,255,.75)';g.beginPath();g.ellipse(e[0],e[1],3.2,2,0,0,7);g.fill();if(!(disc&&j==throws-1)){g.font='7px system-ui';g.textAlign='center';g.fillText('👻',e[0],e[1]-4)}}
  g.restore()}
 drawWorld=function(){_drawWorld();if(!UP)return;const t=performance.now()/1000;
- if(playing&&!disc){ws=wsB*(1+.24*Math.sin(t*.55+wph)+.1*Math.sin(t*1.9+wph));wa=waB+.16*Math.sin(t*.3+wph);wx=Math.sin(wa)*ws;wy=-Math.cos(wa)*ws;if(((t*4)|0)%2==0&&!(drawWorld._l==((t*4)|0))){drawWorld._l=(t*4)|0;hud()}}
+ if(playing&&!disc){ws=Math.max(0,wsB+.5*Math.sin(t*.45+wph));wa=waB+.05*Math.sin(t*.3+wph);wx=Math.sin(wa)*ws;wy=-Math.cos(wa)*ws;if(((t*4)|0)%2==0&&!(drawWorld._l==((t*4)|0))){drawWorld._l=(t*4)|0;hud()}}
  if(disc&&disc.trail.length>2){const tr=disc.trail,s=Math.max(1,tr.length-40);g.save();g.globalCompositeOperation='lighter';g.lineCap='round';for(let i=s;i<tr.length;i++){const a=tr[i-1],b=tr[i],f=(i-s)/(tr.length-s);g.strokeStyle='rgba(255,240,180,'+(f*.45)+')';g.lineWidth=.6+f*2.4;g.beginPath();g.moveTo(a[0],a[1]-(a[2]||0));g.lineTo(b[0],b[1]-(b[2]||0));g.stroke()}g.restore()}
  drawGhost();drawParts();if(chainT>0)chainT--;drawAtm()};
 basket3=function(x,y,s){if(UP&&chainT>0&&holes[hi]&&Math.abs(x-holes[hi].b[0])<.6){const j=Math.sin(performance.now()/24)*chainT/70*1.3;_b3(x+j,y,s);g.save();g.globalAlpha=chainT/70*.6;g.strokeStyle='#ffe680';g.lineWidth=1.2;g.beginPath();g.ellipse(x,y,6+(70-chainT)*.25,(6+(70-chainT)*.25)*.5,0,0,7);g.stroke();g.restore()}else _b3(x,y,s)};
@@ -1778,11 +1778,11 @@ addEventListener('pointerup',()=>{if(!TOMA||!UP||!disc||disc.tom||disc.trail.len
  disc.tom={sx:disc.x,sy:disc.y,tx:disc.x+Math.sin(a)*L+wx*.6*KSf(),ty:disc.y-Math.cos(a)*L-wy*.6*KSf(),t:0,N:Math.round(46+dm0*.9),alt:0,done:false};disc.a=a});
 const _alt21=altNow;altNow=function(d){return d&&d.tom?d.tom.alt:_alt21(d)};
 const _st21=step;step=function(){const d=disc;if(!d||!d.tom||d.tom.done)return _st21();const T=d.tom,h=holes[hi];T.t++;const f=Math.min(1,T.t/T.N),e=f<.5?2*f*f:1-Math.pow(-2*f+2,2)/2;
- const nx=T.sx+(T.tx-T.sx)*e,ny=T.sy+(T.ty-T.sy)*e;T.alt=Math.sin(f*Math.PI)*34+Math.sin(T.t*.6)*.5;
+ const nx=T.sx+(T.tx-T.sx)*e,ny=T.sy+(T.ty-T.sy)*e;T.alt=T.flat?(T.roll?2.5:Math.abs(Math.sin(f*Math.PI*2))*3*(1-f)):Math.sin(f*Math.PI)*34+Math.sin(T.t*.6)*.5;
  for(const o of h.md||[])if(segX(d.x,d.y,nx,ny,o.m[0],o.m[1],o.e[0],o.e[1])){d.x=nx;d.y=ny;T.done=true;T.alt=0;d.v=.0001;d.v0=1;return _st21()}
  d.x=nx;d.y=ny;d.trail.push([nx,ny,T.alt]);if(f<1){if(d.trail.length%6==0)hud();return}
  for(const t of (h._col||h.trees)){const dx=d.x-t[0],dy=d.y-t[1],dd=Math.hypot(dx,dy);if(dd<t[2]+3){const k=(t[2]+5)/(dd||1);d.x=t[0]+dx*k;d.y=t[1]+dy*k}}
- T.done=true;T.alt=0;d.v=.0001;d.v0=1;return _st21()};
+ return tomLand(d,T,h,_st21)};
 function tomPreview(){if(!drag)return;const dx=drag.sx-drag.x,dy=drag.sy-drag.y,l=Math.min(Math.hypot(dx,dy),110),a=Math.atan2(dx,-dy),D=discs[di],p=(l/110)*(hand<0?.95:1)/(hand<0?.95:1),dm0=tomDist(p),L=dm0/M,ex=lie.x+Math.sin(a)*L,ey=lie.y-Math.cos(a)*L;
  g.save();g.setLineDash([3,4]);g.lineCap='round';g.strokeStyle='rgba(255,220,120,.95)';g.lineWidth=2.4;g.beginPath();for(let i=0;i<=24;i++){const f=i/24,x=lie.x+(ex-lie.x)*f,y=lie.y+(ey-lie.y)*f-Math.sin(f*Math.PI)*34*(1+RK);i?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();g.setLineDash([]);
  g.strokeStyle='rgba(255,220,120,.95)';g.lineWidth=2;g.beginPath();g.ellipse(ex,ey,7,4,0,0,7);g.stroke();txt('🪓 '+Math.round(dm0)+' m',ex+10,ey-4,13);g.restore()}
@@ -2120,9 +2120,9 @@ try{window._gfxLow=localStorage.getItem('dg_gfx')=='low'}catch(e){window._gfxLow
 (function(){const S0=step;step=function(){try{S0()}catch(e){console.error(e);if(disc){const d=disc;disc=null;lie={x:Math.max(6,Math.min(W-6,d.x)),y:Math.max(6,Math.min(H-6,d.y))};next=0;hud()}}}})();
 function quitToMenu(){disc=null;drag=null;next=0;RES=null;try{rxOff()}catch(e){}banT=0;done=false;$('end').style.display='none';$('menu').style.display='flex';playing=false;try{GRP=[];grpBoard()}catch(e){}try{showRankBits(true)}catch(e){}showView('main');try{menuTop()}catch(e){}try{renderCareer();renderDaily2()}catch(e){}try{ambTick()}catch(e){}}
 (function(){const b=document.createElement('button');b.id='qbtn';b.hidden=true;b.innerHTML='<span>🏠</span><small>menu</small>';document.body.appendChild(b);
- const box=document.createElement('div');box.id='qbox';box.innerHTML='<div class="qc"><b>Wyjść do menu?</b><p>Ta runda nie zostanie zapisana.</p><div><button data-q="no">Graj dalej</button><button data-q="yes">🏠 Menu</button></div></div>';document.body.appendChild(box);
- b.onclick=e=>{e.stopPropagation();if(!playing)return;box.classList.add('on')};b.addEventListener('pointerdown',e=>e.stopPropagation());
- box.addEventListener('pointerdown',e=>e.stopPropagation());box.onclick=e=>{const q=e.target.dataset.q;if(q=='yes'){box.classList.remove('on');quitToMenu()}else if(q=='no'||e.target===box)box.classList.remove('on')};
+ const box=document.createElement('div');box.id='qbox';box.innerHTML='<div class="qc"><b>Pauza</b><p id="qtxt">Wyjście do menu nie zapisuje rundy.</p><div><button data-q="no">▶ Graj dalej</button><button data-q="yes">🏠 Menu</button></div><div style="margin-top:8px"><button data-q="retee">↩ Retee <small style="opacity:.75">(+2)</small></button><button data-q="again">🔄 Od nowa</button></div></div>';document.body.appendChild(box);
+ b.onclick=e=>{e.stopPropagation();if(!playing)return;try{const car=typeof CAREER!='undefined'&&CAREER,a=box.querySelector('[data-q=again]'),r=box.querySelector('[data-q=retee]');a.style.display=car?'none':'';r.disabled=!(throws>0)||!!disc;r.style.opacity=r.disabled?.45:1}catch(x){}box.classList.add('on')};b.addEventListener('pointerdown',e=>e.stopPropagation());
+ box.addEventListener('pointerdown',e=>e.stopPropagation());box.onclick=e=>{const q=e.target.dataset.q;if(q=='yes'){box.classList.remove('on');quitToMenu()}else if(q=='retee'){box.classList.remove('on');try{pauseRetee()}catch(x){}}else if(q=='again'){box.classList.remove('on');try{pauseAgain()}catch(x){}}else if(q=='no'||e.target===box)box.classList.remove('on')};
  setInterval(()=>{const sh=!!playing&&$('menu').style.display=='none'&&$('end').style.display!='flex';if(b.hidden==sh)b.hidden=!sh},250)})();
 /* ===================== P37: WZNOWIENIE RUNDY · POWITANIE · NICK · PORZĄDKI ===================== */
 /* ---------- 6: tylko nowa wersja ---------- */
@@ -2157,7 +2157,7 @@ function onboard(){let seen=false;try{seen=localStorage.getItem('dg_onb')=='1'}c
  const S=[['🥏','Witaj w Discgolf PL!','Graj na prawdziwych polach: Złotów i Międzybłocie (Mistrzostwa Polski 2026). Zrób jak najmniej rzutów do kosza.'],
   ['👆','Jak rzucać?','Przeciągnij palcem w dół od gracza i puść – im dłużej ciągniesz, tym mocniej. Kierunek to przeciwieństwo ruchu palca, jak w procy.'],
   ['🎒','Dysk i lot','Putter – blisko i prosto. Mid – średnio. Driver – daleko. Hyzer skręca w lewo, Anhyzer w prawo. 🪓 Tomahawk przelatuje nad drzewami.'],
-  ['🏆','Tryby gry','🥏 Runda i 🏆 Kariera (dywizje MA4 → MA3 → Open, rating) oraz ⭐ wyzwania: 🎯 Putting i 📅 Dołek dnia z rankingiem online.']];
+  ['🏆','Tryby gry','🥏 Runda – grasz pole dla wyniku i rankingu Top 5. 🏆 Kariera – cotygodniowe sezony online z innymi graczami (dywizje MA4 → MA3 → Open, rating).']];
  const ov=document.createElement('div');ov.id='onb';document.body.appendChild(ov);let k=seen?S.length:0;
  const draw=()=>{if(k<S.length){const s=S[k];ov.innerHTML='<div class="oc"><div class="oi">'+s[0]+'</div><b>'+s[1]+'</b><p>'+s[2]+'</p><div class="od">'+S.map((_,i)=>'<i class="'+(i==k?'on':'')+'"></i>').join('')+'<i class="'+(k==S.length?'on':'')+'"></i></div><div class="ob"><button data-o="skip">Pomiń</button><button data-o="next">Dalej ›</button></div></div>'}
   else ov.innerHTML='<div class="oc"><div class="oi">✍️</div><b>Jak się nazywasz?</b><p>Twój nick pojawi się w rankingach online.</p><input id="onick" maxlength="12" placeholder="Twój nick" autocomplete="off" enterkeyhint="done" value="'+(pname&&pname!='Gracz'?String(pname).replace(/"/g,''):'')+'"><div class="ob"><button data-o="go" class="wide">▶ Zaczynamy!</button></div></div>'}
@@ -3094,18 +3094,24 @@ setInterval(chkCar,4000);setTimeout(chkCar,2500);
 /* --- przewidywany tor lotu (krzywa) --- */
 function PREV(a,l,len){try{if(typeof TOMA!=='undefined'&&TOMA)throw 0;const D=discs[di],K=KSf(),v0=Math.min(l,110)/110*D.v*(hand<0?.95:1)*K;if(v0<.6*K)throw 0;
  const d={x:lie.x,y:lie.y,a,v:v0,v0,h:hand},pts=[[d.x,d.y]];let n=0;
- while(d.v>=.5*K&&n<900){const f=1-d.v/d.v0;d.a+=D.turn*d.h*((curve==2?(f<.5?1.1:-.45-(f-.5)*1.1):curve)*0.012*(0.3+f*1.5)-0.004*f);d.x+=Math.sin(d.a)*d.v+wx*0.05*K;d.y-=Math.cos(d.a)*d.v-wy*0.05*K;d.v*=D.dec;n++;if(d.x<0||d.x>W||d.y<0||d.y>H){d.x=Math.max(0,Math.min(W,d.x));d.y=Math.max(0,Math.min(H,d.y));pts.push([d.x,d.y]);return PVsoft({pts,ex:d.x,ey:d.y,d:Math.hypot(d.x-lie.x,d.y-lie.y)*M,ob:true},a)}if(n%2==0)pts.push([d.x,d.y])}
+ while(d.v>=.5*K&&n<900){const f=1-d.v/d.v0;d.a+=D.turn*d.h*((curve==2?(f<.5?1.1:-.45-(f-.5)*1.1):curve)*0.012*(0.3+f*1.5)-0.004*f);d.x+=Math.sin(d.a)*d.v+wx*0.072*K;d.y-=Math.cos(d.a)*d.v-wy*0.072*K;d.v*=D.dec;n++;if(d.x<0||d.x>W||d.y<0||d.y>H){d.x=Math.max(0,Math.min(W,d.x));d.y=Math.max(0,Math.min(H,d.y));pts.push([d.x,d.y]);return PVsoft({pts,ex:d.x,ey:d.y,d:Math.hypot(d.x-lie.x,d.y-lie.y)*M,ob:true},a)}if(n%2==0)pts.push([d.x,d.y])}
  pts.push([d.x,d.y]);return PVsoft({pts,ex:d.x,ey:d.y,d:Math.hypot(d.x-lie.x,d.y-lie.y)*M},a)}
  catch(e){return{pts:[[lie.x,lie.y],[lie.x+Math.sin(a)*len,lie.y-Math.cos(a)*len]],ex:lie.x+Math.sin(a)*len,ey:lie.y-Math.cos(a)*len,d:null}}}
-/* tor: pierwsze 80% = dokładny lot, ostatnie 20% = przybliżenie (połowa dalszego skrętu), linią przerywaną */
+/* tor: pierwsze 70% = prawie dokładny lot; ostatnie 30% = przybliżenie odchylone o ~7,5% od realnego toru, rysowane inaczej */
 function PVsoft(R,a){const P=R.pts,n=P.length;if(n<4)return R;let s=0;const S=[0];for(let i=1;i<n;i++){s+=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);S.push(s)}
- let c=1;while(c<n-1&&S[c]<s*.8)c++;const tx=P[c][0]-P[c-1][0],ty=P[c][1]-P[c-1][1],tl=Math.hypot(tx,ty)||1;
- const Q=P.map((p,i)=>{if(i<=c)return p;const bx=P[c][0]+tx/tl*(S[i]-S[c]),by=P[c][1]+ty/tl*(S[i]-S[c]);return[bx+(p[0]-bx)*.55,by+(p[1]-by)*.55]});
+ let c=1;while(c<n-1&&S[c]<s*.7)c++;const tail=(s-S[c])||1,dev=s*.075;
+ /* odchylenie w stronę „prostszego" lotu (przeciwnie do końcowego skrętu) */
+ const tx=P[c][0]-P[c-1][0],ty=P[c][1]-P[c-1][1],tl=Math.hypot(tx,ty)||1,ex=P[n-1][0]-P[c][0],ey=P[n-1][1]-P[c][1],cr=(tx*ey-ty*ex),sg=cr>0?-1:1;
+ const Q=P.map((p,i)=>{if(i<=c)return p;const u=(S[i]-S[c])/tail,dx=P[i][0]-P[i-1][0],dy=P[i][1]-P[i-1][1],dl=Math.hypot(dx,dy)||1,k=dev*Math.pow(u,1.3)*sg;return[p[0]+(-dy/dl)*k,p[1]+(dx/dl)*k]});
  const E=Q[n-1];R.pts=Q;R.cut=c;R.ex=Math.max(4,Math.min(W-4,E[0]));R.ey=Math.max(4,Math.min(H-4,E[1]));R.d=Math.hypot(E[0]-lie.x,E[1]-lie.y)*M;return R}
 function PVdraw(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.lineCap='round';const cut=PV.cut||n-1;
+ /* pewna część: biała kropkowana */
  g.setLineDash([2,9]);g.strokeStyle='rgba(0,0,0,.28)';g.lineWidth=5;g.beginPath();g.moveTo(P[0][0]+1.5,P[0][1]+2);for(let i=1;i<=cut;i++)g.lineTo(P[i][0]+1.5,P[i][1]+2);g.stroke();
  g.strokeStyle=ac;g.lineWidth=3.4;g.beginPath();g.moveTo(P[0][0],P[0][1]);for(let i=1;i<=cut;i++)g.lineTo(P[i][0],P[i][1]);g.stroke();
- if(cut<n-1){g.setLineDash([7,6]);g.globalAlpha=.55;g.lineWidth=2.4;g.beginPath();g.moveTo(P[cut][0],P[cut][1]);for(let i=cut+1;i<n;i++)g.lineTo(P[i][0],P[i][1]);g.stroke();g.globalAlpha=1}
+ /* niepewna część: żółty rozszerzający się „stożek" + cienka żółta kreska */
+ if(cut<n-1){g.setLineDash([]);const L=[],Rr=[];for(let i=cut;i<n;i++){const a0=P[Math.max(cut,i-1)],b0=P[Math.min(n-1,i+1)],dx=b0[0]-a0[0],dy=b0[1]-a0[1],dl=Math.hypot(dx,dy)||1,w=1+7*((i-cut)/(n-1-cut));L.push([P[i][0]-dy/dl*w,P[i][1]+dx/dl*w]);Rr.push([P[i][0]+dy/dl*w,P[i][1]-dx/dl*w])}
+  g.fillStyle='rgba(255,211,90,.22)';g.beginPath();L.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));for(let i=Rr.length-1;i>=0;i--)g.lineTo(Rr[i][0],Rr[i][1]);g.closePath();g.fill();
+  g.setLineDash([6,5]);g.strokeStyle='#ffd35a';g.lineWidth=2;g.beginPath();g.moveTo(P[cut][0],P[cut][1]);for(let i=cut+1;i<n;i++)g.lineTo(P[i][0],P[i][1]);g.stroke()}
  if(PV.ob){g.setLineDash([]);g.strokeStyle='#ff4a3d';g.lineWidth=3;g.beginPath();g.moveTo(PV.ex-6,PV.ey-6);g.lineTo(PV.ex+6,PV.ey+6);g.moveTo(PV.ex+6,PV.ey-6);g.lineTo(PV.ex-6,PV.ey+6);g.stroke()}}
 (function(){
  /* --- cienie chmur, ptaki, motyle --- */
@@ -3145,8 +3151,8 @@ function PVdraw(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.lineCap='round'
  /* --- tap-in do 3 m --- */
  const st=document.createElement('style');st.textContent='#tapin{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 118px);transform:translateX(-50%);z-index:30;display:none;border:0;border-radius:18px;padding:12px 24px;font:900 17px system-ui;color:#fff;background:linear-gradient(180deg,#4fd97a,#1f9e4c);box-shadow:0 6px 22px rgba(31,158,76,.55);animation:tpin 1.2s ease-in-out infinite}@keyframes tpin{50%{transform:translateX(-50%) scale(1.06)}}';document.head.appendChild(st);
  const bt=document.createElement('button');bt.id='tapin';bt.textContent='👆 Tap in';document.body.appendChild(bt);
- setInterval(()=>{let show=false;try{show=playing&&!done&&!disc&&!drag&&next<=0&&throws>0&&holes[hi]&&dm(lie)<=3&&!(typeof GRP!='undefined'&&GRP.length)}catch(e){}bt.style.display=show?'block':'none'},200);
- bt.onclick=e=>{e.stopPropagation();try{if(!playing||disc||done||dm(lie)>3)return;throws++;try{sfx.chains()}catch(x){}pill('👆 Tap in!');hole()}catch(x){console.warn(x)}bt.style.display='none'};
+ setInterval(()=>{let show=false;try{show=playing&&!done&&!disc&&!drag&&next<=0&&throws>0&&holes[hi]&&dm(lie)<=5&&!(typeof GRP!='undefined'&&GRP.length)}catch(e){}bt.style.display=show?'block':'none'},200);
+ bt.onclick=e=>{e.stopPropagation();try{if(!playing||disc||done||dm(lie)>5)return;throws++;try{sfx.chains()}catch(x){}pill('👆 Tap in!');hole()}catch(x){console.warn(x)}bt.style.display='none'};
 })();
 </script>
 <script>/* P75: Top 5 na Starcie – Złotów i Złotów 22 widoczne od razu, jedno pod drugim */
@@ -3181,6 +3187,51 @@ function PVdraw(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.lineCap='round'
  try{const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);try{const v=document.getElementById('optv');if(!v||document.getElementById('bgdiag'))return;const r=JSON.parse(localStorage.getItem('dg_bgerr')||'null');if(!r)return;const d=document.createElement('div');d.id='bgdiag';d.style.cssText='margin:10px 4px;padding:10px;border-radius:12px;background:rgba(255,255,255,.06);font:600 11px system-ui;color:#cfe5d5;word-break:break-word';
    d.innerHTML='<b>🛠 Diagnostyka mapy</b> (wyślij screen autorowi)<br>'+new Date(r.t).toLocaleString('pl-PL')+' · '+r.k+' · '+String(r.m).replace(/[<>&]/g,'')+'<br><small>'+String(r.s).replace(/[<>&]/g,'').slice(0,220)+'<br>'+r.w+' · '+String(r.ua).replace(/[<>&]/g,'')+'</small> <button id="bgdx" style="margin-left:6px;border:0;border-radius:8px;padding:3px 8px">wyczyść</button>';v.appendChild(d);
    document.getElementById('bgdx').onclick=()=>{localStorage.removeItem('dg_bgerr');d.remove()}}catch(e){}}}catch(e){}
+})();
+</script>
+<script>/* ===================== P77: ETAP 1 – rozgrywka ===================== */
+/* tomahawk: 20% roller/skip o 5–7 m, przy koszu 69% wpada / 31% czapka lub klatka */
+function tomLand(d,T,h,fin){const end=()=>{T.done=true;T.alt=0;d.v=.0001;d.v0=1;return fin()};try{
+  const bx=h.b[0],by=h.b[1],db=Math.hypot(d.x-bx,d.y-by),inB=db<13,special=!T.flat&&Math.random()<.2;
+  if(inB){if(!T.flat&&Math.random()<.69)return end();
+   const a=Math.random()*6.283,r=(T.flat?15:16+Math.random()*14);d.x=bx+Math.cos(a)*r;d.y=by+Math.sin(a)*r;try{sfx.chains()}catch(e){}pill(Math.random()<.5?'🎩 Uderzył w czapkę kosza!':'🧺 Odbił się od klatki!');return end()}
+  if(special){const roll=Math.random()<.5,L=(5+Math.random()*2)/M,a=d.a+(Math.random()-.5)*(roll?1.1:.5);
+   d.tom={sx:d.x,sy:d.y,tx:Math.max(4,Math.min(W-4,d.x+Math.sin(a)*L)),ty:Math.max(4,Math.min(H-4,d.y-Math.cos(a)*L)),t:0,N:roll?44:26,alt:0,done:false,flat:true,roll};pill(roll?'🛞 Roller po tomahawku!':'💨 Skip po tomahawku!');return}
+ }catch(e){}return end()}
+function pauseRetee(){if(!playing||disc||!(throws>0))return;const h=holes[hi];lie={x:h.tee[0],y:h.tee[1]};throws+=2;drag=null;try{TOFF=0}catch(e){}try{MARKS.length=0}catch(e){}say('↩ Retee','+2 karne · rzucasz jeszcze raz z tee','#c9a227',110);hud()}
+function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){toast('W karierze nie można zaczynać turnieju od nowa');return}disc=null;drag=null;next=0;try{fitScreen()}catch(e){}start();toast('🔄 Runda od początku')}
+(function(){
+ /* --- potwierdzenie zakupu --- */
+ const st=document.createElement('style');st.textContent='#ynb{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;background:rgba(0,8,4,.6);font-family:"Baloo 2",system-ui}#ynb .c{width:min(86vw,320px);background:#10221a;border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:16px;color:#fff;text-align:center}#ynb b{font-size:19px}#ynb p{margin:6px 0 14px;color:#a9c9b1;font:600 14px system-ui;line-height:1.4}#ynb .r{display:flex;gap:8px}#ynb button{flex:1;padding:11px;border-radius:14px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font:900 15px "Baloo 2",system-ui}#ynb button.y{background:linear-gradient(180deg,#8ff0a4,#3fca63);color:#0a2a14;border:0}'
+  +'#coach{position:fixed;left:50%;transform:translateX(-50%);width:min(92vw,360px);z-index:35;background:rgba(12,30,20,.94);border:1px solid rgba(143,240,164,.5);border-radius:18px;padding:12px 14px;color:#fff;font:600 14px system-ui;line-height:1.4;box-shadow:0 8px 30px rgba(0,0,0,.5)}#coach b{font:900 16px "Baloo 2",system-ui;color:#8ff0a4;display:block;margin-bottom:2px}#coach .r{display:flex;gap:8px;margin-top:10px;align-items:center}#coach button{border:0;border-radius:12px;padding:8px 14px;font:900 14px "Baloo 2",system-ui}#coach .n{background:linear-gradient(180deg,#8ff0a4,#3fca63);color:#0a2a14;margin-left:auto}#coach .s{background:transparent;color:#a9c9b1;text-decoration:underline;padding:8px 2px}#coach i{font-style:normal;opacity:.6;font-size:12px}'
+  +'#chgb{position:fixed;inset:0;z-index:65;display:flex;align-items:center;justify-content:center;background:rgba(0,8,4,.6);font-family:"Baloo 2",system-ui}#chgb .c{width:min(92vw,380px);max-height:80vh;overflow:auto;background:#10221a;border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:16px;color:#fff}#chgb h3{margin:0 0 2px;font-size:20px}#chgb h4{margin:12px 0 4px;color:#ffd35a;font-size:14px}#chgb ul{margin:0;padding-left:18px;font:600 13.5px system-ui;color:#d7eadc;line-height:1.45}#chgb button{width:100%;margin-top:14px;padding:11px;border-radius:14px;border:0;background:linear-gradient(180deg,#8ff0a4,#3fca63);color:#0a2a14;font:900 15px "Baloo 2",system-ui}@keyframes gopulse{50%{transform:scale(1.04);box-shadow:0 0 0 8px rgba(143,240,164,.25)}}#go.pulse{animation:gopulse 1s ease-in-out 6}';document.head.appendChild(st);
+ function askYN(t,p,y,cb){const o=document.getElementById('ynb');if(o)o.remove();const d=document.createElement('div');d.id='ynb';d.innerHTML='<div class="c"><b>'+t+'</b><p>'+p+'</p><div class="r"><button data-n="1">Anuluj</button><button class="y" data-y="1">'+y+'</button></div></div>';document.body.appendChild(d);d.addEventListener('pointerdown',e=>e.stopPropagation());d.onclick=e=>{if(e.target.dataset.y){d.remove();cb()}else if(e.target.dataset.n||e.target===d)d.remove()}}
+ window.askYN=askYN;
+ try{const _pb=pickBrand;pickBrand=function(id){try{const first=!SV.brands.length,own=SV.brands.includes(id);
+    if(!first&&!own&&SV.coins>=30){askYN('Kupić '+BR[id].n+'?','Koszt: 30 🪙 · masz '+SV.coins+' 🪙','Kup za 30 🪙',()=>_pb(id));return}
+    _pb(id);if(first&&SV.brands.length){setTimeout(()=>{try{showView('main');const go=$('go');go.classList.remove('pulse');void go.offsetWidth;go.classList.add('pulse');go.scrollIntoView({block:'center',behavior:'smooth'});toast('Bag gotowy! Teraz kliknij ▶ GRAJ')}catch(e){}},350)}}catch(e){_pb(id)}}}catch(e){}
+ document.addEventListener('click',e=>{try{const b=e.target.closest&&e.target.closest('[data-lb]');if(!b||b._ok)return;const L=LTD.find(x=>x.id==b.dataset.lb);if(!L||(SV.ltd||[]).includes(L.id)||SV.coins<L.p)return;e.preventDefault();e.stopImmediatePropagation();askYN('Kupić '+L.n+'?','Koszt: '+L.p+' 🪙 · masz '+SV.coins+' 🪙','Kup za '+L.p+' 🪙',()=>{b._ok=1;b.click();b._ok=0})}catch(x){}},true);
+ /* --- jeden wiatr na rundę (zmienia się tylko o ±0,5 w trakcie) --- */
+ let RW=null;try{const _s=start;start=function(){RW=null;return _s.apply(this,arguments)};
+  const _l=load;load=function(){const r=_l.apply(this,arguments);try{if(typeof M_=='function'&&M_()=='putt')return r;if(!RW)RW={wa:waB,ws:wsB};else{wa=waB=RW.wa;ws=wsB=RW.ws;wx=Math.sin(wa)*ws;wy=-Math.cos(wa)*ws;hud()}}catch(e){}return r}}catch(e){}
+ /* --- samouczek przy pierwszej rundzie (można pominąć) --- */
+ const TS=[['🎒 Wybór dysku','Na dole wybierasz dysk: <b style="display:inline;color:#fff">Putter</b> – blisko i prosto, <b style="display:inline;color:#fff">Mid</b> – średnio, <b style="display:inline;color:#fff">Driver</b> – daleko.',0],
+  ['🖐 Rodzaj rzutu','BH to backhand, FH to forehand. <b style="display:inline;color:#fff">Hyzer</b> skręca w lewo, <b style="display:inline;color:#fff">Anhyzer</b> w prawo, Prosto leci prosto.',0],
+  ['👆 Twój pierwszy rzut','Przeciągnij palcem <b style="display:inline;color:#fff">w dół od zawodnika</b> i puść. Im dłużej ciągniesz, tym mocniej. Linia pokazuje, jak poleci dysk. Kółko ✕ anuluje rzut.',1],
+  ['👏 Brawo!','Graj dalej aż do kosza. Bliżej niż 5 m pojawi się przycisk <b style="display:inline;color:#fff">Tap in</b>. Pod przyciskiem 🏠 masz pauzę: Retee i start od nowa.',0]];
+ let tk=-1,tel=null;const tdone=()=>{try{localStorage.setItem('dg_tut','1')}catch(e){}if(tel){tel.remove();tel=null}tk=99};
+ const tdraw=()=>{if(!tel){tel=document.createElement('div');tel.id='coach';document.body.appendChild(tel);tel.addEventListener('pointerdown',e=>e.stopPropagation())}const s=TS[tk];tel.style.bottom=tk<2?'calc(env(safe-area-inset-bottom) + 128px)':'';tel.style.top=tk<2?'':'calc(env(safe-area-inset-top) + 120px)';
+  tel.innerHTML='<b>'+s[0]+'</b>'+s[1]+'<div class="r"><button class="s" data-s="1">Pomiń samouczek</button><i>'+(tk+1)+'/'+TS.length+'</i>'+(s[2]?'':'<button class="n" data-n="1">'+(tk==TS.length-1?'OK':'Dalej ›')+'</button>')+'</div>';
+  tel.onclick=e=>{if(e.target.dataset.s)tdone();else if(e.target.dataset.n){if(tk>=TS.length-1)tdone();else{tk++;tdraw()}}}};
+ setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
+   if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
+ /* --- lista zmian --- */
+ const CHG=[['Aktualizacja 11.11.2026',['Tap-in już od 5 m – dysk sam wpada do kosza','Linia celowania: 70% toru prawie dokładnie, żółta końcówka to tylko przybliżenie','Pauza (🏠): Retee z tee (+2) i start rundy od nowa','Jeden wiatr na całą rundę (waha się o ±0,5 m/s) i trochę mocniej znosi dysk','Tomahawk: 20% szans na rollera lub skip o 5–7 m; przy koszu 69% wpada','Potwierdzenie przy kupowaniu dysków','Samouczek przy pierwszej rundzie (można pominąć)','Naprawa: mapa dołka sama się odbudowuje, gdy się nie załaduje','Większe przyciski przy bardzo szerokim ekranie']],
+  ['Aktualizacja 10.11.2026',['Krzywy podgląd toru lotu i ostrzeżenie o OB','Cienie chmur, ptaki, motyl, wiewiórka na 4 i 6','Dołek 9: większa łąka przy rzece','Top 5 Złotów 12 i Złotów 22 widoczne od razu','Zostały tylko tryby Runda i Kariera']]];
+ function showChg(){const o=document.getElementById('chgb');if(o)o.remove();const d=document.createElement('div');d.id='chgb';d.innerHTML='<div class="c"><h3>📋 Co nowego</h3>'+CHG.map(c=>'<h4>'+c[0]+'</h4><ul>'+c[1].map(x=>'<li>'+x+'</li>').join('')+'</ul>').join('')+'<button data-x="1">OK</button></div>';document.body.appendChild(d);d.onclick=e=>{if(e.target.dataset.x||e.target===d)d.remove()};try{localStorage.setItem('dg_chg',CHG[0][0])}catch(e){}}
+ window.showChg=showChg;
+ setTimeout(()=>{try{if(localStorage.getItem('dg_onb')!='1'){localStorage.setItem('dg_chg',CHG[0][0]);return}if(localStorage.getItem('dg_chg')!=CHG[0][0]&&!playing&&!document.getElementById('onb')&&!document.getElementById('pwask'))showChg()}catch(e){}},2500);
+ try{const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);try{const v=document.getElementById('optv');if(!v||document.getElementById('chgbtn'))return;const b=document.createElement('button');b.id='chgbtn';b.textContent='📋 Co nowego w grze';b.style.cssText='display:block;width:calc(100% - 8px);margin:10px 4px;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);color:#fff;font:800 15px "Baloo 2",system-ui';b.onclick=showChg;v.appendChild(b)}catch(e){}}}catch(e){}
 })();
 </script></body>
 </html>
