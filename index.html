@@ -3308,7 +3308,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  const F12={say:'',until:0,next:3,who:0};
  const _co=crowdOn;crowdOn=function(){try{if(UP&&holes===ZL&&hi==11)return true}catch(e){}return _co()};
  const _cd=crowdDraw;crowdDraw=function(){const h=holes[hi];try{if(holes===ZL&&hi==11){if(!CROWD.p||CROWD.h!==h||!CROWD.z12){CROWD.h=h;CROWD.z12=1;CROWD.p=[];const R=rnd(91);
-     for(let i=0;i<20;i++){const row=i%2,x=h.b[0]-78+i*8.2+(R()-.5)*3,y=h.b[1]-62-row*12+(R()-.5)*3;CROWD.p.push({x,y,c:GCOL[(R()*7)|0],hc:['#2b1d14','#d9b26a','#5a3a22','#b8452a'][(R()*4)|0],ph:R()*7})}CROWD.p.sort((a,b)=>a.y-b.y)}
+     const GR=[[-84,-58,3],[-52,-70,5],[-14,-60,2],[14,-74,4],[46,-62,5],[80,-70,3]];for(const[gx,gy,n]of GR){const cx=h.b[0]+gx+(R()-.5)*10,cy=h.b[1]+gy+(R()-.5)*8;for(let j=0;j<n;j++){let x,y,k=0;do{const a=R()*6.283,r=3+R()*10;x=cx+Math.cos(a)*r;y=cy+Math.sin(a)*r*.7;k++}while(k<20&&CROWD.p.some(q=>Math.hypot(q.x-x,q.y-y)<6.5));if(x<6||x>W-6)continue;CROWD.p.push({x,y,c:GCOL[(R()*7)|0],hc:['#2b1d14','#d9b26a','#5a3a22','#b8452a','#8a8a8a'][(R()*5)|0],ph:R()*7})}}CROWD.p.sort((a,b)=>a.y-b.y)}
    }else if(CROWD.z12){CROWD.z12=0;CROWD.p=null}}catch(e){}
   _cd.apply(this,arguments);
   try{if(holes===ZL&&hi==11&&CROWD.p){const t=performance.now()/1000;if(t>F12.next&&t>F12.until){F12.say=FL[(Math.random()*FL.length)|0];F12.who=(Math.random()*CROWD.p.length)|0;F12.until=t+3.2;F12.next=t+5+Math.random()*4}
