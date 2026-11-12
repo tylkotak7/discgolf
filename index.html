@@ -3433,18 +3433,18 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  const ch=$('condchip');if(ch)ch.classList.add('hid');
  setInterval(()=>{try{if($('menu').style.display!='none')paintWx()}catch(e){}},700);
  /* --- Top 5 (od dziś) + Archiwum (wszystkie wcześniejsze wyniki) --- */
- const LS=[['zlotow','⛳ Złotów 12','dg_topz'],['z22','🧪 Złotów 22','dg_topz22'],['miedzy','🌲 Międzybłocie','dg_topm'],['lubon','🆕 Luboń · beta',null]];
+ const LS=[['zlotow','⛳ Złotów 12','dg_topz'],['z22','🧪 Złotów 22','dg_topz22'],['miedzy','🌲 Międzybłocie','dg_topm'],['lubon','🆕 Luboń · beta','dg_topl']];
  const LA=LS.slice(0,3).concat([['trening','🎯 Przysieczyn trening','dg_topt'],['miedzyS','🌲 Międzybłocie Short','dg_topms']]);
  const srt=a=>a.slice().sort((x,y)=>(+x.s||0)-(+y.s||0)||(+x.t||0)-(+y.t||0));
  const esc=s=>String(s==null?'':s).replace(/[<>&"'`]/g,'').slice(0,12);
  const sc=v=>(v>0?'+':'')+v;
  const li=e=>'<li><span>'+esc(e.n)+' '+(e.se=='autumn'?'🍂':e.w?'❄️':'☀️')+'</span><b>'+sc(+e.s||0)+'</b></li>';
  let tab='now';const cache={};
- async function load(k,lk){let loc=[];if(lk)try{loc=JSON.parse(localStorage.getItem(lk)||'[]')}catch(e){}let on=null;if(DB&&k!='lubon'){if(cache[k])on=cache[k];else try{const q=await DB.collection('sc_'+k).orderBy('s').limit(400).get();on=cache[k]=q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(e){}}return{loc,on}}
+ async function load(k,lk){let loc=[];if(lk)try{loc=JSON.parse(localStorage.getItem(lk)||'[]')}catch(e){}let on=null;if(DB){if(cache[k])on=cache[k];else try{const q=await DB.collection('sc_'+k).orderBy('s').limit(400).get();on=cache[k]=q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(e){}}return{loc,on}}
  function box(){const el=$('mtop');if(!el)return null;let w=$('t5w');if(!w){w=document.createElement('div');w.id='t5w';el.after(w);const hel=$('mh');const tb=document.createElement('div');tb.className='t5tabs';tb.innerHTML='<button data-t="now" class="on">🏆 Top 5</button><button data-t="arch">📦 Archiwum</button>';hel.after(tb);tb.querySelectorAll('button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;tb.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));menuTop()})}return w}
  menuTop=async function(){const w=box();if(!w)return;const hel=$('mh');
-  if(tab=='now'){hel.textContent='🏆 Top 5 · nowy sezon rankingu';const R=await Promise.all(LS.map(T=>T[0]=='lubon'?null:load(T[0],T[2])));if(tab!='now')return;
-   w.className='t5g';w.innerHTML=LS.map((T,i)=>{if(T[0]=='lubon')return '<div class="c"><div class="lb">'+T[1]+'</div><div class="em">🔒 wkrótce</div></div>';const r=R[i];const L=srt((r.on||r.loc).filter(isNew)).slice(0,5);return '<div class="c"><div class="lb">'+T[1]+'</div>'+(L.length?'<ol>'+L.map(li).join('')+'</ol>':'<div class="em">Brak wyników. Bądź pierwszy!</div>')+'</div>'}).join('')}
+  if(tab=='now'){hel.textContent='🏆 Top 5 · nowy sezon rankingu';const R=await Promise.all(LS.map(T=>load(T[0],T[2])));if(tab!='now')return;
+   w.className='t5g';w.innerHTML=LS.map((T,i)=>{const r=R[i];const L=srt((r.on||r.loc).filter(isNew)).slice(0,5);return '<div class="c"><div class="lb">'+T[1]+'</div>'+(L.length?'<ol>'+L.map(li).join('')+'</ol>':'<div class="em">Brak wyników. Bądź pierwszy!</div>')+'</div>'}).join('')}
   else{hel.textContent='📦 Archiwum · wyniki sprzed 12.11.2026';const R=await Promise.all(LA.map(T=>load(T[0],T[2])));if(tab!='arch')return;
    w.className='t5g t5a';w.style.gridTemplateColumns='1fr';w.innerHTML=LA.map((T,i)=>{const r=R[i],A=(r.on||r.loc).filter(e=>!isNew(e));if(!A.length&&(T[0]=='trening'||T[0]=='miedzyS'))return '';const L=srt(A).slice(0,10);return '<div class="c"><div class="lb">'+T[1]+' <small>· '+A.length+' wyników</small></div>'+(L.length?'<ol>'+L.map(e=>li(e).replace('</b></li>','</b><small style="color:#8fae98;font-weight:600"> ('+(+e.t||0)+')</small></li>')).join('')+'</ol>':'<div class="em">Brak wyników</div>')+'</div>'}).join('')||'<div class="em">Archiwum jest puste</div>'}};
  /* ranking po rundzie liczy tylko wyniki od nowego sezonu */
@@ -3957,5 +3957,7 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
   _dw.apply(this,arguments);try{if(playing)drawFX()}catch(e){}};
 }catch(e){console.warn('P84',e)}})();
 </script>
+<script>/* P87: przycisk Złotów 3D na sam dół menu */
+(function(){const mv=()=>{try{const a=document.getElementById('go3d'),v=document.getElementById('v-main');if(a&&v&&v.lastElementChild!==a){a.style.marginTop='14px';v.appendChild(a)}}catch(e){}};mv();setTimeout(mv,800);setTimeout(mv,3000)})();</script>
 </body>
 </html>
