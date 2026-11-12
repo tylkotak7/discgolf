@@ -3227,7 +3227,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 krótkich dołków w parku nad Wartą – dużo szans na ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha, a on chodzi po polu razem z Tobą','🏃 Beta: rzut z rozbiegu (Opcje → Beta)','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
+ const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','⛓️ Trafiony dysk zostaje w koszu do końca dołka','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Przebudowa wszystkich 18 dołków według uwag z pola','1: krótki tee, par 3, dwie linie (hyzer/backhand) z kępą drzew i OB po prawej','5 i 6: asfaltowa droga, jeżdżą auta, a kierowcy komentują rzuty','5: 3× większa rzeczka · 6: rozległy staw · 4: staw za drogą','7: brzozy, działka ze szklarnią i działkowiczem · 8: pole zboża i większa woda za koszem','9: mostek przez rzeczkę · 10: kosz z 9, ścieżka i tee od 11 · 14: wąski fairway z tabliczkami 50–200 m i dom w oddali','Usunięte mando na 2, 3, 8, 10, 17, hazard na 12 i 15, szałas na 17 · 18: z górki ~1,5 m i pole za koszem']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie 4 mapy naraz (Złotów 12, Złotów 22, Międzybłocie, Luboń beta – wkrótce)','Przycisk „Zmień pogodę” na kafelku pola – kafelek pokazuje porę roku i pogodę','Top 5 obok siebie: Złotów 12 i 22, pod spodem Międzybłocie i Luboń','Nowy sezon rankingu – wszystkie wcześniejsze wyniki są w zakładce 📦 Archiwum','Pole treningowe przeniesione do Opcji → Old school']],
   ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
@@ -3686,7 +3686,9 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
 #onsh button{width:100%;margin:6px 0;padding:12px;border-radius:14px;border:0;font:900 15px 'Baloo 2',system-ui;background:#3fd16a;color:#08210f}
 #onsh button.s{background:rgba(255,255,255,.1);color:#fff}#onsh input{width:100%;box-sizing:border-box;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.25);color:#fff;font:900 22px system-ui;text-align:center;letter-spacing:.3em;text-transform:uppercase}
 #onsh .code{font:900 40px system-ui;letter-spacing:.25em;text-align:center;color:#7dff9a;margin:6px 0}
-#onchip{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 58px);z-index:20;background:rgba(10,30,60,.82);color:#cfe8ff;font:800 11px system-ui;padding:4px 10px;border-radius:10px;pointer-events:none;display:none;white-space:nowrap}
+#onchip{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 112px);z-index:20;background:rgba(10,30,60,.86);color:#cfe8ff;font:800 12px system-ui;padding:6px 10px;border-radius:12px;pointer-events:none;display:none;min-width:200px;box-shadow:0 3px 10px rgba(0,0,0,.35)}
+#onchip .r{display:flex;gap:8px;align-items:baseline;white-space:nowrap}#onchip .r b{margin-left:auto;font:900 15px system-ui;color:#fff}#onchip .r.me b{color:#7dff9a}#onchip .r small{color:#9cc3e6;font-weight:700}#onchip .hd{font:800 10px system-ui;color:#8fb4d8;letter-spacing:.05em;margin-bottom:2px}
+.onend{margin:8px 0;padding:10px;border-radius:14px;background:rgba(60,140,220,.16);border:1px solid rgba(125,200,255,.4);color:#dff0ff;font:800 14px system-ui}.onend div{display:flex;justify-content:space-between;padding:2px 0}
 .rolb{white-space:nowrap}
 </style>
 <script>/* P84 Etap 6: statystyki od nowa, roller, rozbieg (beta), Luboń (beta), gra online na kod */
@@ -3699,15 +3701,15 @@ try{const _bb=buildBar;buildBar=function(){_bb();const sh=$('sh');if(!sh||sh.que
   rb.onclick=e=>{e.stopPropagation();ROLL=!ROLL;if(ROLL&&typeof TOMA!='undefined'){TOMA=false;sh.querySelectorAll('.tomb:not(.rolb)').forEach(x=>x.classList.remove('on'))}rb.classList.toggle('on',ROLL);pill(ROLL?'🛞 Roller: dysk leci nisko i toczy się po ziemi, na końcu skręca':'Rzut zwykły')};
   [...sh.children].forEach(x=>{if(x!==rb)x.addEventListener('click',()=>{ROLL=false;rb.classList.remove('on')})});sh.appendChild(rb)};buildBar()}catch(e){console.warn('roller bar',e)}
  const rDist=p=>(20+58*Math.min(1,p))*[.6,.85,1][di]*SLK();
- function rPath(x0,y0,a,L,sg){const P=[[x0,y0]],air=L*.22;let x=x0,y=y0,hd=a;for(let s=0;s<L;s+=2){const f=s/L;if(s>air)hd=a+sg*1.05*Math.pow((s-air)/(L-air),2.2);x+=Math.sin(hd)*2;y-=Math.cos(hd)*2;P.push([x,y])}return{P,air}}
+ function rPath(x0,y0,a,L,sg){const P=[[x0,y0]],air=L*.22;let x=x0,y=y0,hd=a;for(let s=0;s<L;s+=2){const f=s/L;if(s>air)hd=a+sg*.55*Math.pow((s-air)/(L-air),2.4);x+=Math.sin(hd)*2;y-=Math.cos(hd)*2;P.push([x,y])}return{P,air}}
  const rSign=()=>{const c=typeof curve=='number'&&curve!=2?curve:0;return(hand>0?-1:1)*(1+c*.6)};
  addEventListener('pointerup',()=>{if(!ROLL||!disc||disc.rol||disc.tom||disc.trail.length>1)return;const D=disc.D,p=disc.v0/(D.v*(hand<0?.95:1)*KSf()*SLK()),L=rDist(p)/M,R=rPath(disc.x,disc.y,disc.a,L,rSign());
   disc.rol={P:R.P,air:R.air/2|0,i:0,alt:0,done:false,sp:3.4};});
  try{const _alt=altNow;altNow=function(d){return d&&d.rol?d.rol.alt:_alt(d)}}catch(e){}
  const _stR=step;step=function(){const d=disc;if(!d||!d.rol||d.rol.done)return _stR();const R=d.rol,h=holes[hi],n=R.P.length;
   const end=()=>{R.done=true;R.alt=0;d.v=.0001;d.v0=1;return _stR()};
-  const fr=R.i/n;R.sp=Math.max(.35,3.4*Math.pow(1-fr,.55));R.i+=R.sp;const k=Math.min(n-1,R.i|0),q=R.P[k];
-  if(R.i<R.air){const f=R.i/R.air;R.alt=Math.sin(f*Math.PI)*5}else R.alt=.8+Math.abs(Math.sin(R.i*.35))*.6;
+  const fr=R.i/n;R.sp=R.i<R.air?3.2:Math.max(.3,2.3*Math.pow(1-fr,.5));R.i+=R.sp;const k=Math.min(n-1,R.i|0),q=R.P[k];
+  if(R.i<R.air){const f=R.i/R.air;R.alt=Math.sin(f*Math.PI)*5}else{R.alt=0;if(R.rs==null)R.rs=d.trail.length;R.ang=Math.atan2(q[0]-(R.P[Math.max(0,k-3)][0]),-(q[1]-R.P[Math.max(0,k-3)][1]));R.spin=(R.spin||0)+R.sp*.9}
   d.x=q[0];d.y=q[1];d.trail.push([d.x,d.y,R.alt]);if(d.trail.length%6==0)try{hud()}catch(e){}
   if(d.x<0||d.x>W||d.y<0||d.y>H)return end();
   if(R.i>=R.air){for(const t of (h._col||h.trees)){const dx=d.x-t[0],dy=d.y-t[1],dd=Math.hypot(dx,dy);if(dd<t[2]+2){const kk=(t[2]+5)/(dd||1);d.x=t[0]+dx*kk;d.y=t[1]+dy*kk;try{sfx.tree&&sfx.tree()}catch(e){}return end()}}
@@ -3715,11 +3717,21 @@ try{const _bb=buildBar;buildBar=function(){_bb();const sh=$('sh');if(!sh||sh.que
    for(const w of h.rivers||[])if(d.x>w[0]&&d.x<w[2]&&d.y>w[1]&&d.y<w[3])return end();
    const bd=Math.hypot(d.x-h.b[0],d.y-h.b[1]);if(bd<5){if(R.sp<1.6&&Math.random()<.3){R.done=true;return hole()}const nx=(d.x-h.b[0])/(bd||1),ny=(d.y-h.b[1])/(bd||1);d.x=h.b[0]+nx*9;d.y=h.b[1]+ny*9;try{sfx.chains&&sfx.chains()}catch(e){}return end()}}
   if(R.i>=n-1)return end()};
+
+ /* animacja toczenia: dysk na krawędzi, kręci się, zostawia ślad w trawie */
+ try{const _da=discAt3;discAt3=function(x,y,al,col,fly){const d=disc;if(!d||!d.rol||d.rol.rs==null||d.rol.done||x!==d.x||y!==d.y)return _da.apply(this,arguments);const R=d.rol;
+   g.save();const T=d.trail;g.lineCap='round';g.strokeStyle='rgba(60,45,25,.35)';g.lineWidth=1.6;g.beginPath();for(let i=R.rs;i<T.length;i++){i==R.rs?g.moveTo(T[i][0],T[i][1]):g.lineTo(T[i][0],T[i][1])}g.stroke();
+   const a=R.ang||0,lean=Math.sin((R.spin||0)*.18)*.12+(R.sp<1.2?(1.2-R.sp)*.5*(hand>0?-1:1):0);
+   g.translate(x,y);g.fillStyle='rgba(0,0,0,.28)';g.beginPath();g.ellipse(2,1.2,4.6,1.4,a,0,7);g.fill();
+   g.rotate(lean);const r=4.2,rx=Math.max(1.1,r*Math.abs(Math.sin(a))),cy=-r;g.fillStyle=col||'#22c55e';g.beginPath();g.ellipse(0,cy,rx,r,0,0,7);g.fill();g.strokeStyle='rgba(0,0,0,.5)';g.lineWidth=.6;g.stroke();
+   g.fillStyle='rgba(0,0,0,.18)';g.beginPath();g.ellipse(Math.sign(Math.sin(a)||1)*rx*.25,cy,rx*.55,r*.7,0,0,7);g.fill();
+   const s=(R.spin||0)*(Math.sin(a)>=0?1:-1);g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=.9;g.beginPath();g.moveTo(Math.cos(s)*rx*.85,cy+Math.sin(s)*r*.85);g.lineTo(-Math.cos(s)*rx*.85,cy-Math.sin(s)*r*.85);g.stroke();
+   g.fillStyle='rgba(255,255,255,.4)';g.beginPath();g.ellipse(-rx*.3,cy-r*.45,rx*.25,r*.2,0,0,7);g.fill();g.restore()}}catch(e){console.warn('roll draw',e)}
+ try{const _pv=PREV;}catch(e){}
  try{const _PV=PREV;PREV=function(a,l,len){if(!ROLL)return _PV.apply(this,arguments);const D=discs[di],p=Math.min(l,110)/110,L=rDist(p)/M,R=rPath(lie.x,lie.y,a,L,rSign()),P=R.P.filter((q,i)=>i%2==0),e=P[P.length-1];return{pts:P,ex:e[0],ey:e[1],d:Math.hypot(e[0]-lie.x,e[1]-lie.y)*M}}}catch(e){}
 /* ===== 2. ROZBIEG (beta) ===== */
 let RUN=false;try{RUN=localStorage.getItem('dg_runup')=='1'}catch(e){}
  const runOK=()=>RUN&&!ROLL&&!(typeof TOMA!='undefined'&&TOMA)&&lie&&holes&&holes[hi]&&dm(lie)>15;
- try{const _sl=window.SLK;window.SLK=function(){return _sl()*(runOK()?1.06:1)}}catch(e){}
  const RS={t:0,a:0};let wasDisc=null;
  setInterval(()=>{try{if(disc&&disc!==wasDisc&&disc.trail&&disc.trail.length<4&&RUN&&!disc.rol&&!disc.tom&&dm({x:disc.x,y:disc.y})>15){RS.t=performance.now();RS.a=disc.a}wasDisc=disc}catch(e){}},30);
  try{const _pd=playerDraw;playerDraw=function(x,y,hold){if(!RS.t||!playing)return _pd.apply(this,arguments);const e=(performance.now()-RS.t)/1000;if(e>1.3){RS.t=0;return _pd.apply(this,arguments)}
@@ -3730,33 +3742,38 @@ let RUN=false;try{RUN=localStorage.getItem('dg_runup')=='1'}catch(e){}
 try{
  const sp=(h,n,seed,avoid)=>{const R=rng(seed),T=[];let tries=0;while(T.length<n&&tries++<400){const x=12+R()*(W-24),y=12+R()*(H-24);if(Math.hypot(x-h.tee[0],y-h.tee[1])<34||Math.hypot(x-h.b[0],y-h.b[1])<30)continue;if(Math.abs(h.lat([x,y]))<(avoid||26)&&h.along([x,y])>-10&&h.along([x,y])<h.L+10)continue;T.push([x,y,11+((R()*6)|0)])}return T};
  const OPEN=h=>{h.mead=[[-20,-20,W+20,H+20]];h.trees=[];h.open=1;const R=rng((h.b[0]|0)*31+(h.tee[1]|0));for(let c=0;c<7;c++){let cx,cy,k=0;do{cx=10+R()*(W-20);cy=40+R()*(H-80);k++}while(k<40&&(Math.abs(h.lat([cx,cy]))<62||Math.hypot(cx-h.b[0],cy-h.b[1])<50||Math.hypot(cx-h.tee[0],cy-h.tee[1])<50));if(k>=40)continue;const n=2+(R()*3|0);for(let j=0;j<n;j++)h.trees.push([cx+(R()-.5)*34,cy+(R()-.5)*30,12+(R()*5|0)])}};
+ const MD=(h,f,side)=>{const L=h.L,m=h.rel(L*f,side*16),e=h.rel(L*f,side*220),dz=h.rel(L*Math.max(0,f-.14),0);h.md=[{m,e,dz}];h.trees=h.trees.filter(t=>Math.hypot(t[0]-m[0],t[1]-m[1])>t[2]+8);h.trees.push([m[0],m[1],10])};
+ const RIV=(h,side)=>{h.rivers.push(side<0?[-20,-20,46,H+20]:[W-46,-20,W+20,H+20])};
+ /* wg mapy „Disc Golf Luboń – ścieżka edukacyjno-rekreacyjna": 1829 m, par 60 */
  const HD=[
-  {d:52,par:3,t:'o',p:[[0,0],[6,-40],[14,-80]],o:h=>{h.roads.push({pts:[[-30,H-24],[W+30,H-30]],w:16})},n:5},
-  {d:46,par:3,t:'w',p:[[0,0],[0,-80]],w:106},
-  {d:58,par:3,t:'o',p:[[0,0],[-8,-50],[-4,-100]],n:4,o:h=>{const m=h.rel(h.L*.6,6);h.extra=[[m[0],m[1],13]]}},
-  {d:42,par:3,t:'w',p:[[0,0],[4,-40],[-14,-80]],w:104},
-  {d:55,par:3,t:'o',p:[[0,0],[10,-60],[6,-110]],n:4,o:h=>{h.rivers.push([-20,-20,52,H+20])}},
-  {d:92,par:4,t:'w',p:[[0,0],[0,-60],[16,-120],[48,-160]],w:102},
-  {d:48,par:3,t:'o',p:[[0,0],[-10,-90]],n:6},
-  {d:60,par:3,t:'w',p:[[0,0],[-6,-60],[6,-120]],w:118},
-  {d:44,par:3,t:'o',p:[[0,0],[12,-70]],n:5},
-  {d:50,par:3,t:'w',p:[[0,0],[10,-50],[0,-100]],w:108},
-  {d:135,par:5,t:'o',p:[[0,0],[10,-80],[-6,-170],[10,-250]],n:9,o:h=>{h.rivers.push([W-46,-20,W+20,H+20])}},
-  {d:45,par:3,t:'w',p:[[0,0],[-6,-80]],w:106},
-  {d:56,par:3,t:'o',p:[[0,0],[8,-60],[-6,-110]],n:5},
-  {d:47,par:3,t:'w',p:[[0,0],[10,-40],[18,-90]],w:106},
-  {d:88,par:4,t:'m',p:[[0,0],[0,-80],[-20,-150]],w:84,n:4},
-  {d:95,par:4,t:'w',p:[[0,0],[-10,-70],[-30,-140],[-34,-180]],w:102},
-  {d:90,par:4,t:'o',p:[[0,0],[16,-90],[6,-170]],n:6},
-  {d:50,par:3,t:'o',p:[[0,0],[-4,-90]],n:4,o:h=>{h.roads.push({pts:[[-30,26],[W+30,20]],w:16})}}];
- const LB=HD.map((d,i)=>{const k=330/(d.d*5),h=mk(Object.assign({},d,{k}),3101+i*7);h.par=d.par;h.name='Luboń';h._forest=1;
-   if(d.t=='o'){const ex=h.extra||[];OPEN(h);h.trees=sp(h,d.n||5,77+i,30).concat(ex)}else if(d.t=='m'){const kp=h.trees.filter(t=>h.along(t)>h.L*.45);h.trees=kp.concat(sp(h,d.n||4,91+i,34).filter(t=>h.along(t)<h.L*.45));h.mead=[[-20,h.rel(h.L*.45,0)[1],W+20,H+20]]}
+  {d:77,par:3,t:'m',p:[[0,0],[4,-50],[10,-100]],w:96,n:4},
+  {d:63,par:3,t:'w',p:[[0,0],[8,-40],[4,-80],[-8,-110]],w:96},
+  {d:105,par:3,t:'w',p:[[0,0],[-6,-60],[-10,-120],[-4,-170]],w:100,o:h=>MD(h,.78,-1)},
+  {d:67,par:3,t:'o',p:[[0,0],[-6,-60],[-14,-110]],n:5,o:h=>RIV(h,1)},
+  {d:100,par:3,t:'w',p:[[0,0],[10,-60],[6,-120],[-12,-170]],w:100},
+  {d:121,par:4,t:'w',p:[[0,0],[2,-60],[-10,-120],[-40,-160],[-80,-176]],w:96,o:h=>MD(h,.6,1)},
+  {d:69,par:3,t:'o',p:[[0,0],[8,-60],[12,-110]],n:6},
+  {d:55,par:3,t:'m',p:[[0,0],[-4,-90]],w:96,n:4},
+  {d:67,par:3,t:'w',p:[[0,0],[6,-50],[4,-100]],w:100},
+  {d:93,par:3,t:'w',p:[[0,0],[14,-60],[30,-110],[36,-150]],w:100},
+  {d:259,par:5,t:'m',p:[[0,0],[10,-90],[34,-180],[30,-260],[-6,-320],[-30,-360]],w:92,n:5,o:h=>MD(h,.86,1)},
+  {d:67,par:3,t:'w',p:[[0,0],[-4,-90]],w:100},
+  {d:102,par:3,t:'o',p:[[0,0],[-8,-80],[-6,-160]],n:6,o:h=>RIV(h,-1)},
+  {d:87,par:3,t:'o',p:[[0,0],[6,-80],[2,-150]],n:6,o:h=>RIV(h,-1)},
+  {d:160,par:4,t:'o',p:[[0,0],[10,-80],[22,-170],[30,-250]],n:7,o:h=>RIV(h,1)},
+  {d:102,par:4,t:'w',p:[[0,0],[-10,-50],[-8,-110],[14,-160]],w:96},
+  {d:129,par:4,t:'m',p:[[0,0],[4,-80],[10,-170]],w:92,n:5},
+  {d:106,par:3,t:'o',p:[[0,0],[-6,-90],[-4,-170]],n:5,o:h=>{h.roads.push({pts:[[-30,H-22],[W+30,H-28]],w:16})}}];
+ const LB=HD.map((d,i)=>{const k=Math.min(1.3,380/(d.d*5)),dd=Object.assign({},d);delete dd.o;const h=mk(Object.assign(dd,{k}),3101+i*7);h.par=d.par;h.name='Luboń';h._forest=1;
+   if(d.t=='o'){OPEN(h);h.trees=h.trees.concat(sp(h,d.n||5,77+i,34))}else if(d.t=='m'){const kp=h.trees.filter(t=>h.along(t)>h.L*.5);OPEN(h);h.trees=h.trees.concat(kp)}
+   if(d.o)d.o(h);
    h.trees=h.trees.filter(t=>!(h.rivers||[]).some(r=>t[0]>r[0]-8&&t[0]<r[2]+8)&&!(h.roads||[]).some(r=>r.pts.some((q,j)=>j&&Math.abs(t[1]-q[1])<r.w/2+t[2]*.8)));h.lub=1;return h});
  window.LB=LB;
- const c=CARDS.find(x=>x.k=='lubon');if(c){c.lock=0;c.hl=()=>LB;c.n='Luboń · BETA';c.d='park nad Wartą · krótkie dołki'}
+ const c=CARDS.find(x=>x.k=='lubon');if(c){c.lock=0;c.hl=()=>LB;c.n='Luboń · BETA';c.d='park nad Wartą · 1829 m · par 60'}
  try{CN2.lubon=['Luboń',()=>LB,'dg_topl']}catch(e){}
  /* łapanie na Luboniu (beta – łatwiej o ace) */
- const _stL=step;step=function(){const d=disc,h=holes&&holes[hi];if(d&&h&&h.lub&&!d.rol&&!d.tom){const bd=Math.hypot(d.x-h.b[0],d.y-h.b[1]);if(bd<20&&d.v<7.6*KSf()){disc=d;return hole()}}return _stL()};
+ const _stL=step;step=function(){const d=disc,h=holes&&holes[hi];if(d&&h&&h.lub&&h.par==3&&!d.rol&&!d.tom){const bd=Math.hypot(d.x-h.b[0],d.y-h.b[1]);if(bd<16&&d.v<6.6*KSf()){disc=d;return hole()}}return _stL()};
+ const _hL=hole;hole=function(){const h=holes&&holes[hi];if(h&&h.lub&&h.par>=4&&throws<=1){const d=disc||{x:h.b[0],y:h.b[1]+10};const dx=(lie?lie.x:h.tee[0])-h.b[0],dy=(lie?lie.y:h.tee[1])-h.b[1],l=Math.hypot(dx,dy)||1;lie={x:h.b[0]+dx/l*16,y:h.b[1]+dy/l*16};disc=null;try{sfx.chains&&sfx.chains()}catch(e){}say('💥 Odbił się od kosza!','na par '+h.par+' nie ma ace – putt z '+Math.round(16*(h.M||.2))+' m','#c9a227',100);try{hud()}catch(e){}return}return _hL.apply(this,arguments)};
  try{renderCards()}catch(e){}
 }catch(e){console.warn('Luboń',e)}
 /* ===== 4. GRA ONLINE NA KOD ===== */
@@ -3778,13 +3795,14 @@ try{
  function enter(c){leave();ON.code=c;ON.peers={};ON.unsub=DB.collection('pokoje').doc(c).collection('g').onSnapshot(q=>{q.forEach(d=>{if(d.id===me())return;const v=d.data();const o=ON.peers[d.id];if(o&&v.k!==o.k&&v.tr&&v.tr.length>1)ON.ghost[d.id]={tr:v.tr,t:performance.now()};ON.peers[d.id]=v});const p=$('onppl');if(p)p.innerHTML=peersTxt()},e=>{console.warn('onSnapshot',e);toast('⚠️ Brak odczytu pokoju (reguły Firebase)')});send(true);view()}
  function leave(){try{ON.unsub&&ON.unsub()}catch(e){}if(ON.code&&DB)try{DB.collection('pokoje').doc(ON.code).collection('g').doc(me()).delete()}catch(e){}ON.code=null;ON.unsub=null;ON.peers={};ON.ghost={}}
  window.addEventListener('beforeunload',()=>{try{leave()}catch(e){}});
+ try{const _fn=finish;finish=function(){const r=_fn.apply(this,arguments);try{if(ON.code){const P=Object.values(ON.peers),f=v=>v==0?'E':(v>0?'+':'')+v,er=$('er');if(er&&!er.querySelector('.onend'))er.insertAdjacentHTML('beforeend','<div class="onend"><div>👥 Pokój '+ON.code+'</div><div><span>Ty</span><b>'+f(total)+'</b></div>'+(P.length?P.map(p=>'<div><span>'+esc(p.n)+' <small>('+(p.hi!=null?'dołek '+(p.hi+1):'w menu')+')</small></span><b>'+f(p.tot||0)+'</b></div>').join(''):'<div><small>kolega jeszcze nie grał</small></div>')+'</div>')}}catch(e){}return r}}catch(e){}
  function send(force){if(!ON.code||!DB)return;const st={n:String(pname||SV.nick||'Gracz').slice(0,12),c:layout,hi:playing?hi:null,x:lie?Math.round(lie.x):null,y:lie?Math.round(lie.y):null,th:playing?throws:0,tot:playing?total:0,k:ON.k,tr:ON.tr||[],at:Date.now(),ch:(SV.char&&SV.char.shirt)||0};
   const key=JSON.stringify([st.hi,st.x,st.y,st.th,st.k]);if(!force&&key===ON.last)return;ON.last=key;DB.collection('pokoje').doc(ON.code).collection('g').doc(me()).set(st).catch(e=>console.warn('send',e))}
  let cur=null;setInterval(()=>{try{if(disc&&disc!==cur){cur=disc}if(!disc&&cur){const T=cur.trail||[];const S=[];const st=Math.max(1,Math.floor(T.length/40));for(let i=0;i<T.length;i+=st)S.push([Math.round(T[i][0]),Math.round(T[i][1])]);if(T.length)S.push([Math.round(T[T.length-1][0]),Math.round(T[T.length-1][1])]);ON.tr=S;ON.k++;cur=null}send(false)}catch(e){}},400);
  setInterval(()=>{try{send(true)}catch(e){}},15000);
  /* przycisk w menu */
  const b=document.createElement('button');b.id='onlb';b.innerHTML='👥 Gra z kolegą (kod)';const go=$('go');if(go)go.after(b);b.onclick=()=>{view();sh.classList.add('on')};
- setInterval(()=>{b.innerHTML=ON.code?'👥 Pokój '+ON.code+' · '+Object.keys(ON.peers).length+' kolega(ów)':'👥 Gra z kolegą (kod)';const P=Object.values(ON.peers);chip.style.display=playing&&ON.code?'block':'none';if(ON.code)chip.textContent='👥 '+ON.code+(P.length?' · '+P.map(p=>esc(p.n)+': '+(p.hi!=null?'dołek '+(p.hi+1)+' · '+(p.tot>0?'+':'')+(p.tot||0):'w menu')).join(' · '):' · czekam na kolegę')},700);
+ setInterval(()=>{b.innerHTML=ON.code?'👥 Pokój '+ON.code+' · '+Object.keys(ON.peers).length+' kolega(ów)':'👥 Gra z kolegą (kod)';const P=Object.values(ON.peers);chip.style.display=playing&&ON.code?'block':'none';if(ON.code&&playing){const f=v=>v==0?'E':(v>0?'+':'')+v,h=holes[hi];let html='<div class="hd">👥 POKÓJ '+ON.code+' · WYNIKI</div><div class="r me"><span>Ty</span><small>dołek '+(hi+1)+' · '+throws+' rz.</small><b>'+f(total)+'</b></div>';html+=P.length?P.map(p=>'<div class="r"><span>'+esc(p.n)+'</span><small>'+(p.hi!=null?'dołek '+(p.hi+1)+' · '+(p.th||0)+' rz.':'w menu')+'</small><b>'+f(p.tot||0)+'</b></div>').join(''):'<div class="r"><small>czekam na kolegę…</small></div>';chip.innerHTML=html}},700);
  /* rysowanie kolegi i ducha rzutu */
  function buddy(x,y,n,col){g.save();g.translate(x,y);g.globalAlpha=.85;g.fillStyle='rgba(0,0,0,.3)';g.beginPath();g.ellipse(1.5,2,4,2,0,0,7);g.fill();g.fillStyle='#2f3448';g.fillRect(-2,-1,1.6,4);g.fillRect(.4,-1,1.6,4);g.fillStyle=col;g.beginPath();g.roundRect(-3,-7.5,6,7,1.6);g.fill();g.fillStyle='#f0c8a0';g.beginPath();g.arc(0,-9.6,2.4,0,7);g.fill();g.fillStyle='#e7533c';g.beginPath();g.ellipse(0,-11,3,1.3,0,0,7);g.fill();
   g.globalAlpha=1;g.font='800 6px system-ui';const w=g.measureText(n).width+6;g.fillStyle='rgba(20,60,120,.85)';g.beginPath();g.roundRect(-w/2,-21,w,8,3);g.fill();g.fillStyle='#fff';g.textAlign='center';g.textBaseline='middle';g.fillText(n,0,-16.8);g.restore()}
@@ -3792,11 +3810,20 @@ try{
  const _dw=drawWorld;drawWorld=function(){_dw.apply(this,arguments);if(!ON.code||!playing)return;try{g.save();worldT();let i=0;const now=performance.now();
   for(const id in ON.peers){const p=ON.peers[id];i++;if(p.c!==layout||p.hi!==hi)continue;const G=ON.ghost[id];
    if(G){const e=(now-G.t)/1600;if(e<1.3){const T=G.tr,f=Math.min(1,e),k=Math.min(T.length-1,Math.floor(f*(T.length-1)));g.strokeStyle='rgba(150,200,255,.45)';g.lineWidth=1.2;g.setLineDash([2,3]);g.beginPath();for(let j=0;j<=k;j++){j?g.lineTo(T[j][0],T[j][1]):g.moveTo(T[j][0],T[j][1])}g.stroke();g.setLineDash([]);const q=T[k];g.fillStyle='rgba(180,220,255,.85)';g.beginPath();g.ellipse(q[0],q[1],3.2,2.2,0,0,7);g.fill()}else delete ON.ghost[id]}
-   if(p.x!=null)buddy(p.x+6,p.y+2,esc(p.n),COLS[(i-1)%COLS.length])}
+   if(p.x!=null)buddy(p.x+6,p.y+2,esc(p.n)+' '+((p.tot||0)==0?'E':((p.tot>0?'+':'')+p.tot)),COLS[(i-1)%COLS.length])}
   g.restore()}catch(e){}};
 }catch(e){console.warn('online',e)}
+
+/* wyzwania dnia są wyłączone – bez komunikatów */
+try{dDone=function(){}}catch(e){}
+/* ===== 6. dysk zostaje w koszu po trafieniu ===== */
+try{let INB=null;const _ho=hole;hole=function(){const h=holes&&holes[hi],d=disc;const r=_ho.apply(this,arguments);try{if(h&&holes[hi]===h&&!disc&&scores.length&&scores[scores.length-1]===throws)INB={h,t:performance.now(),c:(d&&d.D&&d.D.col)||discs[di].col}}catch(e){}return r};
+ const _ld=load;load=function(){INB=null;return _ld.apply(this,arguments)};
+ const _b3=basket3;basket3=function(x,y,s){const r=_b3.apply(this,arguments);try{if(INB&&playing&&holes[hi]===INB.h&&Math.abs(x-INB.h.b[0])<1.5&&Math.abs(y-INB.h.b[1])<3){const a=Math.min(1,(performance.now()-INB.t)/350),dy=-24+13*a*a,bo=a>=1?0:0;g.save();g.translate(x,y);g.scale(s||1,s||1);
+   g.fillStyle=INB.c;g.beginPath();g.ellipse(.6,dy-.4,5.4,1.9,-.08,0,7);g.fill();g.strokeStyle='rgba(0,0,0,.45)';g.lineWidth=.45;g.stroke();g.fillStyle='rgba(255,255,255,.35)';g.beginPath();g.ellipse(-1.2,dy-1,2.2,.6,-.08,0,7);g.fill();
+   if(a>=1){g.strokeStyle='rgba(205,214,222,.9)';g.lineWidth=.5;for(const cx of[-5,-2.5,0,2.5,5]){g.beginPath();g.moveTo(cx*.9,-22);g.quadraticCurveTo(cx*1.05,-16,cx*.8,-11.4);g.stroke()}}g.restore()}}catch(e){}return r}}catch(e){console.warn('inB',e)}
 /* ===== 5. opcja rozbiegu w Opcjach ===== */
-try{const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);try{const v=$('optv');if(!v||$('orun'))return;const d=document.createElement('div');d.className='kcc';d.id='orun';d.innerHTML='<h4>🧪 Beta</h4><div class="orow" style="display:flex;align-items:center;gap:10px"><span style="flex:1;font:700 13px system-ui">🏃 Rzut z rozbiegu (x-step) – postać robi rozbieg, dalsze rzuty (+6%) powyżej 15 m</span><button id="orunb" style="min-width:64px;padding:8px;border-radius:12px;border:0;font:900 13px system-ui"></button></div>';v.appendChild(d);
+try{const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);try{const v=$('optv');if(!v||$('orun'))return;const d=document.createElement('div');d.className='kcc';d.id='orun';d.innerHTML='<h4>🧪 Beta</h4><div class="orow" style="display:flex;align-items:center;gap:10px"><span style="flex:1;font:700 13px system-ui">🏃 Rzut z rozbiegu (x-step) – animacja rozbiegu przy rzutach powyżej 15 m</span><button id="orunb" style="min-width:64px;padding:8px;border-radius:12px;border:0;font:900 13px system-ui"></button></div>';v.appendChild(d);
    const b=$('orunb'),upd=()=>{b.textContent=RUN?'WŁ':'WYŁ';b.style.background=RUN?'#3fd16a':'rgba(255,255,255,.12)';b.style.color=RUN?'#08210f':'#fff'};upd();b.onclick=()=>{RUN=!RUN;try{localStorage.setItem('dg_runup',RUN?'1':'0')}catch(e){}upd()}}catch(e){}}}catch(e){}
 })();</script>
 <style id="p84css">
