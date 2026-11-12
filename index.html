@@ -768,7 +768,7 @@ if(d.x<0||d.x>W||d.y<0||d.y>H)return stop('🚫 OB!','+1 kara · rzut z poprzedn
 if(d.v<0.5*KSf()){for(const t of (h._col||h.trees)){const dx=d.x-t[0],dy=d.y-t[1],dd=Math.hypot(dx,dy);if(dd<t[2]+4){const k=(t[2]+6)/(dd||1);d.x=t[0]+dx*k;d.y=t[1]+dy*k}}d.x=Math.max(6,Math.min(W-6,d.x));d.y=Math.max(6,Math.min(H-6,d.y));const dist=Math.round(Math.hypot(d.x-lie.x,d.y-lie.y)*M);if(dist>=100)unlock('far');
 for(const w of h.water)if(((d.x-w[0]-w[2]/2)/(w[2]/2))**2+((d.y-w[1]-w[3]/2)/(w[3]/2))**2<1)return stop('💦 Woda!','+1 kara · '+dist+' m','#2b6cb0');
 for(const w of h.rivers||[])if(d.x>w[0]&&d.x<w[2]&&d.y>w[1]&&d.y<w[3])return stop('💦 Woda!','+1 kara · '+dist+' m','#2b6cb0');
-if(h.obF&&h.obF(d.x,d.y))return stop('🚫 OB!','+1 kara · rzut z poprzedniego miejsca','#c0392b');
+if(h.obF&&h.obF(d.x,d.y)){const T=d.trail||[];let p=null;for(let i=T.length-1;i>=0;i--){if(!h.obF(T[i][0],T[i][1])){p=T[i];break}}if(p){const q=T[Math.max(0,T.indexOf(p)-6)]||p,dx=q[0]-p[0],dy=q[1]-p[1],l=Math.hypot(dx,dy)||1;lie={x:p[0]+dx/l*3,y:p[1]+dy/l*3}}return stop('🚫 OB!','+1 kara · rzut z miejsca, gdzie dysk wyleciał','#c0392b')}
 let rlf=0;for(const o of h.rf||[]){const dx=d.x-h.b[0],dy=d.y-h.b[1],l=Math.hypot(dx,dy)||1;if(Math.hypot(d.x-o.x,d.y-o.y)<o.r){let k=0;while(Math.hypot(d.x-o.x,d.y-o.y)<o.r+4&&k++<200){d.x+=dx/l;d.y+=dy/l}rlf=o}}
 if(rlf){lie={x:d.x,y:d.y};disc=null;say(rlf.ant?'🐜 Relief – mrowisko':'🛖 Relief – szałas','bez kary · dysk przesunięty na linii do kosza','#d6589a',110);hud();return}
 if(h.hz&&h.hz(d.x,d.y)&&Math.hypot(d.x-h.b[0],d.y-h.b[1])>12){lie={x:d.x,y:d.y};addMark(d);return stop('⚠️ Hazard!','+1 kara · '+dist+' m · grasz stąd','#c9a227')}
@@ -1213,7 +1213,7 @@ for(let i=0;i<22;i++){const a=i*2.39,rr=1+(i%7)*.85;g.fillStyle=i%3?'#5b3d1f':'#
 for(let i=0;i<14;i++){const sp=(i%2?1:-1)*(.35+(i%5)*.07),a=i*.45+tt*sp,rr=5+((i*37)%9)+Math.sin(tt*1.7+i)*1.6,ax=o.x+Math.cos(a)*rr,ay=o.y+Math.sin(a)*rr*.85,dir=a+Math.PI/2*Math.sign(sp);
 g.save();g.translate(ax,ay);g.rotate(dir);g.fillStyle='#160c06';g.beginPath();g.ellipse(-.9,0,.75,.45,0,0,7);g.ellipse(.15,0,.45,.35,0,0,7);g.ellipse(.95,0,.55,.45,0,0,7);g.fill();g.restore()}
 const bob=Math.sin(tt*3)*.6;g.fillStyle='#ff69b4';g.font='900 5.5px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('RELIEF',o.x,o.y-o.r-3.5+bob)}else{g.fillStyle='#ff69b4';g.font='900 6px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('RELIEF · SZAŁAS',o.x,o.y-o.r-4)}}
-for(const o of h.md||[]){g.setLineDash([2.5,2.5]);g.strokeStyle='rgba(230,40,40,.85)';g.lineWidth=1.4;g.beginPath();g.moveTo(o.m[0],o.m[1]);g.lineTo(o.e[0],o.e[1]);g.stroke();g.setLineDash([]);
+for(const o of h.md||[]){if(o.gate){g.setLineDash([2.5,2.5]);g.strokeStyle='rgba(230,40,40,.7)';g.lineWidth=1.2;g.beginPath();g.moveTo(o.m[0],o.m[1]);g.lineTo(o.m[0]+(o.e[0]-o.m[0])*.2,o.m[1]+(o.e[1]-o.m[1])*.2);g.stroke();g.setLineDash([]);continue}g.setLineDash([2.5,2.5]);g.strokeStyle='rgba(230,40,40,.85)';g.lineWidth=1.4;g.beginPath();g.moveTo(o.m[0],o.m[1]);g.lineTo(o.e[0],o.e[1]);g.stroke();g.setLineDash([]);
 g.fillStyle='rgba(0,0,0,.3)';g.beginPath();g.ellipse(o.m[0]+1.5,o.m[1]+2,6,3,0,0,7);g.fill();g.fillStyle='#fff';g.strokeStyle='#d62828';g.lineWidth=2;g.beginPath();g.arc(o.m[0],o.m[1]-3,5.5,0,7);g.fill();g.stroke();g.fillStyle='#b01818';g.font='900 7px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('M',o.m[0],o.m[1]-2.6);
 if(o.dz){const[x,y]=o.dz;g.fillStyle='#ff8a1e';g.strokeStyle='#5a2a00';g.lineWidth=.8;g.beginPath();g.roundRect?g.roundRect(x-7,y-4.5,14,9,2):g.rect(x-7,y-4.5,14,9);g.fill();g.stroke();g.fillStyle='#2a1200';g.font='900 6px system-ui';g.fillText('DZ',x,y+.3)}}
 g.restore()}
@@ -3286,7 +3286,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','🌳 Więcej różnorodności drzew: zagajniki brzóz, kępy sosen i jodeł, klony i topole, różne rozmiary i odcienie','🌼 Ozdoby (kwiatki, kępki, kamienie, szyszki) na wszystkich dołkach – o połowę mniej, mniej pstrokato','🔄 Kariera od nowa: Sezon 1 (12–19.11), tylko kategoria Open, rating wszystkich graczy liczony od zera','🎯 W Opcjach pole do testowania czułości celowania','🏆 Online do 4 graczy i turniej: kolejny dołek startuje, gdy wszyscy skończą; rywal stoi przy swoim dysku, a po trafieniu czeka 20 m za koszem','🔒 Luboń na hasło · nowy ekran ładowania Chain Reaction','🌳 Nowe gatunki drzew (jodła, topola) na wszystkich polach','⛳ Międzybłocie: poprawki 1, 2, 3, 4, 5, 13, 14, 17 · większe auta','🎯 Czułość celowania w Opcjach · mniejsze tablice przy tee · HUD przezroczysty, gdy zasłania gracza','🔊 Jeden, realniejszy dźwięk łańcuchów i osobny dźwięk uderzenia w czapę','🧍 NPC i kibice w stylu nowej postaci','🧍 Nowa, realistyczna postać: zamach, wyrzut, dokończenie ruchu i osobny putt','📣 Kibice reagują: wiwatują przy birdie i ace, komentują drzewo, OB i wodę, uciekają przed lecącym dyskiem','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','🛞 Roller ma własny podgląd toru – ślad toczenia jak od opony','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
+ const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','📊 Statystyki bez pola treningowego','🛞 Roller toczy się dalej (+25%) i mocniej skręca','🚫 OB: +1 i rzut z miejsca, gdzie dysk wyleciał za linię','⛳ Międzybłocie: bramka z drzew zamiast mando na 3, ścieżki na 5, drzewa na 6/13/17, naturalniejszy las na 14, szkółka drzewek na 1 i 18','🌳 Więcej różnorodności drzew: zagajniki brzóz, kępy sosen i jodeł, klony i topole, różne rozmiary i odcienie','🌼 Ozdoby (kwiatki, kępki, kamienie, szyszki) na wszystkich dołkach – o połowę mniej, mniej pstrokato','🔄 Kariera od nowa: Sezon 1 (12–19.11), tylko kategoria Open, rating wszystkich graczy liczony od zera','🎯 W Opcjach pole do testowania czułości celowania','🏆 Online do 4 graczy i turniej: kolejny dołek startuje, gdy wszyscy skończą; rywal stoi przy swoim dysku, a po trafieniu czeka 20 m za koszem','🔒 Luboń na hasło · nowy ekran ładowania Chain Reaction','🌳 Nowe gatunki drzew (jodła, topola) na wszystkich polach','⛳ Międzybłocie: poprawki 1, 2, 3, 4, 5, 13, 14, 17 · większe auta','🎯 Czułość celowania w Opcjach · mniejsze tablice przy tee · HUD przezroczysty, gdy zasłania gracza','🔊 Jeden, realniejszy dźwięk łańcuchów i osobny dźwięk uderzenia w czapę','🧍 NPC i kibice w stylu nowej postaci','🧍 Nowa, realistyczna postać: zamach, wyrzut, dokończenie ruchu i osobny putt','📣 Kibice reagują: wiwatują przy birdie i ace, komentują drzewo, OB i wodę, uciekają przed lecącym dyskiem','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','🛞 Roller ma własny podgląd toru – ślad toczenia jak od opony','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Przebudowa wszystkich 18 dołków według uwag z pola','1: krótki tee, par 3, dwie linie (hyzer/backhand) z kępą drzew i OB po prawej','5 i 6: asfaltowa droga, jeżdżą auta, a kierowcy komentują rzuty','5: 3× większa rzeczka · 6: rozległy staw · 4: staw za drogą','7: brzozy, działka ze szklarnią i działkowiczem · 8: pole zboża i większa woda za koszem','9: mostek przez rzeczkę · 10: kosz z 9, ścieżka i tee od 11 · 14: wąski fairway z tabliczkami 50–200 m i dom w oddali','Usunięte mando na 2, 3, 8, 10, 17, hazard na 12 i 15, szałas na 17 · 18: z górki ~1,5 m i pole za koszem']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie 4 mapy naraz (Złotów 12, Złotów 22, Międzybłocie, Luboń beta – wkrótce)','Przycisk „Zmień pogodę” na kafelku pola – kafelek pokazuje porę roku i pogodę','Top 5 obok siebie: Złotów 12 i 22, pod spodem Międzybłocie i Luboń','Nowy sezon rankingu – wszystkie wcześniejsze wyniki są w zakładce 📦 Archiwum','Pole treningowe przeniesione do Opcji → Old school']],
   ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
@@ -3633,7 +3633,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  /* ---------- 18: pole za koszem po lewej, droga w dół 1,5 m ---------- */
  {const h=MZ[17];h.slope=1.04;h.slopeTxt='⬇ Droga schodzi w dół ~1,5 m – dysk poleci trochę dalej';const FP=[[-10,40],[132,40],[132,104],[90,104],[90,150],[-10,150]];
   h.trees=h.trees.filter(t=>!inPoly(t[0],t[1],[[-20,30],[142,30],[142,114],[100,114],[100,160],[-20,160]]));addNoF(h,(x,y)=>inPoly(x,y,[[-20,28],[144,28],[144,116],[102,116],[102,162],[-20,162]]));
-  h.deco=(h.deco||[]).filter(o=>o.k!='bench');addArt(h,(x,w)=>{field(x,FP,w);contours(x,h,false,'▼ ok. 1,5 m w dół')});h.txt=h.slopeTxt;fin(h)}
+  h.deco=(h.deco||[]).filter(o=>o.k!='bench');addArt(h,(x,w)=>{window.NURSERY(x,FP,w);contours(x,h,false,'▼ ok. 1,5 m w dół')});h.txt=h.slopeTxt;fin(h)}
  /* pill ze spadkiem już obsługiwany w P79 przez slopeTxt; tu tylko txt */
  /* most i pomosty – bez kary na moście */
  try{const _st=window.stop;}catch(e){}
@@ -3752,8 +3752,8 @@ let ROLL=false;window.__roll=()=>ROLL;window.__rollOff=()=>{ROLL=false};
 try{const _bb=buildBar;buildBar=function(){_bb();const sh=$('sh');if(!sh||sh.querySelector('.rolb'))return;const rb=document.createElement('button');rb.innerHTML='🛞<small style="font-size:10px;display:block;line-height:1">roller</small>';rb.className='tomb rolb'+(ROLL?' on':'');
   rb.onclick=e=>{e.stopPropagation();ROLL=!ROLL;if(ROLL&&typeof TOMA!='undefined'){TOMA=false;sh.querySelectorAll('.tomb:not(.rolb)').forEach(x=>x.classList.remove('on'))}rb.classList.toggle('on',ROLL);pill(ROLL?'🛞 Roller: dysk leci nisko i toczy się po ziemi, na końcu skręca':'Rzut zwykły')};
   [...sh.children].forEach(x=>{if(x!==rb)x.addEventListener('click',()=>{ROLL=false;rb.classList.remove('on')})});sh.appendChild(rb)};buildBar()}catch(e){console.warn('roller bar',e)}
- const rDist=p=>(20+58*Math.min(1,p))*[.6,.85,1][di]*SLK();
- function rPath(x0,y0,a,L,sg){const P=[[x0,y0]],air=L*.22;let x=x0,y=y0,hd=a;for(let s=0;s<L;s+=2){const f=s/L;if(s>air)hd=a+sg*.55*Math.pow((s-air)/(L-air),2.4);x+=Math.sin(hd)*2;y-=Math.cos(hd)*2;P.push([x,y])}return{P,air}}
+ const rDist=p=>(24+74*Math.min(1,p))*[.6,.85,1][di]*SLK();
+ function rPath(x0,y0,a,L,sg){const P=[[x0,y0]],air=L*.22;let x=x0,y=y0,hd=a;for(let s=0;s<L;s+=2){const f=s/L;if(s>air)hd=a+sg*.85*Math.pow((s-air)/(L-air),2.1);x+=Math.sin(hd)*2;y-=Math.cos(hd)*2;P.push([x,y])}return{P,air}}
  const rSign=()=>{const c=typeof curve=='number'&&curve!=2?curve:0;return(hand>0?-1:1)*(1+c*.6)};
  addEventListener('pointerup',()=>{if(!ROLL||!disc||disc.rol||disc.tom||disc.trail.length>1)return;const D=disc.D,p=disc.v0/(D.v*(hand<0?.95:1)*KSf()*SLK()),L=rDist(p)/M,R=rPath(disc.x,disc.y,disc.a,L,rSign());
   disc.rol={P:R.P,air:R.air/2|0,i:0,alt:0,done:false,sp:3.4};});
@@ -4192,10 +4192,8 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
   h.water=[];for(const u of[.16,.26,.36,.46,.56,.66,.76,.84])h.trees.push(off(u,(hs3(u*100|0,1,3)-.5)*10).concat([10+((hs3(u*100|0,2,3)*4)|0)]));for(const u of[.3,.5,.68])for(const s of[-1,1])h.trees.push(off(u+.05,s*12).concat([8]));
   for(let u=.08;u<.95;u+=.07){const a=hs3(u*1000|0,4,3),b=hs3(u*1000|0,5,3);h.trees.push(off(u,-(84+a*14)).concat([11+((a*4)|0)]),off(u+.03,84+b*14).concat([11+((b*4)|0)]))}
   const r=h.roads[0];const rx=r?Math.max(...r.pts.map(p=>p[0])):120,rw=r?r.w:16;
-  const NX=rx-rw/2-5;h.trees=h.trees.filter(t=>t[0]>NX+6);addNoF(h,(x,y)=>x<NX+4);
-  addArt(h,(x,w)=>{x.fillStyle=w?'#e9eef0':'#7b6a44';x.fillRect(-4,-4,NX+4,H+8);x.fillStyle=w?'rgba(255,255,255,.4)':'rgba(96,78,46,.8)';for(let xx=8;xx<NX-2;xx+=12)x.fillRect(xx-2,-4,4,H+8);
-   for(let xx=8;xx<NX-2;xx+=12)for(let yy=6;yy<H;yy+=9){const s=1.6+hs3(xx,yy,5)*1.4;x.fillStyle='rgba(0,0,0,.25)';x.beginPath();x.ellipse(xx+1,yy+1,s,s*.6,0,0,7);x.fill();x.fillStyle=w?'#c9d6cf':(hs3(xx,yy,6)<.5?'#3f7a2c':'#4f8c34');x.beginPath();x.arc(xx,yy,s,0,7);x.fill();x.fillStyle=w?'#fff':'rgba(160,210,110,.6)';x.beginPath();x.arc(xx-.5,yy-.6,s*.45,0,7);x.fill()}
-   x.strokeStyle='#7a5a36';x.lineWidth=.8;x.beginPath();x.moveTo(NX,-4);x.lineTo(NX,H+4);x.stroke()});
+  const NX=rx-rw/2-1;h.trees=h.trees.filter(t=>t[0]-t[2]*.6>rx+rw/2+2);addNoF(h,(x,y,rr)=>x-(rr||8)*.6<rx+rw/2+3);
+  addArt(h,(x,w)=>{window.NURSERY(x,[[-6,-6],[NX,-6],[NX,H+6],[-6,H+6]],w)});
   const ox=Math.max(...RR.map(p=>p[0]))+30;h.obF=(x,y)=>x>ox;h.obL=[[[ox,-10],[ox,H+10]]];h.trees=h.trees.filter(t=>t[0]<ox-6||t[0]>ox+18);
   h.txt='Dwie linie: hyzer z lewej, backhand z prawej. Po prawej OB.';MZ[0]=fin(h)}
  /* ---------- 2: pionowy asfalt po lewej przez całą mapę + auta ---------- */
@@ -4244,5 +4242,39 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
  x.strokeStyle='#ffd08a';x.lineWidth=5;x.setLineDash([10,8]);x.beginPath();P.forEach((p,i)=>{const q=T(p);i?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1])});x.stroke();x.setLineDash([]);
  const t0=T(h.tee),b0=T(h.b);x.fillStyle='#fff';x.fillRect(t0[0]-8,t0[1]-6,16,12);x.fillStyle='#ff7a1a';x.beginPath();x.arc(b0[0],b0[1],9,0,7);x.fill();x.strokeStyle='#fff';x.lineWidth=3;x.stroke();x.restore();
 }catch(e){console.warn('P94',e)}}}catch(e){console.warn('P94',e)}})();</script>
+<script>/* P99: szkółka drzewek (wspólna), Międzybłocie 3/5/6/13/14/17 */
+window.NURSERY=function(x,P,w){x.save();x.beginPath();P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fillStyle=w?'#e9eef0':'#76663f';x.fill();x.clip();
+ const xs=P.map(p=>p[0]),ys=P.map(p=>p[1]),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+ x.fillStyle=w?'rgba(255,255,255,.5)':'rgba(98,84,50,.9)';for(let xx=x0+6;xx<x1;xx+=11)x.fillRect(xx-2.2,y0,4.4,y1-y0);
+ x.fillStyle=w?'rgba(220,230,235,.6)':'rgba(92,128,54,.55)';for(let xx=x0+11.5;xx<x1;xx+=11)x.fillRect(xx-2,y0,4,y1-y0);
+ for(let xx=x0+6;xx<x1-1;xx+=11)for(let yy=y0+5;yy<y1;yy+=8){const s=1.5+hs3(xx|0,yy|0,5)*1.3;x.fillStyle='rgba(0,0,0,.28)';x.beginPath();x.ellipse(xx+1.2,yy+1,s,s*.55,0,0,7);x.fill();
+  x.fillStyle=w?'#c9d6cf':(hs3(xx|0,yy|0,6)<.5?'#3d7a2b':'#4d8a33');x.beginPath();x.arc(xx,yy,s,0,7);x.fill();x.fillStyle=w?'#fff':'rgba(160,210,110,.55)';x.beginPath();x.arc(xx-.5,yy-.6,s*.45,0,7);x.fill()}
+ x.restore();x.strokeStyle='#7a5a36';x.lineWidth=.8;x.beginPath();P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.stroke();
+ x.fillStyle='#5a4026';for(let i=1;i<=P.length;i++){const a=P[i-1],b=P[i%P.length],l=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.max(1,Math.round(l/9));for(let k=0;k<=n;k++)x.fillRect(a[0]+(b[0]-a[0])*k/n-.8,a[1]+(b[1]-a[1])*k/n-.8,1.6,1.6)}};
+(function(){try{
+ const dseg=(p,a,e)=>{const vx=e[0]-a[0],vy=e[1]-a[1],l2=vx*vx+vy*vy||1,f=Math.max(0,Math.min(1,((p[0]-a[0])*vx+(p[1]-a[1])*vy)/l2));return Math.hypot(p[0]-a[0]-vx*f,p[1]-a[1]-vy*f)};
+ const nearPL=(p,P)=>{let m=1e9;for(let i=1;i<P.length;i++)m=Math.min(m,dseg(p,P[i-1],P[i]));return m};
+ const fin=h=>{delete h._fill;delete h._col;delete h._sil;return h};
+ const addArt=(h,fn)=>{const o=h.art;h.art=(x,w)=>{if(o)o(x,w);fn(x,w)}};
+ /* 3: mando = bramka z dwóch drzew */
+ {const h=MZ[2],o=h.md&&h.md[0];if(o){const vx=o.e[0]-o.m[0],vy=o.e[1]-o.m[1],l=Math.hypot(vx,vy)||1,ux=vx/l,uy=vy/l,A=o.m,B=[A[0]-ux*30,A[1]-uy*30];
+   h.trees=h.trees.filter(t=>Math.hypot(t[0]-A[0],t[1]-A[1])>t[2]+16&&Math.hypot(t[0]-B[0],t[1]-B[1])>t[2]+16&&dseg(t,A,B)>t[2]+4);
+   h.trees.push([A[0]+ux*3,A[1]+uy*3,10,0],[B[0]-ux*3,B[1]-uy*3,10,0]);h.md=[{m:A,e:[A[0]+ux*220,A[1]+uy*220],dz:o.dz,gate:1},{m:B,e:[B[0]-ux*220,B[1]-uy*220],dz:o.dz,gate:1}];h.mdGate=[A,B]}fin(h)}
+ /* 5: bez nieczynnego kosza, ścieżka także do drugiego mostka */
+ {const h=MZ[4],T=h.tee;h.deco=(h.deco||[]).filter(o=>o.k!='bkx');const BR=h.bridges||[];if(BR[1]){const e=BR[1][0][0]>BR[1][1][0]?BR[1][0]:BR[1][1];const P=[[T[0]+46,T[1]-30],[T[0]+62,T[1]-110],[(T[0]+62+e[0])/2+22,(T[1]-110+e[1])/2],[e[0]+5,e[1]+2]];h.roads.push({pts:P,w:5});h.trees=h.trees.filter(t=>P.every((p,k)=>!k||dseg(t,P[k-1],p)>t[2]+3))}fin(h)}
+ /* 6: drzewa przy koszu */
+ {const h=MZ[5],B=h.b;for(const[a,r,s]of[[.4,22,11],[2.2,24,10],[3.6,20,9],[5.1,26,11]])h.trees.push([B[0]+Math.cos(a)*r,B[1]+Math.sin(a)*r*.9,s]);fin(h)}
+ /* 13: drzewo na fairwayu lekko w lewo */
+ {const h=MZ[12];const p=h.rel(h.L*.62,-9);h.trees.push([p[0],p[1],11]);fin(h)}
+ /* 14: naturalny las wzdłuż fairwaya */
+ {const h=MZ[13],T=h.tee,B=h.b,L=h.L;h.trees=h.trees.filter(t=>!(t[0]>110&&t[0]<260&&t[1]>B[1]+24&&t[1]<T[1]-18));
+  for(let gy=B[1]+30;gy<T[1]-20;gy+=11)for(let gx=104;gx<262;gx+=11){const j1=hs3(gx,gy,51),j2=hs3(gx,gy,52),j3=hs3(gx,gy,53);const px=gx+(j1-.5)*10,py=gy+(j2-.5)*10,u=h.along([px,py])/L,d=nearPL([px,py],h.path),cor=(u<.5?14:24)+fb3(px*.04,py*.04,9,2)*14;
+   if(d<cor)continue;const dens=d<cor+16?.62:.4;if(j3>dens)continue;if(Math.hypot(px-T[0],py-T[1])<26||Math.hypot(px-B[0],py-B[1])<22)continue;if(h.trees.some(t=>Math.hypot(t[0]-px,t[1]-py)<12))continue;h.trees.push([px,py,8+((hs3(gx,gy,54)*6)|0)])}
+  for(const u of[.18,.34,.58,.76]){if(hs3(u*100|0,3,7)<.5){const p=h.rel(L*u,(hs3(u*100|0,4,7)-.5)*12);h.trees.push([p[0],p[1],7])}}fin(h)}
+ /* 17: drzewo bliżej kosza */
+ {const h=MZ[16];const p=h.rel(h.L*.83,5);h.trees=h.trees.filter(t=>Math.hypot(t[0]-p[0],t[1]-p[1])>18);h.trees.push([p[0],p[1],11]);fin(h)}
+}catch(e){console.warn('P99',e)}})();</script>
+<script>/* P100: bez treningu w statystykach */
+try{delete CN2.trening;if(statL=='trening')statL='zlotow'}catch(e){}</script>
 </body>
 </html>
