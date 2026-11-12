@@ -1848,7 +1848,7 @@ function renderCareer(){let el=$('carp');const ms=$('modeseg');if(!ms)return;if(
 (function(){const ms=$('modeseg');if(!ms)return;const b=document.createElement('button');b.dataset.mode='career';b.innerHTML='🏆 Kariera';ms.appendChild(b);
  b.addEventListener('click',e=>{e.stopImmediatePropagation();CAREER=true;UPMODE='round';ms.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));renderCareer()},true);
  ms.querySelectorAll('button').forEach(x=>{if(x!==b)x.addEventListener('click',()=>{CAREER=false;b.classList.remove('on');renderCareer()})});renderCareer()})();
-const _start21=start;start=function(){if(CAREER&&UP){const ev=EVS[car().ev];layout=ev.c;season=ev.s;holes=ev.c=='miedzy'?MZ:ZL;document.querySelectorAll('#menu [data-s]').forEach(x=>x.classList.toggle('on',x.dataset.s==season))}_start21();if(CAREER&&UP){const ev=EVS[car().ev];setTimeout(()=>say(ev.i+' '+ev.n,DIVS[car().div].n+' · 8 graczy · runda turniejowa','#7a5a10',120,null,true),50)}};
+const _start21=start;start=function(){if(CAREER&&UP){const ev=EVS[car().ev];layout=ev.c;season=ev.s;holes=ev.c=='miedzy'?MZ:ev.c=='z22'?Z22:ZL;document.querySelectorAll('#menu [data-s]').forEach(x=>x.classList.toggle('on',x.dataset.s==season))}_start21();if(CAREER&&UP){const ev=EVS[car().ev];setTimeout(()=>say(ev.i+' '+ev.n,DIVS[car().div].n+' · 8 graczy · runda turniejowa','#7a5a10',120,null,true),50)}};
 const _fin21=finish;finish=function(){_fin21();if(CAREER&&UP&&M_()=='round'){const er=$('er');if(er)er.insertAdjacentHTML('beforeend',carAfter())}};
 const _eb21=$('eb').onclick;$('eb').onclick=()=>{_eb21&&_eb21();renderCareer()};
 
@@ -2520,7 +2520,7 @@ const wkRange=w=>{const a=new Date(WK0+w*WKMS+3600e3),b=new Date(WK0+(w+1)*WKMS-
 const CPT=[100,85,72,61,52,44,37,31,26,22,18,15,12,10,8,6,5,4,3,2];
 const escH=t=>String(t==null?'':t).replace(/[<>&"]/g,'').slice(0,14);
 function wkEnsure(C,W){W=W==null?wkNow():W;{const nd=divOf(C.rating);if(C.rating!=null&&nd>C.div){C.div=nd;if(C.wk&&C.wk.w===W)C.wk.sd=nd;try{persist()}catch(e){}}}if(!C.wk||C.wk.w!==W){if(C.wk&&C.wk.s&&C.wk.s.some(v=>v!=null))C.pwk=C.wk;C.wk={w:W,sd:C.div,s:[null,null,null],t:[null,null,null],st:{a:0,h:{},d:{},b:null}}}return C.wk}
-function nextEv(C){const k=wkEnsure(C);for(let i=0;i<3;i++)if(k.s[i]==null)return i;return -1}
+function nextEv(C){const k=wkEnsure(C);for(let i=0;i<EVS.length;i++)if(k.s[i]==null)return i;return -1}
 async function carSync2(){const C=car();if(!DB||!UID)return;const k=C.wk||{},p=C.pwk||{};try{await DB.doc('kariera/'+UID).set({n:String(pname||'Gracz').slice(0,12),r:C.rating==null?0:C.rating,dv:DIVS[C.div].n,w:(C.titles||[]).length,t:(C.hist||[]).length,ss:wkNo(wkNow()),at:Date.now(),ch:pfChar(),lv:(xpInfo().lv||1),
   wk:k.w==null?-1:k.w,sd:k.sd==null?C.div:k.sd,se:k.s||[null,null,null],pwk:p.w==null?-1:p.w,psd:p.sd==null?0:p.sd,pse:p.s||[null,null,null],md:(C.medals||[]).length})}catch(e){console.warn('carSync2',e)}}
 async function seasonDocs(){if(!DB)return null;try{const q=await DB.collection('kariera').orderBy('at','desc').limit(400).get();return q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(e){try{const q=await DB.collection('kariera').limit(400).get();return q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(x){return null}}}
@@ -2531,10 +2531,10 @@ function seasonTable(docs,W,div,mine){const E=[];(docs||[]).forEach(d=>{if(d.id=
 /* --- bez botów --- */
 grpInit=function(){GRP=[]};
 /* --- start turnieju: wybór następnego nierozegranego --- */
-document.addEventListener('pointerdown',e=>{if(e.target&&e.target.id==='go'&&CAREER&&UP){const C=car();const n=nextEv(C);if(n<0){e.stopImmediatePropagation();e.preventDefault();toast('✅ Wszystkie 3 turnieje tego tygodnia rozegrane – nowy sezon w poniedziałek');showView('car')}else if(C.wk.s[C.ev]!=null||C.ev==null)C.ev=n}},true);
+document.addEventListener('pointerdown',e=>{if(e.target&&e.target.id==='go'&&CAREER&&UP){const C=car();const n=nextEv(C);if(n<0){e.stopImmediatePropagation();e.preventDefault();toast('✅ Wszystkie '+EVS.length+' turnieje tego tygodnia rozegrane – nowy sezon w poniedziałek');showView('car')}else if(C.wk.s[C.ev]!=null||C.ev==null)C.ev=n}},true);
 document.addEventListener('click',e=>{if(e.target&&e.target.id==='go'&&CAREER&&UP&&nextEv(car())<0){e.stopImmediatePropagation();e.preventDefault()}},true);
 /* --- po turnieju --- */
-carAfter=function(){const C=car(),W=wkNow(),k=wkEnsure(C,W),e=Math.max(0,Math.min(2,C.ev|0)),ev=EVS[e],n=holes.length;
+carAfter=function(){const C=car(),W=wkNow(),k=wkEnsure(C,W),e=Math.max(0,Math.min(EVS.length-1,C.ev|0)),ev=EVS[e],n=holes.length;
  if(k.s[e]!=null)return '<div class="carres"><div class="crh">'+ev.i+' '+ev.n+'</div><div class="crs">Ten turniej był już rozegrany w tym tygodniu – wynik się nie liczy do tabeli.</div></div>';
  const strokes=scores.reduce((a,b)=>a+b,0);k.s[e]=total;k.t[e]=strokes;
  const st=k.st;scores.forEach((v,i)=>{if(v==1)st.a++;const p=holes[i]?holes[i].par:3;const h=st.h[i]||[0,0];h[0]+=v-p;h[1]++;st.h[i]=h});for(const d in RDISC)st.d[d]=(st.d[d]||0)+RDISC[d];if(st.b==null||total<st.b)st.b=total;
@@ -2578,8 +2578,8 @@ renderCarV=function(){const el=$('carv');if(!el)return;const C=car(),W=wkNow(),k
 /* --- panel kariery w menu Start --- */
 renderCareer=function(){let el=$('carp');const ms=$('modeseg');if(!ms)return;if(!el){el=document.createElement('div');el.id='carp';el.className='glass carp';(document.getElementById('wxsel')||ms).after(el)}
  el.hidden=!(CAREER&&UP);if(el.hidden)return;const C=car(),k=wkEnsure(C),n=nextEv(C);
- el.innerHTML='<div class="cth"><span class="dv">'+DIVS[C.div].n+'</span><div><b>Kariera online · sezon '+wkNo(wkNow())+'</b><small>rating '+(C.rating==null?'–':C.rating)+' · rozegrane '+k.s.filter(v=>v!=null).length+'/3 turniejów tygodnia</small></div></div>'+
- '<div class="cnx">'+(n>=0?'Następny: <b>'+EVS[n].i+' '+EVS[n].n+'</b><small>Złotów · 12 dołków · raz w tygodniu</small>':'✅ Tydzień rozegrany<small>Nowy sezon w poniedziałek</small>')+'</div><button class="pcbtn" id="opencar">🏅 Tabela i szczegóły kariery</button>';
+ el.innerHTML='<div class="cth"><span class="dv">'+DIVS[C.div].n+'</span><div><b>Kariera online · sezon '+wkNo(wkNow())+'</b><small>rating '+(C.rating==null?'–':C.rating)+' · rozegrane '+k.s.filter(v=>v!=null).length+'/'+EVS.length+' turniejów tygodnia</small></div></div>'+
+ '<div class="cnx">'+(n>=0?'Następny: <b>'+EVS[n].i+' '+EVS[n].n+'</b><small>'+(EVS[n].c=='z22'?'Złotów 22 · 22 dołki':'Złotów · 12 dołków')+' · raz w tygodniu</small>':'✅ Tydzień rozegrany<small>Nowy sezon w poniedziałek</small>')+'</div><button class="pcbtn" id="opencar">🏅 Tabela i szczegóły kariery</button>';
  const b=$('opencar');if(b)b.onclick=()=>showView('car')};
 try{renderCareer()}catch(e){}
 /* --- gablota w Pucharach --- */
@@ -3226,7 +3226,8 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Złotów 12',['Nowe drzewa na dołkach 1, 2, 3, 8 i 12, dodatkowy tee na 3 przesunięty w prawo','Dołek 1: drugi NPC w moro z fajką','Dołek 12: kibice za drogą przy koszu – komentują rzuty','Dołek 11 pod górę (dysk krócej), dołek 2 z górki (dalej)','Drzewa kołyszą się w stronę wiatru','Patyki i kępki trawy na fairwayach, dużo igliwia na 4','Nowe gatunki drzew: modrzew i klon (jesienią czerwony)']],
+ const CHG=[['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
+  ['Aktualizacja 12.11.2026 – Złotów 12',['Nowe drzewa na dołkach 1, 2, 3, 8 i 12, dodatkowy tee na 3 przesunięty w prawo','Dołek 1: drugi NPC w moro z fajką','Dołek 12: kibice za drogą przy koszu – komentują rzuty','Dołek 11 pod górę (dysk krócej), dołek 2 z górki (dalej)','Drzewa kołyszą się w stronę wiatru','Patyki i kępki trawy na fairwayach, dużo igliwia na 4','Nowe gatunki drzew: modrzew i klon (jesienią czerwony)']],
   ['Aktualizacja 11.11.2026',['Tap-in już od 5 m – dysk sam wpada do kosza','Linia celowania: 70% toru prawie dokładnie, żółta końcówka to tylko przybliżenie','Pauza (🏠): Retee z tee (+2) i start rundy od nowa','Jeden wiatr na całą rundę (waha się o ±0,5 m/s) i trochę mocniej znosi dysk','Tomahawk: 20% szans na rollera lub skip o 5–7 m; przy koszu 69% wpada','Potwierdzenie przy kupowaniu dysków','Samouczek przy pierwszej rundzie (można pominąć)','Naprawa: mapa dołka sama się odbudowuje, gdy się nie załaduje','Większe przyciski przy bardzo szerokim ekranie']],
   ['Aktualizacja 10.11.2026',['Krzywy podgląd toru lotu i ostrzeżenie o OB','Cienie chmur, ptaki, motyl, wiewiórka na 4 i 6','Dołek 9: większa łąka przy rzece','Top 5 Złotów 12 i Złotów 22 widoczne od razu','Zostały tylko tryby Runda i Kariera']]];
  function showChg(){const o=document.getElementById('chgb');if(o)o.remove();const d=document.createElement('div');d.id='chgb';d.innerHTML='<div class="c"><h3>📋 Co nowego</h3>'+CHG.map(c=>'<h4>'+c[0]+'</h4><ul>'+c[1].map(x=>'<li>'+x+'</li>').join('')+'</ul>').join('')+'<button data-x="1">OK</button></div>';document.body.appendChild(d);d.onclick=e=>{if(e.target.dataset.x||e.target===d)d.remove()};try{localStorage.setItem('dg_chg',CHG[0][0])}catch(e){}}
@@ -3308,6 +3309,19 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
    const g2=x.createLinearGradient(tx,ty,bx,by);g2.addColorStop(0,up?'rgba(0,0,0,.10)':'rgba(255,255,220,.08)');g2.addColorStop(1,up?'rgba(255,255,220,.08)':'rgba(0,0,0,.10)');x.fillStyle=g2;x.fillRect(0,0,W,H);
    const mx=tx+dx*.5+nx*48,my=ty+dy*.5+ny*48;x.fillStyle='rgba(255,255,230,.55)';x.font='800 7px system-ui';x.textAlign='center';x.fillText(up?'▲ pod górę':'▼ z górki',mx,my)}
   x.restore()}catch(e){console.warn('P79 bake',e)}};
+})();</script>
+<script>/* P80 Etap 3: Złotów 22 – dołki 14/15/16, sezon 3 */
+(function(){
+ try{const h14=Z22[13],R6=6/(h14.M||.2),[bx,by]=h14.b,[tx,ty]=h14.tee;
+  h14.hz=(x,y)=>Math.hypot(x-bx,y-by)>R6&&Math.hypot(x-tx,y-ty)>22;
+  const C=[];for(let a=0;a<=64;a++){const t=a/64*6.2832;C.push([bx+Math.cos(t)*R6,by+Math.sin(t)*R6])}h14.hzL=[C];h14.hzTxt='⚠️ Hazard wszędzie poza 6 m od kosza (+1)';
+ }catch(e){console.warn('P80 h14',e)}
+ try{Z22[14].par=4}catch(e){}
+ try{const h=Z22[15],L=h.L,hw=h.cwf(.9)/2;h.trees=h.trees.map(t=>{const a=h.along(t),l=h.lat(t);if(a>L-110&&a<L-3&&Math.abs(l)<75){const p=h.rel(a,l*1.15+Math.sign(l||1)*hw*.15);return[p[0],p[1]].concat(t.slice(2))}return t});delete h._fill;delete h._col;delete h._sil}catch(e){console.warn('P80 h16',e)}
+ try{BGC.clear()}catch(e){}
+ const _ld=load;load=function(){const r=_ld.apply(this,arguments);try{const h=holes[hi];if(h&&h.hzTxt&&throws==0)setTimeout(()=>pill(h.hzTxt),900)}catch(e){}return r};
+ /* sezon 3 (tydzień 16–22.11): Złotów 22, tylko jesień i zima, 2 turnieje */
+ try{if(wkNow()===2){EVS.length=0;EVS.push({n:'Złotów 22 · Jesień',c:'z22',s:'autumn',i:'🍂'},{n:'Złotów 22 · Zima · finał',c:'z22',s:'winter',i:'❄️',x:1.5})}}catch(e){console.warn('P80 sezon',e)}
 })();</script>
 </body>
 </html>
