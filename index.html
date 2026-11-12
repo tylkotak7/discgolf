@@ -26,7 +26,7 @@ addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e});
 </script><style>#pwask{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,8,4,.6);font-family:'Baloo 2',system-ui}#pwask .pk{width:min(100vw,440px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 16px);color:#fff;text-align:center;animation:cshUp .25s ease-out}#pwask img{width:72px;height:72px;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.4)}#pwask b{display:block;font-size:21px;margin:8px 0 2px}#pwask p{margin:0 0 12px;color:#cfe5d5;font:600 14px system-ui;line-height:1.45}#pwask .ph{background:rgba(255,211,90,.12);border:1px solid rgba(255,211,90,.4);border-radius:14px;padding:10px;margin:0 0 10px;font:600 14px system-ui;color:#fff3c4;line-height:1.5}#pwask .ph b{display:inline;font:800 14px system-ui;margin:0;color:#ffd35a}#pwask button{display:block;width:100%;padding:13px;border-radius:16px;border:0;font:900 17px 'Baloo 2',system-ui;margin-bottom:8px}#pwyes{background:linear-gradient(135deg,#a4ffb8,#3fd16a);color:#08210f}#pwno{background:rgba(255,255,255,.08)!important;color:#cfe5d5;border:1px solid rgba(255,255,255,.15)!important}</style>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>/* P73: duże przyciski i lekka grafika także gdy przeglądarka podaje bardzo szeroki ekran (np. tryb "wersja na komputer") */
-window.UIZ=1;(function(){var m=document.querySelector('meta[name=viewport]');function wide(){try{return matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2}catch(e){return false}}
+function GFXLOW(){return window._gfxLow}window.UIZ=1;(function(){var m=document.querySelector('meta[name=viewport]');function wide(){try{return matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2}catch(e){return false}}
  try{if(wide())m.setAttribute('content','width=420, viewport-fit=cover')}catch(e){}
  window.vfix=function(){try{var z=wide()?innerWidth/420:1;if(Math.abs(z-window.UIZ)>.02){window.UIZ=z;document.documentElement.style.zoom=z==1?'':z;try{fitScreen()}catch(e){}}}catch(e){}};
  addEventListener('load',function(){setTimeout(vfix,50);setTimeout(vfix,600)});addEventListener('resize',function(){setTimeout(vfix,80)});document.addEventListener('DOMContentLoaded',vfix)})()</script>
@@ -3226,7 +3226,8 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
+ const CHG=[['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie 4 mapy naraz (Złotów 12, Złotów 22, Międzybłocie, Luboń beta – wkrótce)','Przycisk „Zmień pogodę” na kafelku pola – kafelek pokazuje porę roku i pogodę','Top 5 obok siebie: Złotów 12 i 22, pod spodem Międzybłocie i Luboń','Nowy sezon rankingu – wszystkie wcześniejsze wyniki są w zakładce 📦 Archiwum','Pole treningowe przeniesione do Opcji → Old school']],
+  ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
   ['Aktualizacja 12.11.2026 – Złotów 12',['Nowe drzewa na dołkach 1, 2, 3, 8 i 12, dodatkowy tee na 3 przesunięty w prawo','Dołek 1: drugi NPC w moro z fajką','Dołek 12: kibice za drogą przy koszu – komentują rzuty','Dołek 11 pod górę (dysk krócej), dołek 2 z górki (dalej)','Drzewa kołyszą się w stronę wiatru','Patyki i kępki trawy na fairwayach, dużo igliwia na 4','Nowe gatunki drzew: modrzew i klon (jesienią czerwony)']],
   ['Aktualizacja 11.11.2026',['Tap-in już od 5 m – dysk sam wpada do kosza','Linia celowania: 70% toru prawie dokładnie, żółta końcówka to tylko przybliżenie','Pauza (🏠): Retee z tee (+2) i start rundy od nowa','Jeden wiatr na całą rundę (waha się o ±0,5 m/s) i trochę mocniej znosi dysk','Tomahawk: 20% szans na rollera lub skip o 5–7 m; przy koszu 69% wpada','Potwierdzenie przy kupowaniu dysków','Samouczek przy pierwszej rundzie (można pominąć)','Naprawa: mapa dołka sama się odbudowuje, gdy się nie załaduje','Większe przyciski przy bardzo szerokim ekranie']],
   ['Aktualizacja 10.11.2026',['Krzywy podgląd toru lotu i ostrzeżenie o OB','Cienie chmur, ptaki, motyl, wiewiórka na 4 i 6','Dołek 9: większa łąka przy rzece','Top 5 Złotów 12 i Złotów 22 widoczne od razu','Zostały tylko tryby Runda i Kariera']]];
@@ -3323,5 +3324,108 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  /* sezon 3 (tydzień 16–22.11): Złotów 22, tylko jesień i zima, 2 turnieje */
  try{if(wkNow()===2){EVS.length=0;EVS.push({n:'Złotów 22 · Jesień',c:'z22',s:'autumn',i:'🍂'},{n:'Złotów 22 · Zima · finał',c:'z22',s:'winter',i:'❄️',x:1.5})}}catch(e){console.warn('P80 sezon',e)}
 })();</script>
+<style>/* P81 Etap 4: menu */
+#menu.m2 .cards.g4{display:grid;grid-template-columns:1fr 1fr;gap:10px;overflow:visible;margin:0;padding:2px 0 0;scroll-snap-type:none}
+#menu.m2 .g4 .ccard{flex:none;border-radius:18px;min-width:0;position:relative;transition:transform .15s,border-color .15s}
+#menu.m2 .g4 .ccard:active{transform:scale(.97)}
+#menu.m2 .g4 .ccard.on{border-width:2px;box-shadow:0 0 0 3px rgba(125,255,154,.18),0 10px 30px rgba(0,0,0,.35)}
+#menu.m2 .g4 .ccard .th{height:78px;overflow:hidden}
+#menu.m2 .g4 .ccard .th::after{background:linear-gradient(transparent 30%,rgba(14,28,20,.97))}
+#menu.m2 .g4 .ccard em{top:7px;left:7px;font-size:9.5px;padding:2px 7px;border-radius:8px}
+#menu.m2 .g4 .ccard .ok,#menu.m2 .g4 .ccard.on .ok{display:none}
+#menu.m2 .g4 .ccard .in{padding:0 10px 10px;margin-top:-14px}
+#menu.m2 .g4 .ccard h2{font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#menu.m2 .g4 .ccard .ds{font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#menu.m2 .g4 .mm{display:flex;justify-content:space-between;margin-top:5px;font:700 10.5px system-ui;color:#cfe8d6}
+#menu.m2 .g4 .mm b{color:#fff;font-weight:900}
+#menu.m2 .g4 .ccard.lock .th{filter:grayscale(.7) brightness(.7)}
+#menu.m2 .g4 .ccard .lk{position:absolute;left:0;right:0;top:0;height:78px;z-index:2;display:flex;align-items:center;justify-content:center;font:900 12px system-ui;color:#ffd35a;text-shadow:0 1px 3px #000;letter-spacing:.04em}
+#menu.m2 .g4 .wov{position:absolute;inset:0;z-index:0;pointer-events:none;transition:background .3s}
+#menu.m2 .g4 .th.s-autumn{filter:sepia(.55) hue-rotate(-28deg) saturate(1.5)}
+#menu.m2 .g4 .th.s-winter{filter:grayscale(.75) brightness(1.45) contrast(.8)}
+#menu.m2 .g4 .th.s-winter .wov{background-image:radial-gradient(#fff 1px,transparent 1.6px),radial-gradient(#fff 1px,transparent 1.6px);background-size:14px 14px,22px 22px;background-position:0 0,7px 9px;opacity:.9}
+#menu.m2 .g4 .wov.w-mgła{background:rgba(232,238,242,.55)}
+#menu.m2 .g4 .wov.w-wieczór{background:rgba(8,16,58,.55)}
+#menu.m2 .g4 .wov.w-zmierzch{background:rgba(90,40,96,.42)}
+#menu.m2 .g4 .wov.w-złota{background:rgba(255,160,50,.33)}
+#menu.m2 .g4 .wov.w-deszcz{background:repeating-linear-gradient(105deg,rgba(200,220,255,.45) 0 1px,transparent 1px 7px),rgba(20,30,50,.35)}
+#menu.m2 .g4 .wxb{position:absolute;top:6px;left:62px;z-index:3;border:0;background:rgba(10,24,16,.82);color:#fff;font:800 9.5px system-ui;padding:3px 7px;border-radius:8px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+#menu.m2 .g4 .wxb i{font-style:normal}
+#menu.m2 .cdots.hid,#condchip.hid{display:none!important}
+#optv #condchip.hid{display:flex!important}
+.t5tabs{display:flex;gap:6px;margin:0 0 8px}
+.t5tabs button{flex:1;border:0;border-radius:10px;padding:7px 4px;font:800 12px system-ui;background:rgba(255,255,255,.08);color:#cfe8d6}
+.t5tabs button.on{background:#7dff9a;color:#0c2414}
+.t5g{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+.t5g .c{min-width:0}
+.t5g .lb{font:800 11.5px "Baloo 2",system-ui;color:#ffd35a;margin:0 0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t5g ol{margin:0;padding:0;list-style:none;counter-reset:r}
+.t5g li{counter-increment:r;display:flex;align-items:baseline;gap:4px;font:700 11.5px system-ui;color:#e8f5ec;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.t5g li::before{content:counter(r)'.';color:#8fae98;width:14px;flex:none}
+.t5g li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.t5g li b{color:#7dff9a}
+.t5g .em{font:600 11px system-ui;color:#8fae98;padding:4px 0}
+.t5a .c{margin-bottom:10px}
+.t5a .lb small{color:#8fae98;font-weight:700}
+#oldsch{display:flex;flex-direction:column;gap:8px}
+#oldsch button{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;border-radius:12px;padding:9px 11px;font:700 13px system-ui}
+#oldsch button small{display:block;color:#8fae98;font-weight:600;font-size:11px}
+#oldsch button b{margin-left:auto;color:#7dff9a;font-weight:900}
+#mtop,#mtl1,#mtl2,#mtop22{display:none!important}
+</style>
+<script>/* P81 Etap 4: wybór mapy 2×2, pogoda na kafelku, Top 5 + Archiwum, Old school */
+(function(){try{
+ const ARCH_T=Date.UTC(2026,10,12,4,0,0);window.ARCH_T=ARCH_T;
+ const tOf=e=>+(e&&(e.at||e.id))||0,isNew=e=>tOf(e)>=ARCH_T;
+ const LUB={k:'lubon',n:'Luboń · BETA',d:'nowe pole – już wkrótce',hl:()=>[],bp:'50% 60%',lock:1};
+ const ORD=['zlotow','z22','miedzy'],byK={};CARDS.forEach(c=>byK[c.k]=c);
+ const OLD=CARDS.filter(c=>!ORD.includes(c.k));
+ CARDS.length=0;ORD.forEach(k=>{if(byK[k])CARDS.push(byK[k])});CARDS.push(LUB);
+ if(byK.zlotow)byK.zlotow.n='Złotów 12';if(byK.z22){byK.z22.n='Złotów 22';byK.z22.d='22 dołki · mando · hazard'}
+ if(byK.miedzy){byK.miedzy.n='Międzybłocie';byK.miedzy.d='MP Long · mando · hazard'}
+ if(!ORD.includes(layout))layout='zlotow';
+ const WXN={'los':['🎲','Losowa'],'dzień':['☀️','Słońce'],'złota godzina':['🌇','Złota godz.'],'mgła':['🌫️','Mgła'],'wieczór':['🌙','Wieczór'],'deszcz':['🌧️','Deszcz'],'zmierzch':['🌆','Zmierzch']};
+ const SEI={summer:'☀️',autumn:'🍂',winter:'❄️'};
+ const wxNow=()=>{let w='dzień';try{w=localStorage.getItem('dg_wx')||'dzień'}catch(e){}if(season=='winter'&&!['los','dzień','mgła','zmierzch'].includes(w))w='los';if(season!='winter'&&w=='zmierzch')w='los';return w};
+ const wcls=w=>'wov'+(w=='los'||w=='dzień'?'':' w-'+(w=='złota godzina'?'złota':w));
+ function paintWx(){const w=wxNow(),el=$('cards');if(!el)return;el.querySelectorAll('.th').forEach(t=>{t.classList.remove('s-autumn','s-winter');if(season!='summer')t.classList.add('s-'+season);const o=t.querySelector('.wov');if(o)o.className=wcls(w)});const b=el.querySelector('.ccard.on .wxb');if(b)b.innerHTML='<i>'+(season=='summer'?'':SEI[season]||'')+(WXN[w]||WXN.los)[0]+'</i> Zmień pogodę'}
+ window.paintWx=paintWx;
+ renderCards=function(){const el=$('cards');if(!el)return;el.classList.add('g4');const dt=$('cdots');if(dt)dt.classList.add('hid');
+  el.innerHTML=CARDS.map((c,i)=>{const hs=c.hl(),par=hs.reduce((a,h)=>a+h.par,0),len=Math.round(hs.reduce((a,h)=>a+Math.hypot(h.tee[0]-h.b[0],h.tee[1]-h.b[1])*(h.M||.2),0)),st=SV.stats[c.k],best=st&&st.best!=null?(st.best>0?'+':'')+st.best:'–';
+   const th=c.lock?'linear-gradient(135deg,#3d6b45,#1b3522)':(thumbURL?'url('+thumbURL+')':'linear-gradient(135deg,#2f5f36,#16301d)');
+   return '<button class="ccard'+(layout==c.k?' on':'')+(c.lock?' lock':'')+'" data-ci="'+i+'"><div class="th" style="background-image:'+th+';background-position:'+c.bp+'"><div class="wov"></div><em>POLE '+(i+1)+'/'+CARDS.length+'</em><span class="ok">✓</span></div>'+
+    (layout==c.k&&!c.lock?'<span class="wxb" data-wx="1"></span>':'')+(c.lock?'<span class="lk">🔒 WKRÓTCE</span>':'')+
+    '<div class="in"><h2>'+c.n+'</h2><div class="ds">'+c.d+'</div><div class="mm">'+(c.lock?'<span>beta</span><span>–</span>':'<span><b>'+hs.length+'</b> dołk. · par <b>'+par+'</b></span><span>'+len+' m</span>')+'</div><div class="mm"><span>rekord</span><b>'+(c.lock?'–':best)+'</b></div></div></button>'}).join('');
+  el.querySelectorAll('.ccard').forEach(b=>b.onclick=ev=>{const c=CARDS[+b.dataset.ci];if(c.lock){toast('🔒 Luboń (beta) pojawi się wkrótce');return}
+   if(ev.target.closest('[data-wx]')){const ch=$('condchip');if(ch)ch.click();return}
+   if(layout!=c.k){selLayout(c.k);renderCards()}});
+  paintWx()};
+ const ch=$('condchip');if(ch)ch.classList.add('hid');
+ setInterval(()=>{try{if($('menu').style.display!='none')paintWx()}catch(e){}},700);
+ /* --- Top 5 (od dziś) + Archiwum (wszystkie wcześniejsze wyniki) --- */
+ const LS=[['zlotow','⛳ Złotów 12','dg_topz'],['z22','🧪 Złotów 22','dg_topz22'],['miedzy','🌲 Międzybłocie','dg_topm'],['lubon','🆕 Luboń · beta',null]];
+ const LA=LS.slice(0,3).concat([['trening','🎯 Przysieczyn trening','dg_topt'],['miedzyS','🌲 Międzybłocie Short','dg_topms']]);
+ const srt=a=>a.slice().sort((x,y)=>(+x.s||0)-(+y.s||0)||(+x.t||0)-(+y.t||0));
+ const esc=s=>String(s==null?'':s).replace(/[<>&"'`]/g,'').slice(0,12);
+ const sc=v=>(v>0?'+':'')+v;
+ const li=e=>'<li><span>'+esc(e.n)+' '+(e.se=='autumn'?'🍂':e.w?'❄️':'☀️')+'</span><b>'+sc(+e.s||0)+'</b></li>';
+ let tab='now';const cache={};
+ async function load(k,lk){let loc=[];if(lk)try{loc=JSON.parse(localStorage.getItem(lk)||'[]')}catch(e){}let on=null;if(DB&&k!='lubon'){if(cache[k])on=cache[k];else try{const q=await DB.collection('sc_'+k).orderBy('s').limit(400).get();on=cache[k]=q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(e){}}return{loc,on}}
+ function box(){const el=$('mtop');if(!el)return null;let w=$('t5w');if(!w){w=document.createElement('div');w.id='t5w';el.after(w);const hel=$('mh');const tb=document.createElement('div');tb.className='t5tabs';tb.innerHTML='<button data-t="now" class="on">🏆 Top 5</button><button data-t="arch">📦 Archiwum</button>';hel.after(tb);tb.querySelectorAll('button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;tb.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));menuTop()})}return w}
+ menuTop=async function(){const w=box();if(!w)return;const hel=$('mh');
+  if(tab=='now'){hel.textContent='🏆 Top 5 · nowy sezon rankingu';const R=await Promise.all(LS.map(T=>T[0]=='lubon'?null:load(T[0],T[2])));if(tab!='now')return;
+   w.className='t5g';w.innerHTML=LS.map((T,i)=>{if(T[0]=='lubon')return '<div class="c"><div class="lb">'+T[1]+'</div><div class="em">🔒 wkrótce</div></div>';const r=R[i];const L=srt((r.on||r.loc).filter(isNew)).slice(0,5);return '<div class="c"><div class="lb">'+T[1]+'</div>'+(L.length?'<ol>'+L.map(li).join('')+'</ol>':'<div class="em">Brak wyników. Bądź pierwszy!</div>')+'</div>'}).join('')}
+  else{hel.textContent='📦 Archiwum · wyniki sprzed 12.11.2026';const R=await Promise.all(LA.map(T=>load(T[0],T[2])));if(tab!='arch')return;
+   w.className='t5g t5a';w.style.gridTemplateColumns='1fr';w.innerHTML=LA.map((T,i)=>{const r=R[i],A=(r.on||r.loc).filter(e=>!isNew(e));if(!A.length&&(T[0]=='trening'||T[0]=='miedzyS'))return '';const L=srt(A).slice(0,10);return '<div class="c"><div class="lb">'+T[1]+' <small>· '+A.length+' wyników</small></div>'+(L.length?'<ol>'+L.map(e=>li(e).replace('</b></li>','</b><small style="color:#8fae98;font-weight:600"> ('+(+e.t||0)+')</small></li>')).join('')+'</ol>':'<div class="em">Brak wyników</div>')+'</div>'}).join('')||'<div class="em">Archiwum jest puste</div>'}};
+ /* ranking po rundzie liczy tylko wyniki od nowego sezonu */
+ try{const _ft=fetchTop;fetchTop=async function(){const l=await _ft.apply(this,arguments);for(const k in cache)delete cache[k];return l?l.filter(isNew):l}}catch(e){}
+ /* --- Old school w Opcjach --- */
+ const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);try{const v=$('optv');if(!v||$('oldsch'))return;const d=document.createElement('div');d.className='kcc';d.innerHTML='<h4>🕹️ Old school</h4><p class="kinfo" style="margin:0 0 8px">Starsze mapy, które nie są już w głównym menu.</p><div id="oldsch"></div>';v.appendChild(d);
+  $('oldsch').innerHTML=OLD.map(c=>{const hs=c.hl();return '<button data-ok="'+c.k+'">🎯<span>'+c.n+'<small>'+c.d+' · '+hs.length+' dołk.</small></span><b>▶ Graj</b></button>'}).join('')||'<p class="kinfo">Brak</p>';
+  $('oldsch').querySelectorAll('[data-ok]').forEach(b=>b.onclick=()=>{showView('main');layout=b.dataset.ok;setTimeout(()=>{try{const G=$('go');G.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}));G.click()}catch(e){console.warn(e)}},50)})}catch(e){console.warn('P81 old',e)}};
+ /* po powrocie z mapy Old school wróć do Złotowa */
+ try{const _sv=showView;showView=function(v){if(v=='main'&&!playing&&!ORD.includes(layout)&&layout!='trening'){layout='zlotow'}const r=_sv.apply(this,arguments);if(v=='main'&&!playing&&layout=='trening'){layout='zlotow';renderCards();menuTop()}return r}}catch(e){}
+ renderCards();menuTop();
+}catch(e){console.warn('P81',e)}})();</script>
 </body>
 </html>
