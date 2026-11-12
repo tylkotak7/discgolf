@@ -988,7 +988,7 @@ const wor3=(x,y,cs,sd)=>{const gx=Math.floor(x/cs),gy=Math.floor(y/cs);let f1=9;
 const sm3=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)};
 const hexf=h=>{h=String(h).replace('#','');return[parseInt(h.slice(0,2),16)/255,parseInt(h.slice(2,4),16)/255,parseInt(h.slice(4,6),16)/255]};
 /* maska z rysunku na płótnie */
-function cmask(fn,r){const c=document.createElement('canvas');c.width=RTW;c.height=RTH;const x=c.getContext('2d');x.scale(RS,RS);x.fillStyle=x.strokeStyle='#fff';x.lineCap=x.lineJoin='round';fn(x);const d=x.getImageData(0,0,RTW,RTH).data,a=new Float32Array(RN3);for(let i=0;i<RN3;i++)a[i]=d[i*4+3]/255;return r?bl3(bl3(a,r),Math.max(1,r>>1)):a}
+function cmask(fn,r){const c=document.createElement('canvas');c.width=RTW;c.height=RTH;const x=c.getContext('2d',{willReadFrequently:true});x.scale(RS,RS);x.fillStyle=x.strokeStyle='#fff';x.lineCap=x.lineJoin='round';fn(x);const d=x.getImageData(0,0,RTW,RTH).data,a=new Float32Array(RN3);c.width=c.height=0;for(let i=0;i<RN3;i++)a[i]=d[i*4+3]/255;return r?bl3(bl3(a,r),Math.max(1,r>>1)):a}
 function holePath(h){if(!h.path){h.path=[[h.tee[0],h.tee[1]],[h.b[0],h.b[1]]];h.pf=[0,1];h.cwf=()=>90}}
 function strokePath(x,h,ex){for(let i=1;i<h.path.length;i++){x.lineWidth=h.cwf((h.pf[i]+h.pf[i-1])/2)+ex;x.beginPath();x.moveTo(h.path[i-1][0],h.path[i-1][1]);x.lineTo(h.path[i][0],h.path[i][1]);x.stroke()}if(h.fw2)for(const f of h.fw2){x.lineWidth=f.w+ex*.3;x.beginPath();f.pts.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke()}}
 const TYP3=['oak','pine','birch','spruce','willow','larch','maple'];
@@ -3492,6 +3492,31 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
   }catch(e){if(!drawWorld._e82){drawWorld._e82=1;console.warn('P82',e)}}
  };
 }catch(e){console.warn('P82',e)}})();
+</script>
+<script>
+/* ===================== P83: naprawa „samego zielonego tła” na Chrome =====================
+   Gdy tło dołka nie zbuduje się (brak pamięci na płótno / błąd odczytu), gra pokazywała zapasowe
+   zielone tło i zostawała z nim do wyczyszczenia danych. Teraz: zwalniamy pamięć i próbujemy od razu
+   jeszcze raz, a jeśli dalej się nie da – gra po cichu ponawia budowę w tle i podmienia mapę. */
+(function(){try{
+ const idx=wn=>wn?1:(season=='autumn'?2:0);
+ /* oznacz zapasowe tło */
+ const _fb=window.fallbackBG;if(_fb){window.fallbackBG=function(){const c=_fb.apply(this,arguments);try{c._fb=1}catch(e){}return c};try{fallbackBG=window.fallbackBG}catch(e){}}
+ /* zwolnij pamięć: tła innych dołków */
+ const free=keep=>{try{for(const k of Array.from(BGC.keys())){if(k===keep)continue;const e=BGC.get(k)||[];for(const c of e)if(c&&c.width){try{c.width=c.height=0}catch(x){}}BGC.delete(k);try{k._sil=null}catch(x){}}}catch(e){}};
+ const _b=build3;
+ /* zapasowe tło poznajemy też po braku sylwetek drzew (h._sil), bo starszy zapas nie jest oznaczony */
+ const bad=(c,h)=>!c||!c.width||c._fb||!h._sil;
+ build3=function(h,wn){h._sil=null;let c=_b.apply(this,arguments);if(bad(c,h)){if(c)c._fb=1;free(h);try{h._sil=null;const c2=_b.apply(this,arguments);if(!bad(c2,h))c=c2;else if(c2)c2._fb=1}catch(e){}}return c};
+ /* ponawianie w tle, gdy na ekranie jest zapasowe tło */
+ let tries=0,lastH=null;
+ setInterval(()=>{try{if(!playing||!holes||!holes[hi]||bgBusy)return;const h=holes[hi],wn=season=='winter',i=idx(wn),e=BGC.get(h),cur=e&&e[i];
+  if(h!==lastH){lastH=h;tries=0}
+  if(!cur||!cur._fb||tries>=6)return;tries++;free(h);
+  let c=null;const s0=h._sil;h._sil=null;try{AUT3=season=='autumn';c=_b(h,wn)}catch(x){}try{AUT3=false}catch(x){}
+  if(!bad(c,h)){e[i]=c;try{cur.width=cur.height=0}catch(x){}try{localStorage.setItem('dg_bgfix',String(Date.now()))}catch(x){}}
+ }catch(x){}},2500);
+}catch(e){console.warn('P83',e)}})();
 </script>
 </body>
 </html>
