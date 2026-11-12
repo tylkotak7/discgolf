@@ -3254,7 +3254,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','⛓️ Trafiony dysk zostaje w koszu do końca dołka','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
+ const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Przebudowa wszystkich 18 dołków według uwag z pola','1: krótki tee, par 3, dwie linie (hyzer/backhand) z kępą drzew i OB po prawej','5 i 6: asfaltowa droga, jeżdżą auta, a kierowcy komentują rzuty','5: 3× większa rzeczka · 6: rozległy staw · 4: staw za drogą','7: brzozy, działka ze szklarnią i działkowiczem · 8: pole zboża i większa woda za koszem','9: mostek przez rzeczkę · 10: kosz z 9, ścieżka i tee od 11 · 14: wąski fairway z tabliczkami 50–200 m i dom w oddali','Usunięte mando na 2, 3, 8, 10, 17, hazard na 12 i 15, szałas na 17 · 18: z górki ~1,5 m i pole za koszem']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie 4 mapy naraz (Złotów 12, Złotów 22, Międzybłocie, Luboń beta – wkrótce)','Przycisk „Zmień pogodę” na kafelku pola – kafelek pokazuje porę roku i pogodę','Top 5 obok siebie: Złotów 12 i 22, pod spodem Międzybłocie i Luboń','Nowy sezon rankingu – wszystkie wcześniejsze wyniki są w zakładce 📦 Archiwum','Pole treningowe przeniesione do Opcji → Old school']],
   ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
@@ -3723,7 +3723,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
 /* ===== 0. statystyki tylko od nowego sezonu rankingu ===== */
 try{const T=window.ARCH_T||0;if(SV.statsArchT!==T){SV.statsArch=Object.assign({},SV.statsArch||{},SV.stats||{});SV.stats={};SV.statsArchT=T;persist()}}catch(e){console.warn('P84 stats',e)}
 /* ===== 1. ROLLER ===== */
-let ROLL=false;window.__roll=()=>ROLL;
+let ROLL=false;window.__roll=()=>ROLL;window.__rollOff=()=>{ROLL=false};
 try{const _bb=buildBar;buildBar=function(){_bb();const sh=$('sh');if(!sh||sh.querySelector('.rolb'))return;const rb=document.createElement('button');rb.innerHTML='🛞<small style="font-size:10px;display:block;line-height:1">roller</small>';rb.className='tomb rolb'+(ROLL?' on':'');
   rb.onclick=e=>{e.stopPropagation();ROLL=!ROLL;if(ROLL&&typeof TOMA!='undefined'){TOMA=false;sh.querySelectorAll('.tomb:not(.rolb)').forEach(x=>x.classList.remove('on'))}rb.classList.toggle('on',ROLL);pill(ROLL?'🛞 Roller: dysk leci nisko i toczy się po ziemi, na końcu skręca':'Rzut zwykły')};
   [...sh.children].forEach(x=>{if(x!==rb)x.addEventListener('click',()=>{ROLL=false;rb.classList.remove('on')})});sh.appendChild(rb)};buildBar()}catch(e){console.warn('roller bar',e)}
@@ -3844,9 +3844,10 @@ try{
 /* wyzwania dnia są wyłączone – bez komunikatów */
 try{dDone=function(){}}catch(e){}
 /* ===== 6. dysk zostaje w koszu po trafieniu ===== */
-try{let INB=null;const _ho=hole;hole=function(){const h=holes&&holes[hi],d=disc;const r=_ho.apply(this,arguments);try{if(h&&holes[hi]===h&&!disc&&scores.length&&scores[scores.length-1]===throws)INB={h,t:performance.now(),c:(d&&d.D&&d.D.col)||discs[di].col}}catch(e){}return r};
+try{let INB=null;const _ho=hole;hole=function(){const h=holes&&holes[hi],d=disc;const r=_ho.apply(this,arguments);try{if(h&&holes[hi]===h&&!disc&&scores.length&&scores[scores.length-1]===throws&&!(INB&&INB.h===h))INB={h,t:performance.now(),c:(d&&d.D&&d.D.col)||discs[di].col}}catch(e){}return r};
+ window.__INB=v=>{INB=v};
  const _ld=load;load=function(){INB=null;return _ld.apply(this,arguments)};
- const _b3=basket3;basket3=function(x,y,s){const r=_b3.apply(this,arguments);try{if(INB&&playing&&holes[hi]===INB.h&&Math.abs(x-INB.h.b[0])<1.5&&Math.abs(y-INB.h.b[1])<3){const a=Math.min(1,(performance.now()-INB.t)/350),dy=-24+13*a*a,bo=a>=1?0:0;g.save();g.translate(x,y);g.scale(s||1,s||1);
+ const _b3=basket3;basket3=function(x,y,s){const r=_b3.apply(this,arguments);try{if(INB&&playing&&holes[hi]===INB.h&&Math.abs(x-INB.h.b[0])<1.5&&Math.abs(y-INB.h.b[1])<3){const e=(performance.now()-INB.t)/1000,a=Math.min(1,e/.42),dy=-30+19*a*a-(e>.42&&e<.7?Math.sin((e-.42)/.28*Math.PI)*1.6:0);g.save();g.translate(x,y);g.scale(s||1,s||1);
    g.fillStyle=INB.c;g.beginPath();g.ellipse(.6,dy-.4,5.4,1.9,-.08,0,7);g.fill();g.strokeStyle='rgba(0,0,0,.45)';g.lineWidth=.45;g.stroke();g.fillStyle='rgba(255,255,255,.35)';g.beginPath();g.ellipse(-1.2,dy-1,2.2,.6,-.08,0,7);g.fill();
    if(a>=1){g.strokeStyle='rgba(205,214,222,.9)';g.lineWidth=.5;for(const cx of[-5,-2.5,0,2.5,5]){g.beginPath();g.moveTo(cx*.9,-22);g.quadraticCurveTo(cx*1.05,-16,cx*.8,-11.4);g.stroke()}}g.restore()}}catch(e){}return r}}catch(e){console.warn('inB',e)}
 /* ===== 5. opcja rozbiegu w Opcjach ===== */
@@ -3959,5 +3960,15 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
 </script>
 <script>/* P87: przycisk Złotów 3D na sam dół menu */
 (function(){const mv=()=>{try{const a=document.getElementById('go3d'),v=document.getElementById('v-main');if(a&&v&&v.lastElementChild!==a){a.style.marginTop='14px';v.appendChild(a)}}catch(e){}};mv();setTimeout(mv,800);setTimeout(mv,3000)})();</script>
+<script>/* P88: najpierw widać, jak dysk wpada do kosza, dopiero potem napis Ace/Birdie */
+(function(){try{let busy=false;const _h=hole;hole=function(){const h=holes&&holes[hi];if(busy)return;
+  if(!h||!playing||(h.lub&&h.par>=4&&throws<=1))return _h.apply(this,arguments);
+  const d=disc,args=arguments;busy=true;disc=null;next=-1;try{chainT=70}catch(e){}try{sfx.chains&&sfx.chains()}catch(e){}
+  try{window.__INB&&window.__INB({h,t:performance.now(),c:(d&&d.D&&d.D.col)||discs[di].col})}catch(e){}
+  setTimeout(()=>{busy=false;if(!playing||holes[hi]!==h)return;disc=d;try{_h.apply(this,args)}catch(e){console.warn('hole delay',e)}},1250)};
+ const _ld=load;load=function(){busy=false;return _ld.apply(this,arguments)};
+}catch(e){console.warn('P88',e)}})();</script>
+<script>/* P89: na każdym nowym dołku – Mid, Prosto, bez rollera i tomy */
+(function(){try{const _ld=load;load=function(){const r=_ld.apply(this,arguments);try{if(typeof TOMA!='undefined')TOMA=false;if(window.__rollOff)window.__rollOff();di=1;curve=0;buildBar()}catch(e){}return r}}catch(e){console.warn('P89',e)}})();</script>
 </body>
 </html>
