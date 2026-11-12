@@ -3427,5 +3427,71 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  try{const _sv=showView;showView=function(v){if(v=='main'&&!playing&&!ORD.includes(layout)&&layout!='trening'){layout='zlotow'}const r=_sv.apply(this,arguments);if(v=='main'&&!playing&&layout=='trening'){layout='zlotow';renderCards();menuTop()}return r}}catch(e){}
  renderCards();menuTop();
 }catch(e){console.warn('P81',e)}})();</script>
+<script>
+/* ===================== P82: TEST nowych efektów grafiki – tylko Złotów, dołek 1 =====================
+   lato: ciepłe światło słońca + promienie, plamy światła między drzewami, miękka winieta
+   zima: chłodne światło, padający śnieg w 3 warstwach (z wiatrem), iskrzenie śniegu, szron na brzegach
+   wyłączenie testu: dopisz ?fx=0 do adresu */
+(function(){try{
+ const OFF=/[?&]fx=0/.test(location.search);
+ const ON=()=>{try{return !OFF&&playing&&holes===ZL&&hi===0&&!GFXLOW()}catch(e){return false}};
+ const mk=(w,h,f)=>{const c=document.createElement('canvas');c.width=w;c.height=h;f(c.getContext('2d'));return c};
+ const rad=(c0,c1,c2)=>mk(64,64,x=>{const r=x.createRadialGradient(32,32,0,32,32,32);r.addColorStop(0,c0);r.addColorStop(.45,c1);r.addColorStop(1,c2);x.fillStyle=r;x.fillRect(0,0,64,64)});
+ const FLK=rad('rgba(255,255,255,1)','rgba(255,255,255,.75)','rgba(255,255,255,0)');
+ const SPOT=rad('rgba(255,236,170,.9)','rgba(255,226,150,.35)','rgba(255,220,140,0)');
+ const FLS=rad('rgba(60,85,125,.85)','rgba(60,85,125,.4)','rgba(70,95,135,0)');
+ const GLT=rad('rgba(255,255,255,1)','rgba(220,240,255,.5)','rgba(200,230,255,0)');
+ const R=(a,b)=>a+Math.random()*(b-a);
+ /* śnieg w 3 warstwach (współrzędne ekranu) */
+ const FL=[];function initSnow(w,h){FL.length=0;const L=[[90,.8,1.8,.35,.7],[50,1.6,3.2,.7,.9],[12,5,9,1.5,.7]];for(let l=0;l<3;l++){const[n,s0,s1,v,a]=L[l];for(let i=0;i<n;i++)FL.push({l,x:R(0,w),y:R(0,h),s:R(s0,s1),v:v*R(.8,1.25),a,p:R(0,6.3)})}FL._w=w;FL._h=h}
+ /* plamy światła i iskry – pozycje w świecie, losowane raz na dołek */
+ let SP=null,GL=null;function initWorld(h){SP=[];GL=[];const P=(h.path&&h.path.length)?h.path:[[h.tee[0],h.tee[1]],[h.b[0],h.b[1]]];
+  for(let i=0;i<16;i++){const k=Math.random()*(P.length-1),i0=k|0,f=k-i0,a=P[i0],b=P[Math.min(P.length-1,i0+1)];SP.push({x:a[0]+(b[0]-a[0])*f+R(-38,38),y:a[1]+(b[1]-a[1])*f+R(-30,30),r:R(14,34),p:R(0,6.3),q:R(.6,1.4)})}
+  for(let i=0;i<55;i++){const k=Math.random()*(P.length-1),i0=k|0,f=k-i0,a=P[i0],b=P[Math.min(P.length-1,i0+1)];GL.push({x:a[0]+(b[0]-a[0])*f+R(-70,70),y:a[1]+(b[1]-a[1])*f+R(-60,60),p:R(0,6.3),f:R(1.5,4)})}
+  SP._h=h}
+ let snowBak=null;
+ const _dw82=drawWorld;
+ drawWorld=function(){_dw82.apply(this,arguments);
+  const on=ON();
+  /* stary „kwadratowy” śnieg wyłączony na dołku testowym, przywracany na innych */
+  try{if(on&&season=='winter'&&snow.length){snowBak=snow.slice();snow.length=0}else if(!on&&snowBak){snow.push(...snowBak);snowBak=null}}catch(e){}
+  if(!on)return;
+  try{const h=holes[hi],wn=season=='winter',t=performance.now()/1000,cw=CAM.cw,ch=CAM.ch;
+   const wvx=(typeof wx=='number'?wx:0),wvy=(typeof wy=='number'?wy:0);
+   if(!SP||SP._h!==h)initWorld(h);
+   /* ---- warstwa świata ---- */
+   g.save();worldT();
+   if(!wn){g.globalCompositeOperation='overlay';for(const s of SP){const fl=.55+.45*Math.sin(t*s.q+s.p)*Math.sin(t*.7*s.q+s.p*2),ox=Math.sin(t*1.3+s.p)*2.2*(.5+Math.abs(wvx)*.25),r=s.r*(1+.08*Math.sin(t*2+s.p));g.globalAlpha=Math.max(0,.8*fl);g.drawImage(SPOT,s.x+ox-r,s.y-r*.7,r*2,r*1.4)}}
+   else{g.globalCompositeOperation='lighter';for(const s of GL){const v=Math.sin(t*s.f+s.p);if(v<.82)continue;const a=(v-.82)/.18,r=1.2+a*2.2;g.globalAlpha=a*.9;g.drawImage(GLT,s.x-r,s.y-r,r*2,r*2);g.globalAlpha=a*.5;g.fillStyle='#fff';g.fillRect(s.x-r*1.6,s.y-.25,r*3.2,.5);g.fillRect(s.x-.25,s.y-r*1.6,.5,r*3.2)}}
+   g.restore();
+   /* ---- warstwa ekranu ---- */
+   g.save();g.setTransform(dpr,0,0,dpr,0,0);
+   if(!wn){
+    /* ciepłe słońce z lewej góry, chłodny cień z prawego dołu */
+    g.globalCompositeOperation='soft-light';let gr=g.createLinearGradient(0,0,cw,ch);gr.addColorStop(0,'rgba(255,214,140,.85)');gr.addColorStop(.5,'rgba(255,240,210,.25)');gr.addColorStop(1,'rgba(30,60,90,.7)');g.fillStyle=gr;g.fillRect(0,0,cw,ch);
+    /* promienie słońca */
+    g.globalCompositeOperation='screen';for(let i=0;i<4;i++){const ph=t*.12+i*1.7,a=.09+.045*Math.sin(ph*1.9),x0=-cw*.2+i*cw*.32+Math.sin(ph)*18;g.save();g.translate(x0,-20);g.rotate(-.55);const lg=g.createLinearGradient(0,0,0,ch*1.3);lg.addColorStop(0,'rgba(255,236,180,'+(a*2.2)+')');lg.addColorStop(1,'rgba(255,236,180,0)');g.fillStyle=lg;g.fillRect(0,0,34+i*16,ch*1.3);g.restore()}
+    /* poświata słońca w rogu */
+    gr=g.createRadialGradient(0,0,0,0,0,cw*.9);gr.addColorStop(0,'rgba(255,228,150,.42)');gr.addColorStop(1,'rgba(255,230,160,0)');g.fillStyle=gr;g.fillRect(0,0,cw,ch);
+    g.globalCompositeOperation='source-over';
+    gr=g.createRadialGradient(cw/2,ch*.45,Math.min(cw,ch)*.35,cw/2,ch*.5,Math.max(cw,ch)*.75);gr.addColorStop(0,'rgba(10,25,10,0)');gr.addColorStop(1,'rgba(8,20,8,.62)');g.fillStyle=gr;g.fillRect(0,0,cw,ch);
+   }else{
+    /* chłodne zimowe światło */
+    g.globalCompositeOperation='soft-light';let gr=g.createLinearGradient(0,0,0,ch);gr.addColorStop(0,'rgba(170,205,255,.75)');gr.addColorStop(1,'rgba(60,90,150,.6)');g.fillStyle=gr;g.fillRect(0,0,cw,ch);
+    g.globalCompositeOperation='source-over';
+    /* szron na brzegach ekranu */
+    gr=g.createRadialGradient(cw/2,ch/2,Math.min(cw,ch)*.38,cw/2,ch/2,Math.max(cw,ch)*.72);gr.addColorStop(0,'rgba(200,225,255,0)');gr.addColorStop(.6,'rgba(200,225,255,.25)');gr.addColorStop(1,'rgba(235,245,255,.85)');g.fillStyle=gr;g.fillRect(0,0,cw,ch);
+    /* śnieg */
+    if(!FL.length||FL._w!==cw||FL._h!==ch)initSnow(cw,ch);
+    for(const f of FL){f.y+=f.v*(1+f.l*.35);f.x+=wvx*.35*(1+f.l)+Math.sin(t*1.2+f.p)*.35*(1+f.l*.6);f.y+=Math.max(0,wvy)*.15*(1+f.l);
+     if(f.y>ch+10){f.y=-10;f.x=R(0,cw)}if(f.x>cw+10)f.x=-10;if(f.x<-10)f.x=cw+10;
+     const s=f.s*2;g.globalAlpha=f.a*.8;g.drawImage(FLS,f.x-s*.6+s*.12,f.y-s*.6+s*.18,s*1.2,s*1.2);g.globalAlpha=f.a;g.drawImage(FLK,f.x-s/2,f.y-s/2,s,s)}
+    g.globalAlpha=1;
+   }
+   g.restore();
+  }catch(e){if(!drawWorld._e82){drawWorld._e82=1;console.warn('P82',e)}}
+ };
+}catch(e){console.warn('P82',e)}})();
+</script>
 </body>
 </html>
