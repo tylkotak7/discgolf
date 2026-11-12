@@ -1878,16 +1878,17 @@ function openMap(){const h=holes[hi];if(!h)return;let w=$('hmapw');if(!w){w=docu
 
 /* ---------- KARIERA ---------- */
 let CAREER=false;
-const DIVS=[{n:'MA4',min:0,base:820,d:'do 850'},{n:'MA3',min:850,base:885,d:'850–920'},{n:'Open',min:920,base:950,d:'ponad 920'}];
+const DIVS=[{n:'Open',min:0,base:900,d:'wszyscy gracze'}];
 const RSP=[[640,16],[700,11],[760,6],[820,1],[885,-7],[950,-12],[1010,-16],[1070,-19]];
 function expScore(r,n){let a=RSP[0],b=RSP[1];for(let i=1;i<RSP.length;i++){b=RSP[i];a=RSP[i-1];if(r<=b[0])break}const f=(r-a[0])/(b[0]-a[0]);return (a[1]+(b[1]-a[1])*f)*n/12}
 function rateScore(t,n){const s=t*12/n;let a=RSP[0],b=RSP[1];for(let i=1;i<RSP.length;i++){b=RSP[i];a=RSP[i-1];if(s>=b[1])break}const f=(s-a[1])/(b[1]-a[1]);return Math.round(a[0]+(b[0]-a[0])*f)}
-const divOf=r=>r==null?0:r>=920?2:r>=850?1:0;
+const divOf=r=>0;
 function calcRating(R){if(!R.length)return null;const L=R.slice(-8);let s=0,w=0;L.forEach((v,i)=>{const k=i>=L.length-2?2:1;s+=v*k;w+=k});return Math.round(s/w)}
 const RIV=['Bartek „Kosa” Nowak','Marek Zając','Kuba Wiśniewski','Tomek „Driver” Lis','Ania Wróbel','Paweł Kruk','Olek Sowa'],ROFF=[-26,-16,-8,0,7,15,24];
 const EVS=[{n:'Złotów Winter',c:'zlotow',s:'winter',i:'❄️'},{n:'Złotów Open',c:'zlotow',s:'summer',i:'☀️'},{n:'Złotów Jesień · finał',c:'zlotow',s:'autumn',i:'🍂',x:1.5}];
 const PTS=[100,85,72,61,52,44,37,31],PRZ=[40,25,15,10,5,0,0,0];
-function car(){if(!SV.car||!SV.car.v2)SV.car={v2:1,div:0,rating:null,rounds:[],season:1,ev:0,pts:0,rp:{},log:[]};if(SV.car.ev>=EVS.length)SV.car.ev=0;return SV.car}
+const CRES=Date.UTC(2026,10,12,4);
+function car(){if(SV.car&&SV.carRes!==CRES){SV.carArch=SV.car;SV.car=null;SV.carRes=CRES}if(!SV.car||!SV.car.v2)SV.car={v2:1,div:0,rating:null,rounds:[],season:1,ev:0,pts:0,rp:{},log:[]};if(SV.car.ev>=EVS.length)SV.car.ev=0;return SV.car}
 const gauss=()=>{let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)};
 function simScore(r,n){return Math.round(expScore(r,n)+gauss()*1.8*Math.sqrt(n/12))}
 function carAfter(){const C=car(),ev=EVS[C.ev],n=holes.length,rows=[{n:pname||'Ty',s:total,me:1}];RIV.forEach((nm,i)=>{const gp=(typeof GRP!='undefined'?GRP:[]).find(g2=>g2.i==i);rows.push({n:nm+(gp?' 👥':''),s:gp?gp.tot:simScore(DIVS[C.div].base+ROFF[i],n)})});
@@ -1895,14 +1896,14 @@ function carAfter(){const C=car(),ev=EVS[C.ev],n=holes.length,rows=[{n:pname||'T
  rows.forEach((r,i)=>{if(!r.me)C.rp[r.n]=(C.rp[r.n]||0)+Math.round(PTS[i]*mul)});C.pts+=pts;SV.coins+=prz;SV.coinsTotal=(SV.coinsTotal||0)+prz;
  const rr=rateScore(total,n),old=C.rating;C.rounds.push(rr);C.rounds=C.rounds.slice(-20);C.rating=calcRating(C.rounds);(C.hist=C.hist||[]).push({r:C.rating,rr,p:pl,e:ev.n,s:C.season});C.log.push({e:ev.n,p:pl,s:total});
  let html='<div class="carres"><div class="crh">'+ev.i+' '+ev.n+' · '+DIVS[C.div].n+'</div><div class="crp">Miejsce <b>'+pl+'</b> / 8 · +'+pts+' pkt'+(prz?' · 🪙 +'+prz:'')+'</div><div class="crr">Rating rundy: <b>'+rr+'</b> · Twój rating: '+(old==null?'nowy':old)+' → <b>'+C.rating+'</b>'+(old==null?'':' ('+(C.rating>=old?'+':'')+(C.rating-old)+')')+' · '+DIVS[divOf(C.rating)].n+'</div><ol class="crl">'+rows.map(r=>'<li class="'+(r.me?'me':'')+'"><span>'+String(r.n).replace(/[<>&]/g,'')+'</span><b>'+(r.s>0?'+':'')+r.s+'</b></li>').join('')+'</ol>';
- C.ev++;if(C.ev>=EVS.length){const st=[{n:pname||'Ty',p:C.pts,me:1}].concat(RIV.map(r=>({n:r,p:C.rp[r]||0}))).sort((a,b)=>b.p-a.p),sp=st.findIndex(r=>r.me)+1,byR=divOf(C.rating),nd=Math.max(C.div,byR,sp==1&&C.div<2?C.div+1:0),up=nd>C.div;
-  html+='<div class="crs">🏁 Koniec sezonu '+C.season+': miejsce <b>'+sp+'</b> ('+C.pts+' pkt)'+(up?'<br>⬆️ <b>Awans '+DIVS[C.div].n+' → '+DIVS[nd].n+'!</b>'+(nd-C.div>1?' 🚀 przeskok o 2 dywizje!':''):C.div==2&&sp==1?'<br>👑 <b>Mistrz sezonu Open!</b>':'<br>Zostajesz w '+DIVS[C.div].n+(C.div<2?' – awans: wygraj sezon albo rating '+DIVS[C.div+1].min+'+':''))+'</div>';
+ C.ev++;if(C.ev>=EVS.length){const st=[{n:pname||'Ty',p:C.pts,me:1}].concat(RIV.map(r=>({n:r,p:C.rp[r]||0}))).sort((a,b)=>b.p-a.p),sp=st.findIndex(r=>r.me)+1,byR=divOf(C.rating),nd=0,up=nd>C.div;
+  html+='<div class="crs">🏁 Koniec sezonu '+C.season+': miejsce <b>'+sp+'</b> ('+C.pts+' pkt)'+(up?'<br>⬆️ <b>Awans '+DIVS[C.div].n+' → '+DIVS[nd].n+'!</b>'+(nd-C.div>1?' 🚀 przeskok o 2 dywizje!':''):sp==1?'<br>👑 <b>Mistrz sezonu Open!</b>':'<br>Zostajesz w '+DIVS[C.div].n+'')+'</div>';
   if(up)C.div=nd;if(sp==1)unlock&&unlock('m5');C.season++;C.ev=0;C.pts=0;C.rp={}}
  else html+='<div class="crs">Następny turniej: '+EVS[C.ev].i+' <b>'+EVS[C.ev].n+'</b></div>';
  try{persist()}catch(e){}try{upd()}catch(e){}return html+'</div>'}
 function renderCareer(){let el=$('carp');const ms=$('modeseg');if(!ms)return;if(!el){el=document.createElement('div');el.id='carp';el.className='glass carp';(document.getElementById('wxsel')||ms).after(el)}
  el.hidden=!(CAREER&&UP);if(el.hidden)return;const C=car(),ev=EVS[C.ev],st=[{n:pname||'Ty',p:C.pts,me:1}].concat(RIV.map(r=>({n:r,p:C.rp[r]||0}))).sort((a,b)=>b.p-a.p).slice(0,5);
- el.innerHTML='<div class="cth"><span class="dv">'+DIVS[C.div].n+'</span><div><b>Kariera · sezon '+C.season+'</b><small>rating '+(C.rating==null?'– (zagraj turniej)':C.rating)+' · MA4 &lt;850 · MA3 850–920 · Open 920+</small></div></div>'+(C.rounds.length?'<div class="crt">'+C.rounds.slice(-6).map(v=>'<span class="'+(v>=920?'o':v>=850?'m':'')+'">'+v+'</span>').join('')+'<em>ratingi rund</em></div>':'')+
+ el.innerHTML='<div class="cth"><span class="dv">'+DIVS[C.div].n+'</span><div><b>Kariera · sezon '+C.season+'</b><small>rating '+(C.rating==null?'– (zagraj turniej)':C.rating)+' · kategoria Open</small></div></div>'+(C.rounds.length?'<div class="crt">'+C.rounds.slice(-6).map(v=>'<span class="'+(v>=920?'o':v>=850?'m':'')+'">'+v+'</span>').join('')+'<em>ratingi rund</em></div>':'')+
  '<div class="cev">'+EVS.map((e,i)=>'<div class="'+(i<C.ev?'done':i==C.ev?'now':'')+'"><i>'+(i<C.ev?'✔':e.i)+'</i><small>'+e.n+'</small></div>').join('')+'</div>'+
  '<div class="cnx">Następny: <b>'+ev.i+' '+ev.n+'</b><small>'+(ev.c=='miedzy'?'Międzybłocie MP Long · 18 dołków':'Złotów · 12 dołków')+' · '+(ev.s=='autumn'?'jesień':ev.s=='winter'?'zima':'lato')+(ev.x?' · punkty ×1.5':'')+'</small></div>'+
  '<ol class="cst">'+st.map(r=>'<li class="'+(r.me?'me':'')+'"><span>'+r.n+'</span><b>'+r.p+' pkt</b></li>').join('')+'</ol>'}
@@ -1984,7 +1985,7 @@ function openCard(){const C=car(),H=C.hist||[],R=C.rounds||[];let w=$('pcard');i
 /* ---------- ranking kariery online ---------- */
 let UID=null;(async()=>{try{if(window.claude&&claude.use){const U=await claude.use('user');if(U&&U.id)UID=await U.id()}}catch(e){}})();
 async function carSync(){const C=car();if(!DB||!UID||C.rating==null)return;try{await DB.doc('kariera/'+UID).set({n:String(pname||'Gracz').slice(0,12),r:C.rating,dv:DIVS[C.div].n,w:(C.hist||[]).filter(x=>x.p==1).length,t:(C.hist||[]).length,ss:C.season,at:Date.now()})}catch(e){}}
-async function carTop(){if(!DB)return null;try{const q=await DB.collection('kariera').orderBy('r','desc').limit(10).get();return q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(e){return null}}
+async function carTop(){if(!DB)return null;try{const q=await DB.collection('kariera').orderBy('r','desc').limit(10).get();return q.docs.map(d=>Object.assign({},d.data(),{id:d.id})).filter(x=>!String(x.id).startsWith('pk-')&&(+x.at||0)>=CRES)}catch(e){return null}}
 async function carTopRender(){const el=$('carol');if(!el)return;const l=await carTop();if(!l){el.innerHTML='<small>🌍 Ranking kariery online działa w wersji gry na claude.ai</small>';return}
  el.innerHTML='<b>🌍 Ranking kariery online</b>'+(l.length?'<ol>'+l.map(x=>'<li class="'+(x.id===UID?'me':'')+'"><span>'+String(x.n||'?').replace(/[<>&"]/g,'').slice(0,12)+' <small>'+String(x.dv||'').replace(/[<>&"]/g,'')+'</small></span><em>'+(+x.r||0)+'</em></li>').join('')+'</ol>':'<small>Jeszcze nikt nie zagrał turnieju – bądź pierwszy!</small>')}
 
@@ -2215,7 +2216,7 @@ function onboard(){let seen=false;try{seen=localStorage.getItem('dg_onb')=='1'}c
  const S=[['🥏','Witaj w Discgolf PL!','Graj na prawdziwych polach: Złotów i Międzybłocie (Mistrzostwa Polski 2026). Zrób jak najmniej rzutów do kosza.'],
   ['👆','Jak rzucać?','Przeciągnij palcem w dół od gracza i puść – im dłużej ciągniesz, tym mocniej. Kierunek to przeciwieństwo ruchu palca, jak w procy.'],
   ['🎒','Dysk i lot','Putter – blisko i prosto. Mid – średnio. Driver – daleko. Hyzer skręca w lewo, Anhyzer w prawo. 🪓 Tomahawk przelatuje nad drzewami.'],
-  ['🏆','Tryby gry','🥏 Runda – grasz pole dla wyniku i rankingu Top 5. 🏆 Kariera – cotygodniowe sezony online z innymi graczami (dywizje MA4 → MA3 → Open, rating).']];
+  ['🏆','Tryby gry','🥏 Runda – grasz pole dla wyniku i rankingu Top 5. 🏆 Kariera – cotygodniowe sezony online z innymi graczami (kategoria Open, wspólny rating).']];
  const ov=document.createElement('div');ov.id='onb';document.body.appendChild(ov);let k=seen?S.length:0;
  const draw=()=>{if(k<S.length){const s=S[k];ov.innerHTML='<div class="oc"><div class="oi">'+s[0]+'</div><b>'+s[1]+'</b><p>'+s[2]+'</p><div class="od">'+S.map((_,i)=>'<i class="'+(i==k?'on':'')+'"></i>').join('')+'<i class="'+(k==S.length?'on':'')+'"></i></div><div class="ob"><button data-o="skip">Pomiń</button><button data-o="next">Dalej ›</button></div></div>'}
   else ov.innerHTML='<div class="oc"><div class="oi">✍️</div><b>Jak się nazywasz?</b><p>Twój nick pojawi się w rankingach online.</p><input id="onick" maxlength="12" placeholder="Twój nick" autocomplete="off" enterkeyhint="done" value="'+(pname&&pname!='Gracz'?String(pname).replace(/"/g,''):'')+'"><div class="ob"><button data-o="go" class="wide">▶ Zaczynamy!</button></div></div>'}
@@ -2558,7 +2559,7 @@ function silHit(d,h){const T=d.trail,n=T.length;if(n<1)return;const cur=T[n-1],p
    const ln=[850,920].map(v=>'<line x1="0" x2="300" y1="'+Y(v).toFixed(1)+'" y2="'+Y(v).toFixed(1)+'" stroke="rgba(255,255,255,.18)" stroke-dasharray="4 4"/><text x="296" y="'+(Y(v)-3).toFixed(1)+'" fill="#8fae98" font-size="8" text-anchor="end">'+(v==850?'MA3':'Open')+' '+v+'</text>').join('');
    chart='<svg viewBox="0 0 300 90">'+ln+'<polyline fill="none" stroke="#3fd16a" stroke-width="2.5" stroke-linejoin="round" points="'+H.map((h,i)=>X(i).toFixed(1)+','+Y(h.r).toFixed(1)).join(' ')+'"/>'+H.map((h,i)=>'<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(h.r).toFixed(1)+'" r="3" fill="'+(h.p==1?'#ffd35a':'#fff')+'"/>').join('')+'</svg>'}
   const lg=(C.hist||[]).slice(-6).reverse();
-  el.innerHTML='<div class="kcc"><div class="khd"><div class="kbd" style="background:'+DC[C.div]+'">'+dv.n+'<small>dywizja</small></div><div><b>Sezon '+C.season+'</b><em>Rating: '+(r==null?'–':r)+' · '+C.pts+' pkt w sezonie</em><em>Dywizje: MA4 &lt;850 · MA3 850–920 · Open 920+</em></div></div>'+prog+'</div>'+
+  el.innerHTML='<div class="kcc"><div class="khd"><div class="kbd" style="background:'+DC[C.div]+'">'+dv.n+'<small>dywizja</small></div><div><b>Sezon '+C.season+'</b><em>Rating: '+(r==null?'–':r)+' · '+C.pts+' pkt w sezonie</em><em>Kategoria: Open (wszyscy gracze razem)</em></div></div>'+prog+'</div>'+
   '<div class="kcc"><h4>📅 Turnieje sezonu</h4><div class="kev">'+EVS.map((e,i)=>'<div class="'+(i<C.ev?'done':i==C.ev?'now':'')+'"><i>'+(i<C.ev?'✔':e.i)+'</i>'+e.n+(e.x?'<br>×1.5 pkt':'')+'</div>').join('')+'</div><button class="kgo" id="cargo">▶ Graj: '+ev.i+' '+ev.n+'</button></div>'+
   '<div class="kcc"><h4>🏆 Tabela sezonu</h4><ol>'+stand.map(x=>'<li class="'+(x.me?'me':'')+'"><span>'+String(x.n).replace(/[<>&]/g,'')+(x.rt?'<small>~'+x.rt+'</small>':'')+'</span><b>'+x.p+' pkt</b></li>').join('')+'</ol></div>'+
   '<div class="kcc"><h4>📈 Twój rating</h4>'+chart+'</div>'+
@@ -2571,7 +2572,7 @@ function silHit(d,h){const T=d.trail,n=T.length;if(n<1)return;const cur=T[n-1],p
 
 
 /* ===================== P53: KARIERA ONLINE (tygodniowe sezony, bez botów) · SZATNIA · OPCJE ===================== */
-const WK0=Date.UTC(2026,10,2,-1),WKMS=604800e3;
+const WK0=Date.UTC(2026,10,12,4),WKMS=604800e3;
 const wkNow=()=>Math.floor((Date.now()-WK0)/WKMS),wkNo=w=>w+1,wkEnd=w=>WK0+(w+1)*WKMS;
 const wkRange=w=>{const a=new Date(WK0+w*WKMS+3600e3),b=new Date(WK0+(w+1)*WKMS-3600e3+3600e3-1),f=d=>String(d.getUTCDate()).padStart(2,'0')+'.'+String(d.getUTCMonth()+1).padStart(2,'0');return f(a)+'–'+f(new Date(WK0+(w+1)*WKMS-1))};
 const CPT=[100,85,72,61,52,44,37,31,26,22,18,15,12,10,8,6,5,4,3,2];
@@ -2580,7 +2581,7 @@ function wkEnsure(C,W){W=W==null?wkNow():W;{const nd=divOf(C.rating);if(C.rating
 function nextEv(C){const k=wkEnsure(C);for(let i=0;i<EVS.length;i++)if(k.s[i]==null)return i;return -1}
 async function carSync2(){const C=car();if(!DB||!UID)return;const k=C.wk||{},p=C.pwk||{};try{await DB.doc('kariera/'+UID).set({n:String(pname||'Gracz').slice(0,12),r:C.rating==null?0:C.rating,dv:DIVS[C.div].n,w:(C.titles||[]).length,t:(C.hist||[]).length,ss:wkNo(wkNow()),at:Date.now(),ch:pfChar(),lv:(xpInfo().lv||1),
   wk:k.w==null?-1:k.w,sd:k.sd==null?C.div:k.sd,se:k.s||[null,null,null],pwk:p.w==null?-1:p.w,psd:p.sd==null?0:p.sd,pse:p.s||[null,null,null],md:(C.medals||[]).length})}catch(e){console.warn('carSync2',e)}}
-async function seasonDocs(){if(!DB)return null;try{const q=await DB.collection('kariera').orderBy('at','desc').limit(400).get();return q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(e){try{const q=await DB.collection('kariera').limit(400).get();return q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(x){return null}}}
+async function seasonDocs(){if(!DB)return null;try{const q=await DB.collection('kariera').orderBy('at','desc').limit(400).get();return q.docs.map(d=>Object.assign({},d.data(),{id:d.id})).filter(x=>!String(x.id).startsWith('pk-')&&(+x.at||0)>=CRES)}catch(e){try{const q=await DB.collection('kariera').limit(400).get();return q.docs.map(d=>Object.assign({},d.data(),{id:d.id}))}catch(x){return null}}}
 function seasonTable(docs,W,div,mine){const E=[];(docs||[]).forEach(d=>{if(d.id===UID)return;let sd,se;if(d.wk===W){sd=d.sd;se=d.se}else if(d.pwk===W){sd=d.psd;se=d.pse}else return;if(sd!==div||!Array.isArray(se)||!se.some(v=>v!=null))return;E.push({id:d.id,n:escH(d.n||'?'),se,r:d.r})});
  if(mine&&mine.s.some(v=>v!=null))E.push({id:UID||'me',n:escH(pname||'Ty'),se:mine.s,r:car().rating,me:1});
  E.forEach(x=>{x.p=0;x.tot=0;x.np=0});for(let e=0;e<3;e++){const L=E.filter(x=>x.se[e]!=null).sort((a,b)=>a.se[e]-b.se[e]);let pl=0;L.forEach((x,i)=>{if(i==0||x.se[e]!==L[i-1].se[e])pl=i;x.p+=Math.round((CPT[pl]||1)*(EVS[e].x||1));x.tot+=x.se[e];x.np++;x['pl'+e]=pl+1;x['n'+e]=L.length})}
@@ -2976,7 +2977,7 @@ setTimeout(pfSync,5000);
 #pfbox h4{margin:8px 0 4px;text-align:left;font:900 14px 'Baloo 2',system-ui;color:#ffd35a}#pfbox .rw{display:flex;justify-content:space-between;background:rgba(255,255,255,.05);border-radius:10px;padding:6px 9px;margin-bottom:4px;font:700 12px system-ui;color:#cfe5d5}#pfbox .rw b{color:#fff}#pfbox button.x{margin-top:10px;width:100%;padding:11px;border-radius:14px;border:0;background:#3fd16a;color:#08210f;font:900 15px 'Baloo 2',system-ui}`;document.head.appendChild(st)})();
 window.openProfile=async function(name){if(!name)return;const old=document.getElementById('pfbox');if(old)old.remove();const box=document.createElement('div');box.id='pfbox';box.innerHTML='<div class="pc"><h3>'+name+'</h3><div class="sub">🌍 Ładowanie profilu…</div></div>';box.onclick=e=>{if(e.target===box||e.target.classList.contains('x'))box.remove()};document.body.appendChild(box);
  const f=v=>v==0?'E':(v>0?'+':'')+v,COURSES=[['zlotow','Złotów'],['z22','Złotów 22'],['miedzy','Międzybłocie']];let kd=null,best=[],rounds=0,last=0;
- try{if(DB){const q=await DB.collection('kariera').limit(400).get();const L=q.docs.map(d=>Object.assign({},d.data(),{id:d.id})).filter(x=>String(x.n||'')==name).sort((a,b)=>(b.pat||b.at||0)-(a.pat||a.at||0));kd=L[0]||null}}catch(e){}
+ try{if(DB){const q=await DB.collection('kariera').limit(400).get();const L=q.docs.map(d=>Object.assign({},d.data(),{id:d.id})).filter(x=>!String(x.id).startsWith('pk-')&&(+x.at||0)>=CRES).filter(x=>String(x.n||'')==name).sort((a,b)=>(b.pat||b.at||0)-(a.pat||a.at||0));kd=L[0]||null}}catch(e){}
  for(const[k,nm]of COURSES){try{if(!DB)break;const q=await DB.collection('sc_'+k).orderBy('s').limit(400).get();const L=q.docs.map(d=>d.data()).filter(x=>String(x.n||'')==name);rounds+=L.length;L.forEach(x=>{if((+x.at||0)>last)last=+x.at});if(L.length){const b=L.reduce((a,c)=>(+c.s<+a.s?c:a));best.push([nm,+b.s,+b.t||0,L.length])}}catch(e){}}
  const me=String(pname||SV.nick||'')==name,ch=kd&&kd.ch?Object.assign({},SV.char,kd.ch):me?SV.char:Object.assign({},SV.char,{cap:0,shirt:0}),rt=kd&&kd.r?kd.r:me?car().rating:null,dvn=rt?DIVS[divOf(rt)].n:null,DC={MA4:'#9fe0b0',MA3:'#8ec5ff',Open:'#ffd35a'},lv=kd&&kd.lv?kd.lv:me?xpInfo().lv:null;
  const ld=last?new Date(last):null,lds=ld?String(ld.getDate()).padStart(2,'0')+'.'+String(ld.getMonth()+1).padStart(2,'0')+'.'+ld.getFullYear():'–';
@@ -3283,7 +3284,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','🏆 Online do 4 graczy i turniej: kolejny dołek startuje, gdy wszyscy skończą; rywal stoi przy swoim dysku, a po trafieniu czeka 20 m za koszem','🔒 Luboń na hasło · nowy ekran ładowania Chain Reaction','🌳 Nowe gatunki drzew (jodła, topola) na wszystkich polach','⛳ Międzybłocie: poprawki 1, 2, 3, 4, 5, 13, 14, 17 · większe auta','🎯 Czułość celowania w Opcjach · mniejsze tablice przy tee · HUD przezroczysty, gdy zasłania gracza','🔊 Jeden, realniejszy dźwięk łańcuchów i osobny dźwięk uderzenia w czapę','🧍 NPC i kibice w stylu nowej postaci','🧍 Nowa, realistyczna postać: zamach, wyrzut, dokończenie ruchu i osobny putt (Opcje → Beta: można wrócić do klasycznej)','📣 Kibice reagują: wiwatują przy birdie i ace, komentują drzewo, OB i wodę, uciekają przed lecącym dyskiem','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','🛞 Roller ma własny podgląd toru – ślad toczenia jak od opony','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
+ const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','🔄 Kariera od nowa: Sezon 1 (12–19.11), tylko kategoria Open, rating wszystkich graczy liczony od zera','🎯 W Opcjach pole do testowania czułości celowania','🏆 Online do 4 graczy i turniej: kolejny dołek startuje, gdy wszyscy skończą; rywal stoi przy swoim dysku, a po trafieniu czeka 20 m za koszem','🔒 Luboń na hasło · nowy ekran ładowania Chain Reaction','🌳 Nowe gatunki drzew (jodła, topola) na wszystkich polach','⛳ Międzybłocie: poprawki 1, 2, 3, 4, 5, 13, 14, 17 · większe auta','🎯 Czułość celowania w Opcjach · mniejsze tablice przy tee · HUD przezroczysty, gdy zasłania gracza','🔊 Jeden, realniejszy dźwięk łańcuchów i osobny dźwięk uderzenia w czapę','🧍 NPC i kibice w stylu nowej postaci','🧍 Nowa, realistyczna postać: zamach, wyrzut, dokończenie ruchu i osobny putt','📣 Kibice reagują: wiwatują przy birdie i ace, komentują drzewo, OB i wodę, uciekają przed lecącym dyskiem','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','🛞 Roller ma własny podgląd toru – ślad toczenia jak od opony','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Przebudowa wszystkich 18 dołków według uwag z pola','1: krótki tee, par 3, dwie linie (hyzer/backhand) z kępą drzew i OB po prawej','5 i 6: asfaltowa droga, jeżdżą auta, a kierowcy komentują rzuty','5: 3× większa rzeczka · 6: rozległy staw · 4: staw za drogą','7: brzozy, działka ze szklarnią i działkowiczem · 8: pole zboża i większa woda za koszem','9: mostek przez rzeczkę · 10: kosz z 9, ścieżka i tee od 11 · 14: wąski fairway z tabliczkami 50–200 m i dom w oddali','Usunięte mando na 2, 3, 8, 10, 17, hazard na 12 i 15, szałas na 17 · 18: z górki ~1,5 m i pole za koszem']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie 4 mapy naraz (Złotów 12, Złotów 22, Międzybłocie, Luboń beta – wkrótce)','Przycisk „Zmień pogodę” na kafelku pola – kafelek pokazuje porę roku i pogodę','Top 5 obok siebie: Złotów 12 i 22, pod spodem Międzybłocie i Luboń','Nowy sezon rankingu – wszystkie wcześniejsze wyniki są w zakładce 📦 Archiwum','Pole treningowe przeniesione do Opcji → Old school']],
   ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
@@ -3345,9 +3346,9 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  window.__bk2=function(h,bg){if(!bg||bg._det2||holes!==ZL&&holes!==window.Z22)return;bg._det2=1;try{
   const x=bg.getContext('2d'),k=bg.width/W,idx=holes.indexOf(h)+1,R=rnd(idx*7919+(holes===ZL?1:2)),win=season=='winter';x.save();x.scale(k,k);
   /* kępki gęstszej trawy */
-  if(!win)for(let i=0;i<120;i++){const px=R()*W,py=R()*H;if(!onFair(h,px,py)||Math.hypot(px-h.b[0],py-h.b[1])<24||Math.hypot(px-h.tee[0],py-h.tee[1])<20||inT(h,px,py))continue;const n=5+(R()*6|0);x.fillStyle=R()<.5?'rgba(46,96,30,.35)':'rgba(60,110,36,.3)';x.beginPath();x.ellipse(px,py-1,3.5,2,0,0,7);x.fill();x.strokeStyle=R()<.5?'rgba(34,82,22,.75)':'rgba(64,112,36,.7)';x.lineWidth=.7;x.beginPath();for(let j=0;j<n;j++){const ox=(R()-.5)*4,hh=1.6+R()*1.8;x.moveTo(px+ox,py);x.lineTo(px+ox+(R()-.5)*1.6,py-hh)}x.stroke()}
+  if(!win)for(let i=0;i<120*(window.DECK==null?1:window.DECK);i++){const px=R()*W,py=R()*H;if(!onFair(h,px,py)||Math.hypot(px-h.b[0],py-h.b[1])<24||Math.hypot(px-h.tee[0],py-h.tee[1])<20||inT(h,px,py))continue;const n=5+(R()*6|0);x.fillStyle=R()<.5?'rgba(46,96,30,.35)':'rgba(60,110,36,.3)';x.beginPath();x.ellipse(px,py-1,3.5,2,0,0,7);x.fill();x.strokeStyle=R()<.5?'rgba(34,82,22,.75)':'rgba(64,112,36,.7)';x.lineWidth=.7;x.beginPath();for(let j=0;j<n;j++){const ox=(R()-.5)*4,hh=1.6+R()*1.8;x.moveTo(px+ox,py);x.lineTo(px+ox+(R()-.5)*1.6,py-hh)}x.stroke()}
   /* patyki pod drzewami i na fairwayu */
-  const nT=40+(h.trees||[]).length;for(let i=0;i<nT;i++){let px,py;const t=(h.trees||[])[i%Math.max(1,(h.trees||[]).length)];if(t&&R()<.75){const a=R()*6.283,d=t[2]*(.9+R()*.9);px=t[0]+Math.cos(a)*d;py=t[1]+Math.sin(a)*d}else{px=R()*W;py=R()*H;if(!onFair(h,px,py))continue}
+  const nT=(40+(h.trees||[]).length)*(window.DECK==null?1:window.DECK);for(let i=0;i<nT;i++){let px,py;const t=(h.trees||[])[i%Math.max(1,(h.trees||[]).length)];if(t&&R()<.75){const a=R()*6.283,d=t[2]*(.9+R()*.9);px=t[0]+Math.cos(a)*d;py=t[1]+Math.sin(a)*d}else{px=R()*W;py=R()*H;if(!onFair(h,px,py))continue}
    if(Math.hypot(px-h.b[0],py-h.b[1])<14||inT(h,px,py))continue;const a=R()*3.14,l=4+R()*6;x.strokeStyle=win?'rgba(60,44,30,.85)':'rgba(96,64,32,.9)';x.lineWidth=.9+R()*.5;x.beginPath();x.moveTo(px-Math.cos(a)*l/2,py-Math.sin(a)*l/2);x.lineTo(px+Math.cos(a)*l/2,py+Math.sin(a)*l/2);if(R()<.5){const u=R()-.5;x.moveTo(px+Math.cos(a)*l*u,py+Math.sin(a)*l*u);x.lineTo(px+Math.cos(a)*l*u+Math.cos(a+.7)*l*.35,py+Math.sin(a)*l*u+Math.sin(a+.7)*l*.35)}x.stroke()}
   /* dużo igliwia na dołku 4 Złotowa */
   if(holes===ZL&&idx==4){for(let yy=0;yy<H;yy+=2)for(let xx=0;xx<W;xx+=2){if(!onFair(h,xx,yy)||inT(h,xx,yy))continue;x.fillStyle='rgba(58,42,18,'+(.34+R()*.12)+')';x.fillRect(xx,yy,2.2,2.2)}
@@ -3372,7 +3373,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  try{BGC.clear()}catch(e){}
  const _ld=load;load=function(){const r=_ld.apply(this,arguments);try{const h=holes[hi];if(h&&h.hzTxt&&throws==0)setTimeout(()=>pill(h.hzTxt),900)}catch(e){}return r};
  /* sezon 3 (tydzień 16–22.11): Złotów 22, tylko jesień i zima, 2 turnieje */
- try{if(wkNow()===2){EVS.length=0;EVS.push({n:'Złotów 22 · Jesień',c:'z22',s:'autumn',i:'🍂'},{n:'Złotów 22 · Zima · finał',c:'z22',s:'winter',i:'❄️',x:1.5})}}catch(e){console.warn('P80 sezon',e)}
+ try{if(wkNow()===1){EVS.length=0;EVS.push({n:'Złotów 22 · Jesień',c:'z22',s:'autumn',i:'🍂'},{n:'Złotów 22 · Zima · finał',c:'z22',s:'winter',i:'❄️',x:1.5})}}catch(e){console.warn('P80 sezon',e)}
 })();</script>
 <style>/* P81 Etap 4: menu */
 #menu.m2 .cards.g4{display:grid;grid-template-columns:1fr 1fr;gap:10px;overflow:visible;margin:0;padding:2px 0 0;scroll-snap-type:none}
@@ -4001,14 +4002,14 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
   function twig(px,py){x.save();x.translate(px,py);x.rotate(rnd()*6);const l=2.5+rnd()*3;x.strokeStyle='rgba(8,20,8,.2)';x.lineWidth=.7;x.beginPath();x.moveTo(-l/2+.3,.4);x.lineTo(l/2+.3,.4);x.stroke();x.strokeStyle='#5b3d22';x.lineWidth=.55;x.lineCap='round';x.beginPath();x.moveTo(-l/2,0);x.lineTo(l/2,0);x.moveTo(0,0);x.lineTo(l*.25,-1);x.stroke();x.restore()}
   let n={tuft:0,fl:0,st:0,mu:0,co:0,tw:0};const FC=['#ffffff','#f7e04a','#b78be8','#ff8fb5','#ffffff'];
   for(let i=0;i<5000;i++){const px=rnd()*W,py=rnd()*H;if(bad(px,py))continue;const dF=polyD(px,py,P),nt=nearTree(px,py),r=rnd();
-   if(nt&&!wn&&n.mu<9&&r<.06){mush(px,py,1.6+rnd()*.8);n.mu++;continue}
-   if(nt&&n.co<18&&r<.25){cone(px,py);n.co++;continue}
-   if(nt&&n.tw<16&&r<.4){twig(px,py);n.tw++;continue}
+   if(nt&&!wn&&n.mu<9*(window.DECK==null?1:window.DECK)&&r<.06){mush(px,py,1.6+rnd()*.8);n.mu++;continue}
+   if(nt&&n.co<18*(window.DECK==null?1:window.DECK)&&r<.25){cone(px,py);n.co++;continue}
+   if(nt&&n.tw<16*(window.DECK==null?1:window.DECK)&&r<.4){twig(px,py);n.tw++;continue}
    if(dF<14)continue;
-   if(n.st<14&&r<.05&&dF>22){stone(px,py,1.4+rnd()*1.6);n.st++;continue}
-   if(!wn&&n.fl<46&&r<.3&&dF>16){const c=FC[(rnd()*FC.length)|0],m=1+(rnd()*3|0);for(let j=0;j<m;j++)flower(px+(rnd()-.5)*4,py+(rnd()-.5)*3,au?'#e8c35a':c);n.fl++;continue}
-   if(n.tuft<(wn?45:80)&&r<.75){tuft(px,py,2.2+rnd()*1.6,wn);n.tuft++;continue}
-   if(n.tuft>=(wn?45:80)&&n.fl>=46&&n.st>=14)break}
+   if(n.st<14*(window.DECK==null?1:window.DECK)&&r<.05&&dF>22){stone(px,py,1.4+rnd()*1.6);n.st++;continue}
+   if(!wn&&n.fl<46*(window.DECK==null?1:window.DECK)&&r<.3&&dF>16){const c=FC[(rnd()*FC.length)|0],m=1+(rnd()*3|0);for(let j=0;j<m;j++)flower(px+(rnd()-.5)*4,py+(rnd()-.5)*3,au?'#e8c35a':c);n.fl++;continue}
+   if(n.tuft<(wn?45:80)*(window.DECK==null?1:window.DECK)&&r<.75){tuft(px,py,2.2+rnd()*1.6,wn);n.tuft++;continue}
+   if(n.tuft>=(wn?45:80)*(window.DECK==null?1:window.DECK)&&n.fl>=46*(window.DECK==null?1:window.DECK)&&n.st>=14*(window.DECK==null?1:window.DECK))break}
   x.restore();bg._d84=1}
  const OFF=/[?&]fx=0/.test(location.search);
  const _dw=drawWorld;drawWorld=function(){
@@ -4031,7 +4032,7 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
 <script>/* P90: nowa, realistyczniejsza postać (proporcje 1:7, rzut w fazach) + reakcje kibiców */
 (function(){try{
  const L90={t0:0,a:0,h:1,putt:false,run:false,cur:null,FA:0,lastLie:null};
- let OLD=false;try{OLD=localStorage.getItem('dg_oldchar')=='1'}catch(e){}window.__oldChar=v=>{OLD=v};
+ let OLD=false;try{localStorage.removeItem('dg_oldchar')}catch(e){}window.__oldChar=v=>{OLD=v};
  const cl=(v,a,b)=>Math.max(a,Math.min(b,v)),lerp=(a,b,t)=>a+(b-a)*t,L2=(p,q,t)=>[lerp(p[0],q[0],t),lerp(p[1],q[1],t)];
  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
  /* wykrywanie wyrzutu */
@@ -4131,8 +4132,7 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
   try{_cd.apply(this,arguments)}finally{if(saved)P.forEach((p,i)=>{p.x=saved[i][0];p.y=saved[i][1]});else if(P)for(const p of P){if(p.dv>0){p.x-=(p.ddx||0)*p.dv*7;p.y-=(p.ddy||0)*p.dv*5}}}
   try{const t=performance.now()/1000;if(CR.say&&t<CR.until&&CROWD.p){const p=CROWD.p[CR.who];if(p&&window.__bubble)window.__bubble(CR.say,p.x,p.y-6,Math.min(1,(CR.until-t)*2))}}catch(e){}};
  /* opcja: klasyczna postać */
- const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);try{const v=$('orun');if(!v||$('ochar'))return;const d=document.createElement('div');d.className='orow';d.id='ochar';d.style.cssText='display:flex;align-items:center;gap:10px;margin-top:8px';d.innerHTML='<span style="flex:1;font:700 13px system-ui">🧍 Nowa, realistyczna postać (wyłącz, żeby wrócić do klasycznej)</span><button id="ocharb" style="min-width:64px;padding:8px;border-radius:12px;border:0;font:900 13px system-ui"></button>';v.appendChild(d);
-   const b=$('ocharb'),upd=()=>{b.textContent=OLD?'WYŁ':'WŁ';b.style.background=OLD?'rgba(255,255,255,.12)':'#3fd16a';b.style.color=OLD?'#fff':'#08210f'};upd();b.onclick=()=>{OLD=!OLD;try{localStorage.setItem('dg_oldchar',OLD?'1':'0')}catch(e){}upd()}}catch(e){}};
+
 }catch(e){console.warn('P90',e)}})();</script>
 <script>/* P91: tablice przy tee mniejsze, dźwięk łańcuchów raz i realniej, czułość celowania, HUD nie zasłania */
 (function(){
@@ -4149,7 +4149,20 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
  try{cv.addEventListener('pointermove',()=>{if(drag&&SENS!==1){drag.x=drag.sx+(drag.x-drag.sx)*SENS}})}catch(e){}
  const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);try{const v=$('optv');if(!v||$('osens'))return;const d=document.createElement('div');d.className='kcc';d.id='osens';
    d.innerHTML='<h4>🎯 Czułość celowania</h4><p class="kinfo" style="margin:0 0 6px">Jak szybko linia celowania skręca w lewo/prawo, gdy przesuwasz palcem.</p><div style="display:flex;align-items:center;gap:10px"><span style="font:700 12px system-ui">wolno</span><input id="osensr" type="range" min="0.4" max="1.6" step="0.05" style="flex:1"><span style="font:700 12px system-ui">szybko</span><b id="osensv" style="min-width:42px;text-align:right;font:900 13px system-ui"></b></div>';
-   const ref=$('orun');ref?v.insertBefore(d,ref):v.appendChild(d);const r=$('osensr'),o=$('osensv');r.value=SENS;o.textContent=Math.round(SENS*100)+'%';r.oninput=()=>{SENS=+r.value;o.textContent=Math.round(SENS*100)+'%';try{localStorage.setItem('dg_sens',SENS)}catch(e){}}}catch(e){}};
+   const ref=$('orun');ref?v.insertBefore(d,ref):v.appendChild(d);const r=$('osensr'),o=$('osensv');r.value=SENS;o.textContent=Math.round(SENS*100)+'%';r.oninput=()=>{SENS=+r.value;o.textContent=Math.round(SENS*100)+'%';try{localStorage.setItem('dg_sens',SENS)}catch(e){}pad()};
+   d.insertAdjacentHTML('beforeend','<p class="kinfo" style="margin:8px 0 4px">Wypróbuj: przeciągnij palcem w dół i na boki po polu poniżej</p><canvas id="osensc" width="560" height="260" style="width:100%!important;height:auto!important;aspect-ratio:560/260;max-height:none!important;position:static!important;border-radius:12px;background:#2f5f36;touch-action:none;display:block;pointer-events:auto!important"></canvas>');
+   const O=[280,70];window.__padD=window.__padD||null;
+   function pad(){const C=$('osensc');if(!C)return;const x=C.getContext('2d'),D=window.__padD;x.clearRect(0,0,560,260);x.fillStyle='#3f7a3a';x.fillRect(0,0,560,260);x.strokeStyle='rgba(255,255,255,.08)';x.lineWidth=2;for(let i=0;i<560;i+=40){x.beginPath();x.moveTo(i,0);x.lineTo(i,260);x.stroke()}
+    x.fillStyle='#f2b01e';x.beginPath();x.arc(280,20,9,0,7);x.fill();x.fillStyle='#fff';x.beginPath();x.arc(O[0],O[1]+150,8,0,7);x.fill();
+    if(D){const dx=(D.x-D.sx)*SENS,dy=D.y-D.sy,l=Math.min(Math.hypot(dx,dy),180),a=Math.atan2(-dx,dy),px=O[0],py=O[1]+150,ex=px+Math.sin(a)*l*1.1,ey=py-Math.cos(a)*l*1.1;
+     x.setLineDash([6,10]);x.strokeStyle='#fff';x.lineWidth=5;x.lineCap='round';x.beginPath();x.moveTo(px,py);x.lineTo(ex,ey);x.stroke();x.setLineDash([]);x.strokeStyle='#fff';x.lineWidth=3;x.beginPath();x.arc(ex,ey,10,0,7);x.stroke();
+     x.fillStyle='rgba(255,255,255,.45)';x.beginPath();x.arc(D.x,D.y,14,0,7);x.fill();x.fillStyle='#fff';x.font='800 20px system-ui';x.textAlign='left';x.fillText('kąt: '+Math.round(a*57.3)+'°',14,246)}
+    else{x.fillStyle='rgba(255,255,255,.75)';x.font='700 20px system-ui';x.textAlign='center';x.fillText('przeciągnij tutaj',280,140)}}
+   window.__padF=pad;if(!window.__padL){window.__padL=1;const P=(C,e)=>{const r=C.getBoundingClientRect();return{x:(e.clientX-r.left)*560/r.width,y:(e.clientY-r.top)*260/r.height}};
+    document.addEventListener('pointerdown',e=>{const C=e.target;if(!C||C.id!=='osensc')return;const p=P(C,e);window.__padD={sx:p.x,sy:p.y,x:p.x,y:p.y,C};e.preventDefault();window.__padF()},true);
+    document.addEventListener('pointermove',e=>{const D=window.__padD;if(!D||D.up)return;const p=P(D.C,e);D.x=p.x;D.y=p.y;window.__padF()},true);
+    const up=()=>{const D=window.__padD;if(!D)return;D.up=1;setTimeout(()=>{if(window.__padD===D){window.__padD=null;window.__padF()}},700)};document.addEventListener('pointerup',up,true);document.addEventListener('pointercancel',up,true)}
+   pad()}catch(e){}};
  /* HUD półprzezroczysty, gdy zasłania gracza lub kosz */
  setInterval(()=>{try{const hd=$('hud');if(!hd)return;let hide=false;if(playing&&holes&&holes[hi]&&lie){const R=hd.getBoundingClientRect(),cr=cv.getBoundingClientRect(),k=cr.width/(cv.width/(window.devicePixelRatio||1))||1;
    const pts=[[lie.x,lie.y,44],[holes[hi].b[0],holes[hi].b[1],40]];if(disc)pts.push([disc.x,disc.y,10]);for(const[x,y,up]of pts){const sx=x*CAM.s+CAM.ox,sy=y*CAM.s+CAM.oy;if(sx>R.left-6&&sx<R.right+6&&sy-up*CAM.s<R.bottom+8&&sy>R.top-8){hide=true;break}}}
