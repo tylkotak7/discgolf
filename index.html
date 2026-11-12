@@ -3289,7 +3289,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','📊 Statystyki bez pola treningowego','🛞 Roller toczy się dalej (+25%) i mocniej skręca','☀️ Nowe światło i cienie: miękkie krawędzie cieni, długie ciepłe cienie o złotej godzinie, rozproszone w mgle i deszczu, chłodny wieczór','🏆 22 nowe osiągnięcia z paskami postępu i nagrodami w monetach (10/25/60), nowy baner przy zdobyciu','🚶 Postać chodzi do dysku, cieszy się po trafieniu, łapie się za głowę po drzewie; lepszy forehand i putt','🚫 OB: +1 i rzut z miejsca, gdzie dysk wyleciał za linię','⛳ Międzybłocie: bramka z drzew zamiast mando na 3, ścieżki na 5, drzewa na 6/13/17, naturalniejszy las na 14, szkółka drzewek na 1 i 18','🌳 Więcej różnorodności drzew: zagajniki brzóz, kępy sosen i jodeł, klony i topole, różne rozmiary i odcienie','🌼 Ozdoby (kwiatki, kępki, kamienie, szyszki) na wszystkich dołkach – o połowę mniej, mniej pstrokato','🔄 Kariera od nowa: Sezon 1 (12–19.11), tylko kategoria Open, rating wszystkich graczy liczony od zera','🎯 W Opcjach pole do testowania czułości celowania','🏆 Online do 4 graczy i turniej: kolejny dołek startuje, gdy wszyscy skończą; rywal stoi przy swoim dysku, a po trafieniu czeka 20 m za koszem','🔒 Luboń na hasło · nowy ekran ładowania Chain Reaction','🌳 Nowe gatunki drzew (jodła, topola) na wszystkich polach','⛳ Międzybłocie: poprawki 1, 2, 3, 4, 5, 13, 14, 17 · większe auta','🎯 Czułość celowania w Opcjach · mniejsze tablice przy tee · HUD przezroczysty, gdy zasłania gracza','🔊 Jeden, realniejszy dźwięk łańcuchów i osobny dźwięk uderzenia w czapę','🧍 NPC i kibice w stylu nowej postaci','🧍 Nowa, realistyczna postać: zamach, wyrzut, dokończenie ruchu i osobny putt','📣 Kibice reagują: wiwatują przy birdie i ace, komentują drzewo, OB i wodę, uciekają przed lecącym dyskiem','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','🛞 Roller ma własny podgląd toru – ślad toczenia jak od opony','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
+ const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','📊 Statystyki bez pola treningowego','🛞 Roller toczy się dalej (+25%) i mocniej skręca','🧍 Nowy podgląd w menu Postać: wygląda jak postać w grze, można ją obracać i obejrzeć rzut BH, FH i putt','☀️ Nowe światło i cienie: miękkie krawędzie cieni, długie ciepłe cienie o złotej godzinie, rozproszone w mgle i deszczu, chłodny wieczór','🏆 22 nowe osiągnięcia z paskami postępu i nagrodami w monetach (10/25/60), nowy baner przy zdobyciu','🚶 Postać chodzi do dysku, cieszy się po trafieniu, łapie się za głowę po drzewie; lepszy forehand i putt','🚫 OB: +1 i rzut z miejsca, gdzie dysk wyleciał za linię','⛳ Międzybłocie: bramka z drzew zamiast mando na 3, ścieżki na 5, drzewa na 6/13/17, naturalniejszy las na 14, szkółka drzewek na 1 i 18','🌳 Więcej różnorodności drzew: zagajniki brzóz, kępy sosen i jodeł, klony i topole, różne rozmiary i odcienie','🌼 Ozdoby (kwiatki, kępki, kamienie, szyszki) na wszystkich dołkach – o połowę mniej, mniej pstrokato','🔄 Kariera od nowa: Sezon 1 (12–19.11), tylko kategoria Open, rating wszystkich graczy liczony od zera','🎯 W Opcjach pole do testowania czułości celowania','🏆 Online do 4 graczy i turniej: kolejny dołek startuje, gdy wszyscy skończą; rywal stoi przy swoim dysku, a po trafieniu czeka 20 m za koszem','🔒 Luboń na hasło · nowy ekran ładowania Chain Reaction','🌳 Nowe gatunki drzew (jodła, topola) na wszystkich polach','⛳ Międzybłocie: poprawki 1, 2, 3, 4, 5, 13, 14, 17 · większe auta','🎯 Czułość celowania w Opcjach · mniejsze tablice przy tee · HUD przezroczysty, gdy zasłania gracza','🔊 Jeden, realniejszy dźwięk łańcuchów i osobny dźwięk uderzenia w czapę','🧍 NPC i kibice w stylu nowej postaci','🧍 Nowa, realistyczna postać: zamach, wyrzut, dokończenie ruchu i osobny putt','📣 Kibice reagują: wiwatują przy birdie i ace, komentują drzewo, OB i wodę, uciekają przed lecącym dyskiem','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','🛞 Roller ma własny podgląd toru – ślad toczenia jak od opony','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Przebudowa wszystkich 18 dołków według uwag z pola','1: krótki tee, par 3, dwie linie (hyzer/backhand) z kępą drzew i OB po prawej','5 i 6: asfaltowa droga, jeżdżą auta, a kierowcy komentują rzuty','5: 3× większa rzeczka · 6: rozległy staw · 4: staw za drogą','7: brzozy, działka ze szklarnią i działkowiczem · 8: pole zboża i większa woda za koszem','9: mostek przez rzeczkę · 10: kosz z 9, ścieżka i tee od 11 · 14: wąski fairway z tabliczkami 50–200 m i dom w oddali','Usunięte mando na 2, 3, 8, 10, 17, hazard na 12 i 15, szałas na 17 · 18: z górki ~1,5 m i pole za koszem']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie 4 mapy naraz (Złotów 12, Złotów 22, Międzybłocie, Luboń beta – wkrótce)','Przycisk „Zmień pogodę” na kafelku pola – kafelek pokazuje porę roku i pogodę','Top 5 obok siebie: Złotów 12 i 22, pod spodem Międzybłocie i Luboń','Nowy sezon rankingu – wszystkie wcześniejsze wyniki są w zakładce 📦 Archiwum','Pole treningowe przeniesione do Opcji → Old school']],
   ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
@@ -4369,5 +4369,117 @@ window.NURSERY_M=function(x,P,w,h){const S=h&&h._sil;if(!S)return window.NURSERY
    const O=window.__ON;if(O&&O.code){const P=Object.values(O.peers||{});if(P.length){U('online1');if(O.tour){if(P.length>=3)U('tour4');if(P.every(p=>(p.fin||0)>=holes.length&&(p.tot||0)>total))U('tour_win')}}}chkP()}catch(e){}return _fn.apply(this,arguments)};
  chkP();
 }catch(e){console.warn('P106',e)}})();</script>
+<style>/* P108: nowy podgląd postaci */
+#avsvg.hero{background:radial-gradient(ellipse at 50% 85%,#3f7a3a 0,#24502a 38%,#10261a 75%)!important;border:1.5px solid rgba(125,255,154,.18)!important;padding:0!important;overflow:hidden;position:relative}
+#avsvg.hero{display:block!important;height:auto!important;max-height:none!important;aspect-ratio:auto!important}
+#avsvg.hero canvas{display:block;width:100%!important;height:auto!important;max-height:none!important;aspect-ratio:320/330;position:static!important;touch-action:pan-y}
+#avsvg .hbtn{position:static;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:0 8px 10px}
+#avsvg .hbtn button{border:0;border-radius:12px;padding:7px 11px;font:800 12.5px system-ui;background:rgba(0,0,0,.42);color:#fff;backdrop-filter:blur(4px)}
+#avsvg .hbtn button.on{background:#7dff9a;color:#0c2414}
+#avsvg .hhint{position:absolute;top:10px;left:0;right:0;text-align:center;font:700 11px system-ui;color:rgba(255,255,255,.55);pointer-events:none}
+</style>
+<script>/* P108: podgląd postaci w stylu nowej postaci z gry (obrót, pokaz rzutu) */
+(function(){try{
+ const cl=(v,a,b)=>Math.max(a,Math.min(b,v)),lerp=(a,b,t)=>a+(b-a)*t,L2=(p,q,t)=>[lerp(p[0],q[0],t),lerp(p[1],q[1],t)],ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+ function ik(S,H,l1,l2,bend){let dx=H[0]-S[0],dy=H[1]-S[1],d=Math.hypot(dx,dy)||.01;const mx=l1+l2-.01;if(d>mx){H=[S[0]+dx/d*mx,S[1]+dy/d*mx];dx=H[0]-S[0];dy=H[1]-S[1];d=mx}const a=Math.atan2(dy,dx),c=cl((l1*l1+d*d-l2*l2)/(2*l1*d),-1,1),b=Math.acos(c)*bend;return[[S[0]+Math.cos(a+b)*l1,S[1]+Math.sin(a+b)*l1],H]}
+ const ST={yaw:.35,ty:.35,anim:null,t0:0,drag:null,raf:0,cv:null};
+ function pose(now){let sw=.15,cr=0,lean=0,step=0,heel=0,idle=true,putt=false,hb=1;const A=ST.anim;
+  if(A){const e=(now-ST.t0)/1000;hb=A=='fh'?-1:1;if(A=='putt'){putt=true;idle=false;const T=[[0,0],[.6,-.7],[.9,-.7],[1.05,.45],[1.8,.45],[2.3,.1]];sw=kf(T,e);cr=.55}
+   else{idle=false;const T=[[0,.1],[.7,-1],[1.0,-1],[1.12,.1],[1.42,1],[2.1,.15]];sw=kf(T,e);cr=e<1.4?.22:lerp(.22,0,cl((e-1.4)/.6,0,1));lean=e>1.05&&e<1.6?.18:0;step=e>.4&&e<2?1:0;heel=e>1.1&&e<1.9?1:0}
+   if(e>2.4){ST.anim=null;renderBtns()}}
+  return{sw,cr,lean,step,heel,idle,putt,hb}}
+ function kf(T,e){for(let i=1;i<T.length;i++)if(e<=T[i][0]){const f=(e-T[i-1][0])/(T[i][0]-T[i-1][0]);return lerp(T[i-1][1],T[i][1],ease(cl(f,0,1)))}return T[T.length-1][1]}
+ function draw(x,c,yaw,P,t){const sk=SKIN[c.skin]||SKIN[0],sr=SHIRT[c.shirt]||SHIRT[0],cp=CAP[c.cap]||CAP[0],hc=HAIRC[c.hc]||HAIRC[0],pc=PANTS[c.pants]||PANTS[0],fem=c.g=='f',sd=(col,k)=>shd(col,k);
+  const cs=Math.cos(yaw),sn=Math.sin(yaw),front=cs>.2,back=cs<-.2,mx=sn>=0?1:-1,sq=.62+.38*Math.abs(cs),br=P.idle?Math.sin(t*2)*.22:0;
+  x.save();x.fillStyle='rgba(0,0,0,.35)';x.beginPath();x.ellipse(0,.6,10,2.6,0,0,7);x.fill();
+  const hipY=-17+2.6*P.cr+br*.3,shY=-29.4+2.8*P.cr+br,hw=fem?2.5:2.3,sw=P.sw,hb=P.hd||P.hb,rot=cl(Math.abs(sw),0,1),shW=(fem?4.1:4.7)*(1-.25*rot)*sq,tl=P.lean*6*(front?-1:1);
+  x.scale(mx,1);
+  const SH=[tl+sw*hb*1.2*(back?1:-1),shY];
+  /* nogi */
+  const spread=P.putt?3:2.3,footL=[-spread*sq-.3*P.step,P.step*-1.4],footR=[spread*sq+.5*P.step,P.heel?-1.6:0],hipL=[-hw*sq,hipY],hipR=[hw*sq,hipY];
+  const legL=ik(hipL,footL,8.4,8.6,-.28),legR=ik(hipR,footR,8.4,8.6,.28),shorts=!c.pl;
+  const leg=(H,K,back2)=>{const s=back2?.84:1;x.lineCap='round';const mid=shorts?L2(H,K[0],.8):K[0];
+   x.strokeStyle=sd(pc,.95*s);x.lineWidth=3.7;x.beginPath();x.moveTo(H[0],H[1]);x.lineTo(mid[0],mid[1]);x.stroke();
+   x.strokeStyle=shorts?sd(sk,.93*s):sd(pc,.88*s);x.lineWidth=shorts?2.5:3.1;x.beginPath();x.moveTo(mid[0],mid[1]);x.lineTo(K[0][0],K[0][1]);x.lineTo(K[1][0],K[1][1]-1.3);x.stroke();
+   if(shorts){x.strokeStyle='rgba(0,0,0,.12)';x.lineWidth=.35;x.beginPath();x.arc(K[0][0],K[0][1],.8,0,7);x.stroke()}
+   x.strokeStyle='#f3f3f3';x.lineWidth=2.5;x.beginPath();x.moveTo(K[1][0],K[1][1]-2.1);x.lineTo(K[1][0],K[1][1]-1);x.stroke();
+   x.fillStyle=sd('#2a2f3a',s);x.beginPath();x.ellipse(K[1][0]+(front?0:0),K[1][1]-.3,2.1,1.3,0,0,7);x.fill();x.fillStyle='#ececec';x.fillRect(K[1][0]-2.1,K[1][1]+.4,4.2,.55);x.fillStyle='rgba(255,255,255,.5)';x.fillRect(K[1][0]-1.2,K[1][1]-1.2,.5,.5);x.fillRect(K[1][0]+.2,K[1][1]-1.2,.5,.5)};
+  leg(hipR,legR,true);leg(hipL,legL,false);
+  /* spodenki / pas */
+  x.fillStyle=sd(pc,.92);x.beginPath();x.moveTo(-hw*sq-1.4,hipY+2.4);x.lineTo(hw*sq+1.4,hipY+2.4);x.lineTo(hw*sq+1.2,hipY-1.8);x.lineTo(-hw*sq-1.2,hipY-1.8);x.closePath();x.fill();
+  x.fillStyle=sd(pc,.7);x.fillRect(-hw*sq-1.2,hipY-1.9,(hw*sq+1.2)*2,.7);
+  /* ramiona */
+  const LS=[SH[0]-shW,shY+1.2],RS=[SH[0]+shW,shY+1.2];let lh,tg;
+  if(P.idle){const sw2=Math.sin(t*1.3)*.3;lh=[LS[0]-1.1+sw2,shY+12.1];tg=[RS[0]+1.1-sw2,shY+12.1]}
+  else if(P.putt){lh=[LS[0]-.4,shY+4.6];tg=sw<0?L2([RS[0]-2.2,shY+5],[RS[0]-1,shY+9.5],-sw):L2([RS[0]-2.2,shY+5],[RS[0]-2.6,shY+.5],sw)}
+  else{lh=[LS[0]-3-4*Math.max(0,sw)*hb+2*Math.min(0,sw)*hb,shY+6.5-2*rot];if(hb>0){const rel=[RS[0]-3.4,shY+1.8],bk=[RS[0]-13.5,shY+3.4],fol=[RS[0]+5.5,shY+4.5];tg=sw<0?L2(rel,bk,-sw):L2(rel,fol,sw)}else{const rel=[RS[0]-.4,shY+3.4],bk=[RS[0]+7.2,shY+5.2],fol=[RS[0]-12.5,shY+3];tg=sw<0?L2(rel,bk,-sw):L2(rel,fol,sw)}}
+  const aL=ik(LS,lh,5.6,5.6,P.idle?1:-1),aR=ik(RS,tg,5.8,5.8,-1);
+  const arm=(S,A,bk,disc)=>{const s=bk?.82:1,E=A[0],Hd=A[1];x.lineCap='round';x.strokeStyle=sd(sk,s);x.lineWidth=2.15;x.beginPath();x.moveTo(lerp(S[0],E[0],.5),lerp(S[1],E[1],.5));x.lineTo(E[0],E[1]);x.lineTo(Hd[0],Hd[1]);x.stroke();
+   x.strokeStyle=sd(sr,.95*s);x.lineWidth=3;x.beginPath();x.moveTo(S[0],S[1]);x.lineTo(lerp(S[0],E[0],.5),lerp(S[1],E[1],.5));x.stroke();
+   x.fillStyle=sd(sk,s);x.beginPath();x.arc(Hd[0],Hd[1],1.2,0,7);x.fill();
+   if(disc){const dc=(discs[2]&&discs[2].col)||'#e2483d',hx=Hd[0]+.6,hy=Hd[1]+.3;x.fillStyle=sd(dc,.55);x.beginPath();x.ellipse(hx+.3,hy+.45,3.9,1.55,-.1,0,7);x.fill();const gr=x.createLinearGradient(hx-3.6,hy,hx+3.6,hy);gr.addColorStop(0,sd(dc,1.35));gr.addColorStop(1,sd(dc,.85));x.fillStyle=gr;x.beginPath();x.ellipse(hx,hy,3.7,1.35,-.1,0,7);x.fill();x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=.35;x.beginPath();x.ellipse(hx,hy-.15,2.4,.75,-.1,Math.PI,2*Math.PI);x.stroke()}};
+  const behind=!P.idle&&sw<-.35&&hb>0;
+  if(back){arm(LS,aL,false,false)}else arm(LS,aL,true,false);
+  if(behind)arm(RS,aR,true,true);
+  /* tułów */
+  const tw=shW*2+.6,wb=(hw*sq+1.3)*2*(fem?.92:1);const g2=x.createLinearGradient(SH[0]-tw/2,0,SH[0]+tw/2,0);g2.addColorStop(0,sd(sr,1.15));g2.addColorStop(.55,sr);g2.addColorStop(1,sd(sr,.7));
+  x.fillStyle=g2;x.beginPath();x.moveTo(SH[0]-tw/2,shY+1.5);x.quadraticCurveTo(SH[0]-tw/2,shY-.3,SH[0]-tw/2+1.7,shY-.45);x.lineTo(SH[0]+tw/2-1.7,shY-.45);x.quadraticCurveTo(SH[0]+tw/2,shY-.3,SH[0]+tw/2,shY+1.5);
+  if(fem){x.quadraticCurveTo(SH[0]+tw/2-.8,(shY+hipY)/2,wb/2,hipY-1.2)}else x.lineTo(wb/2,hipY-1.2);x.lineTo(-wb/2,hipY-1.2);if(fem)x.quadraticCurveTo(SH[0]-tw/2+.8,(shY+hipY)/2,SH[0]-tw/2,shY+1.5);x.closePath();x.fill();
+  x.strokeStyle='rgba(0,0,0,.2)';x.lineWidth=.3;x.stroke();
+  x.strokeStyle='rgba(0,0,0,.13)';x.lineWidth=.35;x.beginPath();x.moveTo(SH[0]-1.6,shY+5);x.quadraticCurveTo(SH[0]-.4,shY+8,-1.4,hipY-2);x.moveTo(SH[0]+2.2,shY+7);x.quadraticCurveTo(SH[0]+1.6,shY+9,1.8,hipY-2.4);x.stroke();
+  x.fillStyle=sd(sr,.72);x.fillRect(-wb/2,hipY-2,wb,.8);
+  const bt=(typeof BRS!='undefined'&&SV.brand&&BRS[SV.brand])||'';
+  if(front){x.fillStyle=sd(sr,.6);x.beginPath();x.moveTo(SH[0]-1.6,shY-.4);x.lineTo(SH[0],shY+1.8);x.lineTo(SH[0]+1.6,shY-.4);x.closePath();x.fill();
+   if(bt){x.save();x.scale(mx,1);const bx=mx*(SH[0]-1.6);x.fillStyle='rgba(255,255,255,.9)';x.beginPath();x.arc(bx,shY+4.2,.9,0,7);x.fill();x.fillStyle=sr;x.font='900 1.2px system-ui';x.textAlign='center';x.textBaseline='middle';x.fillText(bt[0],bx,shY+4.25);x.restore()}}
+  else if(back&&bt){x.save();x.scale(mx,1);x.fillStyle='rgba(255,255,255,.75)';x.font='900 1.6px system-ui';x.textAlign='center';x.fillText(bt.split(' ')[0],mx*SH[0],shY+4.4);x.font='900 3.2px system-ui';x.fillText('7',mx*SH[0],shY+8.4);x.restore()}
+  /* szyja + głowa */
+  const HX=SH[0]+tl*.6,HY=shY-4;x.fillStyle=sd(sk,.82);x.fillRect(HX-.95,shY-2.4,1.9,2.6);
+  const hg=x.createRadialGradient(HX-.9,HY-1.1,.3,HX,HY,3.5);hg.addColorStop(0,sd(sk,1.12));hg.addColorStop(1,sd(sk,.82));x.fillStyle=hg;x.beginPath();x.ellipse(HX,HY,2.55,3,0,0,7);x.fill();
+  if(!back||Math.abs(sn)>.5){x.fillStyle=sd(sk,.86);x.beginPath();if(Math.abs(cs)>.3){x.ellipse(HX-2.5,HY+.3,.55,.85,0,0,7);x.ellipse(HX+2.5,HY+.3,.55,.85,0,0,7)}else x.ellipse(HX-.4,HY+.3,.6,.9,0,0,7);x.fill()}
+  /* włosy */
+  const hair=c.hair==null?0:c.hair;
+  if(hair==1||(fem&&hair==0)){x.fillStyle=hc;x.beginPath();x.ellipse(HX,HY+1.8,2.95,3.6,0,0,7);x.fill()}
+  if(hair==2){x.fillStyle=hc;x.beginPath();x.ellipse(HX+(front?0:0),HY+(back?3.4:2.6),.95,2.4,.15,0,7);x.fill()}
+  /* twarz */
+  if(front){const fx=HX+sn*.8*(mx);x.fillStyle=sd(sk,1.02);x.beginPath();x.ellipse(HX,HY+.2,2.3,2.7,0,0,7);x.fill();
+   x.fillStyle='#fff';x.beginPath();x.ellipse(fx-.95,HY+.1,.45,.32,0,0,7);x.ellipse(fx+.95,HY+.1,.45,.32,0,0,7);x.fill();x.fillStyle='#2a1d14';x.beginPath();x.arc(fx-.9,HY+.12,.24,0,7);x.arc(fx+1,HY+.12,.24,0,7);x.fill();
+   x.strokeStyle=sd(hc,.8);x.lineWidth=.32;x.beginPath();x.moveTo(fx-1.4,HY-.55);x.lineTo(fx-.5,HY-.7);x.moveTo(fx+.5,HY-.7);x.lineTo(fx+1.4,HY-.55);x.stroke();
+   x.strokeStyle=sd(sk,.72);x.lineWidth=.28;x.beginPath();x.moveTo(fx,HY+.2);x.lineTo(fx+.25,HY+1);x.lineTo(fx-.1,HY+1.1);x.stroke();
+   x.fillStyle='rgba(220,110,100,.22)';x.beginPath();x.arc(fx-1.5,HY+1,.55,0,7);x.arc(fx+1.5,HY+1,.55,0,7);x.fill();
+   x.strokeStyle='#8a3f32';x.lineWidth=.32;x.beginPath();x.moveTo(fx-.7,HY+1.6);x.quadraticCurveTo(fx,HY+(ST.anim?2.2:2),fx+.7,HY+1.6);x.stroke();
+   if(c.beard&&!fem){x.fillStyle=sd(hc,.95);x.globalAlpha=c.beard==1?.45:.95;x.beginPath();x.moveTo(HX-2.3,HY+.4);x.quadraticCurveTo(HX-2.2,HY+(c.beard==2?3.8:3),HX,HY+(c.beard==2?4.2:3.2));x.quadraticCurveTo(HX+2.2,HY+(c.beard==2?3.8:3),HX+2.3,HY+.4);x.quadraticCurveTo(HX+1.2,HY+1.3,HX,HY+1.25);x.quadraticCurveTo(HX-1.2,HY+1.3,HX-2.3,HY+.4);x.fill();x.globalAlpha=1}}
+  if(hair!=4){x.fillStyle=hc;if(front){x.beginPath();x.ellipse(HX,HY-1.5,2.75,1.9,0,Math.PI,2*Math.PI);x.fill();if(hair==3){for(let k=-2;k<=2;k++){x.beginPath();x.arc(HX+k*1.1,HY-2.2-Math.abs(k)*-.2,1,0,7);x.fill()}}else{x.beginPath();x.moveTo(HX-2.6,HY-1.2);x.quadraticCurveTo(HX-.5,HY-.4,HX+2.2,HY-1.6);x.lineTo(HX+2.6,HY-1.4);x.lineTo(HX+2.6,HY-2);x.lineTo(HX-2.6,HY-2);x.fill()}}
+   else{x.beginPath();x.ellipse(HX,HY-.3,2.7,2.9,0,Math.PI*.95,Math.PI*2.05);x.quadraticCurveTo(HX+2.1,HY+2.4,HX,HY+2.6);x.quadraticCurveTo(HX-2.1,HY+2.4,HX-2.7,HY+.6);x.fill();if(hair==3){for(let k=0;k<7;k++){const a=Math.PI*(1+k/6);x.beginPath();x.arc(HX+Math.cos(a)*2.3,HY-.2+Math.sin(a)*2.5,1,0,7);x.fill()}}}}
+  /* nakrycie głowy */
+  const hat=c.hat==null?0:c.hat;
+  if(hat==0){const cg=x.createRadialGradient(HX-.9,HY-2.6,.2,HX,HY-1.3,3.4);cg.addColorStop(0,sd(cp,1.25));cg.addColorStop(1,sd(cp,.78));x.fillStyle=cg;x.beginPath();x.ellipse(HX,HY-1.15,2.9,2.4,0,Math.PI,2*Math.PI);x.lineTo(HX+2.9,HY-.55);x.lineTo(HX-2.9,HY-.55);x.closePath();x.fill();x.fillStyle=sd(cp,1.3);x.beginPath();x.arc(HX,HY-3.5,.4,0,7);x.fill();
+   if(front){x.fillStyle=sd(cp,.66);x.beginPath();x.ellipse(HX+sn*.6,HY-.85,3.3,.6,0,0,Math.PI);x.fill();x.fillStyle='rgba(0,0,0,.14)';x.beginPath();x.ellipse(HX,HY-.2,2.3,.32,0,0,Math.PI);x.fill()}else if(back){x.fillStyle='rgba(0,0,0,.35)';x.fillRect(HX-.9,HY-.95,1.8,.55)}else{x.fillStyle=sd(cp,.66);x.beginPath();x.ellipse(HX+2.6,HY-.55,1.8,.6,0,0,7);x.fill()}}
+  else if(hat==1){x.fillStyle=sd(cp,.95);x.beginPath();x.ellipse(HX,HY-1,2.95,2.6,0,Math.PI,2*Math.PI);x.fill();x.fillStyle=sd(cp,.78);x.fillRect(HX-2.95,HY-1.3,5.9,1.2);x.strokeStyle='rgba(0,0,0,.15)';x.lineWidth=.2;for(let k=-2.6;k<=2.6;k+=.8){x.beginPath();x.moveTo(HX+k,HY-1.3);x.lineTo(HX+k,HY-.1);x.stroke()}x.fillStyle=sd(cp,1.3);x.beginPath();x.arc(HX,HY-3.8,.95,0,7);x.fill()}
+  else if(hat==2){x.fillStyle=sd(cp,.72);x.beginPath();x.ellipse(HX,HY-.9,4.7,1.4,0,0,7);x.fill();x.fillStyle=sd(cp,1.02);x.beginPath();x.ellipse(HX,HY-1.5,2.5,2.2,0,Math.PI,2*Math.PI);x.fill();x.fillStyle=sd(cp,.55);x.fillRect(HX-2.5,HY-1.9,5,.6)}
+  /* prawa ręka z przodu */
+  if(!behind)arm(RS,aR,back?true:false,!(!P.idle&&!P.putt&&sw>.2));
+  x.restore()}
+ function frame(){const cv=ST.cv;if(!cv||!document.body.contains(cv)){ST.raf=0;return}const v=$('v-chr');if(v&&v.hidden){ST.raf=requestAnimationFrame(frame);return}
+  const x=cv.getContext('2d'),w=cv.width,h=cv.height,now=performance.now(),t=now/1000;
+  if(!ST.drag&&!ST.anim)ST.ty+=(Math.sin(t*.35)*.0)*0;ST.yaw+=(ST.ty-ST.yaw)*.12;
+  x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,w,h);
+  /* tło: trawa, kosz w oddali */
+  const k=w/320;x.save();x.scale(k,k);
+  x.fillStyle='rgba(255,255,255,.04)';for(let i=0;i<40;i++){const gx=(i*53)%320,gy=250+((i*37)%70);x.fillRect(gx,gy,1,3)}
+  x.save();x.translate(262,226);x.globalAlpha=.55;x.fillStyle='rgba(0,0,0,.3)';x.beginPath();x.ellipse(0,2,14,3,0,0,7);x.fill();x.fillStyle='#9aa4ad';x.fillRect(-1.4,-62,2.8,64);x.strokeStyle='#d8dee3';x.lineWidth=1;for(let i=-5;i<=5;i++){x.beginPath();x.moveTo(i*2.6,-56);x.quadraticCurveTo(i*1.6,-44,i*.6,-36);x.stroke()}x.fillStyle='#f6b90c';x.beginPath();x.ellipse(0,-57,16,4.5,0,0,7);x.fill();x.fillStyle='#8a6200';x.beginPath();x.ellipse(0,-58,13,3,0,0,7);x.fill();x.strokeStyle='#f6b90c';x.lineWidth=2;x.beginPath();x.ellipse(0,-28,14,4,0,0,7);x.stroke();x.beginPath();x.ellipse(0,-20,12,3.5,0,0,Math.PI);x.stroke();for(let i=-4;i<=4;i++){x.beginPath();x.moveTo(i*3.4,-27);x.lineTo(i*2.9,-19);x.stroke()}x.restore();
+  x.fillStyle='rgba(0,0,0,.18)';x.beginPath();x.ellipse(150,282,90,14,0,0,7);x.fill();
+  x.translate(150,280);x.scale(6.6,6.6);const P=pose(now);draw(x,SV.char||{},ST.yaw,P,t);x.restore();
+  ST.raf=requestAnimationFrame(frame)}
+ function renderBtns(){const b=$('avsvg')&&$('avsvg').querySelector('.hbtn');if(!b)return;b.querySelectorAll('[data-an]').forEach(e=>e.classList.toggle('on',e.dataset.an===ST.anim))}
+ function mount(){const el=$('avsvg');if(!el)return;el.classList.add('hero');
+  if(!ST.cv){ST.cv=document.createElement('canvas');const d=Math.min(2.5,window.devicePixelRatio||1);ST.cv.width=320*d;ST.cv.height=330*d;
+   const c=ST.cv;c.addEventListener('pointerdown',e=>{ST.drag={x:e.clientX,y0:ST.ty}});addEventListener('pointermove',e=>{if(ST.drag){ST.ty=ST.drag.y0+(e.clientX-ST.drag.x)*.025}});addEventListener('pointerup',()=>{ST.drag=null})}
+  el.innerHTML='';el.appendChild(ST.cv);const hh=document.createElement('div');hh.className='hhint';hh.textContent='⟲ przesuń palcem, żeby obrócić';el.appendChild(hh);
+  const b=document.createElement('div');b.className='hbtn';b.innerHTML='<button data-v="0">Przód</button><button data-v="1.57">Bok</button><button data-v="3.14">Tył</button><button data-an="bh">🥏 Rzut BH</button><button data-an="fh">✋ FH</button><button data-an="putt">🎯 Putt</button>';el.appendChild(b);
+  b.querySelectorAll('[data-v]').forEach(e=>e.onclick=()=>{ST.ty=+e.dataset.v});
+  b.querySelectorAll('[data-an]').forEach(e=>e.onclick=()=>{ST.anim=e.dataset.an;ST.t0=performance.now();ST.ty=e.dataset.an=='putt'?.25:e.dataset.an=='fh'?-2.6:2.6;renderBtns()});
+  if(!ST.raf)ST.raf=requestAnimationFrame(frame)}
+ const _rc=renderChr;renderChr=function(){const r=_rc.apply(this,arguments);try{mount()}catch(e){console.warn('P108',e)}return r};
+}catch(e){console.warn('P108',e)}})();</script>
 </body>
 </html>
