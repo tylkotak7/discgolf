@@ -3058,15 +3058,15 @@ setInterval(chkCar,4000);setTimeout(chkCar,2500);
 #trov .cup.sel .c{transform:scale(1.12)}#trov .info{background:rgba(10,24,14,.8);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:10px;font:600 13px system-ui;color:#cfe5d5;margin-bottom:10px;min-height:44px}#trov .info b{color:#fff;font:900 15px 'Baloo 2',system-ui}`;document.head.appendChild(st);
  const MET={1:['#e0a46a','#8a5226','Brąz'],2:['#e6ecf1','#8a98a5','Srebro'],3:['#ffd35a','#b8860b','Złoto']};
  const cup=r=>{const[a,b]=MET[r]||MET[1];return '<svg viewBox="0 0 52 56"><defs><linearGradient id="cg'+r+'" x1="0" x2="1"><stop offset="0" stop-color="'+b+'"/><stop offset=".45" stop-color="'+a+'"/><stop offset="1" stop-color="'+b+'"/></linearGradient></defs><path d="M10 6 h32 v6 q0 18 -16 22 q-16 -4 -16 -22z" fill="url(#cg'+r+')"/><path d="M10 9 q-7 0 -7 7 q0 8 10 9 M42 9 q7 0 7 7 q0 8 -10 9" fill="none" stroke="'+b+'" stroke-width="2.4"/><rect x="23" y="33" width="6" height="8" fill="'+b+'"/><rect x="15" y="41" width="22" height="5" rx="1.5" fill="url(#cg'+r+')"/><rect x="12" y="46" width="28" height="7" rx="2" fill="#3e2612"/><path d="M14 9 q2 12 8 17" stroke="rgba(255,255,255,.55)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>'};
- const GR=[['🥏 Gra','first birdie eagle ace turkey birds5 under even m5 m10 clean r25 far fh longputt'],['🌲 Pole i przygody','zlotow trees splash ob3 winter quad style'],['🏆 Kariera',CAR_IDS.join(' ')],['🎒 Kolekcja','vet rich coll']];
+ const GR=[['🥏 Gra','first birdie eagle ace turkey birds5 under even m5 m10 clean r25 far fh longputt'],['🌲 Pole i przygody','zlotow trees splash ob3 winter quad style'],['🏆 Kariera',CAR_IDS.join(' ')],['🎒 Kolekcja','vet rich coll'],['📈 Postęp','holes100 holes1000 r50 r200 bird50 bird250 ace5 ace20 tree250 tree1000'],['🎯 Wyzwania','roll_in toma_in putt20 nopen seasons birdz12 aceall mz18 lub'],['👥 Online','online1 tour4 tour_win']];
  renderTro=function(){const v=$('v-tro');if(!v)return;let el=$('trov');if(!el){el=document.createElement('div');el.id='trov';const vh=v.querySelector('.vh');(vh||v).after(el)}
   v.querySelectorAll(':scope > *').forEach(x=>{if(x.id!=='trov'&&!x.classList.contains('vh'))x.style.display='none'});
   const all=Object.keys(AD),got=all.filter(k=>SV.ach[k]),used=new Set();const secs=GR.map(([t,ids])=>{const L=ids.split(' ').filter(k=>AD[k]);L.forEach(k=>used.add(k));return[t,L]});const rest=all.filter(k=>!used.has(k));if(rest.length)secs.push(['✨ Inne',rest]);
   const cnt=r=>got.filter(k=>(RAR[k]||1)==r).length+'/'+all.filter(k=>(RAR[k]||1)==r).length;
   const a=selA&&AD[selA];
   el.innerHTML='<div class="tsum"><div class="big">'+got.length+'<small>/'+all.length+'</small></div><div class="tb"><b>Twoja gablota</b><div class="bar"><i style="width:'+Math.round(got.length/all.length*100)+'%"></i></div><div class="rz"><span style="color:#ffd35a">🥇 '+cnt(3)+'</span><span style="color:#e6ecf1">🥈 '+cnt(2)+'</span><span style="color:#e0a46a">🥉 '+cnt(1)+'</span></div></div></div>'+
-   '<div class="info">'+(a?'<b>'+a.i+' '+a.n+'</b> · '+(MET[RAR[selA]||1][2])+'<br>'+a.d+'<br><small style="color:'+(SV.ach[selA]?'#7dff9a':'#ffd35a')+'">'+(SV.ach[selA]?'✅ Zdobyte '+new Date(SV.ach[selA]).toLocaleDateString('pl-PL'):'🔒 Jeszcze nie zdobyte')+'</small>':'Dotknij pucharu, żeby zobaczyć opis.')+'</div>'+
-   secs.map(([t,L])=>{const g2=L.filter(k=>SV.ach[k]).length;let rows='';for(let i=0;i<L.length;i+=4)rows+='<div class="row">'+L.slice(i,i+4).map(k=>'<button class="cup'+(SV.ach[k]?'':' lock')+(selA==k?' sel':'')+'" data-a="'+k+'"><div class="c">'+cup(RAR[k]||1)+'<span class="ic">'+AD[k].i+'</span></div><small>'+AD[k].n+'</small></button>').join('')+'</div>';return '<div class="sec"><div class="sh"><b>'+t+'</b><em>'+g2+'/'+L.length+'</em></div>'+rows+(t.indexOf('Kariera')>=0?medRow():'')+'</div>'}).join('');
+   '<div class="info">'+(a?'<b>'+a.i+' '+a.n+'</b> · '+(MET[RAR[selA]||1][2])+'<br>'+a.d+'<br><small style="color:'+(SV.ach[selA]?'#7dff9a':'#ffd35a')+'">'+(SV.ach[selA]?'✅ Zdobyte '+new Date(SV.ach[selA]).toLocaleDateString('pl-PL'):'🔒 Jeszcze nie zdobyte'+(a.p?(()=>{const[c,m]=a.p();return ' · postęp '+Math.min(c,m)+'/'+m})():''))+' · nagroda 🪙 '+([0,10,25,60][RAR[selA]||1])+'</small>':'Dotknij pucharu, żeby zobaczyć opis.')+'</div>'+
+   secs.map(([t,L])=>{const g2=L.filter(k=>SV.ach[k]).length;let rows='';for(let i=0;i<L.length;i+=4)rows+='<div class="row">'+L.slice(i,i+4).map(k=>'<button class="cup'+(SV.ach[k]?'':' lock')+(selA==k?' sel':'')+'" data-a="'+k+'"><div class="c">'+cup(RAR[k]||1)+'<span class="ic">'+AD[k].i+'</span></div><small>'+AD[k].n+'</small>'+(!SV.ach[k]&&AD[k].p?(()=>{const[c,m]=AD[k].p();return '<i class="pbar"><b style="width:'+Math.min(100,c/m*100)+'%"></b></i>'})():'')+'</button>').join('')+'</div>';return '<div class="sec"><div class="sh"><b>'+t+'</b><em>'+g2+'/'+L.length+'</em></div>'+rows+(t.indexOf('Kariera')>=0?medRow():'')+'</div>'}).join('');
   el.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{selA=b.dataset.a;renderTro();const i=el.querySelector('.info');if(i)i.scrollIntoView({block:'nearest',behavior:'smooth'})});
   try{const tc=$('tcount');if(tc)tc.textContent='🏆 '+got.length+'/'+all.length}catch(e){}
 };
@@ -3286,7 +3286,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','📊 Statystyki bez pola treningowego','🛞 Roller toczy się dalej (+25%) i mocniej skręca','🚫 OB: +1 i rzut z miejsca, gdzie dysk wyleciał za linię','⛳ Międzybłocie: bramka z drzew zamiast mando na 3, ścieżki na 5, drzewa na 6/13/17, naturalniejszy las na 14, szkółka drzewek na 1 i 18','🌳 Więcej różnorodności drzew: zagajniki brzóz, kępy sosen i jodeł, klony i topole, różne rozmiary i odcienie','🌼 Ozdoby (kwiatki, kępki, kamienie, szyszki) na wszystkich dołkach – o połowę mniej, mniej pstrokato','🔄 Kariera od nowa: Sezon 1 (12–19.11), tylko kategoria Open, rating wszystkich graczy liczony od zera','🎯 W Opcjach pole do testowania czułości celowania','🏆 Online do 4 graczy i turniej: kolejny dołek startuje, gdy wszyscy skończą; rywal stoi przy swoim dysku, a po trafieniu czeka 20 m za koszem','🔒 Luboń na hasło · nowy ekran ładowania Chain Reaction','🌳 Nowe gatunki drzew (jodła, topola) na wszystkich polach','⛳ Międzybłocie: poprawki 1, 2, 3, 4, 5, 13, 14, 17 · większe auta','🎯 Czułość celowania w Opcjach · mniejsze tablice przy tee · HUD przezroczysty, gdy zasłania gracza','🔊 Jeden, realniejszy dźwięk łańcuchów i osobny dźwięk uderzenia w czapę','🧍 NPC i kibice w stylu nowej postaci','🧍 Nowa, realistyczna postać: zamach, wyrzut, dokończenie ruchu i osobny putt','📣 Kibice reagują: wiwatują przy birdie i ace, komentują drzewo, OB i wodę, uciekają przed lecącym dyskiem','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','🛞 Roller ma własny podgląd toru – ślad toczenia jak od opony','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
+ const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','📊 Statystyki bez pola treningowego','🛞 Roller toczy się dalej (+25%) i mocniej skręca','🏆 22 nowe osiągnięcia z paskami postępu i nagrodami w monetach (10/25/60), nowy baner przy zdobyciu','🚶 Postać chodzi do dysku, cieszy się po trafieniu, łapie się za głowę po drzewie; lepszy forehand i putt','🚫 OB: +1 i rzut z miejsca, gdzie dysk wyleciał za linię','⛳ Międzybłocie: bramka z drzew zamiast mando na 3, ścieżki na 5, drzewa na 6/13/17, naturalniejszy las na 14, szkółka drzewek na 1 i 18','🌳 Więcej różnorodności drzew: zagajniki brzóz, kępy sosen i jodeł, klony i topole, różne rozmiary i odcienie','🌼 Ozdoby (kwiatki, kępki, kamienie, szyszki) na wszystkich dołkach – o połowę mniej, mniej pstrokato','🔄 Kariera od nowa: Sezon 1 (12–19.11), tylko kategoria Open, rating wszystkich graczy liczony od zera','🎯 W Opcjach pole do testowania czułości celowania','🏆 Online do 4 graczy i turniej: kolejny dołek startuje, gdy wszyscy skończą; rywal stoi przy swoim dysku, a po trafieniu czeka 20 m za koszem','🔒 Luboń na hasło · nowy ekran ładowania Chain Reaction','🌳 Nowe gatunki drzew (jodła, topola) na wszystkich polach','⛳ Międzybłocie: poprawki 1, 2, 3, 4, 5, 13, 14, 17 · większe auta','🎯 Czułość celowania w Opcjach · mniejsze tablice przy tee · HUD przezroczysty, gdy zasłania gracza','🔊 Jeden, realniejszy dźwięk łańcuchów i osobny dźwięk uderzenia w czapę','🧍 NPC i kibice w stylu nowej postaci','🧍 Nowa, realistyczna postać: zamach, wyrzut, dokończenie ruchu i osobny putt','📣 Kibice reagują: wiwatują przy birdie i ace, komentują drzewo, OB i wodę, uciekają przed lecącym dyskiem','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','🛞 Roller ma własny podgląd toru – ślad toczenia jak od opony','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Przebudowa wszystkich 18 dołków według uwag z pola','1: krótki tee, par 3, dwie linie (hyzer/backhand) z kępą drzew i OB po prawej','5 i 6: asfaltowa droga, jeżdżą auta, a kierowcy komentują rzuty','5: 3× większa rzeczka · 6: rozległy staw · 4: staw za drogą','7: brzozy, działka ze szklarnią i działkowiczem · 8: pole zboża i większa woda za koszem','9: mostek przez rzeczkę · 10: kosz z 9, ścieżka i tee od 11 · 14: wąski fairway z tabliczkami 50–200 m i dom w oddali','Usunięte mando na 2, 3, 8, 10, 17, hazard na 12 i 15, szałas na 17 · 18: z górki ~1,5 m i pole za koszem']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie 4 mapy naraz (Złotów 12, Złotów 22, Międzybłocie, Luboń beta – wkrótce)','Przycisk „Zmień pogodę” na kafelku pola – kafelek pokazuje porę roku i pogodę','Top 5 obok siebie: Złotów 12 i 22, pod spodem Międzybłocie i Luboń','Nowy sezon rankingu – wszystkie wcześniejsze wyniki są w zakładce 📦 Archiwum','Pole treningowe przeniesione do Opcji → Old school']],
   ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
@@ -4049,24 +4049,32 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
     if(putt){sw=e<.12?lerp(-.6,.4,e/.12):e<.6?.4+.1*Math.sin(e*3):lerp(.45,.15,(e-.6)/.5);cr=e<.6?.5:lerp(.5,0,(e-.6)/.5)}
     else{sw=e<.09?lerp(-1,.1,ease(e/.09)):e<.42?lerp(.1,1,ease((e-.09)/.33)):lerp(1,.15,ease(cl((e-.42)/.6,0,1)));cr=e<.42?.22:lerp(.22,0,cl((e-.42)/.6,0,1));lean=e<.42?.18:lerp(.18,0,cl((e-.42)/.6,0,1));step=e<.5?1:lerp(1,0,cl((e-.5)/.5,0,1));heel=e>.06&&e<.75?1:0;
      if(L90.run)run=e<.42?ease(e/.42):e<.8?1:Math.max(0,1-(e-.8)/.3)}}else L90.t0=0}
-  if(ang==null){if(h&&lie)ang=Math.atan2(h.b[0]-lie.x,-(h.b[1]-lie.y));else ang=0}
+  if(ang==null){if(L90.W)ang=Math.atan2(L90.W.t[0]-L90.W.f[0],-(L90.W.t[1]-L90.W.f[1]));else if(h&&lie)ang=Math.atan2(h.b[0]-lie.x,-(h.b[1]-lie.y));else ang=0}
   let d=ang-L90.FA;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;L90.FA+=d*.25;
-  return{sw,cr,lean,hd,step,heel,idle,putt,run,showDisc,A:L90.FA}}
+  let cel=null,jump=0,walk=L90.wph;if(idle&&walk==null&&L90.cel){const e=(now-L90.cel.t0)/1000;if(e<0){}else if(e<L90.cel.d){cel=L90.cel.k;if(cel=='up')jump=Math.abs(Math.sin(e*7.5))*2.8*Math.max(0,1-e/L90.cel.d)}else L90.cel=null}
+  if(!idle)walk=null;return{sw,cr,lean,hd,step,heel,idle,putt,run,showDisc,A:L90.FA,cel,jump,walk}}
+
+ try{const _ho=hole;hole=function(){try{const h=holes[hi],s=throws-h.par;L90.cel={t0:performance.now(),k:(throws==1||s<0)?'up':s==0?'fist':'down',d:throws==1?3:2.2}}catch(e){}return _ho.apply(this,arguments)}}catch(e){}
+ {let seen=null,was=false;setInterval(()=>{try{if(disc){if(typeof treeHit!='undefined'&&treeHit)was=true;seen=disc}else if(seen){if(was&&!(L90.cel&&performance.now()-L90.cel.t0<500))L90.cel={t0:performance.now()+700,k:'head',d:1.6};seen=null;was=false}}catch(e){}},60)}
  function shirtCol(c){return (typeof SHIRT!='undefined'&&SHIRT[c.shirt])||'#2f7be5'}
  const _pd=playerDraw;playerDraw=function(x,y,hold){if(OLD||!UP||!playing)return _pd.apply(this,arguments);try{
+  {const now=performance.now(),key=holes&&holes[hi];if(!L90.dp||L90.dh!==key||Math.hypot(x-L90.dp[0],y-L90.dp[1])>260||drag||disc){if(!L90.dp||L90.dh!==key||Math.hypot(x-L90.dp[0],y-L90.dp[1])>260){L90.dp=[x,y];L90.W=null}L90.dh=key}
+   if(!L90.W&&Math.hypot(x-L90.dp[0],y-L90.dp[1])>1.5&&!disc&&!drag){const d=Math.hypot(x-L90.dp[0],y-L90.dp[1]);L90.W={f:L90.dp.slice(),t:[x,y],t0:now,dur:Math.min(2600,Math.max(600,d*20))};L90.FA=Math.atan2(x-L90.dp[0],-(y-L90.dp[1]))}
+   if(L90.W){if(L90.W.t[0]!==x||L90.W.t[1]!==y){L90.W.t=[x,y]}const e=(now-L90.W.t0)/L90.W.dur;if(e>=1||drag||disc){L90.dp=[x,y];L90.W=null;L90.wph=null}else{const k=e<.15?e/.15*e:e;L90.dp=[lerp(L90.W.f[0],x,e),lerp(L90.W.f[1],y,e)];L90.wph=(now-L90.W.t0)/1000*10.5}}else{L90.dp=[x,y];L90.wph=null}
+   x=L90.dp[0];y=L90.dp[1]}
   const c=SV.char||{},sk=SKIN[c.skin]||SKIN[0],sr=shirtCol(c),cp=(CAP[c.cap]||CAP[0]),hc=(HAIRC[c.hc]||HAIRC[0]),pc=(PANTS[c.pants]||PANTS[0]),fem=c.g=='f',t=performance.now()/1000;
   const P=pose(),sn=Math.sin(P.A),cs=Math.cos(P.A),front=cs<-.35,mx=(sn<-.12?-1:1)*(front?-1:1),sq=.86+.14*Math.abs(cs),br=P.idle?Math.sin(t*2.2)*.25:0;
   const ro=P.run*12,ox=Math.sin(P.A)*ro,oy=-Math.cos(P.A)*ro;
   g.save();g.translate(x+ox,y+oy);
-  g.fillStyle='rgba(6,20,8,.3)';g.beginPath();g.ellipse(5,1,9,3,.32,0,7);g.fill();
+  g.fillStyle='rgba(6,20,8,.3)';g.beginPath();g.ellipse(5,1,9-(P.jump||0),3,.32,0,7);g.fill();g.translate(0,-(P.jump||0));
   g.scale(mx*sq,1);
   /* wymiary (wysokość ok. 36) */
-  const hipY=-17+2.6*P.cr+br*.3,shY=-29.4+2.8*P.cr+br,lean=P.lean*(front?-1:1),tl=lean*6;
+  const wb2=P.walk!=null?Math.abs(Math.sin(P.walk))*.9:0,hipY=-17+2.6*P.cr+br*.3-wb2,shY=-29.4+2.8*P.cr+br-wb2+(P.cel=='down'?.8:0),lean=P.lean*(front?-1:1),tl=lean*6;
   const hw=2.3,sw=P.sw,hb=P.hd>0?1:-1,rot=cl(Math.abs(sw),0,1),shW=4.6*(1-.3*rot);
   const H=[0,hipY],SH=[tl+sw*hb*1.2,shY];
   /* nogi */
   const fwd=P.step*2.2,spread=P.putt?3:2.3;
-  const footL=[-spread-.3*P.step,-fwd],footR=[spread+.5*P.step,P.heel?-1.6:0];
+  let footL=[-spread-.3*P.step,-fwd],footR=[spread+.5*P.step,P.heel?-1.6:0];if(P.walk!=null){const s=Math.sin(P.walk);footL=[-2.1,-s*3.4-(s>0?.9*s:0)];footR=[2.1,s*3.4+(s<0?.9*s:0)]}
   const hipL=[-hw,hipY],hipR=[hw,hipY];
   const legL=ik(hipL,footL,8.4,8.6,-.28),legR=ik(hipR,footR,8.4,8.6,.28);
   const kneeL=[hipL,legL[0],legL[1]],kneeR=[hipR,legR[0],legR[1]];
@@ -4081,8 +4089,8 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
   /* biodra / spodenki */
   g.fillStyle=shd(pc,.9);g.beginPath();g.moveTo(-hw-1.3,hipY+1.6);g.lineTo(hw+1.3,hipY+1.6);g.lineTo(hw+1.1,hipY-1.8);g.lineTo(-hw-1.1,hipY-1.8);g.closePath();g.fill();
   /* lewa ręka (balans) */
-  const LS=[SH[0]-shW,shY+1.2],lh=P.idle?[LS[0]-1.4,shY+11.5]:[LS[0]-3-4*Math.max(0,sw)*hb+2*Math.min(0,sw)*hb,shY+6.5-2*rot];
-  const armL=ik(LS,lh,5.6,5.6,1);
+  const LS=[SH[0]-shW,shY+1.2];let lh=P.idle?[LS[0]-1.4,shY+11.5]:[LS[0]-3-4*Math.max(0,sw)*hb+2*Math.min(0,sw)*hb,shY+6.5-2*rot];
+  let armL=ik(LS,lh,5.6,5.6,1);
   const armC=(back)=>shd(sr,back?.8:1);
   const drawArm=(S,A,back,hasDisc)=>{limb([S,A[0],A[1]],2.6,2.1,armC(back),shd(sk,back?.85:1));g.strokeStyle=shd(sk,back?.85:1);g.lineWidth=2.1;g.beginPath();g.moveTo(A[0][0],A[0][1]);g.lineTo(A[1][0],A[1][1]);g.stroke();
    g.strokeStyle=armC(back);g.lineWidth=2.9;g.beginPath();g.moveTo(S[0],S[1]);g.lineTo(lerp(S[0],A[0][0],.45),lerp(S[1],A[0][1],.45));g.stroke();
@@ -4093,8 +4101,14 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
   if(P.idle)tg=[RS[0]+1.4,shY+11.5];
   else if(P.putt)tg=sw<0?L2([RS[0]-2.2,shY+5],[RS[0]-1,shY+9.5],-sw):L2([RS[0]-2.2,shY+5],[RS[0]-2.6,shY+.5],sw);
   else if(hb>0){const rel=[RS[0]-3.4,shY+1.8],back=[RS[0]-13.5,shY+3.4],fol=[RS[0]+5.5,shY+4.5];tg=sw<0?L2(rel,back,-sw):L2(rel,fol,sw)}
-  else{const rel=[RS[0]-1.2,shY+2],back=[RS[0]+8.5,shY+2.6],fol=[RS[0]-11,shY+4];tg=sw<0?L2(rel,back,-sw):L2(rel,fol,sw)}
-  const armR=ik(RS,tg,5.8,5.8,-1);
+  else{const rel=[RS[0]-.4,shY+3.4],back=[RS[0]+7.2,shY+5.2],fol=[RS[0]-12.5,shY+3];tg=sw<0?L2(rel,back,-sw):L2(rel,fol,sw)}
+  if(P.idle){const HXa=SH[0],HYa=shY-3.9;if(P.walk!=null){const s=Math.sin(P.walk);lh=[LS[0]-1.4,shY+10.6+s*1.6];tg=[RS[0]+1.4,shY+10.6-s*1.6]}
+   else if(P.cel=='up'){lh=[LS[0]-2.4,shY-9.5];tg=[RS[0]+2.4,shY-9.5]}
+   else if(P.cel=='fist'){const k=Math.abs(Math.sin(performance.now()/160));tg=[RS[0]+1.2,shY-2-k*3.5]}
+   else if(P.cel=='down'){lh=[-3.4,hipY-.6];tg=[3.4,hipY-.6]}
+   else if(P.cel=='head'){lh=[HXa-1.8,HYa-2.6];tg=[HXa+1.8,HYa-2.6]}}
+  else if(P.putt){lh=[LS[0]-.6,shY+4.6]}
+  armL=ik(LS,lh,5.6,5.6,P.cel=='head'||P.cel=='up'?-1:1);const armR=ik(RS,tg,5.8,5.8,P.cel=='down'?1:-1);
   const behindR=!P.idle&&sw<-.35&&hb>0;
   if(behindR)drawArm(RS,armR,true,hold||P.showDisc);
   drawArm(LS,armL,true,false);
@@ -4107,7 +4121,7 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
   g.strokeStyle='rgba(255,255,255,.15)';g.beginPath();g.moveTo(SH[0]-tw/2+1.2,shY+2);g.quadraticCurveTo(SH[0]-tw/4,shY+4.2,SH[0]-.8,shY+2.6);g.stroke();
   if(!front){const bt=(typeof BRS!='undefined'&&SV.brand&&BRS[SV.brand])||'';if(bt){g.save();g.scale(mx<0?-1:1,1);g.fillStyle='rgba(255,255,255,.7)';g.font='900 1.9px system-ui';g.textAlign='center';g.fillText(bt.split(' ')[0],(mx<0?-1:1)*SH[0],shY+4.2);g.restore()}}
   /* szyja i głowa */
-  const HX=SH[0]+tl*.6,HY=shY-3.9;g.fillStyle=shd(sk,.85);g.fillRect(HX-.9,shY-2.2,1.8,2.4);
+  const HX=SH[0]+tl*.6,HY=shY-3.9+(P.cel=='down'?.9:0);g.fillStyle=shd(sk,.85);g.fillRect(HX-.9,shY-2.2,1.8,2.4);
   const hg=g.createRadialGradient(HX-.8,HY-1,.3,HX,HY,3.4);hg.addColorStop(0,shd(sk,1.1));hg.addColorStop(1,shd(sk,.84));g.fillStyle=hg;g.beginPath();g.ellipse(HX,HY,2.55,2.95,0,0,7);g.fill();
   g.fillStyle=shd(sk,.88);g.beginPath();g.ellipse(HX-2.5,HY+.3,.55,.85,0,0,7);g.ellipse(HX+2.5,HY+.3,.55,.85,0,0,7);g.fill();
   if(c.hair!=4){g.fillStyle=hc;if(front){g.beginPath();g.ellipse(HX,HY-1.4,2.7,1.8,0,Math.PI,2*Math.PI);g.fill()}else{g.beginPath();g.ellipse(HX,HY-.3,2.65,2.85,0,Math.PI*.95,Math.PI*2.05);g.quadraticCurveTo(HX+2,HY+2.4,HX,HY+2.5);g.quadraticCurveTo(HX-2,HY+2.4,HX-2.6,HY+.6);g.fill()}
@@ -4118,7 +4132,7 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
   else if(c.hat==1){g.fillStyle=shd(cp,.95);g.beginPath();g.ellipse(HX,HY-1,2.9,2.5,0,Math.PI,2*Math.PI);g.fill();g.fillStyle=shd(cp,.8);g.fillRect(HX-2.9,HY-1.2,5.8,1.1);g.fillStyle=shd(cp,1.3);g.beginPath();g.arc(HX,HY-3.7,.9,0,7);g.fill()}
   else if(c.hat==2){g.fillStyle=shd(cp,.75);g.beginPath();g.ellipse(HX,HY-.8,4.6,1.5,0,0,7);g.fill();g.fillStyle=shd(cp,1.05);g.beginPath();g.ellipse(HX,HY-1.4,2.5,2.1,0,Math.PI,2*Math.PI);g.fill()}
   /* prawa ręka z przodu */
-  if(!behindR)drawArm(RS,armR,false,(hold||P.idle||(!P.idle&&P.showDisc)));
+  if(!behindR)drawArm(RS,armR,false,!P.cel&&P.walk==null&&(hold||P.idle||(!P.idle&&P.showDisc)));
   g.restore();
   if(P.run>0&&P.run<1&&!GFXLOW()){g.save();g.fillStyle='rgba(160,130,90,'+(.3*(1-P.run))+')';for(let i=0;i<3;i++){g.beginPath();g.arc(x+ox*.5-Math.sin(P.A)*i*3+(i-1)*2,y+oy*.5+Math.cos(P.A)*i*3+1,1.4+i*.5,0,7);g.fill()}g.restore()}
  }catch(e){console.warn('char90',e);return _pd.apply(this,arguments)}};
@@ -4314,5 +4328,43 @@ window.NURSERY_M=function(x,P,w,h){const S=h&&h._sil;if(!S)return window.NURSERY
  const px=y=>{let b=P[0],bd=1e9;for(const p of P){const d=Math.abs(p[1]-y);if(d<bd){bd=d;b=p}}return b[0]};
  h.trees=h.trees.filter(t=>{if(t[0]<=px(t[1])+14)return true;return R()>.6});
  h.thinF=((o)=>(x,y)=>x>px(y)+14?Math.max(.6,o?o(x,y):0):(o?o(x,y):0))(h.thinF);delete h._fill;delete h._col;delete h._sil}catch(e){console.warn('P104',e)}})();</script>
+<style>.cup .pbar{display:block;height:3px;margin:2px 8px 0;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}.cup .pbar b{display:block;height:100%;background:#ffd35a}
+#achb{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 70px);transform:translate(-50%,-140%);z-index:97;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#2a1f05,#5a4208);border:2px solid #ffd35a;color:#fff;border-radius:18px;padding:8px 14px 8px 10px;box-shadow:0 8px 24px rgba(0,0,0,.45);transition:transform .45s cubic-bezier(.2,1.4,.4,1);pointer-events:none;max-width:90vw}
+#achb.on{transform:translate(-50%,0)}#achb .i{font-size:30px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}#achb small{display:block;font:800 10px system-ui;color:#ffd35a;letter-spacing:.08em}#achb b{display:block;font:900 15px 'Baloo 2',system-ui}#achb em{font:800 12px system-ui;color:#ffe9a8;font-style:normal}</style>
+<script>/* P106: więcej osiągnięć, postęp, nagrody, nowy baner */
+(function(){try{
+ const C=()=>{SV.cnt=SV.cnt||{};return SV.cnt};const inc=(k,v)=>{const c=C();c[k]=(c[k]||0)+(v||1)};const pr=(k,m)=>()=>[C()[k]||0,m];
+ Object.assign(AD,{holes100:{n:'Stówka',d:'Ukończ 100 dołków.',i:'💯',p:pr('holes',100)},holes1000:{n:'Tysiącznik',d:'Ukończ 1000 dołków.',i:'🗺️',p:pr('holes',1000)},
+  r50:{n:'Stały bywalec',d:'Ukończ 50 rund.',i:'📆',p:pr('rounds',50)},r200:{n:'Legenda pola',d:'Ukończ 200 rund.',i:'🏛️',p:pr('rounds',200)},
+  bird50:{n:'Ptasiarz',d:'Zrób 50 birdie.',i:'🐤',p:pr('bird',50)},bird250:{n:'Ornitolog',d:'Zrób 250 birdie.',i:'🦜',p:pr('bird',250)},
+  ace5:{n:'Seryjny asowiec',d:'Traf 5 ace.',i:'🎯',p:pr('ace',5)},ace20:{n:'Król ace',d:'Traf 20 ace.',i:'🤴',p:pr('ace',20)},
+  tree250:{n:'Drwal',d:'Odbij się od 250 drzew.',i:'🪓',p:pr('tree',250)},tree1000:{n:'Pogromca lasów',d:'Odbij się od 1000 drzew.',i:'🌳',p:pr('tree',1000)},
+  roll_in:{n:'Toczy się, toczy…',d:'Wtocz dysk rollerem do kosza.',i:'🛞'},toma_in:{n:'Topór w łańcuchach',d:'Traf do kosza tomahawkiem.',i:'🪓'},
+  putt20:{n:'Z daleka w łańcuchy',d:'Trafienie z 20 m lub dalej (nie z tee).',i:'🔭'},nopen:{n:'Czyste ręce',d:'Runda bez żadnej kary (OB, woda, mando, hazard).',i:'🧤'},
+  seasons:{n:'Trzy pory roku',d:'Ukończ rundę latem, jesienią i zimą.',i:'🍂',p:()=>[Object.keys(C().sea||{}).length,3]},
+  birdz12:{n:'Złotów opanowany',d:'Zrób birdie na każdym z 12 dołków Złotowa (w dowolnych rundach).',i:'🦉',p:()=>[Object.keys(C().bz||{}).length,12]},
+  aceall:{n:'As wszystkich pól',d:'Traf ace na Złotowie 12, Złotowie 22, Międzybłociu i Luboniu.',i:'🌍',p:()=>[Object.keys(C().am||{}).filter(k=>['zlotow','z22','miedzy','lubon'].includes(k)).length,4]},
+  mz18:{n:'Las Międzybłocia',d:'Ukończ rundę na Międzybłociu.',i:'🌲'},lub:{n:'Nad Wartą',d:'Ukończ rundę na Luboniu.',i:'🌊'},
+  online1:{n:'Z ziomkiem',d:'Ukończ rundę z kolegą online.',i:'🤝'},tour4:{n:'Pełny skład',d:'Zagraj turniej online w 4 osoby.',i:'👨‍👩‍👦‍👦'},tour_win:{n:'Mistrz turnieju',d:'Wygraj turniej online.',i:'🏆'}});
+ Object.assign(RAR,{holes100:1,holes1000:3,r50:2,r200:3,bird50:2,bird250:3,ace5:3,ace20:3,tree250:2,tree1000:3,roll_in:3,toma_in:3,putt20:2,nopen:1,seasons:2,birdz12:3,aceall:3,mz18:1,lub:1,online1:1,tour4:2,tour_win:3});
+ const U=id=>{if(!SV.ach[id]&&AD[id]){SV.ach[id]=Date.now();try{persist()}catch(e){}}};
+ const chkP=()=>{for(const id in AD){const a=AD[id];if(a.p&&!SV.ach[id]){const[c,m]=a.p();if(c>=m)U(id)}}};
+ /* baner + nagroda */
+ const bn=document.createElement('div');bn.id='achb';document.body.appendChild(bn);const Q=[];let busy=false;
+ const show=()=>{if(busy||!Q.length)return;busy=true;const id=Q.shift(),a=AD[id],rw=[0,10,25,60][RAR[id]||1];bn.innerHTML='<span class="i">'+a.i+'</span><span><small>🏆 OSIĄGNIĘCIE</small><b>'+a.n+'</b><em>+'+rw+' 🪙 · '+a.d+'</em></span>';bn.classList.add('on');try{sfx.chains&&0}catch(e){}setTimeout(()=>{bn.classList.remove('on');setTimeout(()=>{busy=false;show()},500)},3200)};
+ let seen=new Set(Object.keys(SV.ach||{}));
+ setInterval(()=>{try{chkP();for(const id of Object.keys(SV.ach||{})){if(!seen.has(id)){seen.add(id);const rw=[0,10,25,60][RAR[id]||1];SV.coins=(SV.coins||0)+rw;try{persist()}catch(e){}try{hud&&0}catch(e){}Q.push(id);show()}}}catch(e){}},500);
+ const _t=toast;toast=function(m){if(String(m).indexOf('🏆 Osiągnięcie:')===0)return;return _t.apply(this,arguments)};
+ /* liczniki */
+ let R0={pen:0},bStreak=0;
+ const _ld=load;load=function(){try{if(hi===0&&throws===0&&(!scores||!scores.length)){R0={pen:0}}}catch(e){}return _ld.apply(this,arguments)};
+ const _ho=hole;hole=function(){try{const h=holes[hi],s=throws-h.par,d=disc;inc('holes');if(throws==1){inc('ace');C().am=C().am||{};C().am[layout]=1}if(s<=-1){inc('bird');if(layout=='zlotow'&&holes===ZL){C().bz=C().bz||{};C().bz[hi]=1}}
+   if(d&&d.rol)U('roll_in');if(d&&d.tom)U('toma_in');if(throws>1&&lie&&dm(lie)>=20)U('putt20');chkP()}catch(e){}return _ho.apply(this,arguments)};
+ const _st=stop;stop=function(t){try{if(/OB|Woda|Mando|Hazard/.test(String(t)))R0.pen++}catch(e){}return _st.apply(this,arguments)};
+ {let sd=null,hit=false;setInterval(()=>{try{if(disc){if(disc!==sd){sd=disc;hit=false}if(!hit&&typeof treeHit!='undefined'&&treeHit){hit=true;inc('tree')}}}catch(e){}},50)}
+ const _fn=finish;finish=function(){try{inc('rounds');C().sea=C().sea||{};C().sea[season]=1;if(!R0.pen&&!(typeof roundOB!='undefined'&&roundOB))U('nopen');if(layout=='miedzy')U('mz18');if(layout=='lubon')U('lub');
+   const O=window.__ON;if(O&&O.code){const P=Object.values(O.peers||{});if(P.length){U('online1');if(O.tour){if(P.length>=3)U('tour4');if(P.every(p=>(p.fin||0)>=holes.length&&(p.tot||0)>total))U('tour_win')}}}chkP()}catch(e){}return _fn.apply(this,arguments)};
+ chkP();
+}catch(e){console.warn('P106',e)}})();</script>
 </body>
 </html>
