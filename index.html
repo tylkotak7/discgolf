@@ -3633,7 +3633,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  /* ---------- 18: pole za koszem po lewej, droga w dół 1,5 m ---------- */
  {const h=MZ[17];h.slope=1.04;h.slopeTxt='⬇ Droga schodzi w dół ~1,5 m – dysk poleci trochę dalej';const FP=[[-10,40],[132,40],[132,104],[90,104],[90,150],[-10,150]];
   h.trees=h.trees.filter(t=>!inPoly(t[0],t[1],[[-20,30],[142,30],[142,114],[100,114],[100,160],[-20,160]]));addNoF(h,(x,y)=>inPoly(x,y,[[-20,28],[144,28],[144,116],[102,116],[102,162],[-20,162]]));
-  h.deco=(h.deco||[]).filter(o=>o.k!='bench');addArt(h,(x,w)=>{window.NURSERY(x,FP,w);contours(x,h,false,'▼ ok. 1,5 m w dół')});h.txt=h.slopeTxt;fin(h)}
+  h.deco=(h.deco||[]).filter(o=>o.k!='bench');addArt(h,(x,w)=>{window.NURSERY_M(x,FP,w,h);contours(x,h,false,'▼ ok. 1,5 m w dół')});h.txt=h.slopeTxt;fin(h)}
  /* pill ze spadkiem już obsługiwany w P79 przez slopeTxt; tu tylko txt */
  /* most i pomosty – bez kary na moście */
  try{const _st=window.stop;}catch(e){}
@@ -4193,7 +4193,7 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
   for(let u=.08;u<.95;u+=.07){const a=hs3(u*1000|0,4,3),b=hs3(u*1000|0,5,3);h.trees.push(off(u,-(84+a*14)).concat([11+((a*4)|0)]),off(u+.03,84+b*14).concat([11+((b*4)|0)]))}
   const r=h.roads[0];const rx=r?Math.max(...r.pts.map(p=>p[0])):120,rw=r?r.w:16;
   const NX=rx-rw/2-1;h.trees=h.trees.filter(t=>t[0]-t[2]*.6>rx+rw/2+2);addNoF(h,(x,y,rr)=>x-(rr||8)*.6<rx+rw/2+3);
-  addArt(h,(x,w)=>{window.NURSERY(x,[[-6,-6],[NX,-6],[NX,H+6],[-6,H+6]],w)});
+  addArt(h,(x,w)=>{window.NURSERY_M(x,[[-6,-6],[NX,-6],[NX,H+6],[-6,H+6]],w,h)});
   const ox=Math.max(...RR.map(p=>p[0]))+30;h.obF=(x,y)=>x>ox;h.obL=[[[ox,-10],[ox,H+10]]];h.trees=h.trees.filter(t=>t[0]<ox-6||t[0]>ox+18);
   h.txt='Dwie linie: hyzer z lewej, backhand z prawej. Po prawej OB.';MZ[0]=fin(h)}
  /* ---------- 2: pionowy asfalt po lewej przez całą mapę + auta ---------- */
@@ -4276,5 +4276,29 @@ window.NURSERY=function(x,P,w){x.save();x.beginPath();P.forEach((p,i)=>i?x.lineT
 }catch(e){console.warn('P99',e)}})();</script>
 <script>/* P100: bez treningu w statystykach */
 try{delete CN2.trening;if(statL=='trening')statL='zlotow'}catch(e){}</script>
+<script>/* P101: szkółka pod koronami drzew + Międzybłocie 1/3/5/6/14 */
+window.NURSERY_M=function(x,P,w,h){const S=h&&h._sil;if(!S)return window.NURSERY(x,P,w);const c=x.canvas,o=document.createElement('canvas');o.width=c.width;o.height=c.height;const ox=o.getContext('2d');ox.setTransform(x.getTransform());window.NURSERY(ox,P,w);
+ const D=ox.getImageData(0,0,o.width,o.height),d=D.data,k=o.width/W,sx=S.tw/W;for(let j=0;j<o.height;j++){const Y=((j/k)*sx)|0;if(Y<0||Y>=S.th)continue;for(let i=0;i<o.width;i++){const p=(j*o.width+i)*4;if(!d[p+3])continue;const X=((i/k)*sx)|0;if(X>=0&&X<S.tw&&S.m[Y*S.tw+X]>0)d[p+3]=0}}ox.putImageData(D,0,0);x.save();x.setTransform(1,0,0,1,0,0);x.drawImage(o,0,0);x.restore()};
+(function(){try{
+ const dseg=(p,a,e)=>{const vx=e[0]-a[0],vy=e[1]-a[1],l2=vx*vx+vy*vy||1,f=Math.max(0,Math.min(1,((p[0]-a[0])*vx+(p[1]-a[1])*vy)/l2));return Math.hypot(p[0]-a[0]-vx*f,p[1]-a[1]-vy*f)};
+ const nearPL=(p,P)=>{let m=1e9;for(let i=1;i<P.length;i++)m=Math.min(m,dseg(p,P[i-1],P[i]));return m};
+ const fin=h=>{delete h._fill;delete h._col;delete h._sil;return h};
+ /* 1: bez OB, kilka drzew wzdłuż drogi w szkółce */
+ {const h=MZ[0];h.obF=null;h.obL=null;h.txt='Dwie linie: hyzer z lewej, backhand z prawej.';const r=h.roads[0];if(r){const rx=Math.max(...r.pts.map(p=>p[0]))-r.w/2-10;for(const[y,s]of[[60,12],[150,13],[255,11],[340,13],[430,12]])h.trees.push([rx+(hs3(y,1,8)-.5)*6,y,s,(hs3(y,2,8)<.5?0:6)])}fin(h)}
+ /* 3: szersza bramka, drzewa na fairwayu z lewej w połowie */
+ {const h=MZ[2];if(h.mdGate){const[A,B]=h.mdGate,ux=(A[0]-B[0])/30,uy=(A[1]-B[1])/30;const nA=[A[0]+ux*8,A[1]+uy*8],nB=[B[0]-ux*8,B[1]-uy*8];
+   h.trees=h.trees.filter(t=>!(t[3]===0&&t[2]===10&&(Math.hypot(t[0]-A[0],t[1]-A[1])<6||Math.hypot(t[0]-B[0],t[1]-B[1])<6)));h.trees.push([nA[0]+ux*3,nA[1]+uy*3,10,0],[nB[0]-ux*3,nB[1]-uy*3,10,0]);
+   h.md=[{m:nA,e:[nA[0]+ux*220,nA[1]+uy*220],dz:h.md[0].dz,gate:1},{m:nB,e:[nB[0]-ux*220,nB[1]-uy*220],dz:h.md[0].dz,gate:1}];h.mdGate=[nA,nB]}
+  for(const[u,s]of[[.45,-16],[.52,-26],[.6,-14]]){const p=h.rel(h.L*u,s);h.trees.push([p[0],p[1],10])}fin(h)}
+ /* 5: bez mando, przerwa w rzece w połowie, drzewa przy drodze */
+ {const h=MZ[4];h.md=[];const C=h.water.map(w=>[w[0]+w[2]/2,w[1]+w[3]/2]);const n=h.water.length,i0=Math.floor(n*.44),i1=Math.floor(n*.56);const BR=h.bridges||[];
+  h.water=h.water.filter((w,i)=>i<i0||i>i1||BR.some(([a,b])=>dseg(C[i],a,b)<14));
+  const r=h.roads[0];if(r){for(const f of[.15,.32,.5,.68,.85]){const k=Math.min(r.pts.length-2,Math.floor(f*(r.pts.length-1))),a=r.pts[k],b=r.pts[k+1],dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1,s=(r.w/2+13)*(hs3(k,3,9)<.5?1:-1),p=[(a[0]+b[0])/2+(-dy/l)*s,(a[1]+b[1])/2+(dx/l)*s];if(p[0]<8||p[0]>W-8||h.water.some(w=>Math.hypot(p[0]-w[0]-w[2]/2,p[1]-w[1]-w[3]/2)<w[2]/2+12))continue;h.trees.push([p[0],p[1],11])}}fin(h)}
+ /* 6: drzewa przy koszu – z boków i z tyłu, wejście otwarte */
+ {const h=MZ[5],B=h.b,T=h.tee;h.trees=h.trees.filter(t=>Math.hypot(t[0]-B[0],t[1]-B[1])>t[2]+16||Math.hypot(t[0]-B[0],t[1]-B[1])>30);const a0=Math.atan2(T[1]-B[1],T[0]-B[0]);for(const[da,r,s]of[[1.5,30,9],[-1.5,30,9],[2.6,28,10]]){const a=a0+da;h.trees.push([B[0]+Math.cos(a)*r,B[1]+Math.sin(a)*r,s])}fin(h)}
+ /* 14: większe prześwity */
+ {const h=MZ[13],L=h.L,T=h.tee,B=h.b;const RR=(()=>{let s=1414;return()=>{s=(s*1664525+1013904223)|0;return((s>>>8)&65535)/65536}})();
+  h.trees=h.trees.filter(t=>{const d=nearPL(t,h.path),u=h.along(t)/L;if(t[0]<100||t[0]>265)return true;if(d<(u<.5?24:30)+t[2]*.5)return false;if(d<60&&RR()<.42)return false;return true});fin(h)}
+}catch(e){console.warn('P101',e)}})();</script>
 </body>
 </html>
