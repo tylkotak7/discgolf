@@ -1140,13 +1140,41 @@ function bgOf(h,wn){return BGC.get(h)?.[wn?1:0]}
 function ensureBG(h,cb){const wn=season=='winter';if(bgOf(h,wn)){cb&&cb();return true}if(bgBusy)return false;bgBusy=true;$('ld').style.display='flex';
 setTimeout(()=>{try{const c=build3(h,wn);const e=BGC.get(h)||[];e[wn?1:0]=c;BGC.set(h,e);if(BGC.size>4){const k=BGC.keys().next().value;if(k!==h)BGC.delete(k)}}catch(e){console.error(e)}bgBusy=false;$('ld').style.display='none';cb&&cb()},40);return false}
 /* --- model kosza --- */
-function basket3(x,y,s){g.save();g.translate(x,y);g.scale(s||1,s||1);g.fillStyle='rgba(6,20,8,.3)';g.beginPath();g.moveTo(-2,0);g.lineTo(22,10);g.lineTo(26,6);g.lineTo(1,-3);g.fill();g.beginPath();g.ellipse(10,6,11,4,.3,0,7);g.fill();
-const pole=g.createLinearGradient(-1.6,0,1.6,0);pole.addColorStop(0,'#eef2f5');pole.addColorStop(1,'#7d8994');
-g.fillStyle='#7f8a94';g.beginPath();g.ellipse(0,-9,9,3.2,0,0,7);g.fill();g.fillStyle='#c3ccd3';g.beginPath();g.ellipse(0,-10,8.4,2.8,0,0,7);g.fill();
-g.strokeStyle='#9aa5ae';g.lineWidth=1.3;g.beginPath();g.ellipse(0,-14,10.5,3.6,0,0,Math.PI);g.stroke();g.fillStyle=pole;g.fillRect(-1.5,-36,3,36);
-g.strokeStyle='rgba(225,231,236,.95)';g.lineWidth=.8;for(let k=0;k<16;k++){const a=k/16*6.283,x0=Math.cos(a)*11.2,y0=-33+Math.sin(a)*3.6;if(Math.sin(a)<-.2)continue;g.beginPath();g.moveTo(x0,y0);g.quadraticCurveTo(Math.cos(a)*4.2,-22+Math.sin(a)*2,Math.cos(a)*1.6,-14+Math.sin(a)*.6);g.stroke()}
-g.strokeStyle='#8e99a3';g.lineWidth=1.8;g.beginPath();g.ellipse(0,-33,11.8,4,0,0,7);g.stroke();g.strokeStyle='#e9eef2';g.lineWidth=1;g.beginPath();g.ellipse(0,-33.6,11.8,4,0,3.3,6.1);g.stroke();
-g.fillStyle='#e8c22d';g.beginPath();g.ellipse(0,-37,3.4,1.6,0,0,7);g.fill();g.fillStyle='#d8382c';g.beginPath();g.arc(0,-39,2.4,Math.PI,0);g.fill();g.restore()}
+function basket3(x,y,s){const wn=typeof season!='undefined'&&season=='winter';g.save();g.translate(x,y);g.scale(s||1,s||1);
+ const YL='#f6b90c',YD='#c98a00',YH='#ffd84a',CH='#cfd6dc',CD='rgba(70,78,86,.75)';
+ g.fillStyle='rgba(6,20,8,.28)';g.beginPath();g.moveTo(-1.5,0);g.lineTo(26,11);g.lineTo(30,7);g.lineTo(1.5,-2);g.fill();g.beginPath();g.ellipse(12,7,12,4.2,.32,0,7);g.fill();
+ const arc=(cx,cy,rx,ry,front,col,lw)=>{g.strokeStyle=col;g.lineWidth=lw;g.beginPath();front?g.ellipse(cx,cy,rx,ry,0,0,Math.PI):g.ellipse(cx,cy,rx,ry,0,Math.PI,2*Math.PI);g.stroke()};
+ /* słup */
+ const pg=g.createLinearGradient(-1.4,0,1.4,0);pg.addColorStop(0,'#f2f5f7');pg.addColorStop(.5,'#b9c2ca');pg.addColorStop(1,'#6f7a84');g.fillStyle=pg;g.fillRect(-1.3,-37,2.6,37);
+ g.fillStyle='rgba(0,0,0,.2)';g.fillRect(-1.3,-2,2.6,2);
+ /* kosz (tył) */
+ const TY=-16.5,BY=-9.5,RX=10.2,RY=3.5;
+ arc(0,BY,RX*.92,RY*.92,false,YD,.9);arc(0,TY,RX,RY,false,YD,.9);arc(0,(TY+BY)/2,RX*.97,RY*.97,false,YD,.6);
+ g.strokeStyle=YD;g.lineWidth=.55;for(let k=0;k<16;k++){const a=k/16*6.283;if(Math.sin(a)>0)continue;g.beginPath();g.moveTo(Math.cos(a)*RX,TY+Math.sin(a)*RY);g.lineTo(Math.cos(a)*RX*.92,BY+Math.sin(a)*RY*.92);g.stroke()}
+ g.strokeStyle=YD;g.lineWidth=.45;for(let k=0;k<10;k++){const a=k/10*6.283;g.beginPath();g.moveTo(0,BY+1.2);g.lineTo(Math.cos(a)*RX*.9,BY+Math.sin(a)*RY*.9);g.stroke()}
+ g.fillStyle=YL;g.beginPath();g.ellipse(0,BY+1.4,2,1,0,0,7);g.fill();
+ /* łańcuchy */
+ const BT=-31.6,BR=11.4,BRY=3.9,chain=(front)=>{for(let ring=0;ring<2;ring++){const n=ring?10:16,r0=ring?BR*.55:BR*.94,ry0=ring?BRY*.55:BRY*.94;for(let k=0;k<n;k++){const a=(k+(ring?.5:0))/n*6.283,sn=Math.sin(a);if((sn>=0)!==front)continue;
+   const x0=Math.cos(a)*r0,y0=BT+sn*ry0,x1=Math.cos(a)*(ring?1.6:r0*.36),y1=-17.8+sn*(ring?.5:ry0*.36),mx=Math.cos(a)*(ring?r0*.7:r0*.86),my=-24+sn*ry0*.7;
+   g.strokeStyle=CD;g.lineWidth=.95;g.setLineDash([]);g.beginPath();g.moveTo(x0,y0);g.quadraticCurveTo(mx,my,x1,y1);g.stroke();
+   g.strokeStyle=front?CH:'#9aa3ab';g.lineWidth=.7;g.setLineDash([1.2,.45]);g.beginPath();g.moveTo(x0,y0);g.quadraticCurveTo(mx,my,x1,y1);g.stroke()}}g.setLineDash([])};
+ chain(false);
+ /* górny pierścień – wnętrze */
+ g.fillStyle=wn?'#d9dfe4':'#8a6200';g.beginPath();g.ellipse(0,BT-3.4,BR,BRY,0,0,7);g.fill();g.fillStyle='rgba(0,0,0,.25)';g.beginPath();g.ellipse(0,BT-3.4,BR*.86,BRY*.8,0,0,7);g.fill();
+ g.fillStyle='#d4d9de';g.beginPath();g.ellipse(0,BT-3.6,1.6,.7,0,0,7);g.fill();
+ chain(true);
+ g.fillStyle='#b9c2ca';g.beginPath();g.ellipse(0,-19.4,2,.8,0,0,7);g.fill();
+ /* kosz (przód) */
+ g.strokeStyle=YL;g.lineWidth=.65;for(let k=0;k<16;k++){const a=k/16*6.283;if(Math.sin(a)<=0)continue;g.beginPath();g.moveTo(Math.cos(a)*RX,TY+Math.sin(a)*RY);g.lineTo(Math.cos(a)*RX*.92,BY+Math.sin(a)*RY*.92);g.stroke()}
+ arc(0,(TY+BY)/2,RX*.97,RY*.97,true,YL,.7);arc(0,BY,RX*.92,RY*.92,true,YL,1.1);arc(0,TY,RX,RY,true,YH,1.2);
+ g.strokeStyle='rgba(0,0,0,.25)';g.lineWidth=.4;g.beginPath();g.ellipse(0,TY+.5,RX,RY,0,.2,Math.PI-.2);g.stroke();
+ /* górny pierścień – przód */
+ const gr=g.createLinearGradient(-BR,0,BR,0);gr.addColorStop(0,YD);gr.addColorStop(.35,YH);gr.addColorStop(.7,YL);gr.addColorStop(1,YD);
+ g.fillStyle=gr;g.beginPath();g.ellipse(0,BT-3.4,BR,BRY,0,0,Math.PI);g.lineTo(-BR,BT);g.ellipse(0,BT,BR,BRY,0,Math.PI,0,true);g.closePath();g.fill();
+ g.strokeStyle='rgba(90,60,0,.55)';g.lineWidth=.45;g.beginPath();g.ellipse(0,BT,BR,BRY,0,0,Math.PI);g.stroke();
+ g.strokeStyle=wn?'#ffffff':YH;g.lineWidth=wn?1.4:.7;g.beginPath();g.ellipse(0,BT-3.4,BR,BRY,0,0,7);g.stroke();
+ g.fillStyle='rgba(60,40,0,.55)';g.font='900 2.4px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('DISC GOLF',0,BT+1.9);
+ g.restore()}
 /* --- żywe tło: chmury, pyłki, liście, ptak --- */
 const LV3={clouds:[0,1,2].map(()=>({x:Math.random()*W*1.5-W*.25,y:Math.random()*H,r:140+Math.random()*120,s:.9+Math.random()*.4})),motes:Array.from({length:22},()=>({x:Math.random()*W,y:Math.random()*H,p:Math.random()*6})),leaves:[],bird:null,bt:400};
 function live3(h,wn){if(GFXLOW())return;const t=performance.now()/1000;
@@ -2287,8 +2315,7 @@ ldDraw=function(h){const ld=$('ld');if(!ld)return;let c=$('ldc');if(!c){c=docume
  drawDGPMap(x,h,186,186,340,540,false);
  const bar=ld.querySelector('.ldbar i');if(bar){bar.style.transition='none';bar.style.width='0';void bar.offsetWidth;bar.style.transition='width 2.2s cubic-bezier(.2,.7,.3,1)';bar.style.width='92%'}};
 /* ---------- kosz: żółta obręcz DiscGolfPark ---------- */
-const _b3_41=basket3;basket3=function(x,y,s){_b3_41(x,y,s);g.save();g.translate(x,y);g.scale(s||1,s||1);g.strokeStyle='#d9a21a';g.lineWidth=3;g.beginPath();g.ellipse(0,-33,11.8,4,0,0,7);g.stroke();g.strokeStyle='#ffd23f';g.lineWidth=1.6;g.beginPath();g.ellipse(0,-33.8,11.8,4,0,3.2,6.2);g.stroke();g.strokeStyle='rgba(60,30,0,.55)';g.lineWidth=.6;g.beginPath();g.ellipse(0,-32.2,11.8,4,0,.2,2.9);g.stroke();
- g.strokeStyle='rgba(70,76,82,.85)';g.lineWidth=.55;for(let k=0;k<12;k++){const a=k/12*6.283;if(Math.sin(a)<-.1)continue;g.beginPath();g.moveTo(Math.cos(a)*10.6,-32.4+Math.sin(a)*3.4);g.quadraticCurveTo(Math.cos(a)*5,-23+Math.sin(a)*1.6,Math.cos(a)*1.4,-15+Math.sin(a)*.5);g.stroke()}g.restore()};
+const _b3_41=basket3;
 /* ===================== P44: anulowanie rzutu, reset stylu, ruch po tee, ślady dysku, poprawki Złotowa ===================== */
 (function(){
 /* --- kółko anulowania rzutu --- */
@@ -3227,7 +3254,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','⛓️ Trafiony dysk zostaje w koszu do końca dołka','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
+ const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','⛓️ Trafiony dysk zostaje w koszu do końca dołka','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Przebudowa wszystkich 18 dołków według uwag z pola','1: krótki tee, par 3, dwie linie (hyzer/backhand) z kępą drzew i OB po prawej','5 i 6: asfaltowa droga, jeżdżą auta, a kierowcy komentują rzuty','5: 3× większa rzeczka · 6: rozległy staw · 4: staw za drogą','7: brzozy, działka ze szklarnią i działkowiczem · 8: pole zboża i większa woda za koszem','9: mostek przez rzeczkę · 10: kosz z 9, ścieżka i tee od 11 · 14: wąski fairway z tabliczkami 50–200 m i dom w oddali','Usunięte mando na 2, 3, 8, 10, 17, hazard na 12 i 15, szałas na 17 · 18: z górki ~1,5 m i pole za koszem']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie 4 mapy naraz (Złotów 12, Złotów 22, Międzybłocie, Luboń beta – wkrótce)','Przycisk „Zmień pogodę” na kafelku pola – kafelek pokazuje porę roku i pogodę','Top 5 obok siebie: Złotów 12 i 22, pod spodem Międzybłocie i Luboń','Nowy sezon rankingu – wszystkie wcześniejsze wyniki są w zakładce 📦 Archiwum','Pole treningowe przeniesione do Opcji → Old school']],
   ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
