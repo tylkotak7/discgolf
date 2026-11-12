@@ -4332,8 +4332,8 @@ window.NURSERY_M=function(x,P,w,h){const S=h&&h._sil;if(!S)return window.NURSERY
  h.trees=h.trees.filter(t=>{if(t[0]<=px(t[1])+14)return true;return R()>.6});
  h.thinF=((o)=>(x,y)=>x>px(y)+14?Math.max(.6,o?o(x,y):0):(o?o(x,y):0))(h.thinF);delete h._fill;delete h._col;delete h._sil}catch(e){console.warn('P104',e)}})();</script>
 <style>.cup .pbar{display:block;height:3px;margin:2px 8px 0;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}.cup .pbar b{display:block;height:100%;background:#ffd35a}
-#achb{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 64px);transform:translate(-50%,-180%);z-index:97;display:flex;align-items:center;gap:6px;background:rgba(42,31,5,.92);border:1.5px solid #ffd35a;color:#fff;border-radius:14px;padding:4px 10px 4px 7px;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.45);transition:transform .45s cubic-bezier(.2,1.4,.4,1);pointer-events:none;max-width:90vw}
-#achb.on{transform:translate(-50%,0)}#achb .i{font-size:16px}#achb b{font:900 12.5px 'Baloo 2',system-ui}#achb em{font:800 11px system-ui;color:#ffd35a;font-style:normal}</style>
+#achb{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 64px);transform:translate(-50%,-260%);opacity:0;visibility:hidden;z-index:97;display:flex;align-items:center;gap:6px;background:rgba(42,31,5,.92);border:1.5px solid #ffd35a;color:#fff;border-radius:14px;padding:4px 10px 4px 7px;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.45);transition:transform .45s cubic-bezier(.2,1.4,.4,1);pointer-events:none;max-width:90vw}
+#achb.on{transform:translate(-50%,0);opacity:1;visibility:visible}#achb{transition:transform .45s cubic-bezier(.2,1.4,.4,1),opacity .3s,visibility .3s!important}#achb .i{font-size:16px}#achb b{font:900 12.5px 'Baloo 2',system-ui}#achb em{font:800 11px system-ui;color:#ffd35a;font-style:normal}</style>
 <script>/* P106: więcej osiągnięć, postęp, nagrody, nowy baner */
 (function(){try{
  const C=()=>{SV.cnt=SV.cnt||{};return SV.cnt};const inc=(k,v)=>{const c=C();c[k]=(c[k]||0)+(v||1)};const pr=(k,m)=>()=>[C()[k]||0,m];
