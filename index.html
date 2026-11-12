@@ -25,7 +25,7 @@ addEventListener('load',()=>setTimeout(()=>{try{
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e});
 </script><style>#pwask{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,8,4,.6);font-family:'Baloo 2',system-ui}#pwask .pk{width:min(100vw,440px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 16px);color:#fff;text-align:center;animation:cshUp .25s ease-out}#pwask img{width:72px;height:72px;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.4)}#pwask b{display:block;font-size:21px;margin:8px 0 2px}#pwask p{margin:0 0 12px;color:#cfe5d5;font:600 14px system-ui;line-height:1.45}#pwask .ph{background:rgba(255,211,90,.12);border:1px solid rgba(255,211,90,.4);border-radius:14px;padding:10px;margin:0 0 10px;font:600 14px system-ui;color:#fff3c4;line-height:1.5}#pwask .ph b{display:inline;font:800 14px system-ui;margin:0;color:#ffd35a}#pwask button{display:block;width:100%;padding:13px;border-radius:16px;border:0;font:900 17px 'Baloo 2',system-ui;margin-bottom:8px}#pwyes{background:linear-gradient(135deg,#a4ffb8,#3fd16a);color:#08210f}#pwno{background:rgba(255,255,255,.08)!important;color:#cfe5d5;border:1px solid rgba(255,255,255,.15)!important}</style>
 <meta charset="utf-8">
-<meta name="dgv" content="122 · 12.11.2026">
+<meta name="dgv" content="123 · 12.11.2026">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>/* P73: duże przyciski i lekka grafika także gdy przeglądarka podaje bardzo szeroki ekran (np. tryb "wersja na komputer") */
 function GFXLOW(){return window._gfxLow}window.DECK=window.DECK==null?.5:window.DECK;window.UIZ=1;(function(){var m=document.querySelector('meta[name=viewport]');function wide(){try{return matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2}catch(e){return false}}
  try{if(wide())m.setAttribute('content','width=420, viewport-fit=cover')}catch(e){}
@@ -3291,7 +3291,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['⛳ Międzybłocie: ciągła rzeka na 5, więcej drzew na 15, drzewo na 16. Na 16 droga to OB, grasz z drogi.','🏆 Kariera: na Starcie widać bieżący turniej tygodnia i ranking ratingu.','🏆 Tabela sezonu liczy się tylko z ratingu.','👥 Online: rundę startuje host, gdy ktoś dołączy. Gra do 4 osób i turniej. Widać rzuty i wynik kolegi.','🛞 Nowy rzut roller: dysk toczy się po ziemi i skręca na końcu. Ma własny podgląd toru.','🆕 Luboń (beta, na hasło): 18 dołków parku nad Wartą.','🧍 Nowa postać: realistyczny rzut i putt, chodzi do dysku, reaguje na wynik.','🧍 Nowy podgląd w menu Postać, nowy mały avatar i profil gracza.','👩 Postać kobieca wygląda teraz jak kobieta.','🥏 Nowy kosz. Widać, jak dysk wpada i zostaje w łańcuchach.','☀️ Nowe światło i cienie, woda z falami, spadające liście, ptaki.','🌳 Więcej gatunków drzew i mniej ozdób na trawie.','⛳ Międzybłocie: dołki poprawione według uwag z pola. Słońce zachodzi od dołka 10.','🎥 Kamera przybliża się przy dalekich rzutach.','🏅 Nowe osiągnięcia z nagrodami w monetach.','🚫 OB: grasz z miejsca, gdzie dysk wyleciał.','🌲 Spod drzewa da się już normalnie wyrzucić.','🎯 Czułość celowania w Opcjach, z polem do testu.','🔄 Kariera od nowa: Sezon 1, tylko Open, rating od zera. Statystyki liczone od nowa.','🐞 Zgłaszanie błędów w Opcjach i w pauzie.','📱 Poprawki dla iPhone’a i słabszych telefonów. Tło menu już nie zostaje czarne.','🧹 Usunięte: pole treningowe i rozbieg (beta).']],
+ const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['⛳ Międzybłocie 5: rzeka skręca pod drogę. Wpadnięcie do rzeki to OB, grasz z brzegu.','⛳ Międzybłocie: więcej drzew na 5, 15 i 16. Na 16 droga to OB, grasz z drogi.','🏆 Kariera: na Starcie widać bieżący turniej tygodnia i ranking ratingu.','🏆 Tabela sezonu liczy się tylko z ratingu.','👥 Online: rundę startuje host, gdy ktoś dołączy. Gra do 4 osób i turniej. Widać rzuty i wynik kolegi.','🛞 Nowy rzut roller: dysk toczy się po ziemi i skręca na końcu. Ma własny podgląd toru.','🆕 Luboń (beta, na hasło): 18 dołków parku nad Wartą.','🧍 Nowa postać: realistyczny rzut i putt, chodzi do dysku, reaguje na wynik.','🧍 Nowy podgląd w menu Postać, nowy mały avatar i profil gracza.','👩 Postać kobieca wygląda teraz jak kobieta.','🥏 Nowy kosz. Widać, jak dysk wpada i zostaje w łańcuchach.','☀️ Nowe światło i cienie, woda z falami, spadające liście, ptaki.','🌳 Więcej gatunków drzew i mniej ozdób na trawie.','⛳ Międzybłocie: dołki poprawione według uwag z pola. Słońce zachodzi od dołka 10.','🎥 Kamera przybliża się przy dalekich rzutach.','🏅 Nowe osiągnięcia z nagrodami w monetach.','🚫 OB: grasz z miejsca, gdzie dysk wyleciał.','🌲 Spod drzewa da się już normalnie wyrzucić.','🎯 Czułość celowania w Opcjach, z polem do testu.','🔄 Kariera od nowa: Sezon 1, tylko Open, rating od zera. Statystyki liczone od nowa.','🐞 Zgłaszanie błędów w Opcjach i w pauzie.','📱 Poprawki dla iPhone’a i słabszych telefonów. Tło menu już nie zostaje czarne.','🧹 Usunięte: pole treningowe i rozbieg (beta).']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Wszystkie 18 dołków przebudowane według uwag z pola.','1: krótki tee i dwie linie do kosza.','5 i 6: droga z jeżdżącymi autami. 4, 5 i 6: więcej wody.','7: działka ze szklarnią. 8: pole zboża. 9: mostek przez rzeczkę.','14: wąski fairway z tabliczkami odległości.','Mniej mando i hazardów. 18: tee z górki.']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie mapy naraz.','„Zmień pogodę” na kafelku pola.','Top 5 dla każdego pola. Starsze wyniki są w Archiwum.']],
   ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard poza kołem przy koszu.','Dołek 15: teraz par 4.','Dołek 16: łatwiejsze wejście do kosza.']],
@@ -4683,10 +4683,34 @@ function chgChip(){if(document.getElementById('chgchip'))return;const CHG=window
  {const h=MZ[4],W0=h.water.slice().sort((a,b)=>a[1]-b[1]),N=[];for(let i=0;i<W0.length;i++){N.push(W0[i]);const a=W0[i],b=W0[i+1];if(!b)continue;const cx=a[0]+a[2]/2,cy=a[1]+a[3]/2,dx=b[0]+b[2]/2,dy=b[1]+b[3]/2,L=Math.hypot(dx-cx,dy-cy);if(L>7){const n=Math.ceil(L/5.5);for(let k=1;k<n;k++){const f=k/n;N.push([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,(a[2]+b[2])/2,(a[3]+b[3])/2])}}}
   h.water=N;const inW=(x,y,r)=>N.some(w=>Math.hypot(x-(w[0]+w[2]/2),y-(w[1]+w[3]/2))<w[2]/2+r*.8+3);h.trees=h.trees.filter(t=>!inW(t[0],t[1],t[2]));rf(h)}
  /* 15: kilka drzew na fairwayu */
- {const h=MZ[14];h.trees.push([166,432,15],[194,288,15],[158,252,14],[192,170,13]);rf(h)}
+ {const h=MZ[14];h.trees.push([194,288,15],[158,252,14],[192,170,13]);rf(h)}
  /* 16: jedno drzewo na fairwayu + droga za koszem to OB, grasz z drogi w miejscu wypadnięcia */
- {const h=MZ[15],RY=13.6,RW=9;h.trees.push([168,282,16]);rf(h);h.obF=(x,y)=>y<RY+RW;
+ {const h=MZ[15],RY=13.6,RW=9;h.trees.push([162,212,16]);rf(h);h.obF=(x,y)=>y<RY+RW;
   const _so=stop;stop=function(t,s,c){const d=disc,hh=holes&&holes[hi];const r=_so.apply(this,arguments);try{if(hh===h&&d&&/OB/.test(String(t))){const T=d.trail||[];let p=null;for(const q of T){if(q[1]<RY+RW){p=q;break}}if(!p)p=[d.x,d.y];lie={x:Math.max(8,Math.min(W-8,p[0])),y:RY};hud();try{pill('🛣️ OB – grasz z drogi, gdzie wypadł dysk')}catch(e){}}}catch(e){}return r}}
 }catch(e){console.warn('P127',e)}})();</script>
+<script>/* P128: Międzybłocie 5 – rzeka skręca w lewo pod mostek na drodze, nowe drzewa, rzeka = OB (grasz z brzegu) */
+(function(){try{const h=MZ[4];
+ const dseg=(p,a,b)=>{const dx=b[0]-a[0],dy=b[1]-a[1],l=dx*dx+dy*dy||1,t=Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/l));return Math.hypot(p[0]-a[0]-dx*t,p[1]-a[1]-dy*t)};
+ const R=h.roads[0],RP=R.pts,RW=R.w,onRoad=(x,y,m)=>{for(let k=1;k<RP.length;k++)if(dseg([x,y],RP[k-1],RP[k])<RW/2+(m||0))return true;return false};
+ const keep=h.water.filter(w=>w[1]+w[3]/2<=352);
+ const P=[[151,350],[145,372],[143,384],[155,406],[151,428],[136,440],[121,447],[100,456],[84,462],[61,468],[30,474],[-12,480]],N=[];
+ for(let k=1;k<P.length;k++){const a=P[k-1],b=P[k],L=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.max(1,Math.ceil(L/5.5));for(let j=0;j<n;j++){const f=j/n,x=a[0]+(b[0]-a[0])*f,y=a[1]+(b[1]-a[1])*f;N.push([x-9.5,y-9.5,19,19])}}
+ let W2=keep.concat(N);for(const[a,b]of h.bridges||[])W2=W2.filter(w=>dseg([w[0]+w[2]/2,w[1]+w[3]/2],a,b)>5);
+ W2=W2.filter(w=>!onRoad(w[0]+w[2]/2,w[1]+w[3]/2,6));h.water=W2;
+ /* mostek na drodze w miejscu, gdzie rzeka znika */
+ let cr=null;for(let k=1;k<P.length&&!cr;k++){const a=P[k-1],b=P[k];for(let f=0;f<=1;f+=.05){const x=a[0]+(b[0]-a[0])*f,y=a[1]+(b[1]-a[1])*f;if(onRoad(x,y,0)){cr=[x,y,Math.atan2(b[1]-a[1],b[0]-a[0])];break}}}
+ if(cr){const o=h.art;h.art=(x,w)=>{if(o)o(x,w);const[cx,cy,ang]=cr;x.save();x.translate(cx,cy);x.rotate(ang);
+   for(const s of[-1,1]){x.fillStyle='rgba(0,0,0,.35)';x.fillRect(-RW/2-6+1.5,s*12-1.6+1.5,RW+12,3.2);x.fillStyle='#c9ccd0';x.fillRect(-RW/2-6,s*12-1.6,RW+12,3.2);x.fillStyle='#8f949a';x.fillRect(-RW/2-6,s*12+.6,RW+12,1)}
+   x.restore()}}
+ /* drzewa */
+ const inW=(t)=>W2.some(w=>Math.hypot(t[0]-(w[0]+w[2]/2),t[1]-(w[1]+w[3]/2))<w[2]/2+t[2]*.8+3);
+ h.trees=h.trees.filter(t=>!inW(t));h.trees.push([206,153,14],[111,225,14],[110,270,13]);
+ delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
+ /* rzeka = OB: +1 i rzut z brzegu, gdzie wpadł dysk */
+ const inWater=(x,y)=>W2.some(w=>Math.hypot(x-(w[0]+w[2]/2),y-(w[1]+w[3]/2))<w[2]/2);
+ const _so=stop;stop=function(t,s,c){const d=disc,hh=holes&&holes[hi];if(hh===h&&d&&/Woda/.test(String(t))){const T=d.trail||[];let p=null;for(let i=T.length-1;i>=0;i--){if(!inWater(T[i][0],T[i][1])){p=T[i];break}}
+   const r=_so.call(this,'🚫 OB – rzeka!','+1 kara · grasz z brzegu, gdzie wpadł dysk',c);if(p){const q=T[Math.max(0,T.indexOf(p)-4)]||p,dx=q[0]-p[0],dy=q[1]-p[1],l=Math.hypot(dx,dy)||1;lie={x:p[0]+dx/l*3,y:p[1]+dy/l*3};let k=0;while(inWater(lie.x,lie.y)&&k++<20){lie.x+=dx/l*2;lie.y+=dy/l*2}hud()}return r}
+  return _so.apply(this,arguments)};
+}catch(e){console.warn('P128',e)}})();</script>
 </body>
 </html>
