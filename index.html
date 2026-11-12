@@ -3713,6 +3713,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
 #onsh button{width:100%;margin:6px 0;padding:12px;border-radius:14px;border:0;font:900 15px 'Baloo 2',system-ui;background:#3fd16a;color:#08210f}
 #onsh button.s{background:rgba(255,255,255,.1);color:#fff}#onsh input{width:100%;box-sizing:border-box;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.25);color:#fff;font:900 22px system-ui;text-align:center;letter-spacing:.3em;text-transform:uppercase}
 #onsh .code{font:900 40px system-ui;letter-spacing:.25em;text-align:center;color:#7dff9a;margin:6px 0}
+#toast{z-index:95!important}
 #onchip{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 112px);z-index:20;background:rgba(10,30,60,.86);color:#cfe8ff;font:800 12px system-ui;padding:6px 10px;border-radius:12px;pointer-events:none;display:none;min-width:200px;box-shadow:0 3px 10px rgba(0,0,0,.35)}
 #onchip .r{display:flex;gap:8px;align-items:baseline;white-space:nowrap}#onchip .r b{margin-left:auto;font:900 15px system-ui;color:#fff}#onchip .r.me b{color:#7dff9a}#onchip .r small{color:#9cc3e6;font-weight:700}#onchip .hd{font:800 10px system-ui;color:#8fb4d8;letter-spacing:.05em;margin-bottom:2px}
 .onend{margin:8px 0;padding:10px;border-radius:14px;background:rgba(60,140,220,.16);border:1px solid rgba(125,200,255,.4);color:#dff0ff;font:800 14px system-ui}.onend div{display:flex;justify-content:space-between;padding:2px 0}
@@ -3816,22 +3817,39 @@ try{
  const me=()=>{let id=null;try{id=UID}catch(e){}if(id)return String(id);try{let v=localStorage.getItem('dg_oid');if(!v){v='g'+Math.random().toString(36).slice(2,10);localStorage.setItem('dg_oid',v)}return v}catch(e){return'gx'}};
  const esc=s=>String(s==null?'':s).replace(/[<>&"]/g,'').slice(0,12);
  const sh=document.createElement('div');sh.id='onsh';document.body.appendChild(sh);const chip=document.createElement('div');chip.id='onchip';document.body.appendChild(chip);
- function view(){if(ON.code){sh.innerHTML='<div class="c"><h3>👥 Pokój '+ON.code+'</h3><p>Podaj koledze ten kod. Gracie to samo pole – widzisz jego rzuty jako ducha, a on chodzi po polu razem z Tobą.</p><div class="code">'+ON.code+'</div><p id="onppl">'+peersTxt()+'</p><button data-a="play">▶ Graj</button><button class="s" data-a="leave">Opuść pokój</button><button class="s" data-a="x">Zamknij</button></div>'}
-  else sh.innerHTML='<div class="c"><h3>👥 Gra z kolegą</h3><p>Utwórz pokój i podaj kod koledze albo wpisz kod od niego.</p><button data-a="new">➕ Utwórz pokój</button><input id="oncode" maxlength="4" placeholder="KOD"><button class="s" data-a="join">Dołącz</button><button class="s" data-a="x">Zamknij</button></div>';
-  sh.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>act(b.dataset.a))}
+ function view(){if(ON.code){sh.innerHTML='<div class="c"><h3>👥 Pokój '+ON.code+'</h3><p>Podaj koledze ten kod. Gracie to samo pole – widzisz jego rzuty jako ducha, a on chodzi po polu razem z Tobą.</p><div class="code">'+ON.code+'</div><p id="onppl">'+peersTxt()+'</p><p id="onst" style="min-height:16px;margin:2px 0 6px"></p><button data-a="play">▶ Graj</button><button class="s" data-a="leave">Opuść pokój</button><button class="s" data-a="x">Zamknij</button></div>'}
+  else sh.innerHTML='<div class="c"><h3>👥 Gra z kolegą</h3><p>Utwórz pokój i podaj kod koledze albo wpisz kod od niego.</p><button data-a="new">➕ Utwórz pokój</button><p style="text-align:center;margin:6px 0">albo wpisz kod od kolegi:</p><input id="oncode" maxlength="4" placeholder="KOD" autocomplete="off" autocapitalize="characters"><p id="onst" style="min-height:16px;margin:6px 0"></p><button class="s" data-a="join">Dołącz</button><button class="s" data-a="x">Zamknij</button></div>';
+  sh.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>act(b.dataset.a));const ci=$('oncode');if(ci)ci.onkeydown=e=>{if(e.key==='Enter')act('join')}}
  function peersTxt(){const P=Object.values(ON.peers);return P.length?'W pokoju: '+P.map(p=>'<b>'+esc(p.n)+'</b>'+(p.hi!=null?' (dołek '+(p.hi+1)+')':'')).join(', '):'Czekam na kolegę…'}
+ /* magazyn pokoi: kolekcja „pokoje”, a gdy reguły Firebase jej nie dopuszczają – zapasowo w „kariera” (pk-KOD…) */
+ let MODE=null;try{MODE=localStorage.getItem('dg_onmode')}catch(e){}
+ const isPerm=e=>/permission|insufficient|PERMISSION/i.test(String(e&&(e.code||e.message)||e));
+ const RS={
+  roomSet:async(c,d)=>{if(MODE!=='b'){try{await DB.collection('pokoje').doc(c).set(d);MODE='a';return}catch(e){if(!isPerm(e))throw e;MODE='b';try{localStorage.setItem('dg_onmode','b')}catch(x){}}}await DB.collection('kariera').doc('pk-'+c).set(Object.assign({room:c,kind:'room'},d))},
+  roomGet:async c=>{try{const s=await DB.collection('pokoje').doc(c).get();if(s.exists){MODE='a';return s.data()}}catch(e){if(!isPerm(e))throw e}const s=await DB.collection('kariera').doc('pk-'+c).get();if(s.exists){MODE='b';return s.data()}return null},
+  pSet:(c,id,st)=>MODE==='b'?DB.collection('kariera').doc('pk-'+c+'-'+id).set(Object.assign({room:c,kind:'p'},st)):DB.collection('pokoje').doc(c).collection('g').doc(id).set(st),
+  pDel:(c,id)=>MODE==='b'?DB.collection('kariera').doc('pk-'+c+'-'+id).delete():DB.collection('pokoje').doc(c).collection('g').doc(id).delete(),
+  listen:(c,cb,err)=>MODE==='b'?DB.collection('kariera').where('room','==',c).onSnapshot(q=>{const L=[];q.forEach(d=>{const v=d.data();if(v.kind==='p')L.push({id:d.id.slice(('pk-'+c+'-').length),v})});cb(L)},err):DB.collection('pokoje').doc(c).collection('g').onSnapshot(q=>{const L=[];q.forEach(d=>L.push({id:d.id,v:d.data()}));cb(L)},err)};
+ const stat=(m,bad)=>{const s=$('onst');if(s){s.textContent=m;s.style.color=bad?'#ff9a8a':'#a4ffb8'}try{toast(m)}catch(e){}};
+ let pend=false;
  async function act(a){if(a=='x'){sh.classList.remove('on');return}
-  if(!DB){toast('Gra online działa w wersji z GitHuba (Firebase)');return}
-  if(a=='new'){const A='ABCDEFGHJKLMNPRSTUWXYZ23456789';let c='';for(let i=0;i<4;i++)c+=A[(Math.random()*A.length)|0];try{await DB.collection('pokoje').doc(c).set({c:layout,s:season,at:Date.now(),n:String(pname||SV.nick||'Gracz').slice(0,12)});enter(c);toast('✅ Pokój '+c+' – podaj kod koledze')}catch(e){console.warn(e);toast('⚠️ Brak uprawnień do zapisu pokoju (Firebase: kolekcja „pokoje”)')}}
-  if(a=='join'){const c=String(($('oncode')||{}).value||'').toUpperCase().trim();if(c.length!=4){toast('Wpisz 4-znakowy kod');return}try{const s=await DB.collection('pokoje').doc(c).get();if(!s.exists){toast('Nie ma pokoju '+c);return}const r=s.data();if(r.c&&CARDS.some(x=>x.k==r.c)){try{selLayout(r.c)}catch(e){layout=r.c}}if(r.s){season=r.s}enter(c);toast('✅ Dołączono do '+c+' · pole: '+(CARDS.find(x=>x.k==r.c)||{n:r.c}).n)}catch(e){console.warn(e);toast('⚠️ Nie udało się dołączyć')}}
-  if(a=='leave'){leave();view()}
-  if(a=='play'){sh.classList.remove('on');try{if(typeof CAREER!='undefined'&&CAREER){const r=document.querySelector('#modeseg [data-mode=round]');if(r)r.click()}}catch(e){}setTimeout(()=>$('go').click(),60)}}
- function enter(c){leave();ON.code=c;ON.peers={};ON.unsub=DB.collection('pokoje').doc(c).collection('g').onSnapshot(q=>{q.forEach(d=>{if(d.id===me())return;const v=d.data();const o=ON.peers[d.id];if(o&&v.k!==o.k&&v.tr&&v.tr.length>1)ON.ghost[d.id]={tr:v.tr,t:performance.now()};ON.peers[d.id]=v});const p=$('onppl');if(p)p.innerHTML=peersTxt()},e=>{console.warn('onSnapshot',e);toast('⚠️ Brak odczytu pokoju (reguły Firebase)')});send(true);view()}
- function leave(){try{ON.unsub&&ON.unsub()}catch(e){}if(ON.code&&DB)try{DB.collection('pokoje').doc(ON.code).collection('g').doc(me()).delete()}catch(e){}ON.code=null;ON.unsub=null;ON.peers={};ON.ghost={}}
+  if(a=='leave'){leave();view();return}
+  if(a=='play'){sh.classList.remove('on');try{if(typeof CAREER!='undefined'&&CAREER){const r=document.querySelector('#modeseg [data-mode=round]');if(r)r.click()}}catch(e){}setTimeout(()=>$('go').click(),60);return}
+  if(!DB){stat('⏳ Łączę z serwerem… spróbuj za chwilę (gra online działa w wersji z GitHuba).',true);return}
+  if(pend)return;pend=true;
+  try{
+   if(a=='new'){stat('⏳ Tworzę pokój…');const A='ABCDEFGHJKLMNPRSTUWXYZ23456789';let c='';for(let i=0;i<4;i++)c+=A[(Math.random()*A.length)|0];
+    await RS.roomSet(c,{c:layout,s:season,at:Date.now(),n:String(pname||SV.nick||'Gracz').slice(0,12)});enter(c);stat('✅ Pokój '+c+' – podaj kod koledze')}
+   if(a=='join'){const inp=$('oncode');const c=String((inp||{}).value||'').toUpperCase().replace(/[^A-Z0-9]/g,'').trim();if(inp)inp.blur();if(c.length!=4){stat('Wpisz 4-znakowy kod',true);pend=false;return}stat('⏳ Szukam pokoju '+c+'…');
+    const r=await RS.roomGet(c);if(!r){stat('Nie ma pokoju '+c+' – sprawdź kod',true);pend=false;return}if(r.c&&CARDS.some(x=>x.k==r.c)){try{selLayout(r.c);renderCards()}catch(e){layout=r.c}}if(r.s){season=r.s}enter(c);stat('✅ Dołączono do '+c+' · pole: '+(CARDS.find(x=>x.k==r.c)||{n:r.c}).n)}
+  }catch(e){console.warn('online',e);stat('⚠️ Błąd serwera: '+String(e&&(e.code||e.message)||e).slice(0,80),true)}
+  pend=false}
+ function enter(c){leave();ON.code=c;ON.peers={};ON.unsub=RS.listen(c,L=>{for(const {id,v} of L){if(id===me())continue;const o=ON.peers[id];if(o&&v.k!==o.k&&v.tr&&v.tr.length>1)ON.ghost[id]={tr:v.tr,t:performance.now()};ON.peers[id]=v}const p=$('onppl');if(p)p.innerHTML=peersTxt()},e=>{console.warn('onSnapshot',e);stat('⚠️ Brak odczytu pokoju: '+String(e&&(e.code||e.message)||e).slice(0,60),true)});send(true);view()}
+ function leave(){try{ON.unsub&&ON.unsub()}catch(e){}if(ON.code&&DB)try{RS.pDel(ON.code,me()).catch(()=>{})}catch(e){}ON.code=null;ON.unsub=null;ON.peers={};ON.ghost={}}
  window.addEventListener('beforeunload',()=>{try{leave()}catch(e){}});
  try{const _fn=finish;finish=function(){const r=_fn.apply(this,arguments);try{if(ON.code){const P=Object.values(ON.peers),f=v=>v==0?'E':(v>0?'+':'')+v,er=$('er');if(er&&!er.querySelector('.onend'))er.insertAdjacentHTML('beforeend','<div class="onend"><div>👥 Pokój '+ON.code+'</div><div><span>Ty</span><b>'+f(total)+'</b></div>'+(P.length?P.map(p=>'<div><span>'+esc(p.n)+' <small>('+(p.hi!=null?'dołek '+(p.hi+1):'w menu')+')</small></span><b>'+f(p.tot||0)+'</b></div>').join(''):'<div><small>kolega jeszcze nie grał</small></div>')+'</div>')}}catch(e){}return r}}catch(e){}
  function send(force){if(!ON.code||!DB)return;const st={n:String(pname||SV.nick||'Gracz').slice(0,12),c:layout,hi:playing?hi:null,x:lie?Math.round(lie.x):null,y:lie?Math.round(lie.y):null,th:playing?throws:0,tot:playing?total:0,k:ON.k,tr:ON.tr||[],at:Date.now(),ch:(SV.char&&SV.char.shirt)||0};
-  const key=JSON.stringify([st.hi,st.x,st.y,st.th,st.k]);if(!force&&key===ON.last)return;ON.last=key;DB.collection('pokoje').doc(ON.code).collection('g').doc(me()).set(st).catch(e=>console.warn('send',e))}
+  const key=JSON.stringify([st.hi,st.x,st.y,st.th,st.k]);if(!force&&key===ON.last)return;ON.last=key;RS.pSet(ON.code,me(),st).catch(e=>console.warn('send',e))}
  let cur=null;setInterval(()=>{try{if(disc&&disc!==cur){cur=disc}if(!disc&&cur){const T=cur.trail||[];const S=[];const st=Math.max(1,Math.floor(T.length/40));for(let i=0;i<T.length;i+=st)S.push([Math.round(T[i][0]),Math.round(T[i][1])]);if(T.length)S.push([Math.round(T[T.length-1][0]),Math.round(T[T.length-1][1])]);ON.tr=S;ON.k++;cur=null}send(false)}catch(e){}},400);
  setInterval(()=>{try{send(true)}catch(e){}},15000);
  /* przycisk w menu */
