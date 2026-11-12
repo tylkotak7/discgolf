@@ -3254,7 +3254,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','🛞 Roller ma własny podgląd toru – ślad toczenia jak od opony','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
+ const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['🛞 Nowy rzut: roller – dysk leci nisko i toczy się, na końcu skręca','🆕 Luboń (beta): 18 dołków wg mapy parku nad Wartą – 1829 m, par 60; na par 4 i 5 nie ma ace','👥 Gra z kolegą na kod: widzisz jego rzuty jako ducha i jego wynik na żywo, a on chodzi po polu razem z Tobą','🏃 Beta: animacja rzutu z rozbiegu (Opcje → Beta)','🧍 Nowa, realistyczna postać: zamach, wyrzut, dokończenie ruchu i osobny putt (Opcje → Beta: można wrócić do klasycznej)','📣 Kibice reagują: wiwatują przy birdie i ace, komentują drzewo, OB i wodę, uciekają przed lecącym dyskiem','🔄 Na każdym nowym dołku: Mid i Prosto, roller i toma wyłączone','🛞 Roller ma własny podgląd toru – ślad toczenia jak od opony','⛓️ Widać, jak dysk wpada w łańcuchy – napis Ace/Birdie pojawia się chwilę później, a dysk zostaje w koszu','🥏 Nowy, realistyczny kosz: żółta obręcz, łańcuchy w dwóch rzędach, druciany kosz','📊 Statystyki liczone od nowa – stare wyniki są w Archiwum']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Przebudowa wszystkich 18 dołków według uwag z pola','1: krótki tee, par 3, dwie linie (hyzer/backhand) z kępą drzew i OB po prawej','5 i 6: asfaltowa droga, jeżdżą auta, a kierowcy komentują rzuty','5: 3× większa rzeczka · 6: rozległy staw · 4: staw za drogą','7: brzozy, działka ze szklarnią i działkowiczem · 8: pole zboża i większa woda za koszem','9: mostek przez rzeczkę · 10: kosz z 9, ścieżka i tee od 11 · 14: wąski fairway z tabliczkami 50–200 m i dom w oddali','Usunięte mando na 2, 3, 8, 10, 17, hazard na 12 i 15, szałas na 17 · 18: z górki ~1,5 m i pole za koszem']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie 4 mapy naraz (Złotów 12, Złotów 22, Międzybłocie, Luboń beta – wkrótce)','Przycisk „Zmień pogodę” na kafelku pola – kafelek pokazuje porę roku i pogodę','Top 5 obok siebie: Złotów 12 i 22, pod spodem Międzybłocie i Luboń','Nowy sezon rankingu – wszystkie wcześniejsze wyniki są w zakładce 📦 Archiwum','Pole treningowe przeniesione do Opcji → Old school']],
   ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard na całym dołku poza 6 m od kosza (+1 za każde lądowanie poza kołem)','Dołek 15: teraz par 4','Dołek 16: wejście do kosza szersze o 15%','Sezon 3 kariery (od 16.11): Złotów 22, tylko 2 turnieje – jesień i zima (finał ×1.5)']],
@@ -3999,5 +3999,111 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
 }catch(e){console.warn('P88',e)}})();</script>
 <script>/* P89: na każdym nowym dołku – Mid, Prosto, bez rollera i tomy */
 (function(){try{const _ld=load;load=function(){const r=_ld.apply(this,arguments);try{if(typeof TOMA!='undefined')TOMA=false;if(window.__rollOff)window.__rollOff();di=1;curve=0;buildBar()}catch(e){}return r}}catch(e){console.warn('P89',e)}})();</script>
+<script>/* P90: nowa, realistyczniejsza postać (proporcje 1:7, rzut w fazach) + reakcje kibiców */
+(function(){try{
+ const L90={t0:0,a:0,h:1,putt:false,run:false,cur:null,FA:0,lastLie:null};
+ let OLD=false;try{OLD=localStorage.getItem('dg_oldchar')=='1'}catch(e){}window.__oldChar=v=>{OLD=v};
+ const cl=(v,a,b)=>Math.max(a,Math.min(b,v)),lerp=(a,b,t)=>a+(b-a)*t,L2=(p,q,t)=>[lerp(p[0],q[0],t),lerp(p[1],q[1],t)];
+ const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+ /* wykrywanie wyrzutu */
+ setInterval(()=>{try{if(disc&&disc!==L90.cur&&disc.trail&&disc.trail.length<5){L90.cur=disc;L90.t0=performance.now();L90.a=disc.a;L90.h=disc.h||hand;L90.putt=dm({x:disc.x,y:disc.y})<12;L90.toma=!!disc.tom;L90.roll=!!disc.rol;let r=false;try{r=localStorage.getItem('dg_runup')=='1'}catch(e){}L90.run=r&&!L90.putt&&!disc.tom&&!disc.rol}}catch(e){}},16);
+ function ik(S,H,l1,l2,bend){let dx=H[0]-S[0],dy=H[1]-S[1],d=Math.hypot(dx,dy)||.01;const mx=l1+l2-.01;if(d>mx){H=[S[0]+dx/d*mx,S[1]+dy/d*mx];dx=H[0]-S[0];dy=H[1]-S[1];d=mx}
+  const a=Math.atan2(dy,dx),c=cl((l1*l1+d*d-l2*l2)/(2*l1*d),-1,1),b=Math.acos(c)*bend;return[[S[0]+Math.cos(a+b)*l1,S[1]+Math.sin(a+b)*l1],H]}
+ function limb(P,w1,w2,c1,c2){g.lineCap='round';g.strokeStyle=c1;g.lineWidth=w1;g.beginPath();g.moveTo(P[0][0],P[0][1]);g.lineTo(P[1][0],P[1][1]);g.stroke();g.strokeStyle=c2||c1;g.lineWidth=w2;g.beginPath();g.moveTo(P[1][0],P[1][1]);g.lineTo(P[2][0],P[2][1]);g.stroke()}
+ function pose(){const now=performance.now(),h=holes&&holes[hi];let sw=.15,cr=0,lean=0,hd=hand,step=0,heel=0,idle=true,ang=null,putt=false,run=0,showDisc=true;
+  if(drag&&!disc){const dx=drag.sx-drag.x,dy=drag.sy-drag.y,p=cl(Math.hypot(dx,dy)/110,0,1);putt=lie&&dm(lie)<12;idle=false;ang=Math.hypot(dx,dy)>8?Math.atan2(dx,-dy):null;
+   if(putt){sw=-.25-.35*p;cr=.55;lean=.05}else{sw=-.2-.8*p;cr=.1+.15*p;lean=-.12*p;step=.4*p}}
+  else if(L90.t0){const e=(now-L90.t0)/1000;if(e<1.1){idle=false;hd=L90.h;putt=L90.putt;ang=L90.a;showDisc=false;
+    if(putt){sw=e<.12?lerp(-.6,.4,e/.12):e<.6?.4+.1*Math.sin(e*3):lerp(.45,.15,(e-.6)/.5);cr=e<.6?.5:lerp(.5,0,(e-.6)/.5)}
+    else{sw=e<.09?lerp(-1,.1,ease(e/.09)):e<.42?lerp(.1,1,ease((e-.09)/.33)):lerp(1,.15,ease(cl((e-.42)/.6,0,1)));cr=e<.42?.22:lerp(.22,0,cl((e-.42)/.6,0,1));lean=e<.42?.18:lerp(.18,0,cl((e-.42)/.6,0,1));step=e<.5?1:lerp(1,0,cl((e-.5)/.5,0,1));heel=e>.06&&e<.75?1:0;
+     if(L90.run)run=e<.42?ease(e/.42):e<.8?1:Math.max(0,1-(e-.8)/.3)}}else L90.t0=0}
+  if(ang==null){if(h&&lie)ang=Math.atan2(h.b[0]-lie.x,-(h.b[1]-lie.y));else ang=0}
+  let d=ang-L90.FA;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;L90.FA+=d*.25;
+  return{sw,cr,lean,hd,step,heel,idle,putt,run,showDisc,A:L90.FA}}
+ function shirtCol(c){return (typeof SHIRT!='undefined'&&SHIRT[c.shirt])||'#2f7be5'}
+ const _pd=playerDraw;playerDraw=function(x,y,hold){if(OLD||!UP||!playing)return _pd.apply(this,arguments);try{
+  const c=SV.char||{},sk=SKIN[c.skin]||SKIN[0],sr=shirtCol(c),cp=(CAP[c.cap]||CAP[0]),hc=(HAIRC[c.hc]||HAIRC[0]),pc=(PANTS[c.pants]||PANTS[0]),fem=c.g=='f',t=performance.now()/1000;
+  const P=pose(),sn=Math.sin(P.A),cs=Math.cos(P.A),front=cs<-.35,mx=(sn<-.12?-1:1)*(front?-1:1),sq=.86+.14*Math.abs(cs),br=P.idle?Math.sin(t*2.2)*.25:0;
+  const ro=P.run*12,ox=Math.sin(P.A)*ro,oy=-Math.cos(P.A)*ro;
+  g.save();g.translate(x+ox,y+oy);
+  g.fillStyle='rgba(6,20,8,.3)';g.beginPath();g.ellipse(5,1,9,3,.32,0,7);g.fill();
+  g.scale(mx*sq,1);
+  /* wymiary (wysokość ok. 36) */
+  const hipY=-17+2.6*P.cr+br*.3,shY=-29.4+2.8*P.cr+br,lean=P.lean*(front?-1:1),tl=lean*6;
+  const hw=2.3,sw=P.sw,hb=P.hd>0?1:-1,rot=cl(Math.abs(sw),0,1),shW=4.6*(1-.3*rot);
+  const H=[0,hipY],SH=[tl+sw*hb*1.2,shY];
+  /* nogi */
+  const fwd=P.step*2.2,spread=P.putt?3:2.3;
+  const footL=[-spread-.3*P.step,-fwd],footR=[spread+.5*P.step,P.heel?-1.6:0];
+  const hipL=[-hw,hipY],hipR=[hw,hipY];
+  const legL=ik(hipL,footL,8.4,8.6,-.28),legR=ik(hipR,footR,8.4,8.6,.28);
+  const kneeL=[hipL,legL[0],legL[1]],kneeR=[hipR,legR[0],legR[1]];
+  const shorts=!c.pl,skinLeg=shd(sk,.92),pantC=shd(pc,.95);
+  const drawLeg=(K,back)=>{const sh=back?.82:1;g.lineCap='round';
+   g.strokeStyle=shd(pantC,sh);g.lineWidth=3.6;g.beginPath();g.moveTo(K[0][0],K[0][1]);const mid=shorts?L2(K[0],K[1],.85):K[1];g.lineTo(mid[0],mid[1]);g.stroke();
+   if(shorts){g.strokeStyle=shd(skinLeg,sh);g.lineWidth=2.5;g.beginPath();g.moveTo(mid[0],mid[1]);g.lineTo(K[1][0],K[1][1]);g.lineTo(K[2][0],K[2][1]-1.2);g.stroke()}
+   else{g.strokeStyle=shd(pantC,sh*.92);g.lineWidth=3;g.beginPath();g.moveTo(K[1][0],K[1][1]);g.lineTo(K[2][0],K[2][1]-1.2);g.stroke()}
+   g.strokeStyle='#f1f1f1';g.lineWidth=2.4;g.beginPath();g.moveTo(K[2][0],K[2][1]-2);g.lineTo(K[2][0],K[2][1]-1);g.stroke();
+   g.fillStyle=shd('#2a2f3a',sh);g.beginPath();g.ellipse(K[2][0],K[2][1]-.4,2,1.25,0,0,7);g.fill();g.fillStyle='#e8e8e8';g.fillRect(K[2][0]-2,K[2][1]+.3,4,.6)};
+  drawLeg(kneeR,true);drawLeg(kneeL,false);
+  /* biodra / spodenki */
+  g.fillStyle=shd(pc,.9);g.beginPath();g.moveTo(-hw-1.3,hipY+1.6);g.lineTo(hw+1.3,hipY+1.6);g.lineTo(hw+1.1,hipY-1.8);g.lineTo(-hw-1.1,hipY-1.8);g.closePath();g.fill();
+  /* lewa ręka (balans) */
+  const LS=[SH[0]-shW,shY+1.2],lh=P.idle?[LS[0]-1.4,shY+11.5]:[LS[0]-3-4*Math.max(0,sw)*hb+2*Math.min(0,sw)*hb,shY+6.5-2*rot];
+  const armL=ik(LS,lh,5.6,5.6,1);
+  const armC=(back)=>shd(sr,back?.8:1);
+  const drawArm=(S,A,back,hasDisc)=>{limb([S,A[0],A[1]],2.6,2.1,armC(back),shd(sk,back?.85:1));g.strokeStyle=shd(sk,back?.85:1);g.lineWidth=2.1;g.beginPath();g.moveTo(A[0][0],A[0][1]);g.lineTo(A[1][0],A[1][1]);g.stroke();
+   g.strokeStyle=armC(back);g.lineWidth=2.9;g.beginPath();g.moveTo(S[0],S[1]);g.lineTo(lerp(S[0],A[0][0],.45),lerp(S[1],A[0][1],.45));g.stroke();
+   g.fillStyle=shd(sk,back?.85:1);g.beginPath();g.arc(A[1][0],A[1][1],1.15,0,7);g.fill();
+   if(hasDisc){const dc=discs[di].col,hx=A[1][0],hy=A[1][1];g.fillStyle=shd(dc,.55);g.beginPath();g.ellipse(hx+.4,hy+.4,3.6,1.5,-.15*hb,0,7);g.fill();g.fillStyle=dc;g.beginPath();g.ellipse(hx,hy,3.4,1.3,-.15*hb,0,7);g.fill();g.strokeStyle='rgba(255,255,255,.55)';g.lineWidth=.4;g.beginPath();g.ellipse(hx,hy-.2,2.2,.7,-.15*hb,Math.PI,2*Math.PI);g.stroke()}};
+  /* prawa ręka (rzucająca) – cele dłoni */
+  const RS=[SH[0]+shW,shY+1.2];let tg;
+  if(P.idle)tg=[RS[0]+1.4,shY+11.5];
+  else if(P.putt)tg=sw<0?L2([RS[0]-2.2,shY+5],[RS[0]-1,shY+9.5],-sw):L2([RS[0]-2.2,shY+5],[RS[0]-2.6,shY+.5],sw);
+  else if(hb>0){const rel=[RS[0]-3.4,shY+1.8],back=[RS[0]-13.5,shY+3.4],fol=[RS[0]+5.5,shY+4.5];tg=sw<0?L2(rel,back,-sw):L2(rel,fol,sw)}
+  else{const rel=[RS[0]-1.2,shY+2],back=[RS[0]+8.5,shY+2.6],fol=[RS[0]-11,shY+4];tg=sw<0?L2(rel,back,-sw):L2(rel,fol,sw)}
+  const armR=ik(RS,tg,5.8,5.8,-1);
+  const behindR=!P.idle&&sw<-.35&&hb>0;
+  if(behindR)drawArm(RS,armR,true,hold||P.showDisc);
+  drawArm(LS,armL,true,false);
+  /* tułów */
+  const tw=shW*2+.6,wb=(hw+1.2)*2;
+  const tg2=g.createLinearGradient(SH[0]-tw/2,0,SH[0]+tw/2,0);tg2.addColorStop(0,shd(sr,1.12));tg2.addColorStop(.6,sr);tg2.addColorStop(1,shd(sr,.72));
+  g.fillStyle=tg2;g.beginPath();g.moveTo(SH[0]-tw/2,shY+1.4);g.quadraticCurveTo(SH[0]-tw/2,shY-.2,SH[0]-tw/2+1.6,shY-.4);g.lineTo(SH[0]+tw/2-1.6,shY-.4);g.quadraticCurveTo(SH[0]+tw/2,shY-.2,SH[0]+tw/2,shY+1.4);g.lineTo(wb/2,hipY-1.2);g.lineTo(-wb/2,hipY-1.2);g.closePath();g.fill();
+  g.strokeStyle='rgba(0,0,0,.18)';g.lineWidth=.35;g.stroke();
+  g.strokeStyle='rgba(0,0,0,.12)';g.lineWidth=.4;g.beginPath();g.moveTo(SH[0]-1,shY+3);g.quadraticCurveTo(SH[0]+.6*sw*hb,shY+7,-.4,hipY-2);g.stroke();
+  g.strokeStyle='rgba(255,255,255,.15)';g.beginPath();g.moveTo(SH[0]-tw/2+1.2,shY+2);g.quadraticCurveTo(SH[0]-tw/4,shY+4.2,SH[0]-.8,shY+2.6);g.stroke();
+  if(!front){const bt=(typeof BRS!='undefined'&&SV.brand&&BRS[SV.brand])||'';if(bt){g.save();g.scale(mx<0?-1:1,1);g.fillStyle='rgba(255,255,255,.7)';g.font='900 1.9px system-ui';g.textAlign='center';g.fillText(bt.split(' ')[0],(mx<0?-1:1)*SH[0],shY+4.2);g.restore()}}
+  /* szyja i głowa */
+  const HX=SH[0]+tl*.6,HY=shY-3.9;g.fillStyle=shd(sk,.85);g.fillRect(HX-.9,shY-2.2,1.8,2.4);
+  const hg=g.createRadialGradient(HX-.8,HY-1,.3,HX,HY,3.4);hg.addColorStop(0,shd(sk,1.1));hg.addColorStop(1,shd(sk,.84));g.fillStyle=hg;g.beginPath();g.ellipse(HX,HY,2.55,2.95,0,0,7);g.fill();
+  g.fillStyle=shd(sk,.88);g.beginPath();g.ellipse(HX-2.5,HY+.3,.55,.85,0,0,7);g.ellipse(HX+2.5,HY+.3,.55,.85,0,0,7);g.fill();
+  if(c.hair!=4){g.fillStyle=hc;if(front){g.beginPath();g.ellipse(HX,HY-1.4,2.7,1.8,0,Math.PI,2*Math.PI);g.fill()}else{g.beginPath();g.ellipse(HX,HY-.3,2.65,2.85,0,Math.PI*.95,Math.PI*2.05);g.quadraticCurveTo(HX+2,HY+2.4,HX,HY+2.5);g.quadraticCurveTo(HX-2,HY+2.4,HX-2.6,HY+.6);g.fill()}
+   if(fem||c.hair==2){g.beginPath();g.ellipse(HX+(front?0:.2),HY+3.6,.9,2.1,.1,0,7);g.fill()}}
+  if(front){g.fillStyle='#2a1d14';g.beginPath();g.arc(HX-.95,HY+.2,.32,0,7);g.arc(HX+.95,HY+.2,.32,0,7);g.fill();g.strokeStyle='#8a4a3a';g.lineWidth=.3;g.beginPath();g.moveTo(HX-.6,HY+1.5);g.quadraticCurveTo(HX,HY+1.9,HX+.6,HY+1.5);g.stroke()}
+  if(c.hat==0||c.hat==null){const cg=g.createRadialGradient(HX-.8,HY-2.4,.2,HX,HY-1.2,3.4);cg.addColorStop(0,shd(cp,1.25));cg.addColorStop(1,shd(cp,.8));g.fillStyle=cg;g.beginPath();g.ellipse(HX,HY-1.1,2.85,2.3,0,Math.PI,2*Math.PI);g.lineTo(HX+2.85,HY-.5);g.lineTo(HX-2.85,HY-.5);g.closePath();g.fill();
+   if(front){g.fillStyle=shd(cp,.7);g.beginPath();g.ellipse(HX,HY-.4,3.1,.9,0,0,Math.PI);g.fill()}else{g.fillStyle='rgba(0,0,0,.3)';g.fillRect(HX-.8,HY-.9,1.6,.6)}}
+  else if(c.hat==1){g.fillStyle=shd(cp,.95);g.beginPath();g.ellipse(HX,HY-1,2.9,2.5,0,Math.PI,2*Math.PI);g.fill();g.fillStyle=shd(cp,.8);g.fillRect(HX-2.9,HY-1.2,5.8,1.1);g.fillStyle=shd(cp,1.3);g.beginPath();g.arc(HX,HY-3.7,.9,0,7);g.fill()}
+  else if(c.hat==2){g.fillStyle=shd(cp,.75);g.beginPath();g.ellipse(HX,HY-.8,4.6,1.5,0,0,7);g.fill();g.fillStyle=shd(cp,1.05);g.beginPath();g.ellipse(HX,HY-1.4,2.5,2.1,0,Math.PI,2*Math.PI);g.fill()}
+  /* prawa ręka z przodu */
+  if(!behindR)drawArm(RS,armR,false,(hold||P.idle||(!P.idle&&P.showDisc)));
+  g.restore();
+  if(P.run>0&&P.run<1&&!GFXLOW()){g.save();g.fillStyle='rgba(160,130,90,'+(.3*(1-P.run))+')';for(let i=0;i<3;i++){g.beginPath();g.arc(x+ox*.5-Math.sin(P.A)*i*3+(i-1)*2,y+oy*.5+Math.cos(P.A)*i*3+1,1.4+i*.5,0,7);g.fill()}g.restore()}
+ }catch(e){console.warn('char90',e);return _pd.apply(this,arguments)}};
+ /* ===== kibice reagują ===== */
+ const CR={say:null,until:0,who:0,last:0,thr:0};
+ const say=(lines,mood)=>{try{if(typeof crowdOn!='function'||!crowdOn()||!CROWD.p||!CROWD.p.length)return;const t=performance.now()/1000;CR.say=lines[(Math.random()*lines.length)|0];CR.who=(Math.random()*CROWD.p.length)|0;CR.until=t+2.8;if(mood){CROWD.mood=mood;CROWD.t=t}}catch(e){}};
+ const _ho=hole;hole=function(){try{const h=holes[hi],s=throws-h.par;if(throws==1)say(['ACE!!! 🔥','Nie wierzę! ACE!','Legenda!','To był rzut!'],'cheer');else if(s<0)say(['Brawo, birdie!','Pięknie!','Tak się gra!','Czysto w łańcuchy!'],'cheer');else if(s==0)say(['Solidny par','Dobra robota','Spokojnie, par'],'cheer');else say(['Następnym razem…','Bywa…','Głowa do góry!'],null)}catch(e){}return _ho.apply(this,arguments)};
+ const _st=stop;stop=function(tt){try{const s=String(tt);if(/OB/.test(s))say(['Ojej, OB!','Poza boiskiem…','Za mocno!'],null);else if(/Woda/.test(s))say(['Plusk! 💦','Do wody…','Ktoś ma ręcznik?'],null);else if(/Mando/.test(s))say(['Mando! Z drugiej strony!','Nie ta strona!'],null);else if(/Hazard/.test(s))say(['Hazard…','Uuu, karny'],null)}catch(e){}return _st.apply(this,arguments)};
+ let thSeen=null;setInterval(()=>{try{if(disc&&typeof treeHit!='undefined'&&treeHit&&thSeen!==disc){thSeen=disc;say(['Uuuu… drzewo!','Ała, prosto w pień','Drzewo 1 : 0 Ty','Pech!'],null)}}catch(e){}},120);
+ const _cd=crowdDraw;crowdDraw=function(){const P=CROWD.p;let saved=null;try{if(P&&disc&&!disc.rol){const al=(typeof altNow=='function'?altNow(disc):0)||0;saved=P.map(p=>[p.x,p.y]);for(const p of P){const dx=p.x-disc.x,dy=p.y-disc.y,d=Math.hypot(dx,dy);p.dv=p.dv||0;if(d<34&&al<16){p.dv=Math.min(1,p.dv+.12);p.ddx=dx/(d||1);p.ddy=dy/(d||1)}else p.dv=Math.max(0,p.dv-.04);}
+   if(P.some(p=>p.dv>.6)&&performance.now()/1000>CR.until)say(['Uwaga!','Kryć się!','Leci na nas!'],null)}
+   if(P)for(const p of P){if(p.dv>0){p.x+=(p.ddx||0)*p.dv*7;p.y+=(p.ddy||0)*p.dv*5}}}catch(e){}
+  try{_cd.apply(this,arguments)}finally{if(saved)P.forEach((p,i)=>{p.x=saved[i][0];p.y=saved[i][1]});else if(P)for(const p of P){if(p.dv>0){p.x-=(p.ddx||0)*p.dv*7;p.y-=(p.ddy||0)*p.dv*5}}}
+  try{const t=performance.now()/1000;if(CR.say&&t<CR.until&&CROWD.p){const p=CROWD.p[CR.who];if(p&&window.__bubble)window.__bubble(CR.say,p.x,p.y-6,Math.min(1,(CR.until-t)*2))}}catch(e){}};
+ /* opcja: klasyczna postać */
+ const _ro=renderOpt;renderOpt=function(){_ro.apply(this,arguments);try{const v=$('orun');if(!v||$('ochar'))return;const d=document.createElement('div');d.className='orow';d.id='ochar';d.style.cssText='display:flex;align-items:center;gap:10px;margin-top:8px';d.innerHTML='<span style="flex:1;font:700 13px system-ui">🧍 Nowa, realistyczna postać (wyłącz, żeby wrócić do klasycznej)</span><button id="ocharb" style="min-width:64px;padding:8px;border-radius:12px;border:0;font:900 13px system-ui"></button>';v.appendChild(d);
+   const b=$('ocharb'),upd=()=>{b.textContent=OLD?'WYŁ':'WŁ';b.style.background=OLD?'rgba(255,255,255,.12)':'#3fd16a';b.style.color=OLD?'#fff':'#08210f'};upd();b.onclick=()=>{OLD=!OLD;try{localStorage.setItem('dg_oldchar',OLD?'1':'0')}catch(e){}upd()}}catch(e){}};
+}catch(e){console.warn('P90',e)}})();</script>
 </body>
 </html>
