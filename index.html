@@ -25,7 +25,7 @@ addEventListener('load',()=>setTimeout(()=>{try{
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e});
 </script><style>#pwask{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,8,4,.6);font-family:'Baloo 2',system-ui}#pwask .pk{width:min(100vw,440px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 16px);color:#fff;text-align:center;animation:cshUp .25s ease-out}#pwask img{width:72px;height:72px;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.4)}#pwask b{display:block;font-size:21px;margin:8px 0 2px}#pwask p{margin:0 0 12px;color:#cfe5d5;font:600 14px system-ui;line-height:1.45}#pwask .ph{background:rgba(255,211,90,.12);border:1px solid rgba(255,211,90,.4);border-radius:14px;padding:10px;margin:0 0 10px;font:600 14px system-ui;color:#fff3c4;line-height:1.5}#pwask .ph b{display:inline;font:800 14px system-ui;margin:0;color:#ffd35a}#pwask button{display:block;width:100%;padding:13px;border-radius:16px;border:0;font:900 17px 'Baloo 2',system-ui;margin-bottom:8px}#pwyes{background:linear-gradient(135deg,#a4ffb8,#3fd16a);color:#08210f}#pwno{background:rgba(255,255,255,.08)!important;color:#cfe5d5;border:1px solid rgba(255,255,255,.15)!important}</style>
 <meta charset="utf-8">
-<meta name="dgv" content="136 · 13.11.2026">
+<meta name="dgv" content="137 · 13.11.2026">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>/* P73: duże przyciski i lekka grafika także gdy przeglądarka podaje bardzo szeroki ekran (np. tryb "wersja na komputer") */
 function GFXLOW(){return window._gfxLow}window.DECK=window.DECK==null?.5:window.DECK;window.UIZ=1;(function(){var m=document.querySelector('meta[name=viewport]');function wide(){try{return matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2}catch(e){return false}}
  try{if(wide())m.setAttribute('content','width=420, viewport-fit=cover')}catch(e){}
@@ -3310,7 +3310,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 13.11.2026 – Nowy sezon',['🏆 Nowy sezon: rekordy pól i kariera od zera. Stare wyniki są w Archiwum.','🎯 Nowe celowanie: linia pokazuje część lotu, czerwony znacznik pokazuje zasięg.','⚙️ W Opcjach: odwrócone celowanie i stare celowanie (bez rekordów).','⛳ Poprawki Międzybłocia, nowy wygląd domów.']],
+ const CHG=[['Aktualizacja 13.11.2026 – Nowy sezon',['🥏 Trudniej przy koszu: za słaby rzut odbija się od klatki, za mocny przelatuje przez łańcuchy. Pasek pokazuje, jaka była siła.','🏆 Nowy sezon: rekordy pól i kariera od zera. Stare wyniki są w Archiwum.','🎯 Nowe celowanie: linia pokazuje część lotu, czerwony znacznik pokazuje zasięg.','⚙️ W Opcjach: odwrócone celowanie i stare celowanie (bez rekordów).','⛳ Poprawki Międzybłocia, nowy wygląd domów.']],
   ['Aktualizacja 12.11.2026 – Etap 6',['⛳ Międzybłocie: nowe drzewa i ścieżki na 6, 7, 10, 13, 14; brzozy na 7, asfalt na 11, teren w dół i pod górę na 6.','🧍 Międzybłocie: kibice z plecakami na 1, spacerowicz z psem na 16.','🏠 Nowy wygląd domów.','⛳ Międzybłocie 14: kępa drzew w połowie fairwaya i drzewa przed koszem – par 5 gra się na 3 rzuty.','👥 Online: mały baner wyniku dołka, płynniejszy cień dysku kolegi w locie.','👥 Online: karta wyników po kliknięciu w wynik, rzut kolegi na żywo, szybkie reakcje.','👥 Online: znajomi i zaproszenie jednym kliknięciem, rewanż, bilans z kolegą, podsumowanie dołek po dołku.','👥 Wyraźny przycisk „Dojedź zioma!” w menu.','👥 Online: naprawione zawieszanie po pierwszym rzucie – wyniki i ruchy kolegi znowu się wysyłają.','👥 Online: gdy kolega się zawiesi, po chwili można grać dalej bez czekania.','⛳ Międzybłocie 5: rzeka skręca pod drogę. Wpadnięcie do rzeki to OB, grasz z brzegu.','⛳ Międzybłocie: więcej drzew na 5, 15 i 16. Na 16 droga to OB, grasz z drogi.','🏆 Kariera: na Starcie widać bieżący turniej tygodnia i ranking ratingu.','🏆 Tabela sezonu liczy się tylko z ratingu.','👥 Online: rundę startuje host, gdy ktoś dołączy. Gra do 4 osób i turniej. Widać rzuty i wynik kolegi.','🛞 Nowy rzut roller: dysk toczy się po ziemi i skręca na końcu. Ma własny podgląd toru.','🆕 Luboń (beta, na hasło): 18 dołków parku nad Wartą.','🧍 Nowa postać: realistyczny rzut i putt, chodzi do dysku, reaguje na wynik.','🧍 Nowy podgląd w menu Postać, nowy mały avatar i profil gracza.','👩 Postać kobieca wygląda teraz jak kobieta.','🥏 Nowy kosz. Widać, jak dysk wpada i zostaje w łańcuchach.','☀️ Nowe światło i cienie, woda z falami, spadające liście, ptaki.','🌳 Więcej gatunków drzew i mniej ozdób na trawie.','⛳ Międzybłocie: dołki poprawione według uwag z pola. Słońce zachodzi od dołka 10.','🎥 Kamera przybliża się przy dalekich rzutach.','🏅 Nowe osiągnięcia z nagrodami w monetach.','🚫 OB: grasz z miejsca, gdzie dysk wyleciał.','🌲 Spod drzewa da się już normalnie wyrzucić.','🎯 Czułość celowania w Opcjach, z polem do testu.','🔄 Kariera od nowa: Sezon 1, tylko Open, rating od zera. Statystyki liczone od nowa.','🐞 Zgłaszanie błędów w Opcjach i w pauzie.','📱 Poprawki dla iPhone’a i słabszych telefonów. Tło menu już nie zostaje czarne.','🧹 Usunięte: pole treningowe i rozbieg (beta).']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Wszystkie 18 dołków przebudowane według uwag z pola.','1: krótki tee i dwie linie do kosza.','5 i 6: droga z jeżdżącymi autami. 4, 5 i 6: więcej wody.','7: działka ze szklarnią. 8: pole zboża. 9: mostek przez rzeczkę.','14: wąski fairway z tabliczkami odległości.','Mniej mando i hazardów. 18: tee z górki.']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie mapy naraz.','„Zmień pogodę” na kafelku pola.','Top 5 dla każdego pola. Starsze wyniki są w Archiwum.']],
@@ -4997,5 +4997,96 @@ body.onl #resx{top:calc(env(safe-area-inset-top,0px) + 92px)!important;transform
    $('oinv').onchange=e=>{INV=e.target.checked;try{localStorage.setItem('dg_inv',INV?'1':'0')}catch(x){}};
    $('oold').onchange=e=>{OLD=window.__oldAim=e.target.checked;try{localStorage.setItem('dg_oldaim',OLD?'1':'0')}catch(x){}}}catch(e){}};
 }catch(e){console.warn('P148',e)}})();</script>
+<script>window.PUTT_OFF=1</script>
+<style>/* P149 trudniej przy koszu */
+#putg{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(4,12,8,.55);font-family:'Baloo 2',system-ui}
+#putg.on{display:flex}#putg .pc{width:min(92vw,360px);border-radius:24px;background:linear-gradient(170deg,#24452f,#0f2017);border:1px solid rgba(255,255,255,.18);box-shadow:0 18px 50px rgba(0,0,0,.6);padding:12px 12px 14px;text-align:center;color:#fff}
+#putg h3{margin:0;font:900 20px 'Baloo 2',system-ui}#putg .sb{font:700 12px system-ui;color:#a9c9b1;margin:0 0 6px}#putg canvas{width:100%!important;height:auto!important;aspect-ratio:640/560;border-radius:16px;touch-action:none;display:block}
+#putg .bt{display:flex;gap:8px;margin-top:8px}#putg button{flex:1;border:0;border-radius:14px;padding:12px;font:900 16px 'Baloo 2',system-ui}#putg .go{background:linear-gradient(180deg,#7dff9a,#2fbf5c);color:#08210f}#putg .sk{flex:.55;background:rgba(255,255,255,.1);color:#cfe5d5;font-size:13px}
+</style>
+<script>/* P149 trudniej przy koszu: Złotów 12 – ace zależy od siły i celności, putt 5–30 m jako minigra z celownikiem */
+(function(){try{
+ window.DIFF={on:true,
+  /* rzut, który doleci do kosza (z tee lub z >30 m) */
+  cen:[[50,.21],[85,.15]],     /* jak daleko od środka może lecieć (część strefy kosza) wg długości dołka */
+  spd:[[50,[.19,.46]],[85,[.21,.425]]], /* zakres prędkości przy koszu: wolniej = klatka, szybciej = łańcuchy */
+  far:{cen:.7,spd:[.08,.5]},
+  ptS:[[5,[.07,.70]],[10,[.11,.56]],[20,[.14,.49]],[35,[.16,.44]],[80,[.17,.42]]], /* zakres prędkości dla rzutów nie z tee wg odległości (m) */   /* rzuty z >30 m (nie z tee) */
+  /* minigra putta: promień celu (px) i szybkość celownika wg odległości */
+  put:[[6,62,.55],[12,48,1.0],[18,36,1.6],[25,24,2.5]]};
+ const lp=(T,d,k)=>{if(d<=T[0][0])return T[0][k];for(let i=1;i<T.length;i++)if(d<=T[i][0]){const f=(d-T[i-1][0])/(T[i][0]-T[i-1][0]),a=T[i-1][k],b=T[i][k];return Array.isArray(a)?a.map((v,j)=>v+(b[j]-v)*f):a+(b-a)*f}return T[T.length-1][k]};
+ const ON=()=>DIFF.on&&typeof holes!='undefined'&&holes!==(typeof TRN!='undefined'?TRN:null)&&(typeof M_!='function'||M_()=='round');
+ window.__diffOn=ON;
+ /* ocena rzutu w koszu */
+ window.__diffCatch=function(d){if(!ON()||!d)return{ok:true,on:false};const h=holes[hi],rx=h.b[0]-d.x,ry=h.b[1]-d.y,fx=Math.sin(d.a),fy=-Math.cos(d.a),ahead=rx*fx+ry*fy,dc=(ahead>0?Math.abs(fx*ry-fy*rx):Math.hypot(rx,ry))/13,sp=d.v*((h.M||M)/.2)/(5.5*KSf()),tee=throws==1;
+  const L=Math.hypot(h.tee[0]-h.b[0],h.tee[1]-h.b[1])*(h.M||M),C=tee?lp(DIFF.cen,L,1):DIFF.far.cen,S=tee?lp(DIFF.spd,L,1):lp(DIFF.ptS,dm(lie),1);
+  const why=sp<S[0]?'slow':sp>S[1]?'fast':null,mid=(S[0]+S[1])/2,hw=(S[1]-S[0])/2,q=Math.abs(sp-mid)/hw;return{ok:!why,why,q,T:1,sp,dc,S,C,on:true}};
+ function place(dist,ang){const h=holes[hi];const MM=h.M||M;let x=h.b[0]+Math.sin(ang)*dist/MM,y=h.b[1]-Math.cos(ang)*dist/MM;x=Math.max(8,Math.min(W-8,x));y=Math.max(8,Math.min(H-8,y));lie={x,y}}
+ window.__DST={a:0,b:0};
+ const SB=document.createElement('div');SB.style.cssText='position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 168px);transform:translateX(-50%);z-index:60;width:200px;padding:5px 8px 3px;border-radius:12px;background:rgba(10,25,18,.85);box-shadow:0 3px 10px rgba(0,0,0,.35);color:#fff;font:800 11px system-ui;text-align:center;display:none;pointer-events:none';document.body.appendChild(SB);let SBt=0;
+ function showSpd(r){if(window.__SP||!r||!r.on)return;const mx=Math.max(.7,r.S[1]*1.6),px=v=>Math.max(0,Math.min(100,v/mx*100));SB.innerHTML='Siła przy koszu: '+(r.why=='fast'?'<span style="color:#ff8a6a">za mocno</span>':r.why=='slow'?'<span style="color:#ffd35a">za słabo</span>':'<span style="color:#7dff9a">idealnie</span>')+'<div style="position:relative;height:10px;margin-top:4px;border-radius:5px;background:#33473b"><div style="position:absolute;left:'+px(r.S[0])+'%;width:'+(px(r.S[1])-px(r.S[0]))+'%;top:0;bottom:0;background:#2fbf5c;border-radius:5px"></div><div style="position:absolute;left:calc('+px(r.sp)+'% - 2px);top:-3px;width:4px;height:16px;background:#fff;border-radius:2px"></div></div><div style="display:flex;justify-content:space-between;font-size:9px;opacity:.7;margin-top:2px"><span>słabo</span><span>mocno</span></div>';SB.style.display='block';clearTimeout(SBt);SBt=setTimeout(()=>SB.style.display='none',3200)}
+ const _ho=hole;hole=function(){try{const d=disc;if(d&&!window.__SP&&ON()){const r=__diffCatch(d);showSpd(r);if(!r.ok){
+    let t,dist,ang=d.a;if(r.why=='slow'){t='💥 Za słabo!';var sub='odbił się od nóżki';dist=6-4*Math.min(1,r.sp/r.S[0]);ang=d.a+Math.PI+(r.dc>.3?.6:.2)}
+    else if(r.why=='fast'){t='💥 Za mocno!';var sub='przez łańcuchy';dist=Math.min(9,6+20*(r.sp-r.S[1]))}
+    else{t='💥 Obręcz!';var sub='od obręczy';dist=7+10*Math.min(1,r.dc-r.C);ang=d.a+((fxS(d))>0?1.2:-1.2)}
+    place(Math.min(18,dist),ang);disc=null;__DST.b++;try{sfx.chains()}catch(e){}try{say(t,sub+' · '+Math.round(dm(lie))+' m','#a05a2b',90)}catch(e){}try{hud()}catch(e){}return}__DST.a++}}catch(e){console.warn('P121',e)}
+  return _ho.apply(this,arguments)};
+ function fxS(d){const h=holes[hi];return Math.sin(d.a)*(h.b[1]-d.y)+Math.cos(d.a)*(h.b[0]-d.x)}
+ /* ---------- putt: minigra ---------- */
+ /* gdy otwarty putt – świat się nie rysuje, żeby linie jechały płynnie */
+ try{const _dw=draw;draw=function(){if(P)return;return _dw.apply(this,arguments)}}catch(e){}
+ window.__puttResolve=function(e,d0){/* e: odchylenie celownika / promień celu (0..), d0: odległość */const h=holes[hi];throws++;
+  if(e<1){disc=null;try{pill('🎯 Putt z '+Math.round(d0)+' m!')}catch(x){}hole();return true}
+  const miss=Math.min(8,d0*.6,1.2+3*(e-1)),bx=lie.x-h.b[0],by=lie.y-h.b[1],a0=Math.atan2(bx,-by);place(miss,a0+(e>1.6?.9:.35)*(Math.random()<.5?-1:1));
+  try{sfx.chains()}catch(x){}try{say(e<1.4?'😬 Prawie! Obręcz':'❌ Pudło',Math.round(dm(lie))+' m od kosza','#a05a2b',80)}catch(x){}try{hud()}catch(x){}return false};
+ const box=document.createElement('div');box.id='putg';box.innerHTML='<div class="pc"><h3>🎯 Putt</h3><div class="sb" id="putsb"></div><canvas id="putc" width="640" height="560"></canvas><div class="bt"><button class="sk" id="putsk">🥏 Rzut zwykły</button><button class="go" id="putgo">STOP!</button></div></div>';document.body.appendChild(box);
+ const cv=box.querySelector('#putc');let x=cv.getContext('2d');let P=null,skipKey='',lastKey='';const MODE=window.PUTT_MODE||'bar';if(window.PUTT_OFF)return;
+ if(MODE=='swipe')box.querySelector('#putgo').style.display='none';
+ let BK=null;function drawBasket(){if(BK){x.drawImage(BK,0,0);return}const real=x;BK=document.createElement('canvas');BK.width=640;BK.height=560;x=BK.getContext('2d');const w=640,h=560,cx=w/2;const g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,'#7fb3d8');g.addColorStop(.55,'#cfe3d0');g.addColorStop(.56,'#4f8a3c');g.addColorStop(1,'#2e5e25');x.fillStyle=g;x.fillRect(0,0,w,h);
+  x.fillStyle='rgba(30,60,30,.55)';for(let i=0;i<9;i++){x.beginPath();x.ellipse(40+i*72,300,60,90,0,0,7);x.fill()}
+  x.fillStyle='#8f989f';x.fillRect(cx-7,140,14,380);x.fillStyle='rgba(0,0,0,.25)';x.beginPath();x.ellipse(cx,520,70,12,0,0,7);x.fill();
+  x.fillStyle='#f2b90e';x.beginPath();x.ellipse(cx,140,120,22,0,0,7);x.fill();x.fillStyle='#c79508';x.fillRect(cx-120,140,240,10);
+  x.strokeStyle='#d8dee3';x.lineWidth=3;for(let i=-9;i<=9;i++){x.beginPath();x.moveTo(cx+i*12,150);x.quadraticCurveTo(cx+i*7,215,cx+i*3,268);x.stroke()}
+  x.strokeStyle='#bfc6cc';x.lineWidth=2;for(let i=-6;i<=6;i++){x.beginPath();x.moveTo(cx+i*8,156);x.lineTo(cx+i*4,262);x.stroke()}
+  x.fillStyle='#f2b90e';x.beginPath();x.ellipse(cx,290,112,20,0,0,7);x.fill();x.strokeStyle='#9aa3aa';x.lineWidth=3;x.beginPath();x.moveTo(cx-112,290);x.lineTo(cx-80,350);x.lineTo(cx+80,350);x.lineTo(cx+112,290);x.stroke();for(let i=-4;i<=4;i++){x.beginPath();x.moveTo(cx+i*26,290);x.lineTo(cx+i*19,350);x.stroke()}
+  x=real;x.drawImage(BK,0,0)}
+ const TX=320,TY=215;
+ /* parametry wg odległości: [m, szerokość strefy (część paska / tolerancja), szybkość] */
+ const BAR=window.PUTT_BAR||[[6,.30,.45],[12,.20,.75],[18,.13,1.1],[25,.08,1.6]];
+ const SW=window.PUTT_SW||[[6,.24,.16],[12,.17,.11],[18,.12,.08],[25,.08,.055]]; /* [m, tolerancja siły, tolerancja kierunku (rad)] */
+ const tri=t=>{const f=t-Math.floor(t);return f<.5?f*2:2-f*2};
+ function flyDisc(now){const e=Math.min(1,(now-P.t2)/650),k=e*e*(3-2*e),sx=320,sy=600,ex=P.ex,ey=P.ey,dx=sx+(ex-sx)*k,dy=sy+(ey-sy)*k-Math.sin(k*Math.PI)*60,sc=1.6-1.0*k;
+  x.fillStyle='rgba(0,0,0,.25)';x.beginPath();x.ellipse(dx,dy+30*(1-k)+18,26*sc,7*sc,0,0,7);x.fill();x.fillStyle='#e63c3c';x.beginPath();x.ellipse(dx,dy,30*sc,11*sc,-.15,0,7);x.fill();x.fillStyle='rgba(255,255,255,.35)';x.beginPath();x.ellipse(dx-8*sc,dy-3*sc,12*sc,3*sc,-.15,0,7);x.fill();
+  if(e>=1&&!P.done){P.done=1;setTimeout(fin,380)}}
+ function head(t){x.fillStyle='rgba(0,0,0,.55)';x.fillRect(0,0,640,44);x.fillStyle='#fff';x.font='800 24px system-ui';x.textAlign='center';x.fillText(t,320,30)}
+ function frame(){if(!P)return;const now=performance.now(),t=(now-P.t0)/1000;drawBasket();
+  if(MODE=='bar'){/* pionowy pasek po prawej, stała prędkość */const X0=560,Y0=70,HB=440,c=.72,w=P.w;if(P.st==0)P.lv=tri(t*P.s*.5+P.ph);
+   x.fillStyle='rgba(0,0,0,.45)';x.fillRect(X0-8,Y0-8,56,HB+16);x.fillStyle='#2a3b30';x.fillRect(X0,Y0,40,HB);
+   const gy=Y0+HB*(1-c-w/2),gh=HB*w;x.fillStyle='#ffcf3a';x.fillRect(X0,Y0+HB*(1-c-w),40,HB*w*2);x.fillStyle='#5bea7c';x.fillRect(X0,gy,40,gh);
+   const ly=Y0+HB*(1-P.lv);x.fillStyle='#fff';x.fillRect(X0-14,ly-4,68,8);x.fillStyle='rgba(255,255,255,.25)';x.fillRect(X0,ly,40,Y0+HB-ly);
+   if(P.st==0)head('Kliknij, gdy pasek jest w zielonym');}
+  else{/* swipe */const p0=.62;if(P.st==0){head('Przeciągnij palcem w górę, w stronę kosza');x.strokeStyle='rgba(255,255,255,.35)';x.lineWidth=3;x.setLineDash([8,10]);x.beginPath();x.moveTo(320,520);x.lineTo(TX,TY+60);x.stroke();x.setLineDash([]);
+    x.fillStyle='#e63c3c';x.beginPath();x.ellipse(320,520,46,16,0,0,7);x.fill();
+    if(P.drag){const dx=P.drag.x-P.drag.sx,dy=P.drag.y-P.drag.sy,L=Math.hypot(dx,dy),pw=Math.min(1.2,L/330),ang=Math.atan2(dx,-dy);
+     x.strokeStyle='#fff';x.lineWidth=6;x.beginPath();x.moveTo(320,520);x.lineTo(320+Math.sin(ang)*L*.9,520-Math.cos(ang)*L*.9);x.stroke();
+     const X0=24,Y0=70,HB=440;x.fillStyle='rgba(0,0,0,.45)';x.fillRect(X0-8,Y0-8,52,HB+16);x.fillStyle='#2a3b30';x.fillRect(X0,Y0,36,HB);x.fillStyle='#5bea7c';x.fillRect(X0,Y0+HB*(1-(p0+P.w)/1.2),36,HB*2*P.w/1.2);
+     const ly=Y0+HB*(1-Math.min(1.2,pw)/1.2);x.fillStyle='#fff';x.fillRect(X0-10,ly-4,56,8)}}}
+  if(P.st==2)flyDisc(now);
+  P.raf=requestAnimationFrame(frame)}
+ function open(d0){P={d0,t0:performance.now(),ph:Math.random(),st:0};if(MODE=='bar'){P.w=lp(BAR,d0,1);P.s=lp(BAR,d0,2)}else{P.w=lp(SW,d0,1);P.wa=lp(SW,d0,2)}
+  box.querySelector('#putsb').textContent=Math.round(d0)+' m · '+(d0<=10?'łatwy':d0<=18?'średni':'trudny')+(MODE=='bar'?' · zatrzymaj pasek w zielonym polu':' · przeciągnij jak przy putcie: kierunek i siła');box.classList.add('on');frame()}
+ function close(){if(P&&P.raf)cancelAnimationFrame(P.raf);P=null;box.classList.remove('on')}
+ function launch(e,ex,ey){P.e=e;P.ex=ex;P.ey=ey;P.st=2;P.t2=performance.now()}
+ function shootBar(){if(!P||P.st!=0||MODE!='bar')return;const c=.72,d=P.lv-c,e=Math.abs(d)/(P.w/2);launch(e,TX+(Math.random()-.5)*20,TY-d*420)}
+ function fin(){if(!P)return;const e=P.e,d0=P.d0;close();__puttResolve(e,d0)}
+ const pt=ev=>{const r=cv.getBoundingClientRect();return{x:(ev.clientX-r.left)*640/r.width,y:(ev.clientY-r.top)*560/r.height}};
+ cv.addEventListener('pointerdown',ev=>{ev.preventDefault();if(!P||P.st!=0)return;if(MODE=='bar')return shootBar();const q=pt(ev);P.drag={sx:q.x,sy:q.y,x:q.x,y:q.y};try{cv.setPointerCapture(ev.pointerId)}catch(e){}});
+ cv.addEventListener('pointermove',ev=>{if(P&&P.drag){const q=pt(ev);P.drag.x=q.x;P.drag.y=q.y}});
+ cv.addEventListener('pointerup',ev=>{if(!P||!P.drag||P.st!=0)return;const D=P.drag;P.drag=null;const dx=D.x-D.sx,dy=D.y-D.sy,L=Math.hypot(dx,dy);if(L<25||dy>-10)return;
+  const pw=L/330,ang=Math.atan2(dx,-dy),p0=.62,ep=(pw-p0)/P.w,ea=ang/P.wa,e=Math.hypot(ep,ea);launch(e,TX+Math.max(-300,Math.min(300,ea*90)),TY-Math.max(-260,Math.min(200,ep*80)))});
+ box.querySelector('#putgo').onclick=ev=>{ev.stopPropagation();shootBar()};
+ box.querySelector('#putsk').onclick=ev=>{ev.stopPropagation();skipKey=lastKey;close()};
+ setInterval(()=>{try{if(P||window.__SP||window.__NOPUTT)return;if(!ON()||!playing||done||disc||next>0||(typeof drag!='undefined'&&drag))return;const d0=dm(lie);const key=hi+':'+throws+':'+Math.round(lie.x)+','+Math.round(lie.y);lastKey=key;if(d0<=5||d0>25||key===skipKey)return;open(d0)}catch(e){}},250);
+}catch(e){console.warn('P121',e)}})();</script>
 </body>
 </html>
