@@ -25,7 +25,7 @@ addEventListener('load',()=>setTimeout(()=>{try{
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e});
 </script><style>#pwask{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,8,4,.6);font-family:'Baloo 2',system-ui}#pwask .pk{width:min(100vw,440px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 16px);color:#fff;text-align:center;animation:cshUp .25s ease-out}#pwask img{width:72px;height:72px;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.4)}#pwask b{display:block;font-size:21px;margin:8px 0 2px}#pwask p{margin:0 0 12px;color:#cfe5d5;font:600 14px system-ui;line-height:1.45}#pwask .ph{background:rgba(255,211,90,.12);border:1px solid rgba(255,211,90,.4);border-radius:14px;padding:10px;margin:0 0 10px;font:600 14px system-ui;color:#fff3c4;line-height:1.5}#pwask .ph b{display:inline;font:800 14px system-ui;margin:0;color:#ffd35a}#pwask button{display:block;width:100%;padding:13px;border-radius:16px;border:0;font:900 17px 'Baloo 2',system-ui;margin-bottom:8px}#pwyes{background:linear-gradient(135deg,#a4ffb8,#3fd16a);color:#08210f}#pwno{background:rgba(255,255,255,.08)!important;color:#cfe5d5;border:1px solid rgba(255,255,255,.15)!important}</style>
 <meta charset="utf-8">
-<meta name="dgv" content="132 · 13.11.2026">
+<meta name="dgv" content="133 · 13.11.2026">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>/* P73: duże przyciski i lekka grafika także gdy przeglądarka podaje bardzo szeroki ekran (np. tryb "wersja na komputer") */
 function GFXLOW(){return window._gfxLow}window.DECK=window.DECK==null?.5:window.DECK;window.UIZ=1;(function(){var m=document.querySelector('meta[name=viewport]');function wide(){try{return matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2}catch(e){return false}}
  try{if(wide())m.setAttribute('content','width=420, viewport-fit=cover')}catch(e){}
@@ -3291,7 +3291,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['⛳ Międzybłocie 14: kępa drzew w połowie fairwaya i drzewa przed koszem – par 5 gra się na 3 rzuty.','👥 Online: mały baner wyniku dołka, płynniejszy cień dysku kolegi w locie.','👥 Online: karta wyników po kliknięciu w wynik, rzut kolegi na żywo, szybkie reakcje.','👥 Online: znajomi i zaproszenie jednym kliknięciem, rewanż, bilans z kolegą, podsumowanie dołek po dołku.','👥 Wyraźny przycisk „Dojedź zioma!” w menu.','👥 Online: naprawione zawieszanie po pierwszym rzucie – wyniki i ruchy kolegi znowu się wysyłają.','👥 Online: gdy kolega się zawiesi, po chwili można grać dalej bez czekania.','⛳ Międzybłocie 5: rzeka skręca pod drogę. Wpadnięcie do rzeki to OB, grasz z brzegu.','⛳ Międzybłocie: więcej drzew na 5, 15 i 16. Na 16 droga to OB, grasz z drogi.','🏆 Kariera: na Starcie widać bieżący turniej tygodnia i ranking ratingu.','🏆 Tabela sezonu liczy się tylko z ratingu.','👥 Online: rundę startuje host, gdy ktoś dołączy. Gra do 4 osób i turniej. Widać rzuty i wynik kolegi.','🛞 Nowy rzut roller: dysk toczy się po ziemi i skręca na końcu. Ma własny podgląd toru.','🆕 Luboń (beta, na hasło): 18 dołków parku nad Wartą.','🧍 Nowa postać: realistyczny rzut i putt, chodzi do dysku, reaguje na wynik.','🧍 Nowy podgląd w menu Postać, nowy mały avatar i profil gracza.','👩 Postać kobieca wygląda teraz jak kobieta.','🥏 Nowy kosz. Widać, jak dysk wpada i zostaje w łańcuchach.','☀️ Nowe światło i cienie, woda z falami, spadające liście, ptaki.','🌳 Więcej gatunków drzew i mniej ozdób na trawie.','⛳ Międzybłocie: dołki poprawione według uwag z pola. Słońce zachodzi od dołka 10.','🎥 Kamera przybliża się przy dalekich rzutach.','🏅 Nowe osiągnięcia z nagrodami w monetach.','🚫 OB: grasz z miejsca, gdzie dysk wyleciał.','🌲 Spod drzewa da się już normalnie wyrzucić.','🎯 Czułość celowania w Opcjach, z polem do testu.','🔄 Kariera od nowa: Sezon 1, tylko Open, rating od zera. Statystyki liczone od nowa.','🐞 Zgłaszanie błędów w Opcjach i w pauzie.','📱 Poprawki dla iPhone’a i słabszych telefonów. Tło menu już nie zostaje czarne.','🧹 Usunięte: pole treningowe i rozbieg (beta).']],
+ const CHG=[['Aktualizacja 12.11.2026 – Etap 6',['⛳ Międzybłocie: nowe drzewa i ścieżki na 6, 7, 10, 13, 14; brzozy na 7, asfalt na 11, teren w dół i pod górę na 6.','🧍 Międzybłocie: kibice z plecakami na 1, spacerowicz z psem na 16.','🏠 Nowy wygląd domów.','⛳ Międzybłocie 14: kępa drzew w połowie fairwaya i drzewa przed koszem – par 5 gra się na 3 rzuty.','👥 Online: mały baner wyniku dołka, płynniejszy cień dysku kolegi w locie.','👥 Online: karta wyników po kliknięciu w wynik, rzut kolegi na żywo, szybkie reakcje.','👥 Online: znajomi i zaproszenie jednym kliknięciem, rewanż, bilans z kolegą, podsumowanie dołek po dołku.','👥 Wyraźny przycisk „Dojedź zioma!” w menu.','👥 Online: naprawione zawieszanie po pierwszym rzucie – wyniki i ruchy kolegi znowu się wysyłają.','👥 Online: gdy kolega się zawiesi, po chwili można grać dalej bez czekania.','⛳ Międzybłocie 5: rzeka skręca pod drogę. Wpadnięcie do rzeki to OB, grasz z brzegu.','⛳ Międzybłocie: więcej drzew na 5, 15 i 16. Na 16 droga to OB, grasz z drogi.','🏆 Kariera: na Starcie widać bieżący turniej tygodnia i ranking ratingu.','🏆 Tabela sezonu liczy się tylko z ratingu.','👥 Online: rundę startuje host, gdy ktoś dołączy. Gra do 4 osób i turniej. Widać rzuty i wynik kolegi.','🛞 Nowy rzut roller: dysk toczy się po ziemi i skręca na końcu. Ma własny podgląd toru.','🆕 Luboń (beta, na hasło): 18 dołków parku nad Wartą.','🧍 Nowa postać: realistyczny rzut i putt, chodzi do dysku, reaguje na wynik.','🧍 Nowy podgląd w menu Postać, nowy mały avatar i profil gracza.','👩 Postać kobieca wygląda teraz jak kobieta.','🥏 Nowy kosz. Widać, jak dysk wpada i zostaje w łańcuchach.','☀️ Nowe światło i cienie, woda z falami, spadające liście, ptaki.','🌳 Więcej gatunków drzew i mniej ozdób na trawie.','⛳ Międzybłocie: dołki poprawione według uwag z pola. Słońce zachodzi od dołka 10.','🎥 Kamera przybliża się przy dalekich rzutach.','🏅 Nowe osiągnięcia z nagrodami w monetach.','🚫 OB: grasz z miejsca, gdzie dysk wyleciał.','🌲 Spod drzewa da się już normalnie wyrzucić.','🎯 Czułość celowania w Opcjach, z polem do testu.','🔄 Kariera od nowa: Sezon 1, tylko Open, rating od zera. Statystyki liczone od nowa.','🐞 Zgłaszanie błędów w Opcjach i w pauzie.','📱 Poprawki dla iPhone’a i słabszych telefonów. Tło menu już nie zostaje czarne.','🧹 Usunięte: pole treningowe i rozbieg (beta).']],
   ['Aktualizacja 12.11.2026 – Międzybłocie',['Wszystkie 18 dołków przebudowane według uwag z pola.','1: krótki tee i dwie linie do kosza.','5 i 6: droga z jeżdżącymi autami. 4, 5 i 6: więcej wody.','7: działka ze szklarnią. 8: pole zboża. 9: mostek przez rzeczkę.','14: wąski fairway z tabliczkami odległości.','Mniej mando i hazardów. 18: tee z górki.']],
   ['Aktualizacja 12.11.2026 – Menu',['Nowy wybór pola: wszystkie mapy naraz.','„Zmień pogodę” na kafelku pola.','Top 5 dla każdego pola. Starsze wyniki są w Archiwum.']],
   ['Aktualizacja 12.11.2026 – Złotów 22',['Dołek 14: hazard poza kołem przy koszu.','Dołek 15: teraz par 4.','Dołek 16: łatwiejsze wejście do kosza.']],
@@ -3571,8 +3571,21 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  function fence(x,P){x.strokeStyle='#7a5a36';x.lineWidth=1;path(x,P);x.stroke();x.fillStyle='#5a4026';for(let i=1;i<P.length;i++){const a=P[i-1],b=P[i],l=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.max(1,Math.round(l/8));for(let k=0;k<=n;k++)x.fillRect(a[0]+(b[0]-a[0])*k/n-1,a[1]+(b[1]-a[1])*k/n-1,2,2)}}
  function greenhouse(x,X,Y,w,h,win){x.fillStyle='rgba(0,0,0,.25)';x.fillRect(X+3,Y+3,w,h);x.fillStyle=win?'rgba(225,235,240,.95)':'rgba(205,235,225,.85)';x.fillRect(X,Y,w,h);x.strokeStyle='#e9f5f0';x.lineWidth=.8;x.strokeRect(X,Y,w,h);x.beginPath();x.moveTo(X,Y+h/2);x.lineTo(X+w,Y+h/2);x.stroke();
   x.strokeStyle='rgba(120,150,140,.7)';x.lineWidth=.5;for(let i=1;i<6;i++){x.beginPath();x.moveTo(X+w*i/6,Y);x.lineTo(X+w*i/6,Y+h);x.stroke()}if(!win){x.fillStyle='rgba(60,140,60,.6)';for(let i=0;i<10;i++)x.fillRect(X+2+i*(w-4)/10,Y+h*.62,2,3)}}
- function house(x,X,Y,w,h,win){x.fillStyle='rgba(0,0,0,.3)';x.fillRect(X+4,Y+4,w,h);x.fillStyle='#e8e0cf';x.fillRect(X,Y,w,h);x.fillStyle=win?'#f4f7f9':'#a5432f';x.beginPath();x.moveTo(X-3,Y+h*.5);x.lineTo(X+w/2,Y-3);x.lineTo(X+w+3,Y+h*.5);x.lineTo(X+w/2,Y+h+3);x.closePath();x.fill();
-  x.strokeStyle=win?'#cfd8de':'#7c2e1f';x.lineWidth=.8;x.beginPath();x.moveTo(X+w/2,Y-3);x.lineTo(X+w/2,Y+h+3);x.stroke();x.fillStyle='#6b6b6b';x.fillRect(X+w*.7,Y+h*.18,4,5)}
+ function house(x,X,Y,w,h,win){/* P135: dom z góry – dach dwuspadowy z dachówką, okap, komin, ścieżka */
+  const ov=3,rw=w+ov*2,rh=h+ov*2,rx=X-ov,ry=Y-ov,mid=rx+rw/2,roof=win?['#f6f9fb','#dfe7ec']:['#b9533a','#8e3a27'];
+  x.fillStyle='rgba(0,0,0,.28)';x.beginPath();x.moveTo(rx+5,ry+6);x.lineTo(rx+rw+7,ry+6);x.lineTo(rx+rw+7,ry+rh+7);x.lineTo(rx+5,ry+rh+7);x.closePath();x.fill();
+  x.fillStyle='#e9e1cf';x.fillRect(X,Y,w,h);
+  /* połówki dachu: lewa jaśniejsza (słońce), prawa ciemniejsza */
+  x.fillStyle=roof[0];x.fillRect(rx,ry,rw/2,rh);x.fillStyle=roof[1];x.fillRect(mid,ry,rw/2,rh);
+  if(!win){x.strokeStyle='rgba(60,15,8,.35)';x.lineWidth=.6;for(let yy=ry+2.5;yy<ry+rh;yy+=2.6){x.beginPath();x.moveTo(rx,yy);x.lineTo(rx+rw,yy);x.stroke()}
+   x.strokeStyle='rgba(255,230,210,.18)';for(let xx=rx+2;xx<rx+rw;xx+=3){x.beginPath();x.moveTo(xx,ry);x.lineTo(xx,ry+rh);x.stroke()}}
+  else{x.fillStyle='rgba(255,255,255,.6)';x.fillRect(rx+1,ry+1,rw/2-1,rh-2)}
+  /* kalenica i krawędzie okapu */
+  x.fillStyle=win?'#cfd8de':'#6e2a1b';x.fillRect(mid-1,ry,2,rh);x.strokeStyle=win?'#c5ced4':'rgba(50,15,8,.6)';x.lineWidth=1;x.strokeRect(rx+.5,ry+.5,rw-1,rh-1);
+  /* komin z cieniem */
+  const cx=mid+rw*.18,cy=ry+rh*.22;x.fillStyle='rgba(0,0,0,.3)';x.fillRect(cx+2,cy+2,5,6);x.fillStyle='#8b8b8b';x.fillRect(cx,cy,5,6);x.fillStyle='#5a5a5a';x.fillRect(cx+1,cy+1,3,2);
+  /* ścieżka z kostki do drzwi */
+  if(!win){x.fillStyle='#cfc6b4';x.fillRect(X+w*.2,Y+h+ov,5,8);x.fillStyle='rgba(0,0,0,.12)';for(let k=0;k<3;k++)x.fillRect(X+w*.2,Y+h+ov+1+k*2.6,5,.6)}}
  function bridge(x,a,b,wd){const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy),ang=Math.atan2(dy,dx);x.save();x.translate(a[0],a[1]);x.rotate(ang);x.fillStyle='rgba(0,0,0,.3)';x.fillRect(2,-wd/2+2,l,wd);x.fillStyle='#9c6b3c';x.fillRect(0,-wd/2,l,wd);
   x.strokeStyle='#6e4a28';x.lineWidth=.6;for(let s=2;s<l;s+=3){x.beginPath();x.moveTo(s,-wd/2);x.lineTo(s,wd/2);x.stroke()}x.strokeStyle='#5a3a1e';x.lineWidth=1.4;for(const sd of[-1,1]){x.beginPath();x.moveTo(0,sd*wd/2);x.lineTo(l,sd*wd/2);x.stroke();x.fillStyle='#4a2e16';for(let s=0;s<=l;s+=l/4)x.fillRect(s-1,sd*wd/2-1,2,2)}x.restore()}
  function signs(x,h,list){for(const m of list){const u=m/(h.M||.2);if(u>h.L-10)continue;const p=h.rel(u,(h.cwf(0)/2)+8);x.fillStyle='rgba(0,0,0,.3)';x.fillRect(p[0]+1,p[1]-1,1.6,7);x.fillStyle='#f4f1e8';x.fillRect(p[0],p[1]-2,1.6,8);x.fillStyle='rgba(20,40,24,.85)';x.beginPath();x.roundRect(p[0]+3,p[1]-6,19,8,2.5);x.fill();x.fillStyle='#fff';x.font='900 5.5px system-ui';x.textAlign='center';x.textBaseline='middle';x.fillText(m+' m',p[0]+12.5,p[1]-1.8)}}
@@ -3626,7 +3639,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
   h.cwf=()=>36;h.cw=36;h.thinF=(px,py)=>px<150&&px>30&&py>B[1]+20&&py<T[1]?.9:0;
   h.trees=h.trees.filter(t=>Math.hypot(t[0]-T[0],t[1]-T[1])>22&&Math.hypot(t[0]-B[0],t[1]-B[1])>18&&!(h.deco||[]).some(o=>Math.hypot(t[0]-o.x,t[1]-o.y)<o.r+t[2]));
   const HX=304,HY=56;addNoF(h,(x,y)=>x>HX-30&&x<HX+60&&y>HY-30&&y<HY+50);h.trees=h.trees.filter(t=>!(t[0]>HX-30&&t[0]<HX+60&&t[1]>HY-30&&t[1]<HY+50));
-  addArt(h,(x,w)=>{signs(x,h,[50,100,150,200]);house(x,HX,HY,30,22,w);x.fillStyle=w?'#e8eef0':'#7aa860';x.fillRect(HX-14,HY+28,58,10);fence(x,[[HX-16,HY-8],[HX-16,HY+40],[HX+46,HY+40]])});
+  addArt(h,(x,w)=>{signs(x,h,[50,100,150,200]);house(x,HX,HY,30,22,w);if(!w){x.fillStyle='rgba(0,0,0,.18)';for(let k=0;k<7;k++){x.beginPath();x.arc(HX-10+k*8+1.5,HY+34,4,0,7);x.fill()}x.fillStyle='#4f7f37';for(let k=0;k<7;k++){x.beginPath();x.arc(HX-10+k*8,HY+32.5,4,0,7);x.fill()}x.fillStyle='#6b9a48';for(let k=0;k<7;k++){x.beginPath();x.arc(HX-11+k*8,HY+31.5,2,0,7);x.fill()}x.fillStyle='#e85a8a';x.fillRect(HX+4,HY+30,2,2);x.fillStyle='#f2d14a';x.fillRect(HX+22,HY+31,2,2)}else{x.fillStyle='#e8eef0';x.fillRect(HX-14,HY+28,58,10)}fence(x,[[HX-16,HY-8],[HX-16,HY+40],[HX+46,HY+40]])});
   h.txt='Par 5 · 230 m · wąski fairway – po lewej rzadszy las';fin(h)}
  /* ---------- 15: bez hazardu ---------- */
  {const h=MZ[14];h.hz=null;h.hzE=null;h.hzL=null;h.wild=null;fin(h)}
@@ -4819,9 +4832,118 @@ body.onl #resx{top:calc(env(safe-area-inset-top,0px) + 92px)!important;transform
 }catch(e){console.warn('P133',e)}})();</script>
 <script>/* P134: Międzybłocie 14 (par 5) – ściana drzew na ~110–145 m i drzewa przed koszem: bez albatrosa w 2 rzuty */
 (function(){try{const h=MZ[13];
- h.trees.push([181,302,13],[166,276,12],[196,268,12],[180,244,12],[203,232,10],[159,250,10],[212,116,10],[241,106,9],[214,290,12],[226,262,11],[148,292,12],[140,264,11],[205,312,10],[157,318,10],[230,236,10],[136,238,10]);
+ h.trees.push([178,304,12],[163,276,12],[184,272,8],[172,246,11],[190,226,7],[155,250,10],[212,116,10],[241,106,9]);
  h.txt='Par 5 · 230 m · w połowie gęsta kępa drzew – rozłóż na 3 rzuty';
  delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
 }catch(e){console.warn('P134',e)}})();</script>
+<script>/* P136: Międzybłocie 6 – drzewo na P10/75 m (węższa przerwa), drzewo z prawej przy koszu, tee kolejnego dołka na P40/150 m + ścieżka */
+(function(){try{const h=MZ[5],M=h.M||.2,T=h.tee,X=m=>180+m/M,Y=d=>T[1]-d/M;
+ const dseg=(p,a,b)=>{const dx=b[0]-a[0],dy=b[1]-a[1],l=dx*dx+dy*dy||1,t=Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/l));return Math.hypot(p[0]-a[0]-dx*t,p[1]-a[1]-dy*t)};
+ const tp=[X(40),Y(150)];
+ const P=[[h.b[0]+12,h.b[1]+10],[h.b[0]+40,h.b[1]+16],[h.b[0]+78,h.b[1]+6],[tp[0]-40,tp[1]+10],[tp[0]-10,tp[1]+2]];
+ h.trees=h.trees.filter(t=>Math.hypot(t[0]-tp[0],t[1]-tp[1])>t[2]+16&&P.every((p,k)=>!k||dseg(t,P[k-1],p)>t[2]*.75+4));
+ h.trees.push([X(10),Y(75),13],[h.b[0]+30,h.b[1]-6,11],[h.b[0]+58,h.b[1]+34,10]);
+ h.roads=(h.roads||[]).concat([{pts:P,w:5}]);
+ h.deco=(h.deco||[]).concat([{k:'teex',x:tp[0],y:tp[1],r:16,rot:1}]);
+ delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
+}catch(e){console.warn('P136',e)}})();</script>
+<script>/* P137: Międzybłocie 14 – kosz dołka 13 na L50/125 m (widać go z tee) i ścieżka z boku: tee → kosz 13 → góra mapy */
+(function(){try{const h=MZ[13],M=h.M||.2,T=h.tee,X=m=>180+m/M,Y=d=>T[1]-d/M;
+ const dseg=(p,a,b)=>{const dx=b[0]-a[0],dy=b[1]-a[1],l=dx*dx+dy*dy||1,t=Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/l));return Math.hypot(p[0]-a[0]-dx*t,p[1]-a[1]-dy*t)};
+ const bk=[X(-50),Y(125)];
+ const P=[[T[0]-10,T[1]-4],[X(-20),Y(25)],[X(-40),Y(60)],[X(-58),Y(100)],[bk[0]-4,bk[1]+12]],P2=[[bk[0]+2,bk[1]-12],[X(-48),Y(170)],[X(-54),Y(215)],[X(-50),-30]];
+ const near=t=>[P,P2].some(L=>L.some((p,k)=>k&&dseg(t,L[k-1],p)<t[2]*.75+4));
+ h.trees=h.trees.filter(t=>!near(t)&&Math.hypot(t[0]-bk[0],t[1]-bk[1])>t[2]+18);
+ h.roads=(h.roads||[]).concat([{pts:P,w:5},{pts:P2,w:5}]);
+ h.deco=(h.deco||[]).concat([{k:'bkx',x:bk[0],y:bk[1],r:24}]);
+ delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
+}catch(e){console.warn('P137',e)}})();</script>
+<script>/* P138: Międzybłocie 10 – drzewo „strażnik” przy stawku (~L10–L20, 75–80 m) na linii do kosza: na ace trzeba je ominąć */
+(function(){try{const h=MZ[9],M=h.M||.2,T=h.tee,B=h.b,d=78,y=T[1]-d/M,f=(T[1]-y)/(T[1]-B[1]),xl=T[0]+(B[0]-T[0])*f;
+ const inW=(x,yy,r)=>(h.water||[]).some(w=>Math.hypot(x-(w[0]+w[2]/2),yy-(w[1]+w[3]/2))<w[2]/2+r*.7);
+ let x=xl-6;while(inW(x,y,12)&&x<xl+30)x+=2;
+ h.trees=h.trees.filter(t=>Math.hypot(t[0]-x,t[1]-y)>t[2]+12);h.trees.push([x,y,13]);
+ delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
+}catch(e){console.warn('P138',e)}})();</script>
+<script>/* P139: Międzybłocie 6 – teren: od tee do 100 m w dół (dolinka), potem pod górę do kosza – cienie, poziomice, opisy */
+(function(){try{const h=MZ[5],M=h.M||.2,T=h.tee,B=h.b,yV=T[1]-100/M;
+ const oa=h.art;h.art=(x,w)=>{if(oa)oa(x,w);x.save();
+  /* jasność terenu: tee wyżej (jaśniej), dolinka ciemna, stok pod kosz oświetlony */
+  const gr=x.createLinearGradient(0,T[1]+40,0,B[1]-40);const fV=(T[1]+40-yV)/(T[1]+40-(B[1]-40));
+  gr.addColorStop(0,'rgba(255,250,215,.18)');gr.addColorStop(Math.max(0,fV-.3),'rgba(0,0,0,.05)');gr.addColorStop(fV,'rgba(5,25,35,'+(w?.22:.55)+')');gr.addColorStop(Math.min(1,fV+.12),'rgba(0,10,0,.2)');gr.addColorStop(Math.min(1,fV+.3),'rgba(255,240,190,.08)');gr.addColorStop(1,'rgba(255,245,200,.28)');
+  x.fillStyle=gr;x.fillRect(-10,-10,W+20,H+20);
+  /* poziomice – łagodne łuki, gęściej na stromszym stoku pod górę */
+  x.strokeStyle=w?'rgba(110,130,150,.4)':'rgba(25,45,15,.38)';x.lineWidth=1.1;
+  const lines=[];for(let d=15;d<100;d+=17)lines.push(d);for(let d=108;d<150;d+=9)lines.push(d);
+  const cx0=T[0]-10,hw=120;for(const d of lines){const y=T[1]-d/M,bend=(d<100?-1:1)*14,sg=x.createLinearGradient(cx0-hw,0,cx0+hw,0);const c=w?'110,130,150':'25,45,15',al=d<100?.4:.5;sg.addColorStop(0,'rgba('+c+',0)');sg.addColorStop(.25,'rgba('+c+','+al+')');sg.addColorStop(.75,'rgba('+c+','+al+')');sg.addColorStop(1,'rgba('+c+',0)');x.strokeStyle=sg;x.beginPath();x.moveTo(cx0-hw,y+bend*.6);x.quadraticCurveTo(cx0,y-bend,cx0+hw,y+bend*.6);x.stroke()}
+  /* dno dolinki – wilgotniejsza, ciemniejsza trawa */
+  const gv=x.createLinearGradient(0,yV-18,0,yV+18);gv.addColorStop(0,'rgba(0,0,0,0)');gv.addColorStop(.5,w?'rgba(150,170,190,.3)':'rgba(15,50,25,.4)');gv.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=gv;x.fillRect(-10,yV-18,W+20,36);
+  /* opisy */
+  x.font='800 7px system-ui';x.textAlign='center';const lab=(t,yy)=>{const tw=x.measureText(t).width+8;x.fillStyle='rgba(0,0,0,.45)';x.fillRect(T[0]+26-tw/2,yy-6,tw,9);x.fillStyle='#fff';x.fillText(t,T[0]+26,yy+1)};
+  lab('▼ w dół',T[1]-50/M);lab('dolinka',yV);lab('▲ pod górę',T[1]-128/M);
+  x.restore()};
+ h.txt=(h.txt?h.txt+' · ':'')+'od tee w dół do dolinki na 100 m, potem pod górę do kosza';
+ delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
+}catch(e){console.warn('P139',e)}})();</script>
+<script>/* P140: Międzybłocie 7 – cienkie białe brzozy na fairwayu */
+(function(){try{const h=MZ[6],T=h.tee,B=h.b;
+ const P=[[152,420],[203,392],[166,350],[214,318],[146,292],[190,262],[221,232],[158,214],[204,182],[140,168],[226,150]];
+ h.trees=h.trees.filter(t=>!P.some(p=>Math.hypot(t[0]-p[0],t[1]-p[1])<t[2]+8));
+ for(const p of P)h.trees.push([p[0],p[1],5,2]);
+ const oa=h.art;h.art=(x,w)=>{if(oa)oa(x,w);for(const[bx,by]of P){const L=24,s=(bx*7+by*3)%5;x.save();
+   x.fillStyle='rgba(0,0,0,.22)';x.beginPath();x.ellipse(bx+9,by+2,11,3.2,-.25,0,7);x.fill();
+   x.fillStyle='#f4f2ea';x.fillRect(bx-1.3,by-L,2.6,L);x.fillStyle='#bdb8aa';x.fillRect(bx+.4,by-L,.9,L);x.fillStyle='#2a2a2a';for(let k=3;k<L-2;k+=3.4+((k+s)%3)*.6)x.fillRect(bx-1.3+((k*7)%2),by-k,1.6,.7);
+   const C=w?['#e8eef0','#d0dadf','#b9c6cc']:['#9dc25a','#b9d870','#7ea844'];for(let k=0;k<11;k++){const a=k*2.4+s,r=3+((k*5+s)%4),dx=Math.cos(a)*r*1.3,dy=Math.sin(a)*r*.9;x.fillStyle=C[k%3];x.globalAlpha=.85;x.beginPath();x.arc(bx+dx,by-L+2+dy,2.3+(k%3)*.6,0,7);x.fill()}x.globalAlpha=1;x.restore()}};
+ delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
+}catch(e){console.warn('P140',e)}})();</script>
+<script>/* P141: Międzybłocie 10 – ścieżka do kosza OFF idzie między drzewami */
+(function(){try{const h=MZ[9],R=(h.roads||[]).find(r=>r.w==5);if(!R)return;const P=R.pts;const add=[];
+ for(let i=1;i<P.length;i++){const a=P[i-1],b=P[i],dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1,nx=-dy/l,ny=dx/l;{const f=.5,x=a[0]+dx*f,y=a[1]+dy*f,s=i%2?1:-1,r=8;add.push([x+nx*s*(r+13),y+ny*s*(r+13),r])}}
+ const dseg=(p,a,b)=>{const dx=b[0]-a[0],dy=b[1]-a[1],l=dx*dx+dy*dy||1,t=Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/l));return Math.hypot(p[0]-a[0]-dx*t,p[1]-a[1]-dy*t)};h.trees=h.trees.filter(t=>P.every((p,k)=>!k||dseg(t,P[k-1],p)>t[2]*.8+6));const T=h.tee,B=(h.deco||[]).find(o=>o.k=='bkx');h.trees.push(...add.filter(t=>Math.hypot(t[0]-T[0],t[1]-T[1])>34&&(!B||Math.hypot(t[0]-B.x,t[1]-B.y)>16)));
+ delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
+}catch(e){console.warn('P141',e)}})();</script>
+<script>/* P142: Międzybłocie 11 – droga za koszem asfaltowa */
+(function(){try{const h=MZ[10],r=(h.roads||[]).find(r=>r.w>=16);if(r){r.asph=1;const a=r.pts[0],b=r.pts[r.pts.length-1],dx=b[0]-a[0],dy=b[1]-a[1];r.pts=[[a[0]-dx*.3,a[1]-dy*.3],[b[0]+dx*.3,b[1]+dy*.3]];h.trees=h.trees.filter(t=>{const l=dx*dx+dy*dy,u=Math.max(-.3,Math.min(1.3,((t[0]-a[0])*dx+(t[1]-a[1])*dy)/l));return Math.hypot(t[0]-a[0]-dx*u,t[1]-a[1]-dy*u)>r.w/2+t[2]*.7})}
+ delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
+}catch(e){console.warn('P142',e)}})();</script>
+<script>/* P143: Międzybłocie 13 – kosz w lewo na L20 */
+(function(){try{const h=MZ[12],M=h.M||.2,nx=180-20/M,dx=nx-h.b[0],P=h.path||[],n=P.length;
+ for(let i=0;i<n;i++){const f=Math.max(0,(i/(n-1)-.45)/.55);P[i]=[P[i][0]+dx*f*f,P[i][1]]}h.b=[nx,h.b[1]];
+ h.trees=h.trees.filter(t=>Math.hypot(t[0]-h.b[0],t[1]-h.b[1])>t[2]+20);
+ const T=h.tee,X=m=>180+m/M,Y=d=>T[1]-d/M;h.trees.push([X(-10),Y(75),11],[X(-10),Y(90),10]);
+ delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
+}catch(e){console.warn('P143',e)}})();</script>
+<script>/* P144: Międzybłocie 16 – spacerowicz z psem na drodze za koszem, komentuje rzuty */
+(function(){try{const h=MZ[15],RY=13.6;
+ const S={x:60,dir:1,y:26,stop:0,say:null,st:0,tail:0},LINES={good:['O, ładnie poleciał!','Panie, to było blisko!','Ale rzut, brawo!'],ob:['Hej, dysk na drodze!','Uwaga, tu jeżdżą samochody!','Burek, zostaw ten dysk!'],tree:['Auć, w drzewo…','Drzewa tu nie przesuniesz 😄'],hole:['Brawo! Burek też się cieszy 🐕','No i w koszu!'],idle:['Dzień dobry!','Ładna pogoda na frisbee','Burek, noga!','Co to za gra, ten dyskgolf?']};
+ const pick=a=>a[(Math.random()*a.length)|0];const sayL=k=>{S.say=pick(LINES[k]);S.st=performance.now()+3800;S.stop=performance.now()+3000};
+ let prev=null,prevH=0;setInterval(()=>{try{if(!playing||holes!==MZ||holes[hi]!==h)return;if(disc&&!prev)prev=disc;if(!disc&&prev){const d=prev;prev=null;if(scores.length>prevH){prevH=scores.length;sayL('hole');return}
+   const dd=dm(lie);if(lie.y<RY+10)sayL('ob');else if(d._hitTree||d.hitT)sayL('tree');else if(dd<10)sayL('good');else if(Math.random()<.35)sayL('idle')}prevH=scores.length}catch(e){}},200);
+ const oL=h.live;h.live=c=>{if(oL)oL(c);try{const now=performance.now();
+   if(now>S.stop){S.x+=S.dir*.16;if(S.x>W-30){S.dir=-1}if(S.x<30){S.dir=1}}
+   if(!S.say&&now>S.st&&Math.random()<.002){sayL('idle')}
+   const walking=now>S.stop,y=walking?S.y:S.y+10,ph=walking?Math.sin(now/140):0;
+   /* pies */const dx=S.x+S.dir*12,dy=y+3+Math.abs(Math.sin(now/110))*0.6;c.save();c.strokeStyle='rgba(60,40,20,.8)';c.lineWidth=.5;c.beginPath();c.moveTo(S.x+S.dir*2,y-6);c.quadraticCurveTo(S.x+S.dir*8,y,dx-S.dir*2,dy-2);c.stroke();
+   c.fillStyle='rgba(0,0,0,.25)';c.beginPath();c.ellipse(dx,dy+1.6,4.5,1.4,0,0,7);c.fill();c.fillStyle='#8a5a2b';c.beginPath();c.ellipse(dx,dy-1.5,4,2,0,0,7);c.fill();c.beginPath();c.ellipse(dx+S.dir*3.8,dy-3,1.9,1.6,0,0,7);c.fill();c.fillStyle='#5a3a1a';c.beginPath();c.ellipse(dx+S.dir*3.5,dy-4.2,.8,1.1,0,0,7);c.fill();
+   c.strokeStyle='#8a5a2b';c.lineWidth=.9;c.beginPath();c.moveTo(dx-S.dir*3.8,dy-2);c.lineTo(dx-S.dir*5.5,dy-3.6+Math.sin(now/90)*1.2);c.stroke();c.lineWidth=.8;for(const o of[-2.6,-1,1,2.6]){c.beginPath();c.moveTo(dx+o,dy-.6);c.lineTo(dx+o+(walking?Math.sin(now/90+o)*.8:0),dy+1.2);c.stroke()}c.restore();
+   PERSON(S.x,y,{shirt:'#c0392b',pants:'#34495e',skin:'#e7b993',hair:'#6b4a2a',hat:'cap',hatc:'#2c3e50',arms:'down',talk:!!S.say,ph:walking?ph*3:0});
+   if(S.say){if(now>S.st)S.say=null;else window.__bubble&&window.__bubble(S.say,S.x,y+34,Math.min(1,(3800-(S.st-now))/300))}}catch(e){}};
+}catch(e){console.warn('P144',e)}})();</script>
+<script>/* P145: Międzybłocie 1 – dwóch kibiców na ławce, gadają między sobą */
+(function(){try{const h=MZ[0],BX=130,BY=h.tee[1]-14;
+
+ const L=[['Zagrałeś już dzisiaj karierę?','Jeszcze nie, rating sam nie wskoczy…'],['Piękny dzień na parę bogeyów.','I na jeden dysk w krzakach.'],['Ten dysk wczoraj kosztował 80 zł.','A ile kosztował wyciągany z wody?'],['Mówię ci, putter jest najważniejszy.','Dlatego mam ich siedem.'],['Ace na jedynce? Widziałem raz.','We śnie się nie liczy.'],['Kiedyś grałem z backhandu.','A teraz grasz z ławki.'],['Pamiętaj: najpierw karta, potem rzut.','Najpierw kawa, potem karta.'],['Wiatr dziś w plecy.','U mnie zawsze w twarz.'],['Ten na tee wygląda na profesjonalistę.','Poczekaj, aż rzuci.']];
+ {let s=91;const R=()=>{s=(s*1664525+1013904223)|0;return((s>>>8)&65535)/65536};for(let y=10;y<540;y+=17+R()*7){const x=104+R()*12,r=9+((R()*4)|0);if(R()<.3)continue;if(h.trees.some(t=>Math.hypot(t[0]-x,t[1]-y)<t[2]+r*.6))continue;h.trees.push([x,y,r])}}
+ const S={i:-1,k:0,t:0};
+ delete h._fill;delete h._col;delete h._sil;try{BGC.delete(h)}catch(e){}
+ const oL=h.live;h.live=c=>{if(oL)oL(c);try{const now=performance.now();
+   const bp=(px,py,col)=>{c.save();c.fillStyle='rgba(0,0,0,.25)';c.beginPath();c.ellipse(px+1.5,py+1.2,4.5,1.6,0,0,7);c.fill();c.fillStyle=col;c.beginPath();c.roundRect?c.roundRect(px-3.5,py-6,7,7,2):c.rect(px-3.5,py-6,7,7);c.fill();c.fillStyle='rgba(0,0,0,.25)';c.fillRect(px-3,py-2.5,6,1.4);c.strokeStyle='rgba(255,255,255,.45)';c.lineWidth=.5;c.beginPath();c.arc(px,py-6,2,Math.PI,0);c.stroke();c.restore()};bp(BX-14,BY+3,'#c0392b');bp(BX+15,BY+4,'#2c3e50');
+   PERSON(BX-6,BY+2,{shirt:'#2e86de',pants:'#34495e',skin:'#f0c9a4',hair:'#6b4a2a',hat:'cap',hatc:'#e67e22',talk:S.k==0&&S.i>=0,ph:1});
+   PERSON(BX+7,BY+2,{shirt:'#27ae60',pants:'#5a4a3a',skin:'#e7b993',hair:'#bbbbbb',beard:'#cccccc',talk:S.k==1&&S.i>=0,ph:4});
+   if(now>S.t){if(S.i<0||S.k==1){S.i=(Math.random()*L.length)|0;S.k=0;S.t=now+3400}else{S.k=1;S.t=now+3400}if(Math.random()<.25&&S.k==0){S.t=now+9000;S.i=-1}}
+   if(S.i>=0&&window.__bubble)window.__bubble(L[S.i][S.k],S.k==0?BX-6:BX+7,BY+10,Math.min(1,(3400-(S.t-now))/300))}catch(e){}};
+}catch(e){console.warn('P145',e)}})();</script>
+<script>/* P146: Międzybłocie 16 – mapa niżej, żeby było widać drogę za koszem */
+(function(){try{const h=MZ[15];const C=camUpdate;camUpdate=function(){C.apply(this,arguments);try{if(holes&&holes[hi]===h&&(CAM.z||1)<=1.001)CAM.oy=54*CAM.s}catch(e){}}}catch(e){console.warn('P146',e)}})();</script>
 </body>
 </html>
