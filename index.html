@@ -25,7 +25,7 @@ addEventListener('load',()=>setTimeout(()=>{try{
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e});
 </script><style>#pwask{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,8,4,.6);font-family:'Baloo 2',system-ui}#pwask .pk{width:min(100vw,440px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 16px);color:#fff;text-align:center;animation:cshUp .25s ease-out}#pwask img{width:72px;height:72px;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.4)}#pwask b{display:block;font-size:21px;margin:8px 0 2px}#pwask p{margin:0 0 12px;color:#cfe5d5;font:600 14px system-ui;line-height:1.45}#pwask .ph{background:rgba(255,211,90,.12);border:1px solid rgba(255,211,90,.4);border-radius:14px;padding:10px;margin:0 0 10px;font:600 14px system-ui;color:#fff3c4;line-height:1.5}#pwask .ph b{display:inline;font:800 14px system-ui;margin:0;color:#ffd35a}#pwask button{display:block;width:100%;padding:13px;border-radius:16px;border:0;font:900 17px 'Baloo 2',system-ui;margin-bottom:8px}#pwyes{background:linear-gradient(135deg,#a4ffb8,#3fd16a);color:#08210f}#pwno{background:rgba(255,255,255,.08)!important;color:#cfe5d5;border:1px solid rgba(255,255,255,.15)!important}</style>
 <meta charset="utf-8">
-<meta name="dgv" content="137 · 13.11.2026">
+<meta name="dgv" content="138 · 13.11.2026">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>/* P73: duże przyciski i lekka grafika także gdy przeglądarka podaje bardzo szeroki ekran (np. tryb "wersja na komputer") */
 function GFXLOW(){return window._gfxLow}window.DECK=window.DECK==null?.5:window.DECK;window.UIZ=1;(function(){var m=document.querySelector('meta[name=viewport]');function wide(){try{return matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2}catch(e){return false}}
  try{if(wide())m.setAttribute('content','width=420, viewport-fit=cover')}catch(e){}
@@ -3179,7 +3179,7 @@ function PVdraw(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.lineCap='round'
   g.setLineDash([6,5]);g.strokeStyle='#ffd35a';g.lineWidth=2;g.beginPath();g.moveTo(P[cut][0],P[cut][1]);for(let i=cut+1;i<n;i++)g.lineTo(P[i][0],P[i][1]);g.stroke()}
  if(PV.ob){g.setLineDash([]);g.strokeStyle='#ff4a3d';g.lineWidth=3;g.beginPath();g.moveTo(PV.ex-6,PV.ey-6);g.lineTo(PV.ex+6,PV.ey+6);g.moveTo(PV.ex+6,PV.ey-6);g.lineTo(PV.ex-6,PV.ey+6);g.stroke()}}
 /* P129: krótszy podgląd – biała linia do ~70% lotu, potem tylko krótka żółta strzałka z kierunkiem (bez miejsca lądowania) */
-function PVshort(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.lineCap='round';let tot=0;for(let i=1;i<n;i++)tot+=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);let cut=1,acc=0;while(cut<n-1){acc+=Math.hypot(P[cut][0]-P[cut-1][0],P[cut][1]-P[cut-1][1]);if(acc>=tot*.58)break;cut++}
+function PVshort(PV,ac){const P=PV.pts,n=P.length;if(n<2)return;g.lineCap='round';let tot=0;for(let i=1;i<n;i++)tot+=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);let cut=1,acc=0;while(cut<n-1){acc+=Math.hypot(P[cut][0]-P[cut-1][0],P[cut][1]-P[cut-1][1]);if(acc>=tot*.5)break;cut++}
  g.setLineDash([2,9]);g.strokeStyle='rgba(0,0,0,.28)';g.lineWidth=5;g.beginPath();g.moveTo(P[0][0]+1.5,P[0][1]+2);for(let i=1;i<=cut;i++)g.lineTo(P[i][0]+1.5,P[i][1]+2);g.stroke();
  g.strokeStyle=ac;g.lineWidth=3.4;g.beginPath();g.moveTo(P[0][0],P[0][1]);for(let i=1;i<=cut;i++)g.lineTo(P[i][0],P[i][1]);g.stroke();g.setLineDash([]);
  let s=0;for(let i=1;i<=cut;i++)s+=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);
@@ -5009,7 +5009,7 @@ body.onl #resx{top:calc(env(safe-area-inset-top,0px) + 92px)!important;transform
  window.DIFF={on:true,
   /* rzut, który doleci do kosza (z tee lub z >30 m) */
   cen:[[50,.21],[85,.15]],     /* jak daleko od środka może lecieć (część strefy kosza) wg długości dołka */
-  spd:[[50,[.19,.46]],[85,[.21,.425]]], /* zakres prędkości przy koszu: wolniej = klatka, szybciej = łańcuchy */
+  spd:[[50,[.19,.414]],[85,[.21,.383]]], /* zakres prędkości przy koszu: wolniej = klatka, szybciej = łańcuchy */
   far:{cen:.7,spd:[.08,.5]},
   ptS:[[5,[.07,.70]],[10,[.11,.56]],[20,[.14,.49]],[35,[.16,.44]],[80,[.17,.42]]], /* zakres prędkości dla rzutów nie z tee wg odległości (m) */   /* rzuty z >30 m (nie z tee) */
   /* minigra putta: promień celu (px) i szybkość celownika wg odległości */
