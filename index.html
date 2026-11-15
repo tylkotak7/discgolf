@@ -2106,7 +2106,7 @@ renderSta=function(){if(!CN2[statL])statL='zlotow';const S=SV.stats[statL]||{rou
  sh.onclick=e=>{if(e.target===sh)sh.classList.remove('on')};chip.onclick=()=>{render();sh.classList.add('on')};label();
  setInterval(()=>{if($('menu').style.display!='none')label()},800)})();
 /* ===================== P30: dymki z kabrioletu (Złotów 12) ===================== */
-const CARTXT=['Jedziemy na Międzybłocie!','Złotów jest dla amatorów 😎','Czas na Międzybłocie…','Kto ostatni w aucie, ten nosi bagi!','Hyzer flip i do domu!','Dziś bijemy rekord pola!','Ej, widziałeś ten ace?!','Za tydzień MP Long, trenuj!','Sezon jesienny – na Międzybłocie!'];
+const CARTXT=['Jedziemy na Międzybłocie!','Złotów jest dla amatorów 😎','Czas na Międzybłocie…','Kto ostatni w aucie, ten nosi bagi!','Hyzer flip i do domu!','Dziś bijemy rekord pola!','Ej, widziałeś ten ace?!','Za tydzień Międzybłocie, trenuj!','Sezon jesienny – na Międzybłocie!'];
 const _cab30=cabrio;cabrio=function(h){const C0=CARP.c;_cab30(h);const C=CARP.c;if(!C||!UP)return;if(C!==C0||!C.tx){C.tx=CARTXT[(Math.random()*CARTXT.length)|0];C.ts=performance.now()/1000}
  if(C.x<-10||C.x>W+10)return;const t=performance.now()/1000,y=h.carRoad+(C.d>0?3:-3);g.save();g.font='800 7.5px "Baloo 2",system-ui';const w=g.measureText(C.tx).width+10,bx=Math.max(4,Math.min(W-w-4,C.x-w/2)),by=y-30,a=Math.min(1,(t-C.ts)*3);g.globalAlpha=a;
  g.fillStyle='rgba(0,0,0,.22)';g.beginPath();g.roundRect(bx+1,by+1.5,w,13,6);g.fill();g.fillStyle='#fff';g.beginPath();g.roundRect(bx,by,w,13,6);g.fill();const tx=Math.max(bx+6,Math.min(bx+w-6,C.x));g.beginPath();g.moveTo(tx-3,by+12.5);g.lineTo(tx+3,by+12.5);g.lineTo(tx,by+18);g.fill();
