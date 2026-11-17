@@ -3374,7 +3374,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  fix(11,h=>{for(const t of h.trees){if(Math.hypot(t[0]-149,t[1]-289)<3)t[0]=158;else if(Math.hypot(t[0]-159,t[1]-347)<3)t[0]=168}});
  try{BGC.clear()}catch(e){}
  /* ---------- NPC 2: pan w moro z fajką (dołek 1, przy wiacie) ---------- */
- const N2={say:'',until:0,next:9},L2=['Masz jakiegoś felona na wymianę?','Tylko forehand się liczy!','Backhand? To dla turystów…','Za moich czasów rzucało się talerzem!','Fajka zgasła, putt nie wpadł. Przypadek?','Nowy Felon? Nigdy nie za wiele.','Forhand to nie rzut, to styl życia.','Kto rzuca forhandem, ten nie płacze.','Zone na approach i putt z metra – klasyka.','Zone w torbie, spokój w głowie.'];
+ const N2={say:'',until:0,next:9};window.__N2=N2;const L2=['Masz jakiegoś felona na wymianę?','Tylko forehand się liczy!','Backhand? To dla turystów…','Za moich czasów rzucało się talerzem!','Fajka zgasła, putt nie wpadł. Przypadek?','Nowy Felon? Nigdy nie za wiele.','Forhand to nie rzut, to styl życia.','Kto rzuca forhandem, ten nie płacze.','Zone na approach i putt z metra – klasyka.','Zone w torbie, spokój w głowie.'];
  const camo=['#4b5a32','#6b7442','#3a3324','#8a8456'];
  function draw2(h){if((holes!==ZL&&holes!==Z22)||hi!==0)return;const sh=(h.deco||[]).find(o=>o.k=='shelter');if(!sh)return;const t=performance.now()/1000;
   if(t>N2.next&&t>N2.until&&!(typeof NPC!='undefined'&&t<NPC.until)){N2.say=L2[(Math.random()*L2.length)|0];N2.until=t+3.6;N2.next=t+10+Math.random()*6}
