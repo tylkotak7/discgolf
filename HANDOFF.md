@@ -51,20 +51,9 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
   slope (używa wbudowanego h.slope .93/1.06 + slopeTxt), mound, bigTree, road, md = mando). Rundy beta nie liczą się do Top 5 / online.
 
 ## Zadania do zrobienia (stan 22.11.2026)
-1. **Kałuże jesienią** – teraz wyglądają dziwnie; mają wyglądać jak woda (połysk, odbicie
-   nieba, ciemniejszy brzeg, lekkie kręgi).
-2. **Street Wągrowiec – 9 dołków gotowych (beta, kod 777)** – dalsze poprawki wg uwag użytkownika.
-   Użytkownik prześle zrzuty z mapy; sprawdź też wygląd Wągrowca w internecie.
-   1. Rynek – rzut po przekątnej rynku, kosz w rogu przy zejściu na Bydgoską.
-      Przeszkody: zaparkowane samochody wokół rynku, fontanna (dysk może wpaść do wody).
-   2. Z Bydgoskiej przy zejściu z rynku w dół na parking Biedronki – par 4.
-   3. Start z Janowieckiej przy Shellu i Neeto, kosz na parkingu przy Kauflandzie.
-   4. PKP – rzut przez tory z jednej strony na drugą, przy budynku dworca.
-   5. Kościuszki – start na torach, kosz przy restauracji Smok po prawej, na parkingu – par 4.
-   6. Nad jeziorem koło Neptuna.
-   7. Przy aquaparku – kosz na rondzie.
-   8. Leśniczówka – z parkingu do wiaty – par 4.
-   9. Z parkingu na Łakinie koło piramidy.
+1. ✅ Kałuże jesienią – zrobione (P195, v215).
+2. ✅ Street Wągrowiec – 9 dołków (beta, kod 777) i Orle Wągrowiec – 13 dołków (beta, kod 777), opis wyżej
+   w „Pola w Wągrowcu”. Dalsze poprawki wg uwag użytkownika; gdy wyjdą z bety → własny Top 5 i ranking online.
 3. **Grafika** – kierunek „malarski / złota godzina” (test: złote światło, chłodne cienie);
    rozważyć Three.js dla ładniejszej grafiki (w widoku z góry / 2.5D, nie pełne 3D).
    Test „złota godzina” istnieje jako plik testowy (nie w grze).
