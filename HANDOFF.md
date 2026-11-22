@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v246**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v247**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -80,3 +80,6 @@ W build3_ (g2patch.py, nakładany po p90patch): źdźbła trawy po h.urb (wykryc
 ### v246
 - p208.js: okno pokoju (#onsh .rm2) – kod z Kopiuj/Wyślij (link ?pokoj=KOD dołącza automatycznie), 4 miejsca graczy, własny przycisk startu #onplay2 (oryginalny #onplay ukryty), ✕ w rogu. Znajomi (#onfr, #frs): avatar ze statusem, bilans z dg_ohist (w–l), w pokoju „Zaproś”, usuwanie po przytrzymaniu.
 - Kolejność: build.py (p195–p204, p206–p208) → p90 → g2 → g3 → g4 → g5.
+
+### v247
+- g6patch.py: Luboń 5 (wpis /* 5 */ w P163) – droga (roads w:8), bez drzewa [205,300], kosz innego dołka (deco bkx 58,432), kłoda logArt, teepad oldTee(46,100) w stronę kosza, przerzedzony korytarz tamtego dołka (filtr h.trees + h.noF). Kolejność: … → g5 → g6.
