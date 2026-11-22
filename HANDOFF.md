@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v226**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v227**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -57,7 +57,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 3. **Grafika** – kierunek „malarski / złota godzina” (test: złote światło, chłodne cienie);
    rozważyć Three.js dla ładniejszej grafiki (w widoku z góry / 2.5D, nie pełne 3D).
    Test „złota godzina” istnieje jako plik testowy (nie w grze).
-4. **Postać** – lepszy model postaci + wybór kolorów i koszulek w menu (zakładka Postać).
+4. ✅ **Postać** – P198 (v227): nowy model `__draw2` dla menu i gry (gra przez `__draw2v` wpięte w P90 po translate), fryzury 0–8, `ss` styl koszulki, `num`, `eye`; mruganie, miny, chód, reakcje. Patche P90 w `p90patch.py` (sesja 22.11).
 5. Pomysły odłożone: tygodniowe misje, Putting League, wskaźnik celności puttów,
    pojedynek z duchem znajomego, Liga Wągrowiec, sekcja „przerwane rundy” w panelu 6666,
    pasek „Aktualizacja · N nowości” zasłania logo w menu (do przesunięcia).
