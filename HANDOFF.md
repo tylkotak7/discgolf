@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v241**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v242**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -61,3 +61,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 5. Pomysły odłożone: tygodniowe misje, Putting League, wskaźnik celności puttów,
    pojedynek z duchem znajomego, Liga Wągrowiec, sekcja „przerwane rundy” w panelu 6666,
    (✅ v228: pasek „Aktualizacja” przeniesiony nad dolne menu, mały avatar z nowego modelu, emblemat WRC na tabliczce Street – P199).
+
+
+### P204 – grafika (v242)
+W build3_ (g2patch.py, nakładany po p90patch): źdźbła trawy po h.urb (wykrycie trawy po kolorze, fairway jaśniejszy i krótko skoszony), chłodne cienie (poza TREEM), saturacja + split-toning przed tone-mappingiem, słabsza nakładka złotej godziny. Wyłącznik: window.__G2=false.
