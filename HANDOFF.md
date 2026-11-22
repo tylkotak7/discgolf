@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v248**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v249**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -86,3 +86,7 @@ W build3_ (g2patch.py, nakładany po p90patch): źdźbła trawy po h.urb (wykryc
 
 ### v248
 - g7patch.py (P209): dyski kolegów online (LV w P132) – kolor wg kolejności w ON.peers, nick, smuga (window.__PTR). Kolejność: … → g6 → g7.
+
+### v249
+- p210.js: dźwięki otoczenia (window.__AMB: kos, zięba, rudzik, kukułka, dzięcioł, wrony, wróble, gołębie, kaczki, klakson, pociąg), sfx.bird zależny od miejsca/pory, zima: wrony/dzięcioł, Street: szum miasta + pociąg (window.__trainOn z p196). p206: przywrócony sfx.land przy lądowaniu.
+- Kolejność: build.py (p195–p204, p206–p208, p210) → p90 → g2 → g3 → g4 → g5 → g6 → g7.
