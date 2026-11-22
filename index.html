@@ -31,7 +31,7 @@ addEventListener('load',()=>setTimeout(()=>{try{
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e});
 </script><style>#pwask{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,8,4,.6);font-family:'Baloo 2',system-ui}#pwask .pk{width:min(100vw,440px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 16px);color:#fff;text-align:center;animation:cshUp .25s ease-out}#pwask img{width:72px;height:72px;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.4)}#pwask b{display:block;font-size:21px;margin:8px 0 2px}#pwask p{margin:0 0 12px;color:#cfe5d5;font:600 14px system-ui;line-height:1.45}#pwask .ph{background:rgba(255,211,90,.12);border:1px solid rgba(255,211,90,.4);border-radius:14px;padding:10px;margin:0 0 10px;font:600 14px system-ui;color:#fff3c4;line-height:1.5}#pwask .ph b{display:inline;font:800 14px system-ui;margin:0;color:#ffd35a}#pwask button{display:block;width:100%;padding:13px;border-radius:16px;border:0;font:900 17px 'Baloo 2',system-ui;margin-bottom:8px}#pwyes{background:linear-gradient(135deg,#a4ffb8,#3fd16a);color:#08210f}#pwno{background:rgba(255,255,255,.08)!important;color:#cfe5d5;border:1px solid rgba(255,255,255,.15)!important}</style>
 <meta charset="utf-8">
-<meta name="dgv" content="215 · 22.11.2026">
+<meta name="dgv" content="216 · 22.11.2026">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>/* P73: duże przyciski i lekka grafika także gdy przeglądarka podaje bardzo szeroki ekran (np. tryb "wersja na komputer") */
 function GFXLOW(){return window._gfxLow}window.DECK=window.DECK==null?.5:window.DECK;window.UIZ=1;(function(){var m=document.querySelector('meta[name=viewport]');function wide(){try{return matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2}catch(e){return false}}
  try{if(wide())m.setAttribute('content','width=420, viewport-fit=cover')}catch(e){}
@@ -6279,6 +6279,9 @@ function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!
  const LNm=cm(x=>{x.lineCap='butt';x.setLineDash([7,7]);for(const r of U.roads)if(r.c)st(x,r,.8)});
  const PKm=cm(x=>{x.lineWidth=.7;for(const o of U.cars){if(o.road)continue;const f=[Math.sin(o.a),-Math.cos(o.a)],r=[Math.cos(o.a),Math.sin(o.a)],hw=7.6*(U.sc||1),hl=13*(U.sc||1);for(const sd of[-1,1]){x.beginPath();x.moveTo(o.x+r[0]*hw*sd-f[0]*hl,o.y+r[1]*hw*sd-f[1]*hl);x.lineTo(o.x+r[0]*hw*sd+f[0]*hl,o.y+r[1]*hw*sd+f[1]*hl);x.stroke()}}});
  const LTm=U.lots&&U.lots.length?cm(x=>{for(const P of U.lots){x.beginPath();P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill()}}):null,GRm=U.grass&&U.grass.length?cm(x=>{for(const P of U.grass){x.beginPath();P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill()}}):null;
+ const RA=U.rails||[],um=1/(h.M||.2),BAm=RA.length?cm(x=>{x.lineCap='butt';for(const r of RA){x.lineWidth=um*4.2;x.beginPath();r.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke()}}):null,
+  SLm=RA.length?cm(x=>{x.lineWidth=um*.26;for(const r of RA)for(let i=1;i<r.length;i++){const a=r[i-1],e=r[i],L=Math.hypot(e[0]-a[0],e[1]-a[1]),u=[(e[0]-a[0])/L,(e[1]-a[1])/L],n=[-u[1],u[0]];for(let t=0;t<L;t+=um*.62){const c=[a[0]+u[0]*t,a[1]+u[1]*t];x.beginPath();x.moveTo(c[0]-n[0]*um*1.3,c[1]-n[1]*um*1.3);x.lineTo(c[0]+n[0]*um*1.3,c[1]+n[1]*um*1.3);x.stroke()}}}):null,
+  RLm=RA.length?cm(x=>{x.lineWidth=Math.max(.35,um*.12);for(const r of RA)for(const sd of[-1,1]){x.beginPath();for(let i=0;i<r.length;i++){const a=r[Math.max(0,i-1)],e=r[Math.min(r.length-1,i+1)],L=Math.hypot(e[0]-a[0],e[1]-a[1])||1,n=[-(e[1]-a[1])/L,(e[0]-a[0])/L],q=[r[i][0]+n[0]*sd*um*.72,r[i][1]+n[1]*sd*um*.72];i?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1])}x.stroke()}}):null;
  const FR=U.fount.map(f=>[f.x*S,f.y*S,f.r*S]),TR=h.trees.map(t=>[t[0]*S,t[1]*S,t[2]*S*1.7]);
  for(let y=0;y<TH;y++)for(let x=0;x<TW;x++){const i=y*TW+x;if(WAm[i]>.55)continue;const pl=PLm[i],rd=RDm[i],cb=CBm[i];let r,g,b,ht;
   /* chodnik: płyty 50×50 */
@@ -6289,6 +6292,8 @@ function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!
   if(GRm&&GRm[i]>0){const k=GRm[i],n=fb3(x*.03,y*.03,41,3),bl=vn3(x*.9,y*.25,42),dr=fb3(x*.08,y*.08,43,2);let gr=.5+n*.1,gg=.46+n*.08,gb=.28;if(n<.45){gr=.34;gg=.43;gb=.19}if(dr>.64){gr=.47;gg=.39;gb=.27}gr+=(bl-.5)*.07;gg+=(bl-.5)*.07;r+=(gr-r)*k;g+=(gg-g)*k;b+=(gb-b)*k;ht=ht*(1-k)+(bl*1.8+n*1.4)*k}
   /* parking (asfalt + linie) */
   if(LTm&&LTm[i]>0){const k=LTm[i],n=hs3(x,y,24)*.05+fb3(x*.04,y*.04,25,3)*.06;let ar=.31+n,ag=.32+n,ab=.34+n;const pk=PKm[i];if(pk>0){ar+=(.9-ar)*pk;ag+=(.9-ag)*pk;ab+=(.88-ab)*pk}r+=(ar-r)*k;g+=(ag-g)*k;b+=(ab-b)*k;ht=ht*(1-k)-.3*k}
+  /* tory: tłuczeń, podkłady, szyny */
+  if(BAm&&BAm[i]>0){const k=BAm[i],n=hs3(x,y,71)*.14+fb3(x*.1,y*.1,72,2)*.06;r+=(.42+n-r)*k;g+=(.39+n-g)*k;b+=(.36+n-b)*k;ht=ht*(1-k)+(1+hs3(x,y,73)*.8)*k;if(SLm[i]>.3){r=.3;g=.22;b=.15;ht+=.8}if(RLm[i]>.3){r=.6;g=.6;b=.63;ht+=1.6}}
   /* krawężnik */
   if(cb>0&&rd<.6){const k=cb*(1-rd);r+=(.76-r)*k;g+=(.75-g)*k;b+=(.72-b)*k;ht+=1.4*k}
   /* asfalt */
@@ -6304,10 +6309,10 @@ function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!
  /* fontanna: kamienne obrzeże + kolumna z czaszą */
  for(const f of U.fount){const cx=f.x*S,cy=f.y*S,ro=f.r*S+5,ri=f.r*S-1.5;E.rectFn(cx-ro-2,cy-ro-2,cx+ro+2,cy+ro+2,(i,x,y)=>{const d=Math.hypot(x-cx,y-cy);if(d<=ro&&d>=ri){const n=hs3(x>>1,y>>1,51)*.06;HT[i]=5+(d>ri+1.5&&d<ro-1.5?1:0);setA(i,.68+n,.66+n,.62+n);SPEC[i]=.1;if(wn&&d<ro-1)setA(i,.92,.94,.97)}else if(d<6){HT[i]=16-d;setA(i,.66,.64,.6);SPEC[i]=.2}else if(d<13&&d>10){HT[i]=Math.max(HT[i],9);setA(i,.62,.6,.56)}})}
  /* kamienice: dach dwuspadowy, elewacja (SIDE 7–12) */
- for(const B of U.bld){const{c,u,v,a,b}=B,ext=Math.hypot(a,b)+1,col=ROOF[B.rf],x0=(c[0]-ext)*S,y0=(c[1]-ext)*S,x1=(c[0]+ext)*S,y1=(c[1]+ext)*S;
+ for(const B of U.bld){const{c,u,v,a,b}=B,ext=Math.hypot(a,b)+1,col=B.paczka?[.95,.78,.15]:B.train?[.9,.9,.88]:B.canopy?[.85,.86,.86]:ROOF[B.rf],x0=(c[0]-ext)*S,y0=(c[1]-ext)*S,x1=(c[0]+ext)*S,y1=(c[1]+ext)*S;
   E.rectFn(x0,y0,x1,y1,(i,x,y)=>{const px=x/S-c[0],py=y/S-c[1],du=px*u[0]+py*u[1],dv=px*v[0]+py*v[1];if(Math.abs(du)>a||Math.abs(dv)>b)return;const qv=Math.abs(dv)/b,qu=Math.abs(du)/a;
    let hh=B.fl?B.h-6+(qu>.96||qv>.96?2:0):B.h+16*(1-qv);const tile=((Math.abs(dv)*S*1.3)|0)%3==0,n=hs3(x>>1,y>>1,61)*.07+fb3(x*.06,y*.06,62,2)*.06;let r=col[0]+n,g=col[1]+n,bb=col[2]+n;
-   if(B.fl){if(qu>.96||qv>.96){r=g=bb=.5}else if(hs3((du/6)|0,(dv/6)|0,63)>.94){r=g=bb=.42;hh+=3}}else{if(tile){r*=.8;g*=.8;bb*=.8}if(qv<.04){r*=.75;g*=.75;bb*=.75}if(qu>.97){r*=.85;g*=.85;bb*=.85;hh+=1.5}}
+   if(B.train){if(qu>.985||Math.abs(qv-.7)<.12){r=.75;g=.12;bb=.12}else if(((du*S)|0)%14<1){r=g=bb=.6}}else if(B.paczka){if(((du*S*1.2)|0)%4<1){r=.35;g=.3;bb=.1}}else if(B.fl){if(qu>.96||qv>.96){r=g=bb=.5}else if(hs3((du/6)|0,(dv/6)|0,63)>.94){r=g=bb=.42;hh+=3}}else{if(tile){r*=.8;g*=.8;bb*=.8}if(qv<.04){r*=.75;g*=.75;bb*=.75}if(qu>.97){r*=.85;g*=.85;bb*=.85;hh+=1.5}}
    if(!B.fl&&hs3(B.rf*7+(du>0?1:0),(c[0]|0),64)>.7&&Math.abs(du-a*.4)<3&&Math.abs(dv-b*.4)<2.5){hh+=8;r=.5;g=.36;bb=.3}
    if(wn){const k=tile?.82:.93;r=k;g=k+.02;bb=k+.05}
    if(hh<=HT[i])return;HT[i]=hh;setA(i,r,g,bb);SPEC[i]=B.fl?.05:.12;SIDE[i]=7+B.fc})}
@@ -6321,7 +6326,7 @@ function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!
 /* kolizja ze ścianami (kapsuły po obwodzie budynku) + OB: ulica i budynki */
 function urbCol(h){const C=[];for(const B of h.U.bld){const{c,u,v,a,b}=B;const pts=[];const st=5;for(let s=-a;s<=a;s+=st){pts.push([s,-b],[s,b])}for(let s=-b;s<=b;s+=st){pts.push([-a,s],[a,s])}
   for(const[p,q]of pts){const x=c[0]+u[0]*p+v[0]*q,y=c[1]+u[1]*p+v[1]*q;if(x<-10||x>W+10||y<-10||y>H+10)continue;const t=[x,y,3.4*Math.max(.6,h.U.sc||1),0];t.w=1;C.push(t)}}return C}
-function urbOB(h){const U=h.U;return(x,y)=>{for(const r of U.roads)if(!r.noOB&&dpl([x,y],r.p)<r.w/2)return true;for(const B of U.bld){const px=x-B.c[0],py=y-B.c[1];if(Math.abs(px*B.u[0]+py*B.u[1])<B.a&&Math.abs(px*B.v[0]+py*B.v[1])<B.b)return true}return false}}
+function urbOB(h){const U=h.U;return(x,y)=>{for(const r of U.roads)if(!r.noOB&&dpl([x,y],r.p)<r.w/2)return true;for(const B of U.bld){if(B.noOB)continue;const px=x-B.c[0],py=y-B.c[1];if(Math.abs(px*B.u[0]+py*B.u[1])<B.a&&Math.abs(px*B.v[0]+py*B.v[1])<B.b)return true}for(const P of U.obp||[])if(inPoly(x,y,P))return true;return false}}
 function mkU(o){const h={tee:o.tee,b:o.b,par:o.par||3,trees:o.trees||[],water:[],roads:[],mead:[],rivers:[],extra:[],deco:o.deco||[],name:'Street Wągrowiec',M:o.M||.2,noFill:1,_fill:[],noSil:1,urb:null,U:o.U,txt:o.txt};
  line(h,o.tee,o.b,o.w||70);h.camDx=o.camDx!=null?o.camDx:Math.max(-40,Math.min(40,(o.b[0]-o.tee[0])*.12));for(const f of o.U.fount)h.water.push([f.x-f.r,f.y-f.r,f.r*2,f.r*2]);h.urb=E=>urbPaint(h,E);h.obF=urbOB(h);h.sw=1;return h}
 /* ================= DOŁEK 1 – RYNEK ================= */
@@ -6354,7 +6359,7 @@ function parkRow(U,P,K,a,b,offs,R,step){const L=Math.hypot(b[0]-a[0],b[1]-a[1]),
 /* ================= DOŁEK 2 – Z BYDGOSKIEJ NA PARKING BIEDRONKI (par 4) ================= */
 const H2=(()=>{const K=2.6,P=mkP(K,140,420),PA=a=>a.map(p=>P(p[0],p[1])),M=K/7.5,k=1/K;
  const byd=PA([[40,1615],[100,1560],[300,1405],[500,1285],[700,1120],[900,1020],[1120,945]]);
- const U={sc:.2/M,cs:.84,roads:[{p:byd,w:50*k,c:1,noOB:1}],plaza:[],lots:[PA([[468,505],[905,530],[990,500],[1120,470],[1120,880],[900,965],[760,1015],[650,1075],[560,1095],[430,1065],[300,1020]])],grass:[PA([[-30,440],[445,440],[468,505],[300,1020],[235,1095],[-30,1095]]),PA([[235,1095],[300,1020],[430,1065],[480,1200],[300,1330],[150,1420],[-30,1420],[-30,1095]]),PA([[-30,1700],[200,1560],[400,1460],[600,1340],[800,1200],[1000,1110],[1120,1080],[1120,1900],[-30,1900]])],bld:[],cars:[],pots:[],bench:[],fount:[]};
+ const U={sc:.2/M,cs:1.51,obp:[PA([[-30,440],[445,440],[468,505],[300,1020],[235,1095],[-30,1095]]),PA([[235,1095],[300,1020],[430,1065],[480,1200],[300,1330],[175,1400],[-30,1400],[-30,1095]])],roads:[{p:byd,w:50*k,c:1,noOB:1}],plaza:[],lots:[PA([[468,505],[905,530],[990,500],[1120,470],[1120,880],[900,965],[760,1015],[650,1075],[560,1095],[430,1065],[300,1020]])],grass:[PA([[-30,440],[445,440],[468,505],[300,1020],[235,1095],[-30,1095]]),PA([[235,1095],[300,1020],[430,1065],[480,1200],[300,1330],[150,1420],[-30,1420],[-30,1095]]),PA([[-30,1700],[200,1560],[400,1460],[600,1340],[800,1200],[1000,1110],[1120,1080],[1120,1900],[-30,1900]])],bld:[],cars:[],pots:[],bench:[],fount:[]};
  for(let i=0;i<byd.length-1;i++)rowHouses(U,byd[i],byd[i+1],1,36*k,61+i*7);
  rowHouses(U,P(262,1440),P(470,1300),-1,36*k,91);
  for(let i=0;i<byd.length-1;i++)rowHouses(U,byd[i],byd[i+1],1,36*k+150*k,131+i*7);
@@ -6362,16 +6367,92 @@ const H2=(()=>{const K=2.6,P=mkP(K,140,420),PA=a=>a.map(p=>P(p[0],p[1])),M=K/7.5
  bRect(U,P,K,330,410,220,70,0,{fl:1,rf:3,fc:4,h:56});
  bRect(U,P,K,665,955,150,80,-.42,{rf:0,fc:1,h:52});
  const R=rnd(777);
- parkRow(U,P,K,[468,525],[312,1000],[-22],R,19);
- parkRow(U,P,K,[595,575],[485,925],[-18,18],R,19);
- parkRow(U,P,K,[725,590],[645,870],[-18,18],R,19);
- parkRow(U,P,K,[808,690],[790,900],[18],R,19);
- parkRow(U,P,K,[868,680],[860,900],[-18],R,19);
- parkRow(U,P,K,[1040,480],[1040,720],[0],R,19);
+ parkRow(U,P,K,[468,525],[312,1000],[-34],R,34);
+ parkRow(U,P,K,[595,575],[485,925],[0],R,34);
+ parkRow(U,P,K,[725,590],[645,870],[0],R,34);
+ parkRow(U,P,K,[870,680],[862,900],[-32],R,34);
+ parkRow(U,P,K,[1045,480],[1045,720],[0],R,34);
  const T=(x,y,r,ty)=>[...P(x,y),r,ty];
  const trees=[T(340,1030,9,6),T(250,1310,13,0),T(825,770,9,2),T(828,835,9,2),T(832,900,9,2),T(565,540,8,6),T(1065,770,9,0),T(180,640,11,0),T(90,900,10,6),T(260,820,8,2)];
- return mkU({tee:P(185,1455),b:P(643,640),par:4,trees,U,M,w:60,txt:'Z Bydgoskiej w dół na parking Biedronki – wzdłuż ulicy i w lewo między auta. Budynki to OB.'})})();
-const SW=[H1,H2];window.SW=SW;
+ return mkU({tee:P(232,1458),b:P(643,640),par:4,trees,U,M,w:60,txt:'Pierwszy rzut w dół Bydgoskiej, potem w lewo na parking Biedronki. Budynki, podwórka i nieużytek to OB.'})})();
+
+/* ================= DOŁEK 3 – JANOWIECKA: OD ŁĄKOWEJ, KOSZ PRZY NETTO ================= */
+const H3=(()=>{const K=3,P=mkP(K,0,120),PA=a=>a.map(p=>P(p[0],p[1])),M=K/9,k=1/K,R=rnd(303);
+ const jan=PA([[380,1760],[440,1520],[520,1350],[620,1220],[760,1090],[880,950],[940,800],[950,660],[930,520],[880,445],[760,405],[500,400],[180,400],[-30,400]]),laka=PA([[-30,1745],[1110,1715]]);
+ const U={sc:.2/M,cs:1.19,roads:[{p:jan,w:60*k,c:1,noOB:1},{p:laka,w:70*k,c:1}],plaza:[],
+  lots:[PA([[-30,330],[1000,330],[1000,440],[870,450],[840,545],[495,545],[495,880],[430,900],[-30,900]]),PA([[790,960],[1000,830],[1110,960],[1110,1210],[880,1320],[800,1200]])],
+  grass:[PA([[495,545],[840,545],[930,640],[920,820],[850,960],[700,1070],[560,1190],[495,1260]]),PA([[820,1440],[1110,1290],[1110,1660],[700,1680]]),PA([[100,1420],[430,1420],[400,1690],[100,1700]])],
+  obp:[PA([[-30,1700],[1110,1670],[1110,1900],[-30,1900]])],bld:[],cars:[],pots:[],bench:[],fount:[],labels:[]};
+ bRect(U,P,K,765,190,640,160,0,{fl:1,rf:5,fc:4,h:60});
+ bRect(U,P,K,275,1080,340,160,0,{fl:1,rf:3,fc:4,h:62});
+ bRect(U,P,K,130,860,140,230,0,{rf:1,fc:0,h:56});
+ bRect(U,P,K,40,1300,110,600,0,{rf:2,fc:3,h:60});
+ bRect(U,P,K,330,1470,120,140,0,{rf:3,fc:4,h:48});
+ bRect(U,P,K,345,1365,90,70,0,{fl:1,rf:5,fc:2,h:40});
+ bRect(U,P,K,900,1080,230,170,-.78,{fl:1,rf:5,fc:2,h:44,noOB:1,canopy:1});
+ bRect(U,P,K,720,1320,200,150,-.78,{fl:1,rf:5,fc:2,h:46});
+ bRect(U,P,K,820,725,140,90,-.5,{rf:4,fc:0,h:38});
+ bRect(U,P,K,675,950,50,40,0,{fl:1,rf:3,fc:4,h:26});
+ parkRow(U,P,K,[440,490],[810,490],[0],R,40);
+ parkRow(U,P,K,[110,400],[110,660],[0],R,40);
+ parkRow(U,P,K,[460,560],[460,840],[0],R,40);
+ parkRow(U,P,K,[200,825],[350,825],[0],R,40);
+ const T=(x,y,r,ty)=>[...P(x,y),r,ty];
+ const trees=[T(190,950,11,0),T(380,1240,13,0),T(550,1500,14,0),T(625,1540,11,6),T(980,1330,11,0),T(680,600,8,3),T(630,880,9,3),T(990,1630,10,6),T(560,1600,10,0)];
+ return mkU({tee:P(420,1600),b:P(300,600),par:3,trees,U,M,w:60,txt:'Od Łąkowej w górę Janowiecką, kosz na parkingu przy Netto. Łąkowa i budynki to OB.'})})();
+/* ================= DOŁEK 4 – PKP: RZUT NAD TORAMI, KOSZ PRZY MAKARONOWYM RAJU ================= */
+const H4=(()=>{const K=3,P=mkP(K,0,150),PA=a=>a.map(p=>P(p[0],p[1])),M=K/9,k=1/K,R=rnd(404);
+ const sre=PA([[-30,674],[1110,466]]),low=PA([[-30,890],[1110,766]]);
+ const tr=[[1012,937],[1112,1037],[1232,1157],[1328,1253]].map(([a,b])=>PA([[-30,a+2],[1110,b-2]]));
+ const U={sc:.2/M,cs:1.19,roads:[{p:sre,w:70*k,c:1},{p:low,w:30*k}],rails:tr,
+  plaza:[PA([[480,1078],[1110,1032],[1110,1108],[480,1150]]),PA([[520,1300],[1110,1250],[1110,1330],[520,1380]]),PA([[150,1500],[1110,1440],[1110,1560],[150,1580]])],
+  lots:[PA([[-30,712],[1110,508],[1110,752],[-30,870]]),PA([[700,330],[1110,300],[1110,430],[700,450]])],
+  grass:[PA([[-30,905],[1110,780],[1110,880],[-30,985]]),PA([[-30,1380],[1110,1310],[1110,1440],[-30,1500]]),PA([[-30,230],[300,230],[300,640],[-30,660]])],
+  obp:[PA([[-30,965],[1110,880],[1110,1300],[-30,1380]])],bld:[],cars:[],pots:[],bench:[],fount:[],labels:[]};
+ bRect(U,P,K,500,470,400,110,-.18,{fl:1,rf:5,fc:4,h:40});
+ bRect(U,P,K,880,180,360,150,0,{rf:0,fc:3,h:66});
+ bRect(U,P,K,470,180,300,130,0,{rf:1,fc:1,h:62});
+ bRect(U,P,K,120,520,240,130,0,{rf:3,fc:4,h:56});
+ bRect(U,P,K,780,1036,600,58,-.07,{fl:1,rf:3,fc:4,h:34,noOB:1});
+ bRect(U,P,K,800,1292,560,58,-.07,{fl:1,rf:3,fc:4,h:34,noOB:1});
+ bRect(U,P,K,930,955,300,30,-.07,{fl:1,rf:5,fc:2,h:26,train:1,noOB:1});
+ bRect(U,P,K,890,1175,380,30,-.07,{fl:1,rf:5,fc:3,h:26,train:1,noOB:1});
+ bRect(U,P,K,680,1665,580,190,0,{rf:3,fc:0,h:66});
+ bRect(U,P,K,220,1610,300,90,0,{rf:1,fc:1,h:50});
+ parkRow(U,P,K,[500,632],[1080,527],[0],R,40);
+ parkRow(U,P,K,[90,826],[1080,727],[0],R,40);
+ parkRow(U,P,K,[240,712],[460,680],[0],R,40);
+ parkRow(U,P,K,[740,370],[1060,350],[0],R,40);
+ const T=(x,y,r,ty)=>[...P(x,y),r,ty];
+ const trees=[T(70,1460,11,0),T(190,1450,10,6),T(330,1440,11,0),T(470,1430,10,6),T(610,1420,11,0),T(330,880,8,2),T(200,300,10,0)];
+ U.labels.push({x:P(880,250)[0],y:P(880,250)[1]-4,t:'Makaronowy Raj',bg:'#c0392b'},{x:P(680,1580)[0],y:P(680,1580)[1]-8,t:'PKP Wągrowiec',bg:'#1f4e8c',c:'#fff'});
+ return mkU({tee:P(330,1525),b:P(880,345),par:4,trees,U,M,w:60,txt:'Przy starym dworcu PKP – rzut nad torami i pociągami, kosz przy Makaronowym Raju. Tory i ulica Średnia to OB.'})})();
+/* ================= DOŁEK 5 – KOŚCIUSZKI → BAR LATAJĄCY SMOK ================= */
+const H5=(()=>{const K=3,P=mkP(K,0,200),PA=a=>a.map(p=>P(p[0],p[1])),M=K/9,k=1/K,R=rnd(505);
+ const kos=PA([[410,1900],[450,1725],[560,1300],[690,900],[772,375],[800,150]]),wach=PA([[640,875],[1110,805]]);
+ const U={sc:.2/M,cs:1.19,roads:[{p:kos,w:120*k,c:1,noOB:1},{p:wach,w:52*k,c:1,noOB:1}],
+  plaza:[PA([[700,940],[880,900],[880,1060],[960,1150],[960,1260],[850,1260],[780,1060]])],
+  lots:[PA([[820,700],[1110,690],[1110,780],[820,790]]),PA([[860,860],[1110,830],[1110,950],[860,960]])],
+  grass:[PA([[-30,300],[520,300],[560,620],[470,960],[-30,980]]),PA([[820,380],[1110,380],[1110,680],[820,690]])],
+  bld:[],cars:[],pots:[],bench:[],fount:[],labels:[]};
+ bRect(U,P,K,1010,1060,170,150,0,{rf:0,fc:3,h:56});
+ bRect(U,P,K,735,1020,210,100,0,{fl:1,rf:3,fc:4,h:58});
+ bRect(U,P,K,745,1180,150,110,0,{rf:4,fc:1,h:54});
+ bRect(U,P,K,330,840,180,120,-.2,{fl:1,rf:5,fc:2,h:36});
+ bRect(U,P,K,800,990,64,22,0,{fl:1,rf:5,fc:1,h:24,paczka:1});
+ rowHouses(U,kos[2],kos[0],1,64*k,511);
+ rowHouses(U,kos[2],kos[0],1,64*k+70,517);
+ rowHouses(U,kos[3],kos[1],-1,64*k,523);
+ bRect(U,P,K,1000,1300,220,140,0,{rf:2,fc:4,h:54});
+ bRect(U,P,K,960,1480,260,160,0,{fl:1,rf:3,fc:2,h:50});
+ parkRow(U,P,K,[840,742],[1100,742],[0],R,40);
+ parkRow(U,P,K,[880,905],[1100,905],[0],R,40);
+ U.bench.push(P(905,1235).concat([0]));U.pots.push([...P(870,1110),4]);
+ const T=(x,y,r,ty)=>[...P(x,y),r,ty];
+ const trees=[T(150,1050,12,0),T(560,1100,10,0),T(560,610,10,6),T(260,470,12,0),T(130,620,10,3),T(380,560,9,3),T(990,620,10,0)];
+ const sm=P(1010,1000);U.labels.push({x:sm[0],y:sm[1]-6,t:'🐉 Latający Smok',bg:'#b0262b'},{x:P(800,980)[0],y:P(800,980)[1]-4,t:'Paczkomat',bg:'#f2c230',c:'#222',s:5});
+ return mkU({tee:P(455,1700),b:P(890,1190),par:4,trees,U,M,w:60,txt:'Z Kościuszki w górę, w prawo w Wachowiaka i do baru Latający Smok. Budynki to OB.'})})();
+const SW=[H1,H2,H3,H4,H5];window.SW=SW;
 /* ---------- wpięcie w grę ---------- */
 const _st=start;start=function(){if(layout=='street')holes=SW;return _st.apply(this,arguments)};
 const okSW=()=>{try{return localStorage.getItem('dg_swok')==='1'}catch(e){return false}};
@@ -6389,7 +6470,8 @@ try{const _so=sendOnline;sendOnline=function(){if(layout=='street')return;return
 /* ściana zamiast drzewa */
 try{const _pl=pill;pill=function(m){try{const h=holes&&holes[hi];if(h&&h.sw&&m==='🌲 Drzewo!'&&disc){let bt=null,bd=1e9;for(const t of h._col||[]){const d=Math.hypot(disc.x-t[0],disc.y-t[1])-t[2];if(d<bd){bd=d;bt=t}}if(bt&&bt.w)m='🧱 Ściana!'}}catch(e){}return _pl.apply(this,[m].concat([].slice.call(arguments,1)))}}catch(e){}
 /* kolizje ze ścianami dokładane po zbudowaniu tła; jesienne kałuże tylko poza miastem */
-const _b3=build3;build3=function(h,wn){const r=_b3.apply(this,arguments);try{if(h&&h.sw){h._col=(h._col||[]).filter(t=>!t.w).concat(urbCol(h))}}catch(e){}return r};
+const _b3=build3;build3=function(h,wn){const r=_b3.apply(this,arguments);try{if(h&&h.sw){h._col=(h._col||[]).filter(t=>!t.w).concat(urbCol(h));
+ const L=h.U.labels||[];if(L.length&&r&&r.getContext){const x=r.getContext('2d');x.save();x.scale(RS,RS);for(const o of L){x.font='900 '+(o.s||7)+'px system-ui';const w=x.measureText(o.t).width+8,hh=(o.s||7)+5;x.fillStyle='rgba(0,0,0,.35)';x.beginPath();x.roundRect(o.x-w/2+1,o.y-hh/2+1.5,w,hh,2.5);x.fill();x.fillStyle=o.bg||'#b0262b';x.beginPath();x.roundRect(o.x-w/2,o.y-hh/2,w,hh,2.5);x.fill();x.fillStyle=o.c||'#ffe27a';x.textAlign='center';x.textBaseline='middle';x.fillText(o.t,o.x,o.y+.5)}x.restore()}}}catch(e){console.warn('P196 lbl',e)}return r};
 try{const _pz=puddles;puddles=function(h){if(h&&h.sw)return h._pud=[];return _pz.apply(this,arguments)}}catch(e){}
 }catch(e){console.warn('P196',e)}})();
 </script>
@@ -6412,7 +6494,7 @@ const OD=[
  {len:78,par:3,p:[[627,1760],[560,1450],[500,1100],[452,790]],wm:18},
  {len:120,par:4,p:[[627,1105],[760,1220],[835,1285],[700,1345],[450,1400],[240,1445]],wm:16,md:[{a:21.8,l:-8.6,side:-1,len:12},{a:20.4,l:5.8,side:1,len:12}],txt:'Bramka z dwóch mando na zakręcie'}];
 const OR=OD.map((o,i)=>{const st=Math.hypot(o.p[0][0]-o.p[o.p.length-1][0],o.p[0][1]-o.p[o.p.length-1][1]),d=Math.round(o.len*st/plen(o.p)),k=Math.min(1.3,380/(d*5)),M=.2/k;
- const h=mk({d,p:o.p,k,w:o.wm/M},5101+i*13);h.par=o.par;h.name='Orle Wągrowiec';h._forest=1;h.needles=1;h.orle=1;h.txt=o.txt;h.slope=o.slope||0;
+ const h=mk({d,p:o.p,k,w:o.wm/M},5101+i*13);h.par=o.par;h.name='Orle Wągrowiec';h._forest=1;h.needles=1;h.orle=1;h.txt=o.txt;if(o.slope){h.slope=o.slope>0?.93:1.06;h.slopeTxt=(o.slope>0?'⬆ ':'⬇ ')+o.txt;h.txt=null}
  const um=m=>m/M;
  h.tt=t=>{const r=hs3(t[0]|0,t[1]|0,57);return r<.6?1:r<.75?3:r<.88?0:2};
  if(o.mound)h.mound=1;
@@ -6427,8 +6509,7 @@ const OR=OD.map((o,i)=>{const st=Math.hypot(o.p[0][0]-o.p[o.p.length-1][0],o.p[0
  if(o.md){h.md=[];for(const m of o.md){const u=um(m.a),pm=h.rel(u,um(m.l)),pe=h.rel(u,um(m.l)+m.side*um(m.len||30));h.md.push({m:pm,e:pe,dz:null});h.trees=h.trees.filter(t=>Math.hypot(t[0]-pm[0],t[1]-pm[1])>t[2]+8);h.trees.push([pm[0],pm[1],8,1])}}
  return h});
 window.OR=OR;
-/* pod górkę / z górki: dysk w powietrzu traci (lub zyskuje) trochę prędkości, gdy leci w stronę kosza */
-const _sp=step;step=function(){const d=disc,h=holes&&holes[hi];if(d&&h&&h.slope&&!d.rol&&!d.tom){const tx=h.b[0]-h.tee[0],ty=h.b[1]-h.tee[1],tl=Math.hypot(tx,ty)||1,c=(Math.sin(d.a)*tx-Math.cos(d.a)*ty)/tl;d.v*=1-.0022*h.slope*Math.max(0,c)}return _sp.apply(this,arguments)};
+/* pod górkę / z górki: wbudowany spadek terenu (SLK, poziomice, opis) */
 const _ld=load;load=function(){const r=_ld.apply(this,arguments);try{const h=holes[hi];if(h&&h.orle&&h.txt&&throws==0)setTimeout(()=>pill('🌲 '+h.txt),900)}catch(e){}return r};
 /* wpięcie w grę */
 const _st=start;start=function(){if(layout=='orle')holes=OR;return _st.apply(this,arguments)};

@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v215**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v216**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -45,15 +45,15 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - P195: kałuże jesienią (woda, nie pod drzewami; w mieście brak kałuż).
 - P196: **Street Wągrowiec** – silnik miejski w `build3_` (hook `h.urb`, elewacje SIDE 7–12, bruk, asfalt,
   parkingi `U.lots`, trawniki `U.grass`, kamienice `rowHouses`, `bRect`, auta `parkRow`). Ulica = OB (poza `noOB`),
-  ściany odbijają (`_col` z flagą `w`), fontanna = woda. Dołki 1 (Rynek) i 2 (Bydgoska → parking Biedronki).
-  Mapowanie: współrzędne px ze zrzutu Google Maps → świat przez `mkP(K,X0,Y0)`. Kolejne dołki: 3–9 z HANDOFF-u.
+  ściany odbijają (`_col` z flagą `w`), fontanna = woda. Dołki 1 Rynek, 2 Bydgoska → parking Biedronki, 3 Janowiecka (Łąkowa → Netto), 4 PKP nad torami → Makaronowy Raj, 5 Kościuszki → bar Latający Smok (+ paczkomat). Tory: `U.rails`, OB-strefy: `U.obp`, napisy: `U.labels`, skala aut: `U.cs`.
+  Mapowanie: współrzędne px ze zrzutu Google Maps → świat przez `mkP(K,X0,Y0)`. Kolejne dołki: 6–9.
 - P197: **Orle Wągrowiec** – 13 dołków z discmap (WRC111), `OD=[...]` (len, par, punkty px, wm = szerokość w m,
-  slope, mound, bigTree, road, md = mando). Rundy beta nie liczą się do Top 5 / online.
+  slope (używa wbudowanego h.slope .93/1.06 + slopeTxt), mound, bigTree, road, md = mando). Rundy beta nie liczą się do Top 5 / online.
 
 ## Zadania do zrobienia (stan 22.11.2026)
 1. **Kałuże jesienią** – teraz wyglądają dziwnie; mają wyglądać jak woda (połysk, odbicie
    nieba, ciemniejszy brzeg, lekkie kręgi).
-2. **Street Wągrowiec – zostały dołki 3–9** (1 i 2 gotowe, kod 777).
+2. **Street Wągrowiec – zostały dołki 6–9** (1–5 gotowe, kod 777).
    Użytkownik prześle zrzuty z mapy; sprawdź też wygląd Wągrowca w internecie.
    1. Rynek – rzut po przekątnej rynku, kosz w rogu przy zejściu na Bydgoską.
       Przeszkody: zaparkowane samochody wokół rynku, fontanna (dysk może wpaść do wody).
