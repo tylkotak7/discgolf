@@ -31,7 +31,7 @@ addEventListener('load',()=>setTimeout(()=>{try{
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e});
 </script><style>#pwask{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,8,4,.6);font-family:'Baloo 2',system-ui}#pwask .pk{width:min(100vw,440px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 16px);color:#fff;text-align:center;animation:cshUp .25s ease-out}#pwask img{width:72px;height:72px;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.4)}#pwask b{display:block;font-size:21px;margin:8px 0 2px}#pwask p{margin:0 0 12px;color:#cfe5d5;font:600 14px system-ui;line-height:1.45}#pwask .ph{background:rgba(255,211,90,.12);border:1px solid rgba(255,211,90,.4);border-radius:14px;padding:10px;margin:0 0 10px;font:600 14px system-ui;color:#fff3c4;line-height:1.5}#pwask .ph b{display:inline;font:800 14px system-ui;margin:0;color:#ffd35a}#pwask button{display:block;width:100%;padding:13px;border-radius:16px;border:0;font:900 17px 'Baloo 2',system-ui;margin-bottom:8px}#pwyes{background:linear-gradient(135deg,#a4ffb8,#3fd16a);color:#08210f}#pwno{background:rgba(255,255,255,.08)!important;color:#cfe5d5;border:1px solid rgba(255,255,255,.15)!important}</style>
 <meta charset="utf-8">
-<meta name="dgv" content="235 · 22.11.2026">
+<meta name="dgv" content="236 · 22.11.2026">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>/* P73: duże przyciski i lekka grafika także gdy przeglądarka podaje bardzo szeroki ekran (np. tryb "wersja na komputer") */
 function GFXLOW(){return window._gfxLow}window.DECK=window.DECK==null?.5:window.DECK;window.UIZ=1;(function(){var m=document.querySelector('meta[name=viewport]');function wide(){try{return matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2}catch(e){return false}}
  try{if(wide())m.setAttribute('content','width=420, viewport-fit=cover')}catch(e){}
@@ -6342,6 +6342,9 @@ function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!
  for(const pr of U.piers||[]){E.rectFn(pr[0]*S,pr[1]*S,pr[2]*S,pr[3]*S,(i,x,y)=>{const pl=(x%4)==0,po=((x%22)<2)&&((y-pr[1]*S)<2||(pr[3]*S-y)<2);let r=.55,g=.4,b=.25;const n=hs3(x>>2,y,97)*.08;r+=n;g+=n;b+=n*.6;if(pl){r*=.7;g*=.7;b*=.7}if(po){r=.32;g=.22;b=.14}if(wn&&!pl)setA(i,.9,.92,.96);else setA(i,r,g,b);HT[i]=po?5:3;SPEC[i]=.04;SIDE[i]=0})}
  /* miejsce na ognisko */
  for(const F of U.fire||[]){const cx=F[0]*S,cy=F[1]*S,R0=F[2]*S;E.rectFn(cx-R0-3,cy-R0-3,cx+R0+3,cy+R0+3,(i,x,y)=>{const d=Math.hypot(x-cx,y-cy);if(d>R0+2)return;if(d>R0-2.4){const st=hs3((Math.atan2(y-cy,x-cx)*6)|0,3,98);HT[i]=3+st*1.5;const l=.5+st*.15;setA(i,l,l*.97,l*.92)}else{HT[i]=.2;const n=hs3(x,y,99);setA(i,.18+n*.1,.16+n*.08,.14+n*.06)}SIDE[i]=0})}
+ /* płotki i bramki (nisko – dysk przelatuje) */
+ for(const F of U.fences||[]){for(let i=1;i<F.length;i++){const A=F[i-1],B2=F[i],L=Math.hypot(B2[0]-A[0],B2[1]-A[1]),ux=(B2[0]-A[0])/L,uy=(B2[1]-A[1])/L;for(let d=0;d<=L;d+=.25){const px=(A[0]+ux*d)*S,py=(A[1]+uy*d)*S,post=(d%3)<.35;E.rectFn(px-(post?1.2:.6),py-(post?1.2:.6),px+(post?1.2:.6),py+(post?1.2:.6),(ii)=>{const hgt=post?7:5.5;if(HT[ii]>hgt)return;HT[ii]=hgt;if(wn&&!post)setA(ii,.92,.94,.97);else setA(ii,post?.36:.52,post?.24:.36,post?.14:.22);SIDE[ii]=0})}}}
+ for(const G of U.gates||[]){const cx=G[0]*S,cy=G[1]*S,vert=!G[2];for(const s2 of[-1,1]){const px=cx+(vert?0:s2*8*S/5),py=cy+(vert?s2*8*S/5:0);E.rectFn(px-1.6,py-1.6,px+1.6,py+1.6,ii=>{HT[ii]=11;setA(ii,.32,.2,.12);SIDE[ii]=0})}E.rectFn(cx-(vert?1:8*S/5),cy-(vert?8*S/5:1),cx+(vert?1:8*S/5),cy+(vert?8*S/5:1),ii=>{if(HT[ii]<10){HT[ii]=10;setA(ii,.45,.3,.17);SIDE[ii]=0}})}
  /* latarnie */
  for(const L of U.lamps||[]){const cx=L[0]*S,cy=L[1]*S;E.rectFn(cx-4,cy-4,cx+4,cy+4,(i,x,y)=>{const d=Math.hypot(x-cx,y-cy);if(d<1.3){HT[i]=Math.max(HT[i],42);setA(i,.95,.92,.7);SPEC[i]=.3;SIDE[i]=0}else if(d<2.4){HT[i]=Math.max(HT[i],38);setA(i,.15,.16,.17);SIDE[i]=0}else if(d<3.6&&HT[i]<3){HT[i]=2;setA(i,.35,.36,.38)}})}
  /* parasole ogródka */
@@ -6463,7 +6466,7 @@ const H4=(()=>{const K=3,P=mkP(K,0,150),PA=a=>a.map(p=>P(p[0],p[1])),M=K/9,k=1/K
  parkRow(U,P,K,[90,826],[1080,727],[0],R,42);
  parkRow(U,P,K,[740,370],[1060,350],[0],R,42);
  const T=(x,y,r,ty)=>[...P(x,y),r,ty];
- const trees=[T(634,878,12,0),T(849,856,12,6),T(70,1460,11,0),T(190,1450,10,6),T(470,1430,10,6),T(610,1420,11,0),T(330,880,8,2),T(200,300,10,0)];
+ const trees=[T(360,945,12,0),T(900,1445,12,6),T(634,878,12,0),T(849,856,12,6),T(70,1460,11,0),T(190,1450,10,6),T(470,1430,10,6),T(610,1420,11,0),T(330,880,8,2),T(200,300,10,0)];
  U.labels.push({x:P(880,250)[0],y:P(880,250)[1]-4,t:'Makaronowy Raj',bg:'#c0392b'},{x:P(680,1580)[0],y:P(680,1580)[1]-8,t:'PKP Wągrowiec',bg:'#1f4e8c',c:'#fff'});
  return mkU({tee:P(330,1525),b:P(880,345),par:4,trees,U,M,w:60,txt:'Przy starym dworcu PKP – rzut nad torami i pociągami, kosz przy Makaronowym Raju. Tory i ulica Średnia to OB.'})})();
 /* ================= DOŁEK 5 – KOŚCIUSZKI → BAR LATAJĄCY SMOK ================= */
@@ -6481,7 +6484,8 @@ const H5=(()=>{const K=3,P=mkP(K,0,200),PA=a=>a.map(p=>P(p[0],p[1])),M=K/9,k=1/K
  const n0=U.bld.length;rowHouses(U,kos[2],kos[0],1,64*k,511);if(0){const tp=P(455,1700),E=U.bld.slice(n0).sort((A,B)=>Math.hypot(A.c[0]-tp[0],A.c[1]-tp[1])-Math.hypot(B.c[0]-tp[0],B.c[1]-tp[1]));if(E[2]){E[2].lbl={t:'🍩 Pączkarnia',bg:'#e86aa0',c:'#fff',s:5};E[2].rf=4}}
  rowHouses(U,kos[2],kos[0],1,64*k+70,517);
  const n1=U.bld.length;rowHouses(U,kos[3],kos[1],-1,64*k,523,60);{const tp=P(704,1571),E=U.bld.slice(n1).sort((A,B)=>Math.hypot(A.c[0]-tp[0],A.c[1]-tp[1])-Math.hypot(B.c[0]-tp[0],B.c[1]-tp[1]));if(E[0]){E[0].lbl={t:'🍩 Pączkarnia',bg:'#e86aa0',c:'#fff',s:5};E[0].rf=4;U.queue=E[0]}}
- {const q0=P(230,1220),q1=P(530,1480);U.bld=U.bld.filter(B=>!(B.c[0]>q0[0]&&B.c[0]<q1[0]&&B.c[1]>q0[1]&&B.c[1]<q1[1])||B.lbl);bRect(U,P,K,380,1350,220,180,0,{fl:1,rf:3,fc:2,h:62})}
+ {const q0=P(230,1220),q1=P(530,1480);U.bld=U.bld.filter(B=>!(B.c[0]>q0[0]&&B.c[0]<q1[0]&&B.c[1]>q0[1]&&B.c[1]<q1[1])||B.lbl);bRect(U,P,K,359,1355,300,190,Math.atan2(425,-110),{fl:1,rf:3,fc:2,h:62});bRect(U,P,K,290,1610,220,170,Math.atan2(425,-110),{rf:1,fc:1,h:58})}
+ rowHouses(U,P(600,1790),P(1110,1790),-1,30*k,541);
  bRect(U,P,K,1000,1300,220,140,0,{rf:2,fc:4,h:54});
  bRect(U,P,K,960,1480,260,160,0,{fl:1,rf:3,fc:2,h:50});
  parkRow(U,P,K,[840,742],[1100,742],[0],R,42);
@@ -6530,9 +6534,9 @@ const H7=(()=>{const K=3,P=mkP(K,0,200),PA=a=>a.map(p=>P(p[0],p[1])),M=K/5.5,k=1
 /* ================= DOŁEK 8 – LEŚNICZÓWKA: Z PARKINGU W STRONĘ LEŚNICZÓWKI ================= */
 const H8=(()=>{const K=3,P=mkP(K,0,200),PA=a=>a.map(p=>P(p[0],p[1])),M=K/9,k=1/K,R=rnd(808);
  const wc=P(600,650),ell=[];for(let i=0;i<18;i++){const a=i/18*6.2832;ell.push([wc[0]+Math.cos(a)*100,wc[1]+Math.sin(a)*68])}
- const U={park:1,thin:.12,roads:[],fire:[[...P(673,1118),5]],
+ const U={park:1,thin:.12,roads:[],fire:[[...P(673,1118),5]],fences:[PA([[452,995],[452,1085]]),PA([[452,1135],[452,1308],[560,1306]]),PA([[620,1305],[912,1298]])],gates:[[...P(452,1110),0],[...P(590,1306),1]],
   paths:[{p:PA([[233,-30],[233,278],[192,932],[111,1853],[600,1880],[876,1919],[1110,1940]]),w:22*k},{p:PA([[200,1109],[420,1109],[560,1050]]),w:16*k}],
-  dirt:[PA([[400,1470],[800,1460],[810,1760],[400,1760]]),PA([[190,1640],[400,1640],[400,1770],[190,1770]]),PA([[460,990],[900,975],[915,1300],[450,1310]])],
+  dirt:[PA([[-30,1075],[275,1075],[275,1315],[-30,1315]]),PA([[400,1470],[800,1460],[810,1760],[400,1760]]),PA([[190,1640],[400,1640],[400,1770],[190,1770]]),PA([[460,990],[900,975],[915,1300],[450,1310]])],
   clear:[ell,PA([[700,820],[900,820],[900,980],[700,980]]),PA([[680,1150],[1090,1150],[1090,1560],[780,1520],[640,1300]]),PA([[520,1330],[760,1330],[760,1470],[520,1470]])],
   bld:[],cars:[],pots:[],bench:[],fount:[],labels:[]};
  bRect(U,P,K,460,1570,80,110,0,{rf:2,fc:0,h:46});
@@ -6540,11 +6544,12 @@ const H8=(()=>{const K=3,P=mkP(K,0,200),PA=a=>a.map(p=>P(p[0],p[1])),M=K/9,k=1/K
  bRect(U,P,K,540,1705,110,80,0,{rf:1,fc:0,h:44});
  bRect(U,P,K,610,1515,50,40,0,{rf:4,fc:5,h:30});
  bRect(U,P,K,590,1405,80,50,0,{rf:4,fc:5,h:34,lbl:{t:'Wiata',bg:'#6b4524',c:'#fff',s:5}});
- parkRow(U,P,K,[205,1745],[290,1745],[0],R,44);
+ parkRow(U,P,K,[205,1745],[290,1745],[0],R,44);parkRow(U,P,K,[70,1095],[70,1300],[0],R,46);parkRow(U,P,K,[250,1095],[250,1300],[0],R,52);
  U.bld.push({c:wc,u:[1,0],v:[0,1],a:45,b:45,h:96,wig:1,lbl:{t:'⛺ Ośrodek Edukacji Leśnej',bg:'#2f6b3a',c:'#fff',s:5}});
  {const fc=P(673,1118);for(let i=0;i<6;i++){const a=i/6*6.2832+.3,x=fc[0]+Math.cos(a)*24,y=fc[1]+Math.sin(a)*20;U.bench.push([x,y,Math.abs(Math.cos(a))>.6?1:0])}}
  const T=(x,y,r,ty)=>[...P(x,y),r,ty];
  const trees=[T(1000,1420,10,6),T(470,1250,10,0)];{const PT=[[233,-30],[233,278],[192,932],[111,1853]];const at=y=>{for(let i=1;i<PT.length;i++)if(y<=PT[i][1]){const f=(y-PT[i-1][1])/(PT[i][1]-PT[i-1][1]);return PT[i-1][0]+(PT[i][0]-PT[i-1][0])*f}return PT[PT.length-1][0]};let k2=0;for(let y=60;y<1640;y+=95){const px=at(y);for(const sd of[-1,1]){k2++;const off=46+((k2*37)%18);trees.push(T(px+sd*off,y+((k2*29)%30),9+((k2*13)%4),k2%3==0?6:0))}}}
+ {const a=P(-30,1060),b2=P(290,1330);for(let i=trees.length-1;i>=0;i--){const t=trees[i];if(t[0]>a[0]-t[2]&&t[0]<b2[0]+t[2]&&t[1]>a[1]-t[2]&&t[1]<b2[1]+t[2])trees.splice(i,1)}}
  return mkU({tee:P(262,1665),b:P(645,914),par:3,trees,U,M,w:60,txt:'Z parkingu w stronę Ośrodka – kosz między wigwamem a placem z ogniskiem.'})})();
 /* ================= DOŁEK 9 – ŁAKIN: OBOK PIRAMIDY ŁAKIŃSKIEGO I GROBU KONIA ================= */
 const H9=(()=>{const K=3,P=mkP(K,0,200),PA=a=>a.map(p=>P(p[0],p[1])),M=K/10,k=1/K;
