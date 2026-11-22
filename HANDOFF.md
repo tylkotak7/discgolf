@@ -90,3 +90,6 @@ W build3_ (g2patch.py, nakładany po p90patch): źdźbła trawy po h.urb (wykryc
 ### v249
 - p210.js: dźwięki otoczenia (window.__AMB: kos, zięba, rudzik, kukułka, dzięcioł, wrony, wróble, gołębie, kaczki, klakson, pociąg), sfx.bird zależny od miejsca/pory, zima: wrony/dzięcioł, Street: szum miasta + pociąg (window.__trainOn z p196). p206: przywrócony sfx.land przy lądowaniu.
 - Kolejność: build.py (p195–p204, p206–p208, p210) → p90 → g2 → g3 → g4 → g5 → g6 → g7.
+
+## ⚙️ Budowanie (od v249)
+Źródła łatek są w repo: `tools/` (base_v214.html, patches/, build.py, release.py, test.py, README.md). Nowa wersja: `python3 tools/release.py NNN "Tytuł" "linia"…` – buduje, testuje i dopiero wtedy podmienia index.html. Nie edytuj index.html ręcznie, bo następne zbudowanie to nadpisze – zmiany rób w łatkach.
