@@ -19,7 +19,7 @@ const CARC=[[.92,.92,.9],[.72,.74,.76],[.12,.12,.13],[.3,.31,.33],[.66,.12,.1],[
 function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!='undefined'&&AUT3,U=h.U;
  const cm=fn=>{const c=document.createElement('canvas');c.width=TW;c.height=TH;const x=c.getContext('2d',{willReadFrequently:true});x.scale(S,S);x.fillStyle=x.strokeStyle='#fff';x.lineJoin='round';fn(x);const d=x.getImageData(0,0,TW,TH).data,a=new Float32Array(TW*TH);for(let i=0;i<a.length;i++)a[i]=d[i*4+3]/255;c.width=c.height=0;return a};
  const st=(x,r,w)=>{x.lineWidth=w;x.beginPath();r.p.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke()};
- const PLm=cm(x=>{for(const P of U.plaza||[]){x.beginPath();P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill()}});
+ const PLm=cm(x=>{for(const P of U.plaza||[]){x.beginPath();P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill()}});h._PLm=PLm;
  const RDm=cm(x=>{x.lineCap='butt';for(const r of U.roads)st(x,r,r.w)}),CBm=cm(x=>{x.lineCap='butt';for(const r of U.roads)st(x,r,r.w+2.6)});
  const LNm=cm(x=>{x.lineCap='butt';x.setLineDash([7,7]);for(const r of U.roads)if(r.c)st(x,r,.8)});
  const PKm=cm(x=>{x.lineWidth=.7;for(const o of U.cars){if(o.road)continue;const f=[Math.sin(o.a),-Math.cos(o.a)],r=[Math.cos(o.a),Math.sin(o.a)],hw=7.6*(U.sc||1)*(U.cs||1),hl=13*(U.sc||1)*(U.cs||1);for(const sd of[-1,1]){x.beginPath();x.moveTo(o.x+r[0]*hw*sd-f[0]*hl,o.y+r[1]*hw*sd-f[1]*hl);x.lineTo(o.x+r[0]*hw*sd+f[0]*hl,o.y+r[1]*hw*sd+f[1]*hl);x.stroke()}}});

@@ -1,0 +1,12 @@
+import sys
+f=sys.argv[1];s=open(f,encoding='utf8').read()
+a="/* P207: wydeptane miejsca"
+assert s.count(a)==1
+b=("/* P212: tekstury z grafik */\nif(window.__G9!==false&&window.__TX&&window.__TX.water&&window.__TX.gravel&&window.__TX.cobble){const Wt=window.__TX.water.R,Gv=window.__TX.gravel.R,Cb=window.__TX.cobble.R,PL=h._PLm;for(let y=0;y<TH;y++)for(let x=0;x<TW;x++){const i=y*TW+x;let T=null,K=0,t;if(WAm[i]>.5&&!(wn&&!h.urb)){T=Wt;K=.7*Math.min(1,(WAm[i]-.5)*3);t=((((y*.8)|0)&255)*256+(((x*.8)|0)&255))*3}else if(!h.urb&&RDm[i]>.3&&FRm&&FRm[i]>.3&&!wn){T=Gv;K=.75;t=((y&255)*256+(x&255))*3}else if(!h.urb&&RDm[i]>.3&&!wn&&window.__TX.dirt){T=window.__TX.dirt.R;K=.8;t=((y&255)*256+(x&255))*3}else if(h.urb&&PL&&PL[i]>.5&&HT[i]<3&&!wn){T=Cb;K=.6;t=((((y*1.6)|0)&255)*256+(((x*1.6)|0)&255))*3}if(!T)continue;AR[i]*=1+(T[t]-1)*K;AG[i]*=1+(T[t+1]-1)*K;AB[i]*=1+(T[t+2]-1)*K;if(T!==Wt)HT[i]+=((T[t]+T[t+1]+T[t+2])/3-1)*1.6}}\nif(wn&&!h.urb&&window.__G9!==false&&window.__TX&&window.__TX.snow){const Sn=window.__TX.snow.R;for(let y=0;y<TH;y++)for(let x=0;x<TW;x++){const i=y*TW+x;if(RDm[i]>.1||WAm[i]>.1)continue;const t=((y&255)*256+(x&255))*3,k=.6*(1-Math.min(1,FWm[i])*.4);AR[i]*=1+(Sn[t]-1)*k;AG[i]*=1+(Sn[t+1]-1)*k;AB[i]*=1+(Sn[t+2]-1)*k;HT[i]+=((Sn[t]+Sn[t+1]+Sn[t+2])/3-1)*1.5}}\nif(!wn&&!h.urb&&window.__G9!==false&&window.__TX&&window.__TX.fair&&window.__TX.rough&&window.__TX.forest&&window.__TX.dirt){const TX=window.__TX,F=TX.fair,Rg=TX.rough,Fo=TX.forest,Di=TX.dirt,fo=!!h._forest;"
+ "for(let y=0;y<TH;y++)for(let x=0;x<TW;x++){const i=y*TW+x;if(RDm[i]>.1||WAm[i]>.1)continue;const fw=Math.min(1,FWm[i]),se=SEm[i],me=MEm[i],dr=Math.min(1,WRm[i]*fw*1.3);let wF=fw*(1-dr),wD=dr,wO=fo?Math.max(0,1-fw)*Math.max(0,1-se*1.6)*(1-Math.min(1,me)):0,wR=Math.max(0,1-wF-wD-wO);"
+ "const t=((y&255)*256+(x&255))*3,t2=(((y+97)&255)*256+((x+41)&255))*3;const r=F.R[t]*wF+Rg.R[t2]*wR+Fo.R[t]*wO+Di.R[t2]*wD,g=F.R[t+1]*wF+Rg.R[t2+1]*wR+Fo.R[t+1]*wO+Di.R[t2+1]*wD,b=F.R[t+2]*wF+Rg.R[t2+2]*wR+Fo.R[t+2]*wO+Di.R[t2+2]*wD;"
+ "const K=.55;AR[i]*=1+(r-1)*K;AG[i]*=1+(g-1)*K;AB[i]*=1+(b-1)*K;"
+ "const hk=.22*(wO+wD);if(hk>0){const mr=Fo.m[0]*wO+Di.m[0]*wD,mg=Fo.m[1]*wO+Di.m[1]*wD,mb=Fo.m[2]*wO+Di.m[2]*wD,s0=(wO+wD)||1,L0=(AR[i]+AG[i]+AB[i])/3,Lm=(mr+mg+mb)/3/s0||1;AR[i]+=(mr/s0*L0/Lm-AR[i])*hk;AG[i]+=(mg/s0*L0/Lm-AG[i])*hk;AB[i]+=(mb/s0*L0/Lm-AB[i])*hk}"
+ "HT[i]+=((r+g+b)/3-1)*1.2}}\n"+a)
+s=s.replace(a,b)
+open(f,'w',encoding='utf8').write(s);print('g8 ok')
