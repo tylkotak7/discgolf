@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v245**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v246**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -76,3 +76,7 @@ W build3_ (g2patch.py, nakładany po p90patch): źdźbła trawy po h.urb (wykryc
 - g5patch.py (wyłącznik window.__G5=false): wyostrzenie tła (unsharp luma), mocniejsza i szersza wydeptana ścieżka (WRm), przetarta trawa przy koszu (2–9 m) i przed tee, maska trawy bg._gm.
 - p207.js: fale wiatru na trawie (soft-light, kierunek/siła z wa/ws), bez zimy, wieczoru i pola noc. Tylko obraz – kolizje bez zmian.
 - Kolejność: build.py (p195–p204, p206, p207) → p90 → g2 → g3 → g4 → g5.
+
+### v246
+- p208.js: okno pokoju (#onsh .rm2) – kod z Kopiuj/Wyślij (link ?pokoj=KOD dołącza automatycznie), 4 miejsca graczy, własny przycisk startu #onplay2 (oryginalny #onplay ukryty), ✕ w rogu. Znajomi (#onfr, #frs): avatar ze statusem, bilans z dg_ohist (w–l), w pokoju „Zaproś”, usuwanie po przytrzymaniu.
+- Kolejność: build.py (p195–p204, p206–p208) → p90 → g2 → g3 → g4 → g5.
