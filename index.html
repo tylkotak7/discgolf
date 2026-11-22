@@ -31,7 +31,7 @@ addEventListener('load',()=>setTimeout(()=>{try{
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e});
 </script><style>#pwask{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,8,4,.6);font-family:'Baloo 2',system-ui}#pwask .pk{width:min(100vw,440px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 16px);color:#fff;text-align:center;animation:cshUp .25s ease-out}#pwask img{width:72px;height:72px;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.4)}#pwask b{display:block;font-size:21px;margin:8px 0 2px}#pwask p{margin:0 0 12px;color:#cfe5d5;font:600 14px system-ui;line-height:1.45}#pwask .ph{background:rgba(255,211,90,.12);border:1px solid rgba(255,211,90,.4);border-radius:14px;padding:10px;margin:0 0 10px;font:600 14px system-ui;color:#fff3c4;line-height:1.5}#pwask .ph b{display:inline;font:800 14px system-ui;margin:0;color:#ffd35a}#pwask button{display:block;width:100%;padding:13px;border-radius:16px;border:0;font:900 17px 'Baloo 2',system-ui;margin-bottom:8px}#pwyes{background:linear-gradient(135deg,#a4ffb8,#3fd16a);color:#08210f}#pwno{background:rgba(255,255,255,.08)!important;color:#cfe5d5;border:1px solid rgba(255,255,255,.15)!important}</style>
 <meta charset="utf-8">
-<meta name="dgv" content="214 · 18.11.2026">
+<meta name="dgv" content="215 · 22.11.2026">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>/* P73: duże przyciski i lekka grafika także gdy przeglądarka podaje bardzo szeroki ekran (np. tryb "wersja na komputer") */
 function GFXLOW(){return window._gfxLow}window.DECK=window.DECK==null?.5:window.DECK;window.UIZ=1;(function(){var m=document.querySelector('meta[name=viewport]');function wide(){try{return matchMedia('(pointer:coarse)').matches&&innerWidth>520&&innerHeight>innerWidth*1.2}catch(e){return false}}
  try{if(wide())m.setAttribute('content','width=420, viewport-fit=cover')}catch(e){}
@@ -1054,15 +1054,17 @@ const rd=RDm[i];if(rd>0&&FRm&&FRm[i]>.3&&!wn){const n=hs3(x,y,3)*.08+fb3(x*.12,y
 const wa=WAm[i];if(wa>0){const n=fb3(x*.03,y*.03,61,3);if(wn){const cr=Math.abs(vn3(x*.06,y*.06,71)-.5)<.012?.12:0;blendA(i,.52+n*.12+cr,.72+n*.1+cr,.88+cr*.5,wa)}else{const dp=WAB?Math.min(1,Math.max(0,(WAB[i]-.3)*1.9)):1,fl=vn3(x*.02,y*.14,62)*.5+vn3(x*.14,y*.02,63)*.5,ca=Math.pow(Math.abs(vn3(x*.16,y*.16,64)-.5)*2,4);let wr=.27-.2*dp+(fl-.5)*.05,wg=.34-.11*dp+(fl-.5)*.06,wb=.27+.1*dp+(fl-.5)*.05;if(dp<.45){const k=(1-dp/.45);wr+=ca*.16*k;wg+=ca*.15*k;wb+=ca*.1*k;if(hs3(x>>1,y>>1,65)>.985){wr=.42;wg=.40;wb=.34}}wr+=n*.03;wg+=n*.04;wb+=n*.05;blendA(i,wr,wg,wb,wa)}HT[i]=HT[i]*(1-wa)-(1.2+(WAB&&!wn?Math.min(1,WAB[i])*2.2:0))*wa;SPEC[i]=wa*(wn?.35:.9)}
 if(!wn&&WAB&&wa<.5){const bk=Math.min(.8,Math.max(0,(WAB[i]-.03)*2.6))*(1-wa*2);if(bk>0){const m=hs3(x,y,66)*.06+fb3(x*.1,y*.1,67,2)*.06;blendA(i,.30+m,.26+m,.16+m*.6,bk);HT[i]-=bk*.8;if(hs3(x>>1,y>>1,68)>.97&&bk>.3){HT[i]+=2.2;setA(i,.52,.5,.46)}}}}
 /* --- igliwie pod drzewami, kamienie, paprocie, grzyby --- */
-for(const t of TREES){const con=treeType(t)%2==1,cx=t[0]*S,cy=t[1]*S,rr=t[2]*S*1.45,sd=(t[0]*7+t[1])|0;if(wn)continue;rectFn(cx-rr,cy-rr,cx+rr,cy+rr,(i,x,y)=>{if(RDm[i]>.3||WAm[i]>.1)return;const d=Math.hypot(x-cx,y-cy)/rr+(fb3(x*.06,y*.06,sd,3)-.5)*.5;if(d>=1)return;const k=Math.min(1,(1-d)*1.8)*.45,n=hs3(x,y,41);if(con)blendA(i,.29+n*.06,.27+n*.05,.15,k);else blendA(i,.32+n*.08,.30+n*.05,.15+n*.03,k*.8);HT[i]*=1-k*.6;if(!con&&n>.985){const lc=hs3(x,y,43);blendA(i,lc<.5?.58:.52,lc<.5?.46:.36,.16,1)}})}
-{const R=rnd(sd0*3+11),ok=(x,y)=>{if(x<10||y<10||x>W-10||y>H-10)return false;const i=((y*S)|0)*TW+((x*S)|0);return FWm[i]<.05&&SEm[i]<.5&&RDm[i]<.05&&WAm[i]<.05&&MEm[i]<.3};
+for(const t of TREES){const con=treeType(t)%2==1,cx=t[0]*S,cy=t[1]*S,rr=t[2]*S*1.45,sd=(t[0]*7+t[1])|0;if(wn||h.urb)continue;rectFn(cx-rr,cy-rr,cx+rr,cy+rr,(i,x,y)=>{if(RDm[i]>.3||WAm[i]>.1)return;const d=Math.hypot(x-cx,y-cy)/rr+(fb3(x*.06,y*.06,sd,3)-.5)*.5;if(d>=1)return;const k=Math.min(1,(1-d)*1.8)*.45,n=hs3(x,y,41);if(con)blendA(i,.29+n*.06,.27+n*.05,.15,k);else blendA(i,.32+n*.08,.30+n*.05,.15+n*.03,k*.8);HT[i]*=1-k*.6;if(!con&&n>.985){const lc=hs3(x,y,43);blendA(i,lc<.5?.58:.52,lc<.5?.46:.36,.16,1)}})}
+{const R=rnd(sd0*3+11),ok=(x,y)=>{if(h.urb)return false;if(x<10||y<10||x>W-10||y>H-10)return false;const i=((y*S)|0)*TW+((x*S)|0);return FWm[i]<.05&&SEm[i]<.5&&RDm[i]<.05&&WAm[i]<.05&&MEm[i]<.3};
 for(let n=0;n<7;n++){const x0=R()*W,y0=R()*H;if(!ok(x0,y0))continue;for(let k=0;k<3;k++){const cx=(x0+(R()-.5)*14)*S,cy=(y0+(R()-.5)*10)*S,r0=(3+R()*4)*S,sd=k*13+n;rectFn(cx-r0*1.3,cy-r0*1.3,cx+r0*1.3,cy+r0*1.3,(i,x,y)=>{const dx=(x-cx)/r0,dy=(y-cy)/(r0*.8),dd=dx*dx+dy*dy+(fb3(x*.15,y*.15,sd,3)-.5)*.5;if(dd>=1)return;const hh=Math.sqrt(1-dd)*r0*.8+fb3(x*.4,y*.4,sd,2)*2;if(hh<=HT[i])return;HT[i]=hh;const g0=.5+hs3(x,y,sd)*.12,moss=fb3(x*.12,y*.12,sd+9,3);if(wn&&dy<.1)setA(i,.9,.93,.97);else if(moss>.55&&dy<.2)setA(i,.26,.40,.14);else setA(i,g0,g0*.98,g0*.92)})}}
 if(!wn)for(let n=0;n<34;n++){const x0=R()*W,y0=R()*H;if(!ok(x0,y0))continue;const cx=x0*S,cy=y0*S,fr=7+(R()*4|0),rad=14+R()*8,rot=R()*6;rectFn(cx-rad-2,cy-rad-2,cx+rad+2,cy+rad+2,(i,x,y)=>{const dx=x-cx,dy=y-cy,d=Math.hypot(dx,dy);if(d>rad)return;const a=Math.atan2(dy,dx)+rot,f=Math.abs(Math.sin(a*fr/2)),w=.25+.7*(1-d/rad);if(f>w*.9&&d>2)return;const hh=6*(1-d/rad)+2;if(hh<=HT[i])return;HT[i]=hh;const lv=.9+hs3(x,y,61)*.25;setA(i,.20*lv,.42*lv,.12*lv)})}
 if(!wn)for(let n=0;n<16;n++){const t=TREES[(R()*TREES.length)|0];if(!t)break;const x0=t[0]+(R()-.5)*t[2]*2.2,y0=t[1]+t[2]*.9+R()*6;if(!ok(x0,y0))continue;const cx=x0*S,cy=y0*S,red=R()<.5;rectFn(cx-5,cy-5,cx+5,cy+5,(i,x,y)=>{const d=Math.hypot(x-cx,y-cy);if(d>3.6)return;HT[i]=Math.max(HT[i],5-d);if(red)setA(i,d<1.2&&hs3(x,y,3)>.5?.95:.78,d<1.2?.9:.12,d<1.2?.85:.08);else setA(i,.72,.55,.32)})}}
-if(!wn){const R=rnd(sd0*9+5),near=(px,py)=>{if(px<0||py<0||px>=W||py>=H)return 0;return WAm[((py*S)|0)*TW+((px*S)|0)]};
+if(!wn&&!h.urb){const R=rnd(sd0*9+5),near=(px,py)=>{if(px<0||py<0||px>=W||py>=H)return 0;return WAm[((py*S)|0)*TW+((px*S)|0)]};
 const reed=(px,py)=>{const cx=px*S,cy=py*S;for(let k=0;k<8;k++){const bx=cx+(R()-.5)*12,by=cy+(R()-.5)*9,hg=9+R()*9,c0=R();rectFn(bx-1.1,by-1.1,bx+1.2,by+1.2,i=>{if(hg<=HT[i])return;HT[i]=hg;setA(i,.20+c0*.08,.34+c0*.1,.11)});if(R()<.4)rectFn(bx-1.4,by-3,bx+1.5,by+.5,i=>{HT[i]=hg+2;setA(i,.34,.2,.09)})}};
 const lily=(px,py)=>{const cx=px*S,cy=py*S,r0=4+R()*4,nt=R()*6.28,fl=R()<.3,fc=R()<.5;rectFn(cx-r0,cy-r0,cx+r0,cy+r0,(i,x,y)=>{const d=Math.hypot(x-cx,y-cy);if(d>r0)return;const a=Math.atan2(y-cy,x-cx),da=Math.abs(((a-nt)%6.283+6.283)%6.283-3.14);if(da>2.84)return;HT[i]=.4;SPEC[i]=.25;setA(i,.19,.40+hs3(x,y,3)*.06,.13);if(fl&&d<2)setA(i,1,fc?.78:.98,fc?.86:.96)})};
 for(let n=0;n<3500;n++){const px=R()*W,py=R()*H,w0=near(px,py);if(w0<.05){if(R()<.3&&(near(px+6,py)>.8||near(px-6,py)>.8||near(px,py+6)>.8||near(px,py-6)>.8))reed(px,py)}else if(w0>.95&&R()<.1&&(near(px+18,py)<.2||near(px-18,py)<.2||near(px,py+18)<.2||near(px,py-18)<.2))lily(px,py)}}
+/* pole miejskie (P196) */
+if(h.urb)try{h.urb({HT,AR,AG,AB,SPEC,SIDE,TW,TH,S,setA,blendA,rectFn,wn,WAm})}catch(e){console.warn('urb',e)}
 /* --- teepad (trawa syntetyczna) --- */
 {const cx=h.tee[0]*S,cy=h.tee[1]*S,au=AUT3;rectFn(cx-22,cy-14,cx+22,cy+52,(i,x,y)=>{const ed=Math.min(x-(cx-22),(cx+22)-x,y-(cy-14),(cy+52)-y),n=hs3(x,y,7),f=fb3(x*.08,y*.08,12,3),wear=fb3(x*.05,y*.05,13,2);let r=.21+n*.05,gg=.42+n*.06+f*.06,b=.16+n*.03;if(wear>.62){r+=.06;gg-=.05}if(ed<1.5){r*=.7;gg*=.7;b*=.7}HT[i]=ed<1.5?2.2:2.6+n*.3;SPEC[i]=.05;
  if(wn){if(hs3(x>>2,y>>2,15)>.18||ed<3){r=.9;gg=.93;b=.97}}else{const lf=hs3(x,y,16),lc=hs3(x>>1,y>>1,17);if(au&&lf>.955){r=lc<.5?.88:.8;gg=lc<.5?.72:.5;b=.14}else if(lf>.985){r=.55;gg=.4;b=.22}else if(!au&&lf>.975){r=.62;gg=.66;b=.55}}setA(i,r,gg,b)})}
@@ -1118,7 +1120,7 @@ const L=LP.L.slice();{const l=Math.hypot(...L);L[0]/=l;L[1]/=l;L[2]/=l}
 const SH=new Float32Array(N),hl=Math.hypot(L[0],L[1]),st=[L[0]/hl,L[1]/hl],rise=L[2]/hl;
 for(let y=0;y<TH;y++)for(let x=0;x<TW;x++){const i=y*TW+x,h0=HT[i];let s=1;for(let k=2;k<240;k+=2){const px=Math.round(x+st[0]*k),py=Math.round(y+st[1]*k);if(px<0||py<0||px>=TW||py>=TH)break;const rh=h0+rise*k;if(rh>90)break;const oc=HT[py*TW+px]-rh;if(oc>.6){s=Math.min(s,Math.max(0,1-oc/(.9+k*.035)));if(s<=0)break}}SH[i]=s}
 const SHb=LP.ss>1.4?bl3(bl3(bl3(SH,4),3),2):bl3(bl3(SH,2),1),HB=bl3(bl3(HT,10),6),HB2=bl3(HT,3);
-if(!wn)for(let i=0;i<N;i++){if(SHb[i]<.6&&HT[i]<4){const x=i%TW,y=(i/TW)|0,sp=fb3(x*.07,y*.07,77,3),k=Math.max(0,Math.min(1,(sp-.6)*9))*(.55+.25*hs3(x>>2,y>>2,5));SHb[i]=Math.max(SHb[i],k*.6)}}
+if(!wn&&!h.urb)for(let i=0;i<N;i++){if(SHb[i]<.6&&HT[i]<4){const x=i%TW,y=(i/TW)|0,sp=fb3(x*.07,y*.07,77,3),k=Math.max(0,Math.min(1,(sp-.6)*9))*(.55+.25*hs3(x>>2,y>>2,5));SHb[i]=Math.max(SHb[i],k*.6)}}
 const COL=new Float32Array(N*3);
 for(let y=1;y<TH-1;y++)for(let x=1;x<TW-1;x++){const i=y*TW+x,gx=(HT[i+1]-HT[i-1])*.5,gy=(HT[i+TW]-HT[i-TW])*.5;let nx=-gx,ny=-gy,nz=1.6;const nl=Math.hypot(nx,ny,nz);nx/=nl;ny/=nl;nz/=nl;
 let ar=AR[i],ag=AG[i],ab=AB[i];if(wn&&TREEM[i]){const k=sm3(.5,.85,nz)*(.55+.45*fb3(x*.2,y*.2,19,2));ar+=(.9-ar)*k;ag+=(.93-ag)*k;ab+=(.97-ab)*k}
@@ -1134,6 +1136,7 @@ for(let x=0;x<TW;x++){let ymin=TH;for(let y=TH-1;y>=0;y--){const i=y*TW+x,hh=Mat
 if(sd==1||sd==3){if(f<.16){cr=sd==1?.42:.5;cg=sd==1?.29:.52;cb=sd==1?.17:.53;dk=.9}else{const fl=f>.86;cr=fl?.24:.07+f*.05;cg=fl?.21:.065+f*.045;cb=fl?.17:.05+f*.03;if(f>.55&&f<.68&&(x%9)>1){cr=.27;cg=.18;cb=.1}}}
 else if(sd==2){const gr=hs3(x,yy>>1,51);cr=.4+gr*.06;cg=.27+gr*.04;cb=.15;dk=1-f*.25}
 else if(sd==4){cr=.2;cg=.21;cb=.22;dk=1-f*.2}
+else if(sd>=7&&sd<=12){const FC=[[.86,.8,.66],[.9,.82,.55],[.9,.89,.85],[.86,.72,.68],[.72,.73,.72],[.8,.62,.38]][sd-7],fl=f*3,fi=Math.floor(fl),ff=fl-fi;cr=FC[0];cg=FC[1];cb=FC[2];dk=1-f*.2;if(f<.06){cr=.24;cg=.2;cb=.17;dk=1}else if(fi<2){const wx=(x+sd*5)%15;if(wx>=4&&wx<11&&ff>.28&&ff<.8){cr=.15;cg=.19;cb=.25;if(ff<.4){cr=.32;cg=.36;cb=.42}}else if(ff>.9){cr*=.88;cg*=.88;cb*=.88}}else{const wx=(x+sd*7)%26;if(wx>=3&&wx<22&&ff>.15&&ff<.86){cr=.12;cg=.15;cb=.19;if(ff<.24){cr=.6;cg=.22;cb=.18}}}if(wn&&f<.09){cr=cg=.92;cb=.96}}
 else if(sd==6){const sx=x+((yy*.15)|0)*0,s1=hs3(x,3,77),s2=hs3(x>>1,5,78),cut=.72+.28*s2;if(f>cut){dk=.55}else{dk=(.62+.5*s1)*(1-f*.3)}cr=COL[j]*(1+s1*.15);cg=COL[j+1]*(1+s1*.1);cb=COL[j+2]*.9}
 else if(sd==5){if(f<.1||f>.9||x%34<1){cr=.26;cg=.17;cb=.1}else if(f<.28){cr=.12;cg=.32;cb=.5}else{const q=hs3(x>>1,yy>>1,52);cr=.28+q*.05;cg=.48+q*.06;cb=.26;if(((x*3+yy*5)%11)<1){cr=.85;cg=.82;cb=.6}}}
 O[o]=cr*dk;O[o+1]=cg*dk;O[o+2]=cb*dk;continue}
@@ -1454,7 +1457,7 @@ $('cdots').innerHTML=CARDS.map(c=>'<i class="'+(layout==c.k?'on':'')+'"></i>').j
 el.querySelectorAll('.ccard').forEach(b=>b.onclick=()=>{const i=+b.dataset.ci;selLayout(CARDS[i].k);b.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'})});
 const i0=Math.max(0,CARDS.findIndex(c=>c.k==layout));requestAnimationFrame(()=>{const cw=el.firstChild?el.firstChild.offsetWidth+12:1;el.scrollLeft=i0*cw})}
 /* ================= EKRAN KOŃCA RUNDY ================= */
-const LNAME=()=>layout=='noc'?'Złotów · Świetlista noc':layout=='trening'?'Przysieczyn trening':layout=='miedzy'?'Międzybłocie Long':layout=='miedzyS'?'Międzybłocie Short':layout=='z22'?'Złotów 22':layout=='lubon'?'Luboń':'Złotów DiscGolfPark';
+const LNAME=()=>layout=='noc'?'Złotów · Świetlista noc':layout=='trening'?'Przysieczyn trening':layout=='miedzy'?'Międzybłocie Long':layout=='miedzyS'?'Międzybłocie Short':layout=='z22'?'Złotów 22':layout=='lubon'?'Luboń':layout=='street'?'Street Wągrowiec':layout=='orle'?'Orle Wągrowiec':'Złotów DiscGolfPark';
 function erHTML(r,c){const pars=holes.reduce((a,h)=>a+h.par,0),thr=scores.reduce((a,b)=>a+b,0),cls=total<0?'neg':total>0?'pos':'zero';let A=0,B=0,P=0,G=0;
 const cells=holes.map((h,i)=>{const t=scores[i],s=t-h.par;if(t==1)A++;else if(s<0)B++;else if(s==0)P++;else G++;const k=t==1?'ace':s<=-2?'eag':s==-1?'bir':s==0?'par':s==1?'bog':'dbl';return '<div class="sc"><small>'+(i+1)+'</small><span class="'+k+'">'+t+'</span><i>'+h.par+'</i></div>'}).join('');
 const msg=total<=-5?'Fenomenalna runda!':total<0?'Świetna gra pod parą!':total==0?'Równo z parem, solidnie!':total<=3?'Niezła runda, jeszcze trochę!':'Następnym razem będzie lepiej!';
@@ -2361,7 +2364,7 @@ drawSign=function(h){const r=signRect(h),hn=(holes.indexOf(h)+1)||1,dist=Math.ro
  g.fillStyle='rgba(6,20,8,.3)';g.beginPath();g.ellipse(r.x+r.w/2+4,r.y+r.h+6,10,2.6,0,0,7);g.fill();
  g.fillStyle='#3fae3a';g.fillRect(r.x+r.w/2-1,r.y+r.h-1,2,7);g.fillStyle='#2c8a2a';g.fillRect(r.x+r.w/2+.4,r.y+r.h-1,.6,7);
  g.fillStyle='#3fae3a';g.beginPath();g.roundRect(r.x-.6,r.y-.6,r.w+1.2,r.h+1.2,1.8);g.fill();g.fillStyle='#fbfcf6';g.beginPath();g.roundRect(r.x,r.y,r.w,r.h,1.4);g.fill();
- shield(g,r.x+2.6,r.y+2.8,.28);g.fillStyle='#222';g.font='700 2.1px system-ui';g.textAlign='left';g.textBaseline='middle';g.fillText(holes===MZ?'Międzybłocie':h===TRN?'Przysieczyn':'Złotów',r.x+5,r.y+2);g.fillText('DiscGolfPark®',r.x+5,r.y+4.2);
+ shield(g,r.x+2.6,r.y+2.8,.28);g.fillStyle='#222';g.font='700 2.1px system-ui';g.textAlign='left';g.textBaseline='middle';g.fillText(h.sw?'Wągrowiec':h.orle?'Orle':holes===MZ?'Międzybłocie':h===TRN?'Przysieczyn':'Złotów',r.x+5,r.y+2);g.fillText(h.sw?'Street · beta':h.orle?'Wągrowiec · beta':'DiscGolfPark®',r.x+5,r.y+4.2);
  const cx=r.x+4,cy=r.y+9.6;g.fillStyle='#fff';g.strokeStyle='#111';g.lineWidth=.55;g.beginPath();g.arc(cx,cy,2.9,0,7);g.fill();g.stroke();g.fillStyle='#111';g.font='700 3.2px Georgia,serif';g.textAlign='center';g.fillText(String(hn),cx+.2,cy+.2);
  g.font='600 2px system-ui';g.fillText('Par '+h.par,cx,cy+5.4);g.fillRect(cx-2.6,cy+6.6,5.2,.18);g.fillText(dist+' m',cx,cy+8);
  g.fillStyle='#f2b01e';g.fillRect(cx-2.6,cy+9.8,5.2,2.6);
@@ -2371,7 +2374,7 @@ ldDraw=function(h){const ld=$('ld');if(!ld)return;let c=$('ldc');if(!c){c=docume
  const x=$('ldsign').getContext('2d'),hn=(holes&&holes.indexOf(h)>=0?holes.indexOf(h)+1:1),dist=Math.round(Math.hypot(h.tee[0]-h.b[0],h.tee[1]-h.b[1])*(h.M||.2)),nm=holes===MZ?'Międzybłocie':h===TRN?'Przysieczyn':'Złotów';
  x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,560,760);x.fillStyle='#3fae3a';x.beginPath();x.roundRect(4,4,552,752,30);x.fill();x.fillStyle='#fbfcf6';x.beginPath();x.roundRect(14,14,532,732,24);x.fill();
  for(const[px,py]of[[34,34],[526,34],[34,726],[526,726]]){x.fillStyle='#c9ced2';x.beginPath();x.arc(px,py,7,0,7);x.fill();x.fillStyle='#8a9096';x.beginPath();x.arc(px,py,3,0,7);x.fill()}
- shield(x,88,92,5.2);x.fillStyle='#222';x.font='600 46px system-ui';x.textAlign='left';x.textBaseline='middle';x.fillText(nm,160,72);x.fillText('DiscGolfPark®',160,124);
+ shield(x,88,92,5.2);x.fillStyle='#222';x.font='600 46px system-ui';x.textAlign='left';x.textBaseline='middle';x.fillText(nm,160,72);x.fillText(h.sw?'Street · beta':h.orle?'Wągrowiec · beta':'DiscGolfPark®',160,124);
  x.fillStyle='#fff';x.strokeStyle='#111';x.lineWidth=9;x.beginPath();x.arc(96,250,62,0,7);x.fill();x.stroke();x.fillStyle='#111';x.font='700 66px Georgia,serif';x.textAlign='center';x.fillText(String(hn),104,256);x.font='700 26px Georgia,serif';x.fillText('#',58,224);
  x.font='500 42px system-ui';x.fillText('Par '+h.par,96,360);x.fillRect(40,392,112,3);x.fillText(dist+' m',96,428);
  x.fillStyle='#f2b01e';x.beginPath();x.roundRect(40,480,112,92,8);x.fill();x.fillStyle='#fff';x.font='900 54px system-ui';x.fillText('!',62,526);x.fillStyle='#3a2a00';x.font='600 11px system-ui';['Zawsze upewnij','się, że w pobliżu','nie ma osób,','które można','trafić dyskiem.'].forEach((l,i)=>x.fillText(l,110,498+i*15));
@@ -3346,7 +3349,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  setInterval(()=>{try{if(tk==99)return;if(tk<0){if(localStorage.getItem('dg_tut')=='1'||(SV.rounds|0)>0){tk=99;return}if(playing&&$('menu').style.display=='none'&&holes[hi]&&bgOf(holes[hi],season=='winter')&&banT<=0){tk=0;tdraw()}return}
    if(!playing){if(tel){tel.remove();tel=null}tk=-1;return}if(tk==2&&throws>=1&&!disc){tk=3;tdraw()}if(tel)tel.style.display=(drag||disc)?'none':''}catch(e){}},300);
  /* --- lista zmian --- */
- const CHG=[['Aktualizacja 16.11.2026 – animacje przy koszu',['🏆 Statystyki: nowy kafelek Top – najczęściej rzucany dysk, plecak, ulubione pole, najłatwiejszy i najtrudniejszy dołek, najdłuższy rzut i putt i więcej. Osobno Twoje i wszystkich graczy.','🌲 Luboń: poprawione dołki 6, 7, 9, 11, 12, 13, 17 i 18 – nowe drzewa, przerzedzony las, ścieżki, widać sąsiednie tee i kosze.','📊 Staty Lubonia pokazują eagle i albatrosy.','🪧 Nowa tabliczka ładowania Lubonia w stylu Złotowa.','🦆 Kaczki na rzece w Złotowie i przy plaży na Luboniu, wędkarz zagaduje – siedzi też nad rzeką na 9 w Złotowie.','🥏 Dysk w locie jest trochę mniejszy.','👥 Gra online: gdy gra się odświeży (np. po utracie grafiki), sama wraca do pokoju i znowu się widzicie.','🛒 W sklepie nowe dyski za 60 monet: Putter Hermes i Mid Apollo (+10% zasięgu) oraz Driver Swaróg (+8%) . Drivery Jastrząb i Grom nazywają się teraz Posejdon i Perun.','🛞 Roller: tor wygląda znów jak ślad opony, toczy się do 10 m dalej niż zwykły rzut, a na końcu dysk zawija spiralą i się kładzie.','🚫 OB poza mapą jak w przepisach: +1 kara i rzucasz z miejsca, gdzie dysk wyleciał, a nie od nowa z tee.','🔧 Naprawa ciemnej planszy na niektórych telefonach z Androidem: gra sama włącza tryb zgodności grafiki (można go też włączyć ręcznie w Opcjach albo w trakcie gry w menu pauzy).','🏆 Top 5 i karta rekordu pokazują, jakimi dyskami rzucano.','🥏 Dyski ze sklepu pokazują zasięg i stabilność (zamiast skrętu). Stabilność 100% = leci prosto, poniżej 100% = mocniej fadeuje pod koniec lotu. Nowe w sklepie za 40 monet: drivery Kronos (90%), Weles (85%), Hefajstos (80%) i midy Artemida (90%), Światowid (85%), Loki (80%). Dyski ze sklepu noszą teraz imiona bogów z mitologii.','💧 Ładniejsza woda: refleksy światła, głębia, piana przy brzegu, iskierki słońca, kręgi od ryb i po wpadnięciu dysku.','🌳 Luboń 15: teepad bardziej w lewo, małe drzewka na łące. Luboń 16: ścieżka do następnego teepada przez polankę i nowe drzewka przy koszu.','🌙 EVENT Świetlista noc: Złotów nocą – dyski LED ze świecącą smugą, lampki na drzewach, ognisko z gitarą i kiełbaskami, sowy, jeże i nietoperze, a na ostatnim dołku wschód słońca. Za udział Driver Aurora, top 3 dostaje Mid Kometa. W karierze możesz raz zagrać rundę specjalną, która liczy się do ratingu.','🗄️ Nowy sezon rankingu: wszystkie dotychczasowe rekordy i statystyki dołków są w Archiwum. Luboń nie jest już w wersji beta.','🎒 Plecak: do 3 kupionych dysków każdego rodzaju, a dysk Twojej firmy jest zawsze do wyboru. W grze przytrzymaj przycisk Putter, Mid albo Driver i wybierz dysk z listy.','🌾 Luboń 13 i 14: łąka na dawnym polu ma widoczne bruzdy.','🔧 Naprawiona ciemna plansza na starszych telefonach. Gdyby pole mimo to zgasło w trakcie gry, gra sama je odbuduje.','🦋 Motyle są mniejsze i latają w małej grupce.','🐦 Więcej życia na polach: przelatujące ptaki, które zrywają się też z drzew po uderzeniu dyskiem, wiewiórki, motyle i wędkarz nad Wartą.','⛓️ Po trafieniu łańcuchy bujają się, a na Warcie w Luboniu pływają kaczki.','🥏 Nietrafienie przy koszu ma teraz animację: za słaby rzut odbija się od klatki, za mocny przelatuje przez łańcuchy, a uderzenie w obręcz wybija dysk w bok.','🌳 Luboń: poprawione dołki 1, 4, 7, 8, 10, 11, 13, 14 i 15.']],
+ const CHG=[['Aktualizacja 22.11.2026 – jesienne kałuże',['💧 Kałuże jesienią wyglądają jak prawdziwa woda – odbijają niebo, mają mokry brzeg, pływają w nich liście, a w deszczu widać kręgi.','🌳 Kałuże nie leżą już pod drzewami.']],['Aktualizacja 16.11.2026 – animacje przy koszu',['🏆 Statystyki: nowy kafelek Top – najczęściej rzucany dysk, plecak, ulubione pole, najłatwiejszy i najtrudniejszy dołek, najdłuższy rzut i putt i więcej. Osobno Twoje i wszystkich graczy.','🌲 Luboń: poprawione dołki 6, 7, 9, 11, 12, 13, 17 i 18 – nowe drzewa, przerzedzony las, ścieżki, widać sąsiednie tee i kosze.','📊 Staty Lubonia pokazują eagle i albatrosy.','🪧 Nowa tabliczka ładowania Lubonia w stylu Złotowa.','🦆 Kaczki na rzece w Złotowie i przy plaży na Luboniu, wędkarz zagaduje – siedzi też nad rzeką na 9 w Złotowie.','🥏 Dysk w locie jest trochę mniejszy.','👥 Gra online: gdy gra się odświeży (np. po utracie grafiki), sama wraca do pokoju i znowu się widzicie.','🛒 W sklepie nowe dyski za 60 monet: Putter Hermes i Mid Apollo (+10% zasięgu) oraz Driver Swaróg (+8%) . Drivery Jastrząb i Grom nazywają się teraz Posejdon i Perun.','🛞 Roller: tor wygląda znów jak ślad opony, toczy się do 10 m dalej niż zwykły rzut, a na końcu dysk zawija spiralą i się kładzie.','🚫 OB poza mapą jak w przepisach: +1 kara i rzucasz z miejsca, gdzie dysk wyleciał, a nie od nowa z tee.','🔧 Naprawa ciemnej planszy na niektórych telefonach z Androidem: gra sama włącza tryb zgodności grafiki (można go też włączyć ręcznie w Opcjach albo w trakcie gry w menu pauzy).','🏆 Top 5 i karta rekordu pokazują, jakimi dyskami rzucano.','🥏 Dyski ze sklepu pokazują zasięg i stabilność (zamiast skrętu). Stabilność 100% = leci prosto, poniżej 100% = mocniej fadeuje pod koniec lotu. Nowe w sklepie za 40 monet: drivery Kronos (90%), Weles (85%), Hefajstos (80%) i midy Artemida (90%), Światowid (85%), Loki (80%). Dyski ze sklepu noszą teraz imiona bogów z mitologii.','💧 Ładniejsza woda: refleksy światła, głębia, piana przy brzegu, iskierki słońca, kręgi od ryb i po wpadnięciu dysku.','🌳 Luboń 15: teepad bardziej w lewo, małe drzewka na łące. Luboń 16: ścieżka do następnego teepada przez polankę i nowe drzewka przy koszu.','🌙 EVENT Świetlista noc: Złotów nocą – dyski LED ze świecącą smugą, lampki na drzewach, ognisko z gitarą i kiełbaskami, sowy, jeże i nietoperze, a na ostatnim dołku wschód słońca. Za udział Driver Aurora, top 3 dostaje Mid Kometa. W karierze możesz raz zagrać rundę specjalną, która liczy się do ratingu.','🗄️ Nowy sezon rankingu: wszystkie dotychczasowe rekordy i statystyki dołków są w Archiwum. Luboń nie jest już w wersji beta.','🎒 Plecak: do 3 kupionych dysków każdego rodzaju, a dysk Twojej firmy jest zawsze do wyboru. W grze przytrzymaj przycisk Putter, Mid albo Driver i wybierz dysk z listy.','🌾 Luboń 13 i 14: łąka na dawnym polu ma widoczne bruzdy.','🔧 Naprawiona ciemna plansza na starszych telefonach. Gdyby pole mimo to zgasło w trakcie gry, gra sama je odbuduje.','🦋 Motyle są mniejsze i latają w małej grupce.','🐦 Więcej życia na polach: przelatujące ptaki, które zrywają się też z drzew po uderzeniu dyskiem, wiewiórki, motyle i wędkarz nad Wartą.','⛓️ Po trafieniu łańcuchy bujają się, a na Warcie w Luboniu pływają kaczki.','🥏 Nietrafienie przy koszu ma teraz animację: za słaby rzut odbija się od klatki, za mocny przelatuje przez łańcuchy, a uderzenie w obręcz wybija dysk w bok.','🌳 Luboń: poprawione dołki 1, 4, 7, 8, 10, 11, 13, 14 i 15.']],
   ['Aktualizacja 15.11.2026 – Luboń dla wszystkich',['🔓 Luboń jest odblokowany dla wszystkich – bez hasła. Pole jest nadal w becie.','🖼️ Nowy pikselowy emblemat Lubonia na ekranie ładowania dołka.','🥏 W sklepie są dwa nowe drivery za 30 monet: Posejdon (+5% zasięgu) i Perun (+7% zasięgu). Znajdziesz je w Bagu.']],
   ['Aktualizacja 15.11.2026 (wieczór) – Luboń beta',['🌳 Luboń 1: droga przedłużona wzdłuż prawej strony z odejściem na fairway, za koszem ścieżka do dołka 2 i skarpa bez drzew.','🌳 Luboń 3: kosz bardziej w lewo, większy dół przy koszu, droga przechodzi w poprzek fairwaya, przy namiocie polanka bez drzew.','🌳 Luboń (beta): dołki przerobione według opisu z pola – skarpa i schodki przy koszu na 1, namiot z ekipą na 3, plaża nad Wartą na 4, słupy telefoniczne na 11, Warta wzdłuż 14.','🧪 Luboń jest dalej w becie – pole będzie jeszcze dopracowywane.','👥 Nowy przycisk Znajomi w menu: lista, statusy i czat z każdym znajomym.','💬 Online: możesz wpisać własny tekst, który pojawi się w dymku nad Twoją postacią.','🚶 Po skończonym dołku chodzisz po większym obszarze za koszem.','🌳 Złotów 22, dołek 13: drzewo przy koszu przesunięte, nie blokuje już wlotu.']],
   ['Aktualizacja 15.11.2026 – Luboń i znajomi',['🌳 Luboń: 18 nowych dołków – skarpy, Warta, kłoda, podwójne mando, rów, brzozy i spacerowicz z psem.','⛰️ Teren ma wysokości: dysk na skarpie albo górce stacza się w dół.','👥 Znajomi: widać, kto jest online, można napisać wiadomość i wyzwać na mecz.','👥 Online: napis o czekaniu jest u góry, a po skończonym dołku stoisz przy koszu i możesz się trochę ruszać.','🎓 Nowy samouczek z animacjami rzutów. Włączysz go w Opcjach.','🥏 Nowy wygląd dysku w locie i w ręce. Dysk leży na ziemi, aż do niego dojdziesz.','🛞 Roller leci dalej, a na końcu mocniej skręca. Forhand skręca inaczej niż backhand.','🗺️ Każde pole w menu ma swoje tło.','🧢 Czapki specjalne wybierasz z listy w Postaci.','🍂 Jesienią więcej żółtych i pomarańczowych liści.','⛳ Poprawki: Złotów 22 (13, 14, kibice na 1), Międzybłocie (6, 12), Złotów 12 (kibic przy wiacie).','⚙️ Odwrócone celowanie działa też na polu testowym w Opcjach.']],
@@ -3413,7 +3416,7 @@ function pauseAgain(){if(!playing)return;if(typeof CAREER!='undefined'&&CAREER){
  window.__bk2=function(h,bg){if(!bg||bg._det2||holes!==ZL&&holes!==window.Z22)return;bg._det2=1;try{
   const x=bg.getContext('2d'),k=bg.width/W,idx=holes.indexOf(h)+1,R=rnd(idx*7919+(holes===ZL?1:2)),win=season=='winter';x.save();x.scale(k,k);
   /* kępki gęstszej trawy */
-  if(!win)for(let i=0;i<120*(window.DECK==null?1:window.DECK);i++){const px=R()*W,py=R()*H;if(!onFair(h,px,py)||Math.hypot(px-h.b[0],py-h.b[1])<24||Math.hypot(px-h.tee[0],py-h.tee[1])<20||inT(h,px,py))continue;const n=5+(R()*6|0);x.fillStyle=R()<.5?'rgba(46,96,30,.35)':'rgba(60,110,36,.3)';x.beginPath();x.ellipse(px,py-1,3.5,2,0,0,7);x.fill();x.strokeStyle=R()<.5?'rgba(34,82,22,.75)':'rgba(64,112,36,.7)';x.lineWidth=.7;x.beginPath();for(let j=0;j<n;j++){const ox=(R()-.5)*4,hh=1.6+R()*1.8;x.moveTo(px+ox,py);x.lineTo(px+ox+(R()-.5)*1.6,py-hh)}x.stroke()}
+  if(!win&&!h.urb)for(let i=0;i<120*(window.DECK==null?1:window.DECK);i++){const px=R()*W,py=R()*H;if(!onFair(h,px,py)||Math.hypot(px-h.b[0],py-h.b[1])<24||Math.hypot(px-h.tee[0],py-h.tee[1])<20||inT(h,px,py))continue;const n=5+(R()*6|0);x.fillStyle=R()<.5?'rgba(46,96,30,.35)':'rgba(60,110,36,.3)';x.beginPath();x.ellipse(px,py-1,3.5,2,0,0,7);x.fill();x.strokeStyle=R()<.5?'rgba(34,82,22,.75)':'rgba(64,112,36,.7)';x.lineWidth=.7;x.beginPath();for(let j=0;j<n;j++){const ox=(R()-.5)*4,hh=1.6+R()*1.8;x.moveTo(px+ox,py);x.lineTo(px+ox+(R()-.5)*1.6,py-hh)}x.stroke()}
   /* patyki pod drzewami i na fairwayu */
   const nT=(40+(h.trees||[]).length)*(window.DECK==null?1:window.DECK);for(let i=0;i<nT;i++){let px,py;const t=(h.trees||[])[i%Math.max(1,(h.trees||[]).length)];if(t&&R()<.75){const a=R()*6.283,d=t[2]*(.9+R()*.9);px=t[0]+Math.cos(a)*d;py=t[1]+Math.sin(a)*d}else{px=R()*W;py=R()*H;if(!onFair(h,px,py))continue}
    if(Math.hypot(px-h.b[0],py-h.b[1])<14||inT(h,px,py))continue;const a=R()*3.14,l=4+R()*6;x.strokeStyle=win?'rgba(60,44,30,.85)':'rgba(96,64,32,.9)';x.lineWidth=.9+R()*.5;x.beginPath();x.moveTo(px-Math.cos(a)*l/2,py-Math.sin(a)*l/2);x.lineTo(px+Math.cos(a)*l/2,py+Math.sin(a)*l/2);if(R()<.5){const u=R()-.5;x.moveTo(px+Math.cos(a)*l*u,py+Math.sin(a)*l*u);x.lineTo(px+Math.cos(a)*l*u+Math.cos(a+.7)*l*.35,py+Math.sin(a)*l*u+Math.sin(a+.7)*l*.35)}x.stroke()}
@@ -4093,7 +4096,7 @@ body #wrap #hud .bd{background:rgba(255,255,255,.95)!important;color:#2e7d3c!imp
   const T=(h.trees||[]).concat(h._fill||[]);
   const inTree=(px,py)=>T.some(t=>Math.abs(px-t[0])<t[2]*1.25&&py>t[1]-t[2]*2.7&&py<t[1]+t[2]*.55);
   const nearTree=(px,py)=>T.some(t=>Math.abs(px-t[0])<t[2]*1.9&&py>t[1]-t[2]*.2&&py<t[1]+t[2]*1.1);
-  const bad=(px,py)=>{if(px<4||px>W-4||py<4||py>H-4)return true;if(Math.hypot(px-h.tee[0],py-h.tee[1])<26||Math.hypot(px-h.b[0],py-h.b[1])<16)return true;
+  const bad=(px,py)=>{if(h.urb)return true;if(px<4||px>W-4||py<4||py>H-4)return true;if(Math.hypot(px-h.tee[0],py-h.tee[1])<26||Math.hypot(px-h.b[0],py-h.b[1])<16)return true;
    for(const r of h.roads||[])if(polyD(px,py,r.pts)<r.w/2+3)return true;
    for(const o of h.deco||[]){if(o.w){if(Math.abs(px-o.x)<o.w/2+4&&Math.abs(py-o.y)<(o.h||o.w)/2+4)return true}else if(Math.hypot(px-o.x,py-o.y)<(o.r||20)+4)return true}
    return inTree(px,py)};
@@ -6202,5 +6205,245 @@ body.onl #resx{top:calc(env(safe-area-inset-top,0px) + 92px)!important;transform
 .tpg{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:0 0 8px}.tpt{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:8px 9px;min-width:0;color:#fff}.tpt.w{grid-column:1/-1}
 .tpt i{font-style:normal;font-size:18px;float:right;margin-left:4px}.tpt small{display:block;font:700 11px system-ui;color:#a9c9b1}.tpt b{display:block;font:900 17px/1.2 'Baloo 2',system-ui;color:#fff;margin:2px 0;overflow-wrap:anywhere}.tpt em{display:block;font:600 10.5px/1.3 system-ui;font-style:normal;color:#cfe5d5;overflow-wrap:anywhere}
 .tpw{display:inline-block;margin-right:12px}`;document.head.appendChild(css);
-}catch(e){console.warn('P194',e)}})();</script></body>
+}catch(e){console.warn('P194',e)}})();</script><script>/* P195: kałuże jesienią jak woda – nieregularny kształt, mokry ciemny brzeg, odbicie nieba, połysk, liście na wodzie, delikatne kręgi (w deszczu częściej); kałuże nie leżą pod koronami drzew */
+(function(){try{
+const S=6,TAU=6.2832;
+puddles=function(h){if(h._pud)return h._pud;if(!h.rel||!h.L)return h._pud=[];
+ const R=rnd(((h.b[0]|0)*31+(h.b[1]|0))|0),P=[],T=h.trees||[];
+ for(let k=0;k<48&&P.length<6;k++){const u=h.L*(.2+R()*.68),[x,y]=h.rel(u,(R()-.5)*h.cw*.85),rx=8+R()*8,ry=rx*(.5+R()*.18);
+  if(x<rx+4||x>W-rx-4||y<ry+30||y>H-ry-30)continue;let ok=1;
+  for(const t of T){const m=(t[2]||8)*1.1+rx,dx=x-t[0];if(dx*dx+(y-t[1])**2<m*m||dx*dx+(y-t[1]+(t[2]||8)*.9)**2<m*m){ok=0;break}}
+  if(ok)for(const q of P)if((x-q.x)**2+(y-q.y)**2<(rx+q.rx+5)**2){ok=0;break}
+  if(ok&&h.b&&(x-h.b[0])**2+(y-h.b[1])**2<32*32)ok=0;
+  if(ok&&h.tee&&(x-h.tee[0])**2+(y-h.tee[1])**2<30*30)ok=0;
+  if(ok)P.push({x,y,rx,ry,a:R()*TAU,s:R(),f:[R()*TAU,R()*TAU,R()*TAU,R()]})}
+ return h._pud=P};
+/* obrys: promień zależny od kąta (gładkie wybrzuszenia), max = elipsa kolizji */
+function ring(p,k){const n=36,o=[];for(let i=0;i<n;i++){const a=i/n*TAU,r=1-.13*(.5+.5*Math.sin(2*a+p.f[0]))-.09*(.5+.5*Math.sin(3*a+p.f[1]))-.05*(.5+.5*Math.sin(5*a+p.f[2]));o.push([Math.cos(a)*p.rx*r*k,Math.sin(a)*p.ry*r*k])}return o}
+function path(c,pts,dx,dy,keep){dx=dx||0;dy=dy||0;const n=pts.length;if(!keep)c.beginPath();const m=(i)=>{const A=pts[i%n],B=pts[(i+1)%n];return[(A[0]+B[0])/2+dx,(A[1]+B[1])/2+dy]};let q=m(n-1);c.moveTo(q[0],q[1]);for(let i=0;i<n;i++){q=m(i);c.quadraticCurveTo(pts[i][0]+dx,pts[i][1]+dy,q[0],q[1])}c.closePath()}
+function sky(){return ATM=='deszcz'||ATM=='mgła'?['#9aa4a9','#6f7a80','#465055']:ATM=='złota godzina'?['#d2bb8e','#8f8a78','#4d5450']:ATM=='wieczór'||ATM=='zmierzch'?['#a493a3','#626780','#383d4e']:['#a9c2cf','#7590a0','#435b69']}
+function sprite(p){const key=ATM;if(p._c&&p._k==key)return p._c;const pad=10,w=(p.rx+pad)*2,hh=(p.ry+pad)*2,c=document.createElement('canvas');c.width=Math.ceil(w*S);c.height=Math.ceil(hh*S);const x=c.getContext('2d');x.scale(S,S);x.translate(w/2,hh/2);
+ const R=rnd((p.s*1e6)|0);
+ /* mokra ziemia wokół – miękkie, ciemne halo */
+ x.save();x.shadowColor='rgba(46,28,12,.85)';x.shadowBlur=S*6;x.fillStyle='rgba(50,31,13,.55)';path(x,ring(p,1.3),.3,.5);x.fill();x.shadowBlur=S*2;x.fillStyle='rgba(50,31,13,.4)';path(x,ring(p,1.12),.2,.4);x.fill();x.restore();
+ /* błotny brzeg */
+ x.fillStyle='rgba(48,30,14,.75)';path(x,ring(p,1.06));x.fill();
+ const pts=ring(p,1);x.save();path(x,pts);x.clip();
+ /* woda: odbicie nieba */
+ const C=sky(),gr=x.createLinearGradient(0,-p.ry,0,p.ry);gr.addColorStop(0,C[2]);gr.addColorStop(.45,C[1]);gr.addColorStop(1,C[0]);x.fillStyle=gr;x.fillRect(-p.rx-2,-p.ry-2,p.rx*2+4,p.ry*2+4);
+ /* odbicie koron drzew przy górnym brzegu */
+ const tr=x.createRadialGradient(-p.rx*.3,-p.ry*.9,0,-p.rx*.3,-p.ry*.9,p.rx*1.1);tr.addColorStop(0,'rgba(20,38,30,.6)');tr.addColorStop(1,'rgba(22,40,30,0)');x.fillStyle=tr;x.fillRect(-p.rx-2,-p.ry-2,p.rx*2+4,p.ry*2+4);
+ /* cień brzegu wewnątrz (głębia) */
+ x.fillStyle='rgba(34,22,10,.55)';x.beginPath();x.rect(-p.rx-6,-p.ry-6,p.rx*2+12,p.ry*2+12);const sh=ring(p,1.02);path(x,sh,0,1.4,1);x.fill('evenodd');
+ x.fillStyle='rgba(34,22,10,.28)';x.beginPath();x.rect(-p.rx-6,-p.ry-6,p.rx*2+12,p.ry*2+12);path(x,sh,0,2.6,1);x.fill('evenodd');
+ /* połysk nieba */
+ x.save();x.translate(p.rx*.18,p.ry*.2);x.rotate(-.18);x.scale(1,.32);const gl=x.createRadialGradient(0,0,0,0,0,p.rx*.55);gl.addColorStop(0,'rgba(255,255,255,.45)');gl.addColorStop(.5,'rgba(255,255,255,.18)');gl.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=gl;x.beginPath();x.arc(0,0,p.rx*.55,0,TAU);x.fill();x.restore();
+ /* liście na wodzie */
+ const nl=R()<.75?1+(R()*2|0):0;for(let i=0;i<nl;i++){const lx=(R()-.5)*p.rx*1.1,ly=(R()-.5)*p.ry*1.0,la=R()*TAU,col=['#c8661f','#d9922b','#a8471c','#b98a3a'][R()*4|0];x.save();x.translate(lx,ly);x.rotate(la);x.fillStyle='rgba(0,0,0,.18)';x.beginPath();x.ellipse(.2,.3,1.2,.6,0,0,TAU);x.fill();x.fillStyle=col;x.beginPath();x.ellipse(0,0,1.2,.6,0,0,TAU);x.fill();x.strokeStyle='rgba(80,35,10,.6)';x.lineWidth=.18;x.beginPath();x.moveTo(-1.2,0);x.lineTo(1.4,0);x.stroke();x.restore()}
+ x.restore();
+ /* jasna linia wody przy dolnym brzegu (światło na krawędzi) */
+ x.save();x.beginPath();x.rect(-p.rx-4,p.ry*.15,p.rx*2+8,p.ry+6);x.clip();x.strokeStyle='rgba(235,245,255,.16)';x.lineWidth=.35;path(x,ring(p,.97));x.stroke();x.restore();
+ p._c=c;p._k=key;p._w=w;p._h=hh;p._p=pts;return c}
+drawPud=function(h){const t=performance.now()/1000,rain=ATM=='deszcz';for(const p of puddles(h)){let sv=0;try{const c=sprite(p);g.save();sv=1;g.translate(p.x,p.y);g.drawImage(c,-p._w/2,-p._h/2,p._w,p._h);
+ path(g,p._p);g.clip();g.lineWidth=.35;
+ /* kręgi: spokojnie co kilka sekund, w deszczu ciągle */
+ const n=rain?4:1;for(let i=0;i<n;i++){const per=rain?1.1:5.5,ph=((t+p.s*per*7+i*per/n)%per)/per;if(!rain&&ph>.45)continue;const f=rain?ph:ph/.45,R2=rnd(((p.s*1e5)|0)+i*97+Math.floor((t+p.s*per*7+i*per/n)/per)),cx=(R2()-.5)*p.rx*1.1,cy=(R2()-.5)*p.ry*1.0,rr=.5+f*(rain?3.2:p.rx*.45);g.strokeStyle='rgba(240,248,255,'+(.45*(1-f))+')';g.beginPath();g.ellipse(cx,cy,rr,rr*.62,0,0,TAU);g.stroke();if(f>.25){g.strokeStyle='rgba(240,248,255,'+(.25*(1-f))+')';g.beginPath();g.ellipse(cx,cy,rr*.6,rr*.37,0,0,TAU);g.stroke()}}
+ /* lekkie migotanie połysku */
+ g.globalAlpha=.10+.08*Math.sin(t*1.3+p.s*9);g.fillStyle='#fff';g.beginPath();g.ellipse(p.rx*.1,p.ry*.18,p.rx*.3,p.ry*.09,-.18,0,TAU);g.fill();
+ g.restore()}catch(e){if(sv)try{g.restore()}catch(_){}}}};
+}catch(e){console.warn('P195',e)}})();
+</script>
+<script>/* P196: Street Wągrowiec (BETA, kod 6666) – pole miejskie: bruk, asfalt, kamienice z oknami, samochody, fontanna; dołek 1: Rynek po przekątnej, kosz w rogu przy zejściu na Bydgoską. Runda beta nie liczy się do rekordów. */
+(function(){try{
+const TAU=6.2832;
+/* ---------- geometria: współrzędne ze zrzutu mapy (px) → świat (1 m = 5 j.) ---------- */
+const mkP=(K,X0,Y0)=>(x,y)=>[(x-X0)/K,(y-Y0)/K];
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1]],nrm=v=>{const l=Math.hypot(v[0],v[1])||1;return[v[0]/l,v[1]/l]};
+const dseg=(p,a,e)=>{const vx=e[0]-a[0],vy=e[1]-a[1],l2=vx*vx+vy*vy||1,f=Math.max(0,Math.min(1,((p[0]-a[0])*vx+(p[1]-a[1])*vy)/l2));return Math.hypot(p[0]-a[0]-vx*f,p[1]-a[1]-vy*f)};
+const dpl=(p,P)=>{let m=1e9;for(let i=1;i<P.length;i++)m=Math.min(m,dseg(p,P[i-1],P[i]));return m};
+const inPoly=(x,y,P)=>{let c=false;for(let i=0,j=P.length-1;i<P.length;j=i++){const[a,b]=P[i],[e,f]=P[j];if(((b>y)!=(f>y))&&(x<(e-a)*(y-b)/(f-b)+a))c=!c}return c};
+function line(h,T,B,w){const n=40,q=[];for(let i=0;i<=n;i++)q.push([T[0]+(B[0]-T[0])*i/n,T[1]+(B[1]-T[1])*i/n]);const L=Math.hypot(B[0]-T[0],B[1]-T[1]),ux=(B[0]-T[0])/L,uy=(B[1]-T[1])/L,nx=-uy,ny=ux;
+ h.path=q;h.pf=q.map((_,i)=>i/n);h.cwf=()=>w;h.cw=w;h.L=L;h.rel=(u,l)=>[T[0]+ux*u+nx*l,T[1]+uy*u+ny*l];h.lat=p=>(p[0]-T[0])*nx+(p[1]-T[1])*ny;h.along=p=>(p[0]-T[0])*ux+(p[1]-T[1])*uy}
+/* kamienice wzdłuż pierzei: a→b oś ulicy, side=+1/-1 strona, off = odległość frontu od osi */
+function rowHouses(U,a,b,side,off,seed,s0,s1){const R=rnd(seed),u=nrm(sub(b,a)),v=[-u[1]*side,u[0]*side],L=Math.hypot(b[0]-a[0],b[1]-a[1]);let s=s0==null?0:s0;const e=s1==null?L:s1;
+ while(s<e){const sc=U.sc||1,w=(44+R()*30)*sc,d=(56+R()*22)*sc,c=[a[0]+u[0]*(s+w/2)+v[0]*(off+d/2),a[1]+u[1]*(s+w/2)+v[1]*(off+d/2)];
+  U.bld.push({c,u,v,a:w/2-.3,b:d/2,h:(58+R()*30)*Math.max(.6,sc),rf:(R()*6)|0,fc:(R()*6)|0,fl:R()<.25});s+=w}}
+/* ---------- malowanie pola miejskiego (wywoływane z build3) ---------- */
+const ROOF=[[.56,.24,.16],[.44,.2,.14],[.36,.36,.38],[.27,.26,.26],[.5,.32,.22],[.6,.58,.55]];
+const CARC=[[.92,.92,.9],[.72,.74,.76],[.12,.12,.13],[.3,.31,.33],[.66,.12,.1],[.16,.24,.42],[.5,.52,.48],[.86,.86,.82]];
+function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!='undefined'&&AUT3,U=h.U;
+ const cm=fn=>{const c=document.createElement('canvas');c.width=TW;c.height=TH;const x=c.getContext('2d',{willReadFrequently:true});x.scale(S,S);x.fillStyle=x.strokeStyle='#fff';x.lineJoin='round';fn(x);const d=x.getImageData(0,0,TW,TH).data,a=new Float32Array(TW*TH);for(let i=0;i<a.length;i++)a[i]=d[i*4+3]/255;c.width=c.height=0;return a};
+ const st=(x,r,w)=>{x.lineWidth=w;x.beginPath();r.p.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke()};
+ const PLm=cm(x=>{for(const P of U.plaza){x.beginPath();P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill()}});
+ const RDm=cm(x=>{x.lineCap='butt';for(const r of U.roads)st(x,r,r.w)}),CBm=cm(x=>{x.lineCap='butt';for(const r of U.roads)st(x,r,r.w+2.6)});
+ const LNm=cm(x=>{x.lineCap='butt';x.setLineDash([7,7]);for(const r of U.roads)if(r.c)st(x,r,.8)});
+ const PKm=cm(x=>{x.lineWidth=.7;for(const o of U.cars){if(o.road)continue;const f=[Math.sin(o.a),-Math.cos(o.a)],r=[Math.cos(o.a),Math.sin(o.a)],hw=7.6*(U.sc||1),hl=13*(U.sc||1);for(const sd of[-1,1]){x.beginPath();x.moveTo(o.x+r[0]*hw*sd-f[0]*hl,o.y+r[1]*hw*sd-f[1]*hl);x.lineTo(o.x+r[0]*hw*sd+f[0]*hl,o.y+r[1]*hw*sd+f[1]*hl);x.stroke()}}});
+ const LTm=U.lots&&U.lots.length?cm(x=>{for(const P of U.lots){x.beginPath();P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill()}}):null,GRm=U.grass&&U.grass.length?cm(x=>{for(const P of U.grass){x.beginPath();P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill()}}):null;
+ const FR=U.fount.map(f=>[f.x*S,f.y*S,f.r*S]),TR=h.trees.map(t=>[t[0]*S,t[1]*S,t[2]*S*1.7]);
+ for(let y=0;y<TH;y++)for(let x=0;x<TW;x++){const i=y*TW+x;if(WAm[i]>.55)continue;const pl=PLm[i],rd=RDm[i],cb=CBm[i];let r,g,b,ht;
+  /* chodnik: płyty 50×50 */
+  {const SL=Math.max(5,Math.round(10*(U.sc||1))),gx=x%SL,gy=y%SL,j=gx==0||gy==0,n=hs3(x>>3,y>>3,5)*.05+fb3(x*.05,y*.05,6,3)*.08+hs3(x,y,7)*.03;r=.6+n;g=.59+n;b=.56+n;if(j){const q=(U.sc||1)<1?.9:.8;r*=q;g*=q;b*=q}ht=j?0:.35}
+  /* rynek: kostka granitowa, rzędy z przesunięciem */
+  if(pl>0){const row=(y/4)|0,off=(row&1)*3,col=((x+off)/6)|0,jx=((x+off)%6)==0,jy=(y%4)==0,v=hs3(col,row,11),n=fb3(x*.03,y*.03,12,3)*.1+v*.09;let pr=.6+n,pg=.56+n,pb=.5+n*.9;if(v>.93){pr-=.08;pg-=.07;pb-=.05}if(jx||jy){pr*=.74;pg*=.74;pb*=.74}for(const F of FR){const d=Math.hypot(x-F[0],y-F[1]);if((d>F[2]+14&&d<F[2]+20)||(d>F[2]+34&&d<F[2]+37)){pr*=.8;pg*=.82;pb*=.86}}const pk=PKm[i];if(pk>0){pr+=(.92-pr)*pk;pg+=(.92-pg)*pk;pb+=(.9-pb)*pk}r+=(pr-r)*pl;g+=(pg-g)*pl;b+=(pb-b)*pl;ht=ht*(1-pl)+(jx||jy?0:.6+v*.5)*pl}
+  /* trawa / nieużytek */
+  if(GRm&&GRm[i]>0){const k=GRm[i],n=fb3(x*.03,y*.03,41,3),bl=vn3(x*.9,y*.25,42),dr=fb3(x*.08,y*.08,43,2);let gr=.5+n*.1,gg=.46+n*.08,gb=.28;if(n<.45){gr=.34;gg=.43;gb=.19}if(dr>.64){gr=.47;gg=.39;gb=.27}gr+=(bl-.5)*.07;gg+=(bl-.5)*.07;r+=(gr-r)*k;g+=(gg-g)*k;b+=(gb-b)*k;ht=ht*(1-k)+(bl*1.8+n*1.4)*k}
+  /* parking (asfalt + linie) */
+  if(LTm&&LTm[i]>0){const k=LTm[i],n=hs3(x,y,24)*.05+fb3(x*.04,y*.04,25,3)*.06;let ar=.31+n,ag=.32+n,ab=.34+n;const pk=PKm[i];if(pk>0){ar+=(.9-ar)*pk;ag+=(.9-ag)*pk;ab+=(.88-ab)*pk}r+=(ar-r)*k;g+=(ag-g)*k;b+=(ab-b)*k;ht=ht*(1-k)-.3*k}
+  /* krawężnik */
+  if(cb>0&&rd<.6){const k=cb*(1-rd);r+=(.76-r)*k;g+=(.75-g)*k;b+=(.72-b)*k;ht+=1.4*k}
+  /* asfalt */
+  if(rd>0){const n=hs3(x,y,21)*.05+fb3(x*.04,y*.04,22,3)*.06,pt=fb3(x*.015,y*.015,23,2);let ar=.24+n,ag=.25+n,ab=.27+n;if(pt>.62){ar+=.04;ag+=.04;ab+=.04}const ln=LNm[i];if(ln>0){ar+=(.86-ar)*ln;ag+=(.86-ag)*ln;ab+=(.8-ab)*ln}r+=(ar-r)*rd;g+=(ag-g)*rd;b+=(ab-b)*rd;ht=ht*(1-rd)-.6*rd;SPEC[i]=.1*rd}else SPEC[i]=0;
+  /* liście jesienią pod drzewami, śnieg zimą */
+  if(wn){const sn=fb3(x*.05,y*.05,31,3),k=rd>.5?(.35+sn*.3):(.72+sn*.25);r+=(.9-r)*k;g+=(.92-g)*k;b+=(.96-b)*k;ht+=.4}
+  else if(au){for(const t of TR){const d=Math.hypot(x-t[0],y-t[1]);if(d<t[2]){const lf=hs3(x>>1,y>>1,91);if(lf>.78+d/t[2]*.2){const c=hs3(x>>1,y>>1,92);r=c<.4?.82:c<.75?.9:.6;g=c<.4?.42:c<.75?.66:.24;b=.1;ht+=.5}break}}}
+  setA(i,r,g,b);HT[i]=ht;SIDE[i]=0}
+ /* donice / kwietniki */
+ for(const o of U.pots){const cx=o[0]*S,cy=o[1]*S,hw=o[2]*S;E.rectFn(cx-hw,cy-hw,cx+hw,cy+hw,(i,x,y)=>{const e=Math.min(x-(cx-hw),(cx+hw)-x,y-(cy-hw),(cy+hw)-y);if(e<2.2){HT[i]=6;setA(i,.58,.56,.52)}else{const n=fb3(x*.3,y*.3,44,2),bush=n>.35;HT[i]=bush?8+n*7:5;if(wn)setA(i,.9,.92,.96);else if(bush)au?setA(i,.7+n*.2,.38,.1):setA(i,.17+n*.1,.36+n*.12,.1);else setA(i,.25,.18,.12)}})}
+ /* ławki */
+ for(const o of U.bench||[]){const cx=o[0]*S,cy=o[1]*S,vert=o[2];E.rectFn(cx-(vert?5:14),cy-(vert?14:5),cx+(vert?5:14),cy+(vert?14:5),(i,x,y)=>{const sl=vert?((x-cx+5)%4)<1:((y-cy+5)%4)<1;HT[i]=sl?5:7;if(wn&&!sl)setA(i,.9,.92,.96);else setA(i,sl?.2:.52,sl?.16:.36,sl?.12:.22)})}
+ /* fontanna: kamienne obrzeże + kolumna z czaszą */
+ for(const f of U.fount){const cx=f.x*S,cy=f.y*S,ro=f.r*S+5,ri=f.r*S-1.5;E.rectFn(cx-ro-2,cy-ro-2,cx+ro+2,cy+ro+2,(i,x,y)=>{const d=Math.hypot(x-cx,y-cy);if(d<=ro&&d>=ri){const n=hs3(x>>1,y>>1,51)*.06;HT[i]=5+(d>ri+1.5&&d<ro-1.5?1:0);setA(i,.68+n,.66+n,.62+n);SPEC[i]=.1;if(wn&&d<ro-1)setA(i,.92,.94,.97)}else if(d<6){HT[i]=16-d;setA(i,.66,.64,.6);SPEC[i]=.2}else if(d<13&&d>10){HT[i]=Math.max(HT[i],9);setA(i,.62,.6,.56)}})}
+ /* kamienice: dach dwuspadowy, elewacja (SIDE 7–12) */
+ for(const B of U.bld){const{c,u,v,a,b}=B,ext=Math.hypot(a,b)+1,col=ROOF[B.rf],x0=(c[0]-ext)*S,y0=(c[1]-ext)*S,x1=(c[0]+ext)*S,y1=(c[1]+ext)*S;
+  E.rectFn(x0,y0,x1,y1,(i,x,y)=>{const px=x/S-c[0],py=y/S-c[1],du=px*u[0]+py*u[1],dv=px*v[0]+py*v[1];if(Math.abs(du)>a||Math.abs(dv)>b)return;const qv=Math.abs(dv)/b,qu=Math.abs(du)/a;
+   let hh=B.fl?B.h-6+(qu>.96||qv>.96?2:0):B.h+16*(1-qv);const tile=((Math.abs(dv)*S*1.3)|0)%3==0,n=hs3(x>>1,y>>1,61)*.07+fb3(x*.06,y*.06,62,2)*.06;let r=col[0]+n,g=col[1]+n,bb=col[2]+n;
+   if(B.fl){if(qu>.96||qv>.96){r=g=bb=.5}else if(hs3((du/6)|0,(dv/6)|0,63)>.94){r=g=bb=.42;hh+=3}}else{if(tile){r*=.8;g*=.8;bb*=.8}if(qv<.04){r*=.75;g*=.75;bb*=.75}if(qu>.97){r*=.85;g*=.85;bb*=.85;hh+=1.5}}
+   if(!B.fl&&hs3(B.rf*7+(du>0?1:0),(c[0]|0),64)>.7&&Math.abs(du-a*.4)<3&&Math.abs(dv-b*.4)<2.5){hh+=8;r=.5;g=.36;bb=.3}
+   if(wn){const k=tile?.82:.93;r=k;g=k+.02;bb=k+.05}
+   if(hh<=HT[i])return;HT[i]=hh;setA(i,r,g,bb);SPEC[i]=B.fl?.05:.12;SIDE[i]=7+B.fc})}
+ /* samochody */
+ for(const o of U.cars){const cx=o.x*S,cy=o.y*S,hw=11.5*(U.sc||1)*(U.cs||1),hh=27*(U.sc||1)*(U.cs||1),ext=hh+2,col=o.c,f=[Math.sin(o.a),-Math.cos(o.a)],rr=[Math.cos(o.a),Math.sin(o.a)];
+  E.rectFn(cx-ext,cy-ext,cx+ext,cy+ext,(i,x,y)=>{const ex=x-cx,ey=y-cy,lx=ex*rr[0]+ey*rr[1],ly=-(ex*f[0]+ey*f[1]),dx=lx/hw,dy=ly/hh,q=Math.pow(Math.abs(dx),4)+Math.pow(Math.abs(dy),4);if(q>1)return;
+   let hg=12*(1-Math.pow(q,3)),c=col.map(v=>v*.8);const cab=Math.abs(dx)<.8&&dy>-.4&&dy<.45;if(cab){hg+=9*(1-Math.pow(Math.abs(dx)/.8,4));if(dy<-.16||dy>.28||Math.abs(dx)>.64){c=[.08,.11,.15];SPEC[i]=.7}else SPEC[i]=.4}else SPEC[i]=.45;
+   if(Math.abs(dy)>.9&&Math.abs(dx)>.4&&Math.abs(dx)<.8)c=dy<0?[.95,.93,.78]:[.75,.1,.1];if(wn&&!(cab&&(dy<-.16||dy>.28||Math.abs(dx)>.64))&&hs3(x>>1,y>>1,71)>.15)c=[.92,.94,.98];
+   HT[i]=Math.max(HT[i],hg*Math.max(.6,U.sc||1));setA(i,c[0],c[1],c[2])})}
+}
+/* kolizja ze ścianami (kapsuły po obwodzie budynku) + OB: ulica i budynki */
+function urbCol(h){const C=[];for(const B of h.U.bld){const{c,u,v,a,b}=B;const pts=[];const st=5;for(let s=-a;s<=a;s+=st){pts.push([s,-b],[s,b])}for(let s=-b;s<=b;s+=st){pts.push([-a,s],[a,s])}
+  for(const[p,q]of pts){const x=c[0]+u[0]*p+v[0]*q,y=c[1]+u[1]*p+v[1]*q;if(x<-10||x>W+10||y<-10||y>H+10)continue;const t=[x,y,3.4*Math.max(.6,h.U.sc||1),0];t.w=1;C.push(t)}}return C}
+function urbOB(h){const U=h.U;return(x,y)=>{for(const r of U.roads)if(!r.noOB&&dpl([x,y],r.p)<r.w/2)return true;for(const B of U.bld){const px=x-B.c[0],py=y-B.c[1];if(Math.abs(px*B.u[0]+py*B.u[1])<B.a&&Math.abs(px*B.v[0]+py*B.v[1])<B.b)return true}return false}}
+function mkU(o){const h={tee:o.tee,b:o.b,par:o.par||3,trees:o.trees||[],water:[],roads:[],mead:[],rivers:[],extra:[],deco:o.deco||[],name:'Street Wągrowiec',M:o.M||.2,noFill:1,_fill:[],noSil:1,urb:null,U:o.U,txt:o.txt};
+ line(h,o.tee,o.b,o.w||70);h.camDx=o.camDx!=null?o.camDx:Math.max(-40,Math.min(40,(o.b[0]-o.tee[0])*.12));for(const f of o.U.fount)h.water.push([f.x-f.r,f.y-f.r,f.r*2,f.r*2]);h.urb=E=>urbPaint(h,E);h.obF=urbOB(h);h.sw=1;return h}
+/* ================= DOŁEK 1 – RYNEK ================= */
+const H1=(()=>{const P=mkP(2.09,200,520),PA=a=>a.map(p=>P(p[0],p[1]));
+ const top=PA([[150,612],[300,655],[940,762],[1090,700]]),lft=PA([[200,200],[200,1900]]),rgt=PA([[905,770],[733,1560]]),bot=PA([[150,1545],[1100,1545]]);
+ const U={roads:[{p:top,w:56/2.09,c:1},{p:lft,w:116/2.09,c:1},{p:rgt,w:56/2.09,c:1},{p:bot,w:56/2.09,c:1}],plaza:[PA([[268,688],[854,783],[706,1509],[268,1509]])],bld:[],cars:[],pots:[],bench:[],fount:[]};
+ const k=1/2.09;
+ rowHouses(U,P(262,649),P(1000,770),-1,50*k,11,0);
+ rowHouses(U,rgt[0],rgt[1],-1,48*k,23,40*k);
+ rowHouses(U,P(262,1545),P(1100,1545),1,50*k,37,0);
+ /* fontanna */
+ {const f=P(525,935);U.fount.push({x:f[0],y:f[1],r:21})}
+ /* kwietniki po lewej stronie rynku i ławki */
+ for(let y=900;y<=1330;y+=62){const p=P(288,y);U.pots.push([p[0],p[1],4])}
+ for(const y of[960,1145,1270]){const p=P(312,y);U.bench.push([p[0],p[1],1])}
+ /* auta: górny rząd (prostopadle do krawężnika), prawy rząd, dolny rząd */
+ const R=rnd(4242),cc=()=>CARC[(R()*CARC.length)|0];
+ const eT=(x)=>[x,692+(x-294)*.164];for(let x=372;x<=724;x+=30){if(R()<.12)continue;const e=eT(x),p=P(e[0]-.162*27,e[1]+.987*27);U.cars.push({x:p[0],y:p[1],a:Math.atan2(-.162,-.987)+Math.PI+(R()-.5)*.08,c:cc()})}
+ const eR=y=>[857-.204*(y-770),y];for(let y=880;y<=1440;y+=29){if(y>985&&y<1105)continue;if(R()<.12)continue;const e=eR(y),p=P(e[0]-.98*27,e[1]-.2*27);U.cars.push({x:p[0],y:p[1],a:Math.atan2(-.98,.2)+(R()-.5)*.08+(R()<.5?Math.PI:0),c:cc()})}
+ for(let x=388;x<=620;x+=29){if(R()<.12)continue;const p=P(x,1509-27);U.cars.push({x:p[0],y:p[1],a:(R()<.5?0:Math.PI)+(R()-.5)*.08,c:cc()})}
+ /* auta na ulicach (zaparkowane wzdłuż) */
+ for(let y=760;y<=1480;y+=64){if(R()<.3)continue;const p=P(236,y);U.cars.push({x:p[0],y:p[1],a:R()<.5?0:Math.PI,c:cc(),road:1})}
+ const trees=[[...P(285,725),17,0],[...P(782,818),12,6],[...P(715,1050),15,0],[...P(226,640),11,6]];
+ const tee=P(330,1452),bk=P(838,795);
+ return mkU({tee,b:bk,par:3,trees,U,w:72,txt:'Rynek – rzut po przekątnej, kosz w rogu przy zejściu na Bydgoską. Fontanna to woda, ulica to OB.'})})();
+/* budynek prostokątny (px mapy): środek, szerokość, głębokość, kąt */
+function bRect(U,P,K,x,y,w,d,ang,o){const c=P(x,y),u=[Math.cos(ang),Math.sin(ang)],v=[-u[1],u[0]];U.bld.push(Object.assign({c,u,v,a:w/2/K,b:d/2/K,h:60,rf:2,fc:2,fl:0},o||{}))}
+/* rząd miejsc parkingowych: oś a→b (px), auta prostopadle, offs = przesunięcia od osi */
+function parkRow(U,P,K,a,b,offs,R,step){const L=Math.hypot(b[0]-a[0],b[1]-a[1]),u=[(b[0]-a[0])/L,(b[1]-a[1])/L],n=[-u[1],u[0]];for(let s=step/2;s<L;s+=step)for(const of of offs){if(R()<.16)continue;const p=P(a[0]+u[0]*s+n[0]*of,a[1]+u[1]*s+n[1]*of),an=Math.atan2(n[0],-n[1])+(R()<.5?Math.PI:0)+(R()-.5)*.08;U.cars.push({x:p[0],y:p[1],a:an,c:CARC[(R()*CARC.length)|0]})}}
+/* ================= DOŁEK 2 – Z BYDGOSKIEJ NA PARKING BIEDRONKI (par 4) ================= */
+const H2=(()=>{const K=2.6,P=mkP(K,140,420),PA=a=>a.map(p=>P(p[0],p[1])),M=K/7.5,k=1/K;
+ const byd=PA([[40,1615],[100,1560],[300,1405],[500,1285],[700,1120],[900,1020],[1120,945]]);
+ const U={sc:.2/M,cs:.84,roads:[{p:byd,w:50*k,c:1,noOB:1}],plaza:[],lots:[PA([[468,505],[905,530],[990,500],[1120,470],[1120,880],[900,965],[760,1015],[650,1075],[560,1095],[430,1065],[300,1020]])],grass:[PA([[-30,440],[445,440],[468,505],[300,1020],[235,1095],[-30,1095]]),PA([[235,1095],[300,1020],[430,1065],[480,1200],[300,1330],[150,1420],[-30,1420],[-30,1095]]),PA([[-30,1700],[200,1560],[400,1460],[600,1340],[800,1200],[1000,1110],[1120,1080],[1120,1900],[-30,1900]])],bld:[],cars:[],pots:[],bench:[],fount:[]};
+ for(let i=0;i<byd.length-1;i++)rowHouses(U,byd[i],byd[i+1],1,36*k,61+i*7);
+ rowHouses(U,P(262,1440),P(470,1300),-1,36*k,91);
+ for(let i=0;i<byd.length-1;i++)rowHouses(U,byd[i],byd[i+1],1,36*k+150*k,131+i*7);
+ bRect(U,P,K,655,445,540,125,.05,{fl:1,rf:5,fc:4,h:66});
+ bRect(U,P,K,330,410,220,70,0,{fl:1,rf:3,fc:4,h:56});
+ bRect(U,P,K,665,955,150,80,-.42,{rf:0,fc:1,h:52});
+ const R=rnd(777);
+ parkRow(U,P,K,[468,525],[312,1000],[-22],R,19);
+ parkRow(U,P,K,[595,575],[485,925],[-18,18],R,19);
+ parkRow(U,P,K,[725,590],[645,870],[-18,18],R,19);
+ parkRow(U,P,K,[808,690],[790,900],[18],R,19);
+ parkRow(U,P,K,[868,680],[860,900],[-18],R,19);
+ parkRow(U,P,K,[1040,480],[1040,720],[0],R,19);
+ const T=(x,y,r,ty)=>[...P(x,y),r,ty];
+ const trees=[T(340,1030,9,6),T(250,1310,13,0),T(825,770,9,2),T(828,835,9,2),T(832,900,9,2),T(565,540,8,6),T(1065,770,9,0),T(180,640,11,0),T(90,900,10,6),T(260,820,8,2)];
+ return mkU({tee:P(185,1455),b:P(643,640),par:4,trees,U,M,w:60,txt:'Z Bydgoskiej w dół na parking Biedronki – wzdłuż ulicy i w lewo między auta. Budynki to OB.'})})();
+const SW=[H1,H2];window.SW=SW;
+/* ---------- wpięcie w grę ---------- */
+const _st=start;start=function(){if(layout=='street')holes=SW;return _st.apply(this,arguments)};
+const okSW=()=>{try{return localStorage.getItem('dg_swok')==='1'}catch(e){return false}};
+const card={k:'street',n:'Street Wągrowiec',d:'🧪 beta · pole miejskie · '+SW.length+'/9 dołków',hl:()=>SW,bp:'50% 50%',pw:1,pwok:okSW,pwask:()=>{const o=document.createElement('div');o.style.cssText='position:fixed;inset:0;z-index:96;background:rgba(0,8,4,.65);display:flex;align-items:center;justify-content:center';
+ o.innerHTML='<div style="width:min(86vw,320px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:20px;padding:18px;color:#fff;font-family:Baloo 2,system-ui;text-align:center"><div style="font-size:34px">🔒</div><h3 style="margin:4px 0">Street Wągrowiec · BETA</h3><p style="margin:0 0 10px;color:#a9c9b1;font:600 13px system-ui">Wpisz kod, żeby odblokować pole</p><input id="swpw" type="password" inputmode="numeric" maxlength="8" style="width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.3);color:#fff;font:900 22px system-ui;text-align:center;letter-spacing:.3em"><p id="swst" style="min-height:16px;margin:6px 0;color:#ff9a8a;font:700 12px system-ui"></p><button id="swok" style="width:100%;padding:12px;border:0;border-radius:12px;background:#3fd16a;color:#08210f;font:900 15px system-ui">Odblokuj</button><button id="swx" style="width:100%;margin-top:6px;padding:10px;border:0;border-radius:12px;background:rgba(255,255,255,.1);color:#fff;font:800 14px system-ui">Anuluj</button></div>';
+ document.body.appendChild(o);const I=o.querySelector('#swpw');setTimeout(()=>I.focus(),50);const go=()=>{if(I.value.trim()==='777'){try{localStorage.setItem('dg_swok','1')}catch(e){}o.remove();selLayout('street');renderCards();toast('🔓 Street Wągrowiec odblokowany')}else{o.querySelector('#swst').textContent='Zły kod';I.value=''}};o.querySelector('#swok').onclick=go;I.onkeydown=e=>{if(e.key==='Enter')go()};o.querySelector('#swx').onclick=()=>o.remove()}};
+if(!CARDS.some(c=>c.k=='street'))CARDS.push(card);
+try{CN2.street=['Street Wągrowiec',()=>SW,'dg_topsw']}catch(e){}
+try{renderCards()}catch(e){}
+/* beta: runda nie trafia do Top 5 ani rankingu online */
+const _fi=finish;finish=function(){if(layout!='street')return _fi.apply(this,arguments);let keep=null,best=null;try{keep=localStorage.getItem('dg_topz');const L=SV.stats.street;best=L?L.best:null}catch(e){}
+ const r=_fi.apply(this,arguments);try{if(keep==null)localStorage.removeItem('dg_topz');else localStorage.setItem('dg_topz',keep)}catch(e){}
+ try{const er=$('er');if(er)er.insertAdjacentHTML('afterbegin','<div style="background:#5a3a12;color:#ffd35a;border-radius:10px;padding:6px 10px;margin:0 0 8px;font:800 12px system-ui">🧪 Street Wągrowiec (beta) – runda nie liczy się do rekordów</div>')}catch(e){}return r};
+try{const _so=sendOnline;sendOnline=function(){if(layout=='street')return;return _so.apply(this,arguments)}}catch(e){}
+/* ściana zamiast drzewa */
+try{const _pl=pill;pill=function(m){try{const h=holes&&holes[hi];if(h&&h.sw&&m==='🌲 Drzewo!'&&disc){let bt=null,bd=1e9;for(const t of h._col||[]){const d=Math.hypot(disc.x-t[0],disc.y-t[1])-t[2];if(d<bd){bd=d;bt=t}}if(bt&&bt.w)m='🧱 Ściana!'}}catch(e){}return _pl.apply(this,[m].concat([].slice.call(arguments,1)))}}catch(e){}
+/* kolizje ze ścianami dokładane po zbudowaniu tła; jesienne kałuże tylko poza miastem */
+const _b3=build3;build3=function(h,wn){const r=_b3.apply(this,arguments);try{if(h&&h.sw){h._col=(h._col||[]).filter(t=>!t.w).concat(urbCol(h))}}catch(e){}return r};
+try{const _pz=puddles;puddles=function(h){if(h&&h.sw)return h._pud=[];return _pz.apply(this,arguments)}}catch(e){}
+}catch(e){console.warn('P196',e)}})();
+</script>
+<script>/* P197: Orle Wągrowiec (BETA, kod 6666) – 13 dołków w lesie wg mapy discmap (WRC111): 1 lekko forhandowy, 3 pod górkę (kosz na wzniesieniu), 4 z górki, kosz pod dużym drzewem, 7 wzdłuż szerokiej drogi z mando, 13 bramka z dwóch mando. Runda beta nie liczy się do rekordów. */
+(function(){try{
+const plen=P=>{let l=0;for(let i=1;i<P.length;i++)l+=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);return l};
+/* p – punkty z mapy (px), len – długość z discmap (po linii), wm – szerokość fairwaya w metrach */
+const OD=[
+ {len:65,par:3,p:[[327,1066],[520,1090],[640,1180],[760,1310],[884,1424]],wm:20,txt:'Lekko forhandowy – linia zawija w prawo'},
+ {len:78,par:3,p:[[240,1247],[560,1285],[840,1303]],wm:18,open:9},
+ {len:89,par:3,p:[[240,1352],[420,1335],[600,1290],[840,1198]],wm:20,slope:1,mound:1,txt:'Pod górkę – kosz stoi na wzniesieniu'},
+ {len:140,par:4,p:[[483,1760],[540,1500],[590,1250],[580,1000],[515,790]],wm:20,slope:-1,bigTree:1,txt:'Z górki w dół – kosz pod dużym drzewem'},
+ {len:93,par:3,p:[[840,1432],[240,1117]],wm:18,lone:1},
+ {len:105,par:3,p:[[840,1190],[240,1360]],wm:20,lone:-1},
+ {len:181,par:4,p:[[437,1760],[380,1530],[365,1270],[420,1050],[560,880],[703,790]],wm:30,md:[{a:86,l:13.6,side:1}],txt:'Szeroki tor · mando po prawej – mijaj je z lewej'},
+ {len:245,par:5,p:[[240,1295],[806,1265]],wm:18,road:1,txt:'Długi par 5 wzdłuż leśnej drogi'},
+ {len:77,par:3,p:[[560,790],[545,1300],[540,1760]],wm:18,lone:1},
+ {len:122,par:4,p:[[840,1230],[500,1290],[240,1320]],wm:20},
+ {len:103,par:3,p:[[330,790],[390,980],[380,1150],[310,1350],[340,1480],[450,1620],[600,1755]],wm:20},
+ {len:78,par:3,p:[[627,1760],[560,1450],[500,1100],[452,790]],wm:18},
+ {len:120,par:4,p:[[627,1105],[760,1220],[835,1285],[700,1345],[450,1400],[240,1445]],wm:16,md:[{a:21.8,l:-8.6,side:-1,len:12},{a:20.4,l:5.8,side:1,len:12}],txt:'Bramka z dwóch mando na zakręcie'}];
+const OR=OD.map((o,i)=>{const st=Math.hypot(o.p[0][0]-o.p[o.p.length-1][0],o.p[0][1]-o.p[o.p.length-1][1]),d=Math.round(o.len*st/plen(o.p)),k=Math.min(1.3,380/(d*5)),M=.2/k;
+ const h=mk({d,p:o.p,k,w:o.wm/M},5101+i*13);h.par=o.par;h.name='Orle Wągrowiec';h._forest=1;h.needles=1;h.orle=1;h.txt=o.txt;h.slope=o.slope||0;
+ const um=m=>m/M;
+ h.tt=t=>{const r=hs3(t[0]|0,t[1]|0,57);return r<.6?1:r<.75?3:r<.88?0:2};
+ if(o.mound)h.mound=1;
+ /* luźniejszy las przy torze: miejsce na rzut z rough-u, polanki przy tee i koszu */
+ {const T0=h.tee,B0=h.b,cw=h.cw,o0=h.noF;h.thinF=(px,py)=>{const l=Math.abs(h.lat([px,py])),al=h.along([px,py]);if(al<-um(6)||al>h.L+um(8))return .25;return l<cw/2+um(14)?.6:l<cw/2+um(30)?.35:.12};
+  h.noF=(x,y,r)=>(o0&&o0(x,y,r))||Math.hypot(x-T0[0],y-T0[1])<um(7)+r||Math.hypot(x-B0[0],y-B0[1])<um(8)+r;
+  h.trees=h.trees.filter(t=>Math.hypot(t[0]-B0[0],t[1]-B0[1])>um(6)+t[2]*.5);
+  if(o.lone){const p=h.rel(h.L*.55,o.lone*cw*.22);h.trees=h.trees.filter(t=>Math.hypot(t[0]-p[0],t[1]-p[1])>t[2]+14);h.trees.push([p[0],p[1],12,0])}}
+ if(o.open){const B=h.b,R=um(o.open);h.trees=h.trees.filter(t=>Math.hypot(t[0]-B[0],t[1]-B[1])>R+t[2]*.6);const o1=h.noF;h.noF=(x,y,r)=>(o1&&o1(x,y,r))||Math.hypot(x-B[0],y-B[1])<R+r}
+ if(o.bigTree){const B=h.b;h.trees=h.trees.filter(t=>Math.hypot(t[0]-B[0],t[1]-B[1])>40);h.trees.push([B[0]+13,B[1]-16,22,0])}
+ if(o.road){const P=h.path.map(q=>[q[0]+um(3),q[1]]);h.roads.push({pts:P,w:um(4),f:1});h.trees=h.trees.filter(t=>Math.min(...P.map(q=>Math.hypot(t[0]-q[0],t[1]-q[1])))>um(5)/2+t[2]+4)}
+ if(o.md){h.md=[];for(const m of o.md){const u=um(m.a),pm=h.rel(u,um(m.l)),pe=h.rel(u,um(m.l)+m.side*um(m.len||30));h.md.push({m:pm,e:pe,dz:null});h.trees=h.trees.filter(t=>Math.hypot(t[0]-pm[0],t[1]-pm[1])>t[2]+8);h.trees.push([pm[0],pm[1],8,1])}}
+ return h});
+window.OR=OR;
+/* pod górkę / z górki: dysk w powietrzu traci (lub zyskuje) trochę prędkości, gdy leci w stronę kosza */
+const _sp=step;step=function(){const d=disc,h=holes&&holes[hi];if(d&&h&&h.slope&&!d.rol&&!d.tom){const tx=h.b[0]-h.tee[0],ty=h.b[1]-h.tee[1],tl=Math.hypot(tx,ty)||1,c=(Math.sin(d.a)*tx-Math.cos(d.a)*ty)/tl;d.v*=1-.0022*h.slope*Math.max(0,c)}return _sp.apply(this,arguments)};
+const _ld=load;load=function(){const r=_ld.apply(this,arguments);try{const h=holes[hi];if(h&&h.orle&&h.txt&&throws==0)setTimeout(()=>pill('🌲 '+h.txt),900)}catch(e){}return r};
+/* wpięcie w grę */
+const _st=start;start=function(){if(layout=='orle')holes=OR;return _st.apply(this,arguments)};
+const okO=()=>{try{return localStorage.getItem('dg_orleok')==='1'}catch(e){return false}};
+const card={k:'orle',n:'Orle Wągrowiec',d:'🧪 beta · las · 13 dołków',hl:()=>OR,bp:'50% 40%',pw:1,pwok:okO,pwask:()=>{const o=document.createElement('div');o.style.cssText='position:fixed;inset:0;z-index:96;background:rgba(0,8,4,.65);display:flex;align-items:center;justify-content:center';
+ o.innerHTML='<div style="width:min(86vw,320px);background:linear-gradient(180deg,#1d3a28,#0e1d15);border-radius:20px;padding:18px;color:#fff;font-family:Baloo 2,system-ui;text-align:center"><div style="font-size:34px">🔒</div><h3 style="margin:4px 0">Orle Wągrowiec · BETA</h3><p style="margin:0 0 10px;color:#a9c9b1;font:600 13px system-ui">Wpisz kod, żeby odblokować pole</p><input id="orpw" type="password" inputmode="numeric" maxlength="8" style="width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.3);color:#fff;font:900 22px system-ui;text-align:center;letter-spacing:.3em"><p id="orst" style="min-height:16px;margin:6px 0;color:#ff9a8a;font:700 12px system-ui"></p><button id="orok" style="width:100%;padding:12px;border:0;border-radius:12px;background:#3fd16a;color:#08210f;font:900 15px system-ui">Odblokuj</button><button id="orx" style="width:100%;margin-top:6px;padding:10px;border:0;border-radius:12px;background:rgba(255,255,255,.1);color:#fff;font:800 14px system-ui">Anuluj</button></div>';
+ document.body.appendChild(o);const I=o.querySelector('#orpw');setTimeout(()=>I.focus(),50);const go=()=>{if(I.value.trim()==='777'){try{localStorage.setItem('dg_orleok','1')}catch(e){}o.remove();selLayout('orle');renderCards();toast('🔓 Orle Wągrowiec odblokowane')}else{o.querySelector('#orst').textContent='Zły kod';I.value=''}};o.querySelector('#orok').onclick=go;I.onkeydown=e=>{if(e.key==='Enter')go()};o.querySelector('#orx').onclick=()=>o.remove()}};
+if(!CARDS.some(c=>c.k=='orle'))CARDS.push(card);
+try{CN2.orle=['Orle Wągrowiec',()=>OR,'dg_topo']}catch(e){}
+try{renderCards()}catch(e){}
+const _fi=finish;finish=function(){if(layout!='orle')return _fi.apply(this,arguments);let keep=null;try{keep=localStorage.getItem('dg_topz')}catch(e){}
+ const r=_fi.apply(this,arguments);try{if(keep==null)localStorage.removeItem('dg_topz');else localStorage.setItem('dg_topz',keep)}catch(e){}
+ try{const er=$('er');if(er)er.insertAdjacentHTML('afterbegin','<div style="background:#5a3a12;color:#ffd35a;border-radius:10px;padding:6px 10px;margin:0 0 8px;font:800 12px system-ui">🧪 Orle Wągrowiec (beta) – runda nie liczy się do rekordów</div>')}catch(e){}return r};
+try{const _so=sendOnline;sendOnline=function(){if(layout=='orle')return;return _so.apply(this,arguments)}}catch(e){}
+}catch(e){console.warn('P197',e)}})();
+</script>
+</body>
 </html>
