@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v244**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v245**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -71,3 +71,8 @@ W build3_ (g2patch.py, nakładany po p90patch): źdźbła trawy po h.urb (wykryc
 - g3patch.py (w build3_, wyłącznik window.__G3=false): pod koronami widać pień (brzoza biała) i zacienioną trawę zamiast pionowej ściany liści.
 - p206.js + g4patch.py: lądowanie wg podłoża (window.__surf: trawa/śnieg/asfalt/ziemia), bez konfetti 'puff', plusk z kręgami, ślad sunięcia (d.gnd).
 - Kolejność budowy: build.py (p195–p204, p206) → p90patch → g2patch → g3patch → g4patch, potem CHG + dgv + sw.js. Przed pushem zawsze test, czy strona się ładuje (smoke.py).
+
+### v245
+- g5patch.py (wyłącznik window.__G5=false): wyostrzenie tła (unsharp luma), mocniejsza i szersza wydeptana ścieżka (WRm), przetarta trawa przy koszu (2–9 m) i przed tee, maska trawy bg._gm.
+- p207.js: fale wiatru na trawie (soft-light, kierunek/siła z wa/ws), bez zimy, wieczoru i pola noc. Tylko obraz – kolizje bez zmian.
+- Kolejność: build.py (p195–p204, p206, p207) → p90 → g2 → g3 → g4 → g5.
