@@ -8,14 +8,14 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Firebase: projekt `discgolf-8c7ad` (Firestore; z sandboxa niedostępny – testy na mocku).
 - Cała gra to jeden plik `index.html` (~1,3 MB). Poprawki dopisywane są jako bloki
   `<script>/* PNNN: opis */ ... </script>` przed ostatnim `</body>`, z wzorcem
-  `const _x=fn; fn=function(){...}` (hooki). Ostatni numer: **P197**.
+  `const _x=fn; fn=function(){...}` (hooki). Ostatni numer: **P199**.
 - `3d/index.html` – osobny test 3D (czysty WebGL2, własne shadery), kafelek „ZŁOTÓW 3D BETA”.
 
 ## Zasady pracy (od użytkownika)
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v227**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v228**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -60,4 +60,4 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 4. ✅ **Postać** – P198 (v227): nowy model `__draw2` dla menu i gry (gra przez `__draw2v` wpięte w P90 po translate), fryzury 0–8, `ss` styl koszulki, `num`, `eye`; mruganie, miny, chód, reakcje. Patche P90 w `p90patch.py` (sesja 22.11).
 5. Pomysły odłożone: tygodniowe misje, Putting League, wskaźnik celności puttów,
    pojedynek z duchem znajomego, Liga Wągrowiec, sekcja „przerwane rundy” w panelu 6666,
-   pasek „Aktualizacja · N nowości” zasłania logo w menu (do przesunięcia).
+   (✅ v228: pasek „Aktualizacja” przeniesiony nad dolne menu, mały avatar z nowego modelu, emblemat WRC na tabliczce Street – P199).
