@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v224**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v225**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -52,7 +52,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 
 ## Zadania do zrobienia (stan 22.11.2026)
 1. ✅ Kałuże jesienią – zrobione (P195, v215).
-2. ✅ Street Wągrowiec – 9 dołków (beta, kod 777) i Orle Wągrowiec – 13 dołków (beta, kod 777), opis wyżej
+2. ✅ WRC Street (Wągrowiec) – 9 dołków, od v225 bez bety, ranking: lokalnie `dg_topsw` (przekierowanie klucza dg_topz w Storage gdy layout=='street'), online `sc_street`. Orle Wągrowiec – 13 dołków, UKRYTE w menu (kod w P197 zostaje), opis wyżej
    w „Pola w Wągrowcu”. Dalsze poprawki wg uwag użytkownika; gdy wyjdą z bety → własny Top 5 i ranking online.
 3. **Grafika** – kierunek „malarski / złota godzina” (test: złote światło, chłodne cienie);
    rozważyć Three.js dla ładniejszej grafiki (w widoku z góry / 2.5D, nie pełne 3D).
