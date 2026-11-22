@@ -8,14 +8,14 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Firebase: projekt `discgolf-8c7ad` (Firestore; z sandboxa niedostępny – testy na mocku).
 - Cała gra to jeden plik `index.html` (~1,3 MB). Poprawki dopisywane są jako bloki
   `<script>/* PNNN: opis */ ... </script>` przed ostatnim `</body>`, z wzorcem
-  `const _x=fn; fn=function(){...}` (hooki). Ostatni numer: **P200** (P200: naprawa kariery – stare C.div spoza DIVS, który ma teraz tylko 'Open').
+  `const _x=fn; fn=function(){...}` (hooki). Ostatni numer: **P201** (P201: Street – wypychanie dysku z budynków; Top 5 na Start ma WRC Street przez wpis w LS w build.py) (P200: naprawa kariery – stare C.div spoza DIVS, który ma teraz tylko 'Open').
 - `3d/index.html` – osobny test 3D (czysty WebGL2, własne shadery), kafelek „ZŁOTÓW 3D BETA”.
 
 ## Zasady pracy (od użytkownika)
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v229**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v230**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
