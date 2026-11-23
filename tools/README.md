@@ -14,6 +14,6 @@ Poprawka bez wpisu: `python3 tools/release.py 250 --no-chg`.
 `python3 tools/test.py index.html` – start bez błędów JS, każde pole i dołek się ładuje, tło lato/zima na każdym polu, fizyka rzutu (wzorzec 403 j.), okno pokoju online. Wymaga Playwright + Chromium.
 
 ## Kolejność łatek
-1. `build.py` – wstawki w `build3_` + łatki JS: p195–p204, p206–p208, p210, p212, p213 (lista w `release.py`, `JS=[…]`).
-2. Łatki Pythona na gotowym pliku: p90patch → g2 → g3 → g4 → g5 → g6 → g7 → g8 → g10 (`PY=[…]`).
+1. `build.py` – wstawki w `build3_` + łatki JS: p195–p204, p206–p208, p210, p212, p213, p215, p216 (lista w `release.py`, `JS=[…]`).
+2. Łatki Pythona na gotowym pliku: p90patch → g2 → g3 → g4 → g5 → g6 → g7 → g8 → g10 → g11 (`PY=[…]`).
 Nowa łatka = nowy plik w `patches/` + dopisanie do listy w `release.py`.

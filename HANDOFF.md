@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v257**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v258**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -99,3 +99,9 @@ W build3_ (g2patch.py, nakładany po p90patch): źdźbła trawy po h.urb (wykryc
 
 ### v253
 - p213: budowanie następnego dołka startuje dopiero w hole() (po trafieniu, w czasie gratulacji), kawałki po ~45 ms – w trakcie gry brak spadku FPS (zgłoszenie po v252).
+
+### v258
+- p215: rewanż z akceptacją (ON.rv {t,s:want|no,by} wysyłane w stanie gracza – g11patch dopisuje rv do send()), okienko #onrv, start przez hosta gdy wszyscy ✅ i nikt ❌.
+- g11patch: wolniejsze cienie chmur (live3).
+- p216: opcja „Zapamiętuj mapy w telefonie” (dg_mapcache, domyślnie off) – IndexedDB dg_maps, webp .9 + _col/_fill/_sil (RLE), max 100 dołków, klucz wersja|pole|dołek|zima|pora|pogoda.
+- p213: usunięte budowanie po trafieniu (zamulało animację ACE); zostaje __b3a i __prebuild.
