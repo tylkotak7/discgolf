@@ -32,7 +32,7 @@
    if(c2&&c2.width&&!c2._fb&&!c2._fallback){const e=BGC.get(h)||[];e[k]=c2;BGC.set(h,e);const cur=holes&&holes[hi];while(BGC.size>3){const kk=BGC.keys().next().value;if(kk===cur||kk===h)break;try{(BGC.get(kk)||[]).forEach(x=>{if(x&&x.width){x.width=x.height=0}})}catch(x){}BGC.delete(kk)}}}}catch(e){console.warn('P213',e)}
   window.__p213c=null;busy=false;busyH=null;window.__p213s='done '+Math.round(performance.now()-T0)+' '+(c?'ok':'null')}
  window.__prebuild=prebuild;
- const _ens=ensureBG;ensureBG=function(h,cb){if(busy&&busyH===h&&!BGC.get(h)?.[ix(season=='winter')]){try{$('ld').style.display='flex'}catch(e){}const w=()=>{if(busy&&busyH===h)return setTimeout(w,60);try{$('ld').style.display='none'}catch(e){}_ens(h,cb)};setTimeout(w,60);return false}return _ens.apply(this,arguments)};
+ const _ens=ensureBG;ensureBG=function(h,cb){if(busy&&busyH===h&&!BGC.get(h)?.[ix(season=='winter')]){try{LDH=h}catch(e){}try{ldDraw(h)}catch(e){}try{$('ld').style.display='flex'}catch(e){}const w=()=>{if(busy&&busyH===h)return setTimeout(w,60);try{$('ld').style.display='none'}catch(e){}_ens(h,cb)};setTimeout(w,60);return false}return _ens.apply(this,arguments)};
  /* budujemy dopiero po skończeniu dołka (w czasie gratulacji), żeby nie zabierać płynności w trakcie gry */
  const _hole=hole;hole=function(){const r=_hole.apply(this,arguments);try{const n=holes&&holes[hi+1];if(n&&!busy)setTimeout(()=>{try{prebuild(n)}catch(e){}},60)}catch(e){}return r};
 }catch(e){console.warn('P213',e)}})();
