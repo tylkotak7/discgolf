@@ -42,12 +42,14 @@
    :au?{g0:'#7c8a3c',g1:'#5c6a2c',fw:'#b9c46e',rd:'#b39a6a',wa:'#3f7fb0',md:'rgba(196,170,80,.45)',tr:['#c86a22','#d9a52b','#8a3a18','#a8501c','#2c5a34']}
    :{g0:'#5f9a48',g1:'#3f7a36',fw:'#9fd27a',rd:'#b59a6a',wa:'#3f7fb0',md:'rgba(170,200,90,.5)',tr:['#1f5a2a','#2a6a32','#174a22','#2f7434']};
   if(sw){pal.g0=wn?'#d8dee2':'#8d9590';pal.g1=wn?'#c4ccd2':'#6f7772';pal.rd=wn?'#9aa3aa':'#4a4f55'}
-  return{h,path,cw,roads,T,B,pal,sw,U,len:plen(path),t0:performance.now(),dl:0}}
+  let est=5000;try{est=+localStorage.getItem('dg_ldt')||5000}catch(e){}const k=Math.max(1,Math.min(4,(est/1000)/2.7));
+  return{h,path,cw,roads,T,B,pal,sw,U,k,len:plen(path),t0:performance.now(),dl:0}}
  const E=t=>t<0?0:t>1?1:1-Math.pow(1-t,3);
  const pop=t=>{if(t<=0)return 0;if(t>=1)return 1;return 1+Math.sin(t*Math.PI)*.35*(1-t)+(E(t)-1)};
  const STG=[[0,'🌱 Sieję trawę…'],[.45,'🛤️ Wysypuję ścieżki…'],[.8,'🌲 Sadzę drzewa…'],[1.75,'🟫 Kładę tee…'],[2.0,'🥏 Stawiam kosz…'],[2.45,'✨ Ostatnie szlify…']];
- function frame(){raf=0;if(!S||LD.style.display=='none'){S=null;return}const now=performance.now();let T=(now-S.t0)/1000*(done?3.5:1)+S.dl;if(done){S.dl=T;S.t0=now}S.lastT=T;
+ function frame(){raf=0;if(!S||LD.style.display=='none'){S=null;return}const now=performance.now();if(S.lf&&now-S.lf<(S.st0?90:55)){raf=requestAnimationFrame(frame);return}S.lf=now;let T=(now-S.t0)/1000/S.k*(done?3.5*S.k:1)+S.dl;if(done){S.dl=T;S.t0=now}S.lastT=T;
   const {h,path,cw,roads,pal}=S;x.setTransform(2,0,0,2,0,0);
+  if(S.st0){x.setTransform(1,0,0,1,0,0);x.drawImage(S.st0,0,0);x.setTransform(2,0,0,2,0,0)}else{
   /* teren */
   const gr=x.createLinearGradient(0,0,0,560);gr.addColorStop(0,pal.g0);gr.addColorStop(1,pal.g1);x.fillStyle='#0d2414';x.fillRect(0,0,360,560);x.globalAlpha=E(T/.35);x.fillStyle=gr;x.fillRect(0,0,360,560);if(!S.sp){const R=rng(7);S.sp=[];for(let i=0;i<420;i++)S.sp.push([R()*360,R()*560,R()<.5])}x.fillStyle=season=='winter'?'rgba(150,175,190,.35)':'rgba(0,0,0,.12)';for(const q of S.sp)if(q[2])x.fillRect(q[0],q[1],2,2);x.fillStyle='rgba(255,255,255,.12)';for(const q of S.sp)if(!q[2])x.fillRect(q[0],q[1],2,2);x.globalAlpha=1;
   const a1=E((T-.15)/.45);
@@ -64,13 +66,15 @@
   /* drzewa wyskakują */
   const n=S.T.length,t0=.8,t1=1.85;S.T.forEach((t,i)=>{const k=pop((T-t0-(i/Math.max(1,n))*(t1-t0))/.28);if(k<=0)return;const r=t[2]*k;x.fillStyle='rgba(0,0,0,.28)';x.beginPath();x.arc(t[0]+r*.28,t[1]+r*.32,r,0,7);x.fill();x.fillStyle=pal.tr[Math.floor(t[3]*pal.tr.length)%pal.tr.length];x.beginPath();x.arc(t[0],t[1],r,0,7);x.fill();x.strokeStyle='rgba(0,0,0,.18)';x.lineWidth=1.2;x.stroke();
    x.fillStyle=pal.sn?'rgba(255,255,255,.85)':'rgba(255,255,255,.16)';x.beginPath();x.arc(t[0]-r*.3,t[1]-r*.3,r*(pal.sn?.5:.42),0,7);x.fill()});
+  }
   /* tee spada z góry */
   const kt=E((T-1.75)/.25);if(kt>0){const s=1+(1-kt)*1.2;x.save();x.translate(h.tee[0],h.tee[1]-(1-kt)*30);x.scale(s,s);x.globalAlpha=kt;x.fillStyle='rgba(0,0,0,.3)';x.fillRect(-10,-5,24,16);x.fillStyle=S.sw?'#9aa0a6':'#e8c07a';x.strokeStyle='#3a2a10';x.lineWidth=2;x.fillRect(-12,-8,24,16);x.strokeRect(-12,-8,24,16);x.restore();x.globalAlpha=1}
+  if(!S.st0&&T>1.98&&!done){try{const o=document.createElement('canvas');o.width=720;o.height=1120;o.getContext('2d').drawImage(cv,0,0);S.st0=o}catch(e){}}
   /* kosz z odbiciem */
   const kb=(T-2.0)/.4;if(kb>0){const bb=kb>=1?0:Math.abs(Math.cos(kb*Math.PI*1.5))*(1-kb)*40;const by=h.b[1]-bb;const glow=.25+.15*Math.sin(now/220);x.fillStyle='rgba(255,210,63,'+glow+')';x.beginPath();x.arc(h.b[0],h.b[1],22,0,7);x.fill();
    x.fillStyle='rgba(0,0,0,.3)';x.beginPath();x.ellipse(h.b[0]+3,h.b[1]+4,10,6,0,0,7);x.fill();x.fillStyle='#ffd23f';x.strokeStyle='#3a2a00';x.lineWidth=3;x.beginPath();x.arc(h.b[0],by,10,0,7);x.fill();x.stroke();x.strokeStyle='rgba(58,42,0,.7)';x.lineWidth=1.4;for(let i=0;i<6;i++){const a=i/6*Math.PI*2;x.beginPath();x.moveTo(h.b[0],by);x.lineTo(h.b[0]+Math.cos(a)*9,by+Math.sin(a)*9);x.stroke()}}
   /* potem dysk lata z tee do kosza */
-  if(T>2.45){const f=((T-2.45)%1.5)/1.2;if(f<=1){const p=pAt(path,E(f)),z=Math.sin(f*Math.PI)*.6+1;x.fillStyle='rgba(0,0,0,.25)';x.beginPath();x.ellipse(p[0]+6*z,p[1]+8*z,6,4,0,0,7);x.fill();x.fillStyle='#ff5a3c';x.strokeStyle='#fff';x.lineWidth=2;x.beginPath();x.arc(p[0],p[1],6*z,0,7);x.fill();x.stroke()}}
+  if(T>2.45){const f=((now/1000)%1.6)/1.25;if(f<=1){const p=pAt(path,E(f)),z=Math.sin(f*Math.PI)*.6+1;x.fillStyle='rgba(0,0,0,.25)';x.beginPath();x.ellipse(p[0]+6*z,p[1]+8*z,6,4,0,0,7);x.fill();x.fillStyle='#ff5a3c';x.strokeStyle='#fff';x.lineWidth=2;x.beginPath();x.arc(p[0],p[1],6*z,0,7);x.fill();x.stroke()}}
   let st='';for(const s of STG)if(T>=s[0])st=s[1];if(stE.textContent!==st)stE.textContent=st;barE.style.width=Math.min(done?100:94,T/2.6*94)+'%';
   raf=requestAnimationFrame(frame)}
  function start(h){try{if(!h||!h.tee||!h.b)return;if(!S||S.h!==h){done=false;S=prep(h)}const idx=holes?holes.indexOf(h):-1;const c=(typeof CARDS!='undefined'&&CARDS.find(q=>q.k==layout))||{};
@@ -81,7 +85,7 @@
  window.__ldbAnim=start;
  /* zbudowane tło -> szybkie dokończenie animacji (max ~0,7 s) i schowanie */
  window.__ensA=function(h,wn,ix,cb){window.__ensAn=(window.__ensAn||0)+1;if(!window.__prebuild)return false;if(!S||S.h!==h)start(h);
-  window.__ensBusy=h;(async()=>{const T0=performance.now();try{await window.__prebuild(h)}catch(e){}
+  window.__ensBusy=h;(async()=>{const T0=performance.now();try{await window.__prebuild(h)}catch(e){}try{const d=performance.now()-T0;if(d>800){const o=+localStorage.getItem('dg_ldt')||d;localStorage.setItem('dg_ldt',String(Math.round(o*.6+d*.4)))}}catch(e){}
    if(!BGC.get(h)?.[ix]){try{AUT3=season=='autumn';const c=build3(h,wn);AUT3=false;const e=BGC.get(h)||[];e[ix]=c;BGC.set(h,e)}catch(e){AUT3=false;console.error(e)}}
    try{while(BGC.size>3){const k=BGC.keys().next().value;if(k===h)break;try{(BGC.get(k)||[]).forEach(c=>{if(c&&c.width){c.width=c.height=0}})}catch(x){}BGC.delete(k)}}catch(e){}
    if(S&&S.h===h){S.dl=S.lastT||0;S.t0=performance.now()}done=true;const w0=performance.now();while(S&&S.h===h&&S.dl<2.45&&performance.now()-w0<700)await new Promise(r=>setTimeout(r,30));
