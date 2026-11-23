@@ -34,6 +34,7 @@ function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!
  const TKm=U.track?cm(x=>{x.beginPath();U.track.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill()}):null;
  const BKm=U.roads.some(r=>r.bike)?cm(x=>{x.lineCap='butt';for(const r of U.roads)if(r.bike)st(x,r,r.w)}):null,BSm=BKm?cm(x=>{x.lineWidth=.5;for(const r of U.roads)if(r.bike){const A=r.p[0],B2=r.p[r.p.length-1],L=Math.hypot(B2[0]-A[0],B2[1]-A[1]);for(let d=30;d<L;d+=60){const c=[A[0]+(B2[0]-A[0])*d/L,A[1]+(B2[1]-A[1])*d/L];x.beginPath();x.arc(c[0]-2.4,c[1]+.8,1.6,0,7);x.arc(c[0]+2.4,c[1]+.8,1.6,0,7);x.stroke();x.beginPath();x.moveTo(c[0]-2.4,c[1]+.8);x.lineTo(c[0]-.6,c[1]-1.2);x.lineTo(c[0]+1.4,c[1]-1.2);x.lineTo(c[0]+2.4,c[1]+.8);x.stroke()}}}):null;
  const FR=U.fount.map(f=>[f.x*S,f.y*S,f.r*S]),TR=h.trees.map(t=>[t[0]*S,t[1]*S,t[2]*S*1.7]);
+ const UMa=h._UM=new Uint8Array(TW*TH);
  for(let y=0;y<TH;y++)for(let x=0;x<TW;x++){const i=y*TW+x;if(WAm[i]>.55)continue;const pl=PLm[i],rd=RDm[i],cb=CBm[i];let r,g,b,ht;
   /* chodnik: płyty 50×50 */
   {const row=(y/6)|0,off=(row&1)*6,col=((x+off)/12)|0,ex=(x+off)%12,ey=y%6,j=ex==0||ey==0,bev=ex==1||ey==1,v=hs3(col,row,5),st=fb3(x*.02,y*.02,6,3),t=.47+v*.09+(st-.5)*.08+hs3(x,y,7)*.02;r=t;g=t*.985;b=t*.95;if(v>.88){r*=.82;g*=.82;b*=.84}else if(v<.06){r*=1.06;g*=.97;b*=.92}if(j){r*=.68;g*=.68;b*=.68}else if(bev){r*=1.08;g*=1.08;b*=1.08}ht=j?0:bev?.45:.8}
@@ -55,7 +56,7 @@ function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!
   /* krawężnik */
   if(cb>0&&rd<.6){const k=cb*(1-rd);r+=(.76-r)*k;g+=(.75-g)*k;b+=(.72-b)*k;ht+=1.4*k}
   /* asfalt */
-  if(rd>0){const n=hs3(x,y,21)*.05+fb3(x*.04,y*.04,22,3)*.06,pt=fb3(x*.015,y*.015,23,2);let ar=.24+n,ag=.25+n,ab=.27+n;if(pt>.62){ar+=.04;ag+=.04;ab+=.04}const ln=LNm[i];if(ln>0){ar+=(.86-ar)*ln;ag+=(.86-ag)*ln;ab+=(.8-ab)*ln}r+=(ar-r)*rd;g+=(ag-g)*rd;b+=(ab-b)*rd;ht=ht*(1-rd)-.6*rd;SPEC[i]=.1*rd}else if(!(LKm&&LKm[i]>0))SPEC[i]=0;
+  if(rd>0){const n=hs3(x,y,21)*.05+fb3(x*.04,y*.04,22,3)*.06,pt=fb3(x*.015,y*.015,23,2);let ar=.24+n,ag=.25+n,ab=.27+n;if(pt>.62){ar+=.04;ag+=.04;ab+=.04}const ln=LNm[i];if(ln>0){ar+=(.86-ar)*ln;ag+=(.86-ag)*ln;ab+=(.8-ab)*ln}r+=(ar-r)*rd;g+=(ag-g)*rd;b+=(ab-b)*rd;ht=ht*(1-rd)-.6*rd;SPEC[i]=.1*rd}else if(!(LKm&&LKm[i]>0))SPEC[i]=0;UMa[i]=(rd>.5||(LTm&&LTm[i]>.5))?2:(pl<.3&&!U.park&&!(GRm&&GRm[i]>.3)&&!(DIm&&DIm[i]>.3)&&!(BAm&&BAm[i]>.3)&&!(LKm&&LKm[i]>0)&&cb<.3&&!(TKm&&TKm[i]>.3)&&!(CTm&&CTm[i]>.3))?1:0;
   if(BKm&&BKm[i]>0){const k=BKm[i],n=hs3(x,y,26)*.05;r+=(.62+n-r)*k;g+=(.26+n*.6-g)*k;b+=(.22+n*.6-b)*k;if(BSm[i]>.4){r=.92;g=.9;b=.88}}
   /* liście jesienią pod drzewami, śnieg zimą */
   if(wn){const sn=fb3(x*.05,y*.05,31,3),k=rd>.5?(.35+sn*.3):(.72+sn*.25);r+=(.9-r)*k;g+=(.92-g)*k;b+=(.96-b)*k;ht+=.4}
@@ -77,6 +78,7 @@ function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!
    let hh=B.fl?B.h-6+(qu>.96||qv>.96?2:0):B.h+16*(1-qv);const tile=((Math.abs(dv)*S*1.3)|0)%3==0,n=hs3(x>>1,y>>1,61)*.07+fb3(x*.06,y*.06,62,2)*.06;let r=col[0]+n,g=col[1]+n,bb=col[2]+n;
    if(B.stand){const rw=((dv+b)*S/2.2)|0;r=rw%2?.75:.62;g=rw%2?.2:.18;bb=rw%2?.2:.18;hh=B.h*(.4+.6*(dv+b)/(2*b))}else if(B.glass){const gx=((du*S)/9|0)%2,gy=((dv*S)/9|0)%2,e=((du*S)%9)<1||((dv*S)%9)<1;r=.55+gx*.08;g=.75+gy*.06;bb=.86;if(e){r=.9;g=.92;bb=.94}if(qu>.95||qv>.95){r=.3;g=.55;bb=.75}}else if(B.stall){const st=((du*S*.55)|0)%2,c1=hexf(B.stall[0]),c2=hexf(B.stall[1]);hh=B.h+5*(1-qv);const cc=st?c1:c2;r=cc[0];g=cc[1];bb=cc[2];if(qv>.94||qu>.96){r*=.7;g*=.7;bb*=.7}}else if(B.train){if(qu>.985||Math.abs(qv-.7)<.12){r=.75;g=.12;bb=.12}else if(((du*S)|0)%14<1){r=g=bb=.6}}else if(B.wash){const f=(du+a)/(2*a)*4,e=f%1;r=.84;g=.86;bb=.9;if(e<.1||qv>.92){r=.16;g=.42;bb=.78}else if(qv<.1){r=.95;g=.95;bb=.97}}else if(B.paczka){if(((du*S*1.2)|0)%4<1){r=.35;g=.3;bb=.1}}else if(B.fl){if(qu>.96||qv>.96){r=g=bb=.5}else if(hs3((du/6)|0,(dv/6)|0,63)>.94){r=g=bb=.42;hh+=3}}else{if(tile){r*=.8;g*=.8;bb*=.8}if(qv<.04){r*=.75;g*=.75;bb*=.75}if(qu>.97){r*=.85;g*=.85;bb*=.85;hh+=1.5}}
    if(!B.fl&&hs3(B.rf*7+(du>0?1:0),(c[0]|0),64)>.7&&Math.abs(du-a*.4)<3&&Math.abs(dv-b*.4)<2.5){hh+=8;r=.5;g=.36;bb=.3}
+   if(!wn&&window.__G9!==false&&window.__TX&&window.__TX.roofr&&!B.stand&&!B.glass&&!B.stall&&!B.train&&!B.wash&&!B.paczka&&!B.canopy){const red=col[0]>col[2]*1.35,T=(red?window.__TX.roofr:window.__TX.roofg).R,t=((((dv+b)*S*(B.fl?3:5))&255)*256+(((du+a)*S*(B.fl?3:5))&255))*3;if(t>=0){const K=.75;r*=1+(T[t]-1)*K;g*=1+(T[t+1]-1)*K;bb*=1+(T[t+2]-1)*K}}
    if(wn){const k=tile?.82:.93;r=k;g=k+.02;bb=k+.05}
    if(hh<=HT[i])return;HT[i]=hh;setA(i,r,g,bb);SPEC[i]=B.fl?.05:.12;SIDE[i]=7+B.fc})}
  /* schody do przejścia podziemnego */
