@@ -364,7 +364,7 @@ const H11=(()=>{const K=3,P=mkP(K,0,260),PA=a=>a.map(p=>P(p[0],p[1])),M=K/10,k=1
  U.labels.push({x:P(330,1430)[0],y:P(330,1430)[1]+4,t:'Basia – salon fryzjerski',bg:'#e86aa0',c:'#fff',s:4});
  const T=(x,y,r,ty)=>[...P(x,y),r,ty];
  const trees=[T(120,700,11,0),T(300,780,10,6),T(60,1080,12,0),T(380,1080,10,6),T(200,1340,9,0),T(1080,520,10,6),T(1090,1350,11,0),T(960,1400,10,6),T(140,290,9,0),T(410,290,10,6),T(760,300,9,0),T(1065,1730,12,0),T(990,1760,11,6),T(1060,1900,10,0)];
- return mkU({tee:P(300,1340),b:P(1000,760),par:3,trees,U,M,w:60,teeA:.86,txt:'Osiedle Wschód – przez plac pełen aut, obok cyrku. Namiot cyrku, wozy i bloki to OB.'})})();
+ return mkU({tee:P(300,1340),b:P(965,740),par:3,trees,U,M,w:60,teeA:.86,txt:'Osiedle Wschód – przez plac pełen aut, obok cyrku. Namiot cyrku, wozy i bloki to OB.'})})();
 /* ================= DOŁEK 12 – LICEUM: DOGLEG KOŁO KOŚCIOŁA, KOSZ PRZY BOISKU ================= */
 const H12=(()=>{const K=3,P=mkP(K,160,330),PA=a=>a.map(p=>P(p[0],p[1])),M=K/8.55,k=1/K,R=rnd(1212);
  const U={park:1,thin:.5,roads:[{p:PA([[90,880],[1300,880]]),w:46*k,c:1},{p:PA([[540,320],[1060,850],[1120,880]]),w:50*k,c:1},{p:PA([[890,900],[890,1085]]),w:30*k,noOB:1}],
@@ -393,7 +393,7 @@ const H12=(()=>{const K=3,P=mkP(K,160,330),PA=a=>a.map(p=>P(p[0],p[1])),M=K/8.55
  const T=(x,y,r,ty)=>[...P(x,y),r,ty];
  const trees=[T(240,1110,14,0),T(380,1228,9,6),T(1050,1010,12,0),T(1110,1100,11,6),T(1110,1400,10,6),T(400,760,10,0),T(520,750,9,6),T(1150,1000,12,0)];
  for(let i=0;i<=11;i++){const t=i/11;trees.push(T(110+760*t,1500+150*t+(i%2?6:-6),7+(i%3),i%2?6:0))}
- const h=mkU({tee:P(968,800),b:P(205,1395),par:4,trees,U,M,w:60,teeA:3.05,txt:'Liceum – z parkingu w dół koło kościoła, potem w lewo wzdłuż boiska. Budynki to OB.'});
+ const h=mkU({tee:P(968,800),b:P(245,1395),par:4,trees,U,M,w:60,teeA:3.05,txt:'Liceum – z parkingu w dół koło kościoła, potem w lewo wzdłuż boiska. Budynki to OB.'});
  /* dogleg: tor gry po łamanej */
  const Q=[h.tee,P(1005,1130),P(1008,1395),h.b],seg=[];let L=0;for(let i=1;i<Q.length;i++){const l=Math.hypot(Q[i][0]-Q[i-1][0],Q[i][1]-Q[i-1][1]);seg.push(l);L+=l}
  const pts=[],pf=[];let acc=0;for(let i=1;i<Q.length;i++){const n=Math.max(4,Math.round(seg[i-1]/6));for(let j=(i==1?0:1);j<=n;j++){const f=j/n;pts.push([Q[i-1][0]+(Q[i][0]-Q[i-1][0])*f,Q[i-1][1]+(Q[i][1]-Q[i-1][1])*f]);pf.push((acc+seg[i-1]*f)/L)}acc+=seg[i-1]}
@@ -401,7 +401,7 @@ const H12=(()=>{const K=3,P=mkP(K,160,330),PA=a=>a.map(p=>P(p[0],p[1])),M=K/8.55
  h.along=p=>{let best=1e9,ba=0,a0=0;for(let i=1;i<Q.length;i++){const A=Q[i-1],B=Q[i],dx=B[0]-A[0],dy=B[1]-A[1],l=seg[i-1],t=Math.max(0,Math.min(1,((p[0]-A[0])*dx+(p[1]-A[1])*dy)/(l*l))),d=Math.hypot(p[0]-A[0]-dx*t,p[1]-A[1]-dy*t);if(d<best){best=d;ba=a0+l*t}a0+=l}return ba};
  h.lat=p=>{let best=1e9,sg=0;for(let i=1;i<Q.length;i++){const A=Q[i-1],B=Q[i],dx=B[0]-A[0],dy=B[1]-A[1],l=seg[i-1],t=Math.max(0,Math.min(1,((p[0]-A[0])*dx+(p[1]-A[1])*dy)/(l*l))),d=Math.hypot(p[0]-A[0]-dx*t,p[1]-A[1]-dy*t);if(d<best){best=d;sg=((p[0]-A[0])*(-dy)+(p[1]-A[1])*dx)/l}}return sg};
  h.rel=(u,l)=>{let a0=0;for(let i=1;i<Q.length;i++){const sl=seg[i-1];if(u<=a0+sl||i==Q.length-1){const A=Q[i-1],B=Q[i],ux=(B[0]-A[0])/sl,uy=(B[1]-A[1])/sl,t=u-a0;return[A[0]+ux*t-uy*l,A[1]+uy*t+ux*l]}a0+=sl}return h.b};
- h.camDx=0;return h})();
+ h.camDx=-25;return h})();
 const SW=[H1,H2,H3,H4,H5,H6,H7,H8,H9,H10,H11,H12];window.SW=SW;
 /* ---------- życie na ulicach: przechodnie, rowerzyści, jadące auta, pociąg (dołek 4), kaczki (dołek 6) ---------- */
 const offL=(P,o)=>P.map((p,i)=>{const a=P[Math.max(0,i-1)],e=P[Math.min(P.length-1,i+1)],L=Math.hypot(e[0]-a[0],e[1]-a[1])||1;return[p[0]-(e[1]-a[1])/L*o,p[1]+(e[0]-a[0])/L*o]});
