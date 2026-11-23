@@ -18,9 +18,9 @@
  let gen=0;
  const _mb=menuBg;
  menuBg=function(){const h=ZL&&ZL[0];if(!h||!window.__prebuild||BGC.get(h)?.[ix(season=='winter')])return _mb.apply(this,arguments);
-  const my=++gen,se=season;const t=TXT[se]||TXT.summer;SL.querySelector('.d').textContent=t[0];SL.querySelector('b').textContent=t[1];SL.classList.add('on');
+  const my=++gen,se=season;const t=TXT[se]||TXT.summer;SL.querySelector('.d').textContent=t[0];SL.querySelector('b').textContent=t[1];const bt=document.getElementById('boot');const bootOn=bt&&bt.isConnected&&getComputedStyle(bt).display!='none'&&getComputedStyle(bt).opacity!='0';if(!bootOn)SL.classList.add('on');window.__sBusy=1;
   (async()=>{try{for(let n=0;n<200&&my===gen&&!BGC.get(h)?.[ix(se=='winter')];n++){await window.__prebuild(h);if(!BGC.get(h)?.[ix(se=='winter')])await new Promise(r=>setTimeout(r,150))}}catch(e){}
-   if(my!==gen)return;try{_mb()}catch(e){}setTimeout(()=>{if(my===gen)SL.classList.remove('on')},250)})()};
+   if(my!==gen)return;try{_mb()}catch(e){}setTimeout(()=>{if(my===gen){SL.classList.remove('on');window.__sBusy=0}},250)})()};
  /* gra nie może ruszyć, póki miniatura w tle buduje ten sam dołek */
  const _ens=ensureBG;ensureBG=function(h,cb){if(window.__thbH&&window.__thbH===h){try{$('ld').style.display='flex'}catch(e){}const w=()=>{if(window.__thbH===h)return setTimeout(w,80);_ens(h,cb)};setTimeout(w,80);return false}return _ens.apply(this,arguments)};
  /* ---------- 2. ilu graczy jest online (przy „Szukaj gracza”) ---------- */
