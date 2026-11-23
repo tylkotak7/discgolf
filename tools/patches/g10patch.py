@@ -17,7 +17,7 @@ SPL=r'''<div id="boot" style="position:fixed;inset:0;z-index:2147483000;backgrou
 <div class="arm"></div><div class="bd"></div></div>
 <div class="dt" style="margin-top:22px;font:900 24px system-ui;color:#fff">Ładowanie<i>.</i><i>.</i><i>.</i></div>
 <div style="margin-top:4px;font:700 14px system-ui;color:#a9d9b6">Proszę czekać</div></div>
-<script>(function(){function hide(){var b=document.getElementById('boot');if(!b)return;b.style.opacity='0';setTimeout(function(){b.remove()},380)}addEventListener('load',function(){requestAnimationFrame(function(){requestAnimationFrame(hide)})});setTimeout(hide,30000)})();</script>
+<script>(function(){var done=false;function hide(){if(done)return;done=true;var b=document.getElementById('boot');if(!b)return;b.style.opacity='0';setTimeout(function(){b.remove()},380)}/* ekran startowy znika dopiero, gdy menu ma gotowe tło (bez stopklatki z tabliczką 1. dołka) */function busy(){try{var l=document.getElementById('ld');if(l&&getComputedStyle(l).display!='none')return true;if(typeof bgBusy!='undefined'&&bgBusy)return true}catch(e){}return false}addEventListener('load',function(){var t0=Date.now(),ok=0;var iv=setInterval(function(){if(Date.now()-t0<600)return;if(busy()){ok=0;return}if(++ok>=3){clearInterval(iv);requestAnimationFrame(function(){requestAnimationFrame(hide)})}},120)});setTimeout(hide,45000)})();</script>
 '''
 a='<body>'
 assert s.count(a)==1
