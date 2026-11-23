@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v251**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v252**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)
@@ -93,3 +93,6 @@ W build3_ (g2patch.py, nakładany po p90patch): źdźbła trawy po h.urb (wykryc
 
 ## ⚙️ Budowanie (od v249)
 Źródła łatek są w repo: `tools/` (base_v214.html, patches/, build.py, release.py, test.py, README.md). Nowa wersja: `python3 tools/release.py NNN "Tytuł" "linia"…` – buduje, testuje i dopiero wtedy podmienia index.html. Nie edytuj index.html ręcznie, bo następne zbudowanie to nadpisze – zmiany rób w łatkach.
+
+### v252
+- p213.js: następny dołek budowany w tle (asynchroniczna kopia build3_ z przerwami co ~22 ms; wynik identyczny z build3 – sprawdza test.py krok 6). Start 2,5 s po wczytaniu dołka. ensureBG czeka na trwające budowanie tego samego dołka. Przejście na kolejny dołek ~0,15 s zamiast ~5 s.

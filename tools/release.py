@@ -7,7 +7,7 @@ Po udanym teście nadpisuje index.html i sw.js oraz poprawia „Ostatnia: vNNN�
 """
 import os,sys,subprocess,datetime,re,shutil
 HERE=os.path.dirname(os.path.abspath(__file__));ROOT=os.path.dirname(HERE);P=os.path.join(HERE,'patches')
-JS=['p195.js','p196.js','p197.js','p198.js','p199.js','p200.js','p201.js','p202.js','p203.js','p204.js','p206.js','p207.js','p208.js','p210.js','p212.js']
+JS=['p195.js','p196.js','p197.js','p198.js','p199.js','p200.js','p201.js','p202.js','p203.js','p204.js','p206.js','p207.js','p208.js','p210.js','p212.js','p213.js']
 PY=['p90patch.py','g2patch.py','g3patch.py','g4patch.py','g5patch.py','g6patch.py','g7patch.py','g8patch.py']
 def main():
   a=sys.argv[1:]
