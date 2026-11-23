@@ -1,8 +1,8 @@
 <script>/* P213: następny dołek budowany w tle w małych kawałkach (bez zacinania) – przejście na kolejny dołek od razu */
 (function(){try{
  let src=build3_.toString();if(!/^function build3_\(h,wn\)\{/.test(src))return;
- const Y='(performance.now()-__t>22&&(await __yl()))';
- const pre="async function(h,wn){let __t=performance.now();const __A=AUT3;const __yl=()=>{TTF=null;AUT3=false;return new Promise(r=>setTimeout(()=>{TTF=h.tt||null;AUT3=__A;__t=performance.now();r()},(typeof disc!='undefined'&&disc)?40:0))};";
+ const Y='(performance.now()-__t>45&&(await __yl()))';
+ const pre="async function(h,wn){let __t=performance.now();const __A=AUT3;const __yl=()=>{TTF=null;AUT3=false;return new Promise(r=>{const go=()=>{if(window.__p213wait&&window.__p213wait())return setTimeout(go,150);requestAnimationFrame(()=>setTimeout(()=>{TTF=h.tt||null;AUT3=__A;__t=performance.now();r()},0))};go()})};";
  const top=(s,YF)=>{let out='',d=0,p=0,i=0,q=null;const n=s.length;
   while(i<n){const c=s[i];
    if(q){out+=c;if(c=='\\'){out+=s[i+1]||'';i+=2;continue}if(c==q)q=null;i++;continue}
@@ -22,6 +22,7 @@
  if(!A){console.warn('P213: brak wersji w tle');return}window.__p213v=vars.findIndex(v=>{try{(0,eval)('('+v(src).replace(/^function build3_\(h,wn\)\{/,pre)+')');return true}catch(e){return false}});
  const F=['_col','_fill','_sil','_PLm','_UM','_live','_pud'];
  const _B=build3_;build3_=function(h,wn){const C=window.__p213c;if(C&&C.h===h&&C.wn===wn&&C.aut===AUT3&&C.atm===(typeof ATM!='undefined'?ATM:null)&&C.se===season&&C.c&&C.c.width){window.__p213c=null;for(const k of F)h[k]=C.f[k];TTF=null;return C.c}return _B.apply(this,arguments)};
+ let lastT=0;['pointerdown','pointermove','touchstart','touchmove'].forEach(e=>addEventListener(e,()=>{lastT=performance.now()},{passive:true,capture:true}));window.__p213wait=()=>document.hidden;
  let busy=false,busyH=null,tLoad=0,lastHi=-1;
  const ix=wn=>typeof bgIdx=='function'?bgIdx(wn):(wn?1:0);
  async function prebuild(h){if(busy||!h)return;const wn=season=='winter',k=ix(wn);if(BGC.get(h)?.[k])return;busy=true;busyH=h;const T0=performance.now();window.__p213s='start';const se=season,atm=typeof ATM!='undefined'?ATM:null,aut=se=='autumn';
@@ -32,6 +33,7 @@
   window.__p213c=null;busy=false;busyH=null;window.__p213s='done '+Math.round(performance.now()-T0)+' '+(c?'ok':'null')}
  window.__prebuild=prebuild;
  const _ens=ensureBG;ensureBG=function(h,cb){if(busy&&busyH===h&&!BGC.get(h)?.[ix(season=='winter')]){try{$('ld').style.display='flex'}catch(e){}const w=()=>{if(busy&&busyH===h)return setTimeout(w,60);try{$('ld').style.display='none'}catch(e){}_ens(h,cb)};setTimeout(w,60);return false}return _ens.apply(this,arguments)};
- setInterval(()=>{try{if(!playing||!holes||bgBusy||busy||document.hidden)return;if(hi!==lastHi){lastHi=hi;tLoad=performance.now();return}if(performance.now()-tLoad<2500)return;const n=holes[hi+1];if(n)prebuild(n)}catch(e){}},700);
+ /* budujemy dopiero po skończeniu dołka (w czasie gratulacji), żeby nie zabierać płynności w trakcie gry */
+ const _hole=hole;hole=function(){const r=_hole.apply(this,arguments);try{const n=holes&&holes[hi+1];if(n&&!busy)setTimeout(()=>{try{prebuild(n)}catch(e){}},60)}catch(e){}return r};
 }catch(e){console.warn('P213',e)}})();
 </script>
