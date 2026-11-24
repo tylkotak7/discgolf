@@ -13,7 +13,7 @@ def main():
   a=sys.argv[1:]
   if not a or not a[0].isdigit():print(__doc__);sys.exit(1)
   ver=a[0];nochg='--no-chg' in a;rest=[x for x in a[1:] if x!='--no-chg']
-  out=os.path.join(HERE,'out.html')
+  out=os.path.join(ROOT,'_out.html')
   subprocess.run([sys.executable,os.path.join(HERE,'build.py'),out]+[os.path.join(P,f) for f in JS],check=True,stdout=subprocess.DEVNULL)
   for f in PY:subprocess.run([sys.executable,os.path.join(P,f),out],check=True,stdout=subprocess.DEVNULL)
   s=open(out,encoding='utf8').read();old=open(os.path.join(ROOT,'index.html'),encoding='utf8').read()
@@ -29,9 +29,13 @@ def main():
   d=datetime.date.today().strftime('%d.%m.%Y')
   s=re.sub(r'<meta name="dgv" content="[^"]*">','<meta name="dgv" content="'+ver+' · '+d+'">',s,count=1)
   open(out,'w',encoding='utf8').write(s)
+  subprocess.run([sys.executable,os.path.join(HERE,'extract.py'),out],check=True)
   r=subprocess.run([sys.executable,os.path.join(HERE,'test.py'),out])
-  if r.returncode:sys.exit('❌ Test nie przeszedł – index.html NIE został zmieniony (wynik w tools/out.html)')
+  if r.returncode:sys.exit('❌ Test nie przeszedł – index.html NIE został zmieniony (wynik w _out.html)')
   shutil.copy(out,os.path.join(ROOT,'index.html'))
+  s=open(os.path.join(ROOT,'index.html'),encoding='utf8').read();A=os.path.join(ROOT,'a')
+  for x in os.listdir(A):
+    if 'a/'+x not in s:os.remove(os.path.join(A,x))
   sw=os.path.join(ROOT,'sw.js');t=open(sw).read();t=re.sub(r'discgolf-v\d+','discgolf-v'+ver,t);open(sw,'w').write(t)
   h=os.path.join(ROOT,'HANDOFF.md');t=open(h,encoding='utf8').read();t=re.sub(r'Ostatnia: \*\*v\d+\*\*\.','Ostatnia: **v'+ver+'**.',t);open(h,'w',encoding='utf8').write(t)
   os.remove(out);print('✅ v'+ver+' gotowe – teraz git add/commit/push')

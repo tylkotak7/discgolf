@@ -7,13 +7,19 @@ from playwright.async_api import async_playwright
 F=os.path.abspath(sys.argv[1]) if len(sys.argv)>1 else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'index.html')
 INIT="localStorage.setItem('dg_onb','1');localStorage.setItem('dg_tut','1');localStorage.setItem('dg_tut2','1');localStorage.setItem('dg_name','Test');Math.random=(()=>{let s=1;return()=>{s=(s*16807)%2147483647;return s/2147483647}})()"
 fails=[]
+import http.server,threading,functools
+class _Q(http.server.SimpleHTTPRequestHandler):
+  def log_message(self,*a):pass
+_srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(_Q,directory=os.path.dirname(F)))
+threading.Thread(target=_srv.serve_forever,daemon=True).start()
+URL='http://127.0.0.1:%d/%s'%(_srv.server_address[1],os.path.basename(F))
 def chk(ok,msg):
   print(('  ✅ ' if ok else '  ❌ ')+msg)
   if not ok:fails.append(msg)
 async def page(b):
   ctx=await b.new_context(viewport={'width':390,'height':845});pg=await ctx.new_page();await pg.add_init_script(INIT)
   errs=[];pg.on('pageerror',lambda e:errs.append(str(e)[:200]))
-  await pg.goto('file://'+F);await pg.wait_for_timeout(3000);return ctx,pg,errs
+  await pg.goto(URL);await pg.wait_for_timeout(3000);return ctx,pg,errs
 async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch()
