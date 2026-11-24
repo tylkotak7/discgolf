@@ -80,7 +80,7 @@ function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!
  /* kamienice: dach dwuspadowy, elewacja (SIDE 7–12) */
  for(const B of U.bld){const{c,u,v,a,b}=B,ext=Math.hypot(a,b)+1,col=B.rc?B.rc:B.paczka?[.95,.78,.15]:B.train?[.9,.9,.88]:B.canopy?[.85,.86,.86]:ROOF[B.rf],x0=(c[0]-ext)*S,y0=(c[1]-ext)*S,x1=(c[0]+ext)*S,y1=(c[1]+ext)*S;
   E.rectFn(x0,y0,x1,y1,(i,x,y)=>{const px=x/S-c[0],py=y/S-c[1],du=px*u[0]+py*u[1],dv=px*v[0]+py*v[1];if(Math.abs(du)>a||Math.abs(dv)>b)return;const qv=Math.abs(dv)/b,qu=Math.abs(du)/a;
-   if(B.spire){const fx=Math.abs(du)/a,fy=Math.abs(dv)/b,m=Math.max(fx,fy);if(m>1)return;let hh=12+B.h*Math.pow(1-m,1.15);const face=fx>fy?(du>0?0:1):(dv>0?2:3),sh=[1.05,.62,.8,.55][face],c=ROOF[B.rf]||ROOF[0];let r=c[0]*sh,g=c[1]*sh,bb=c[2]*sh;
+   if(B.spire){const fx=Math.abs(du)/a,fy=Math.abs(dv)/b,m=Math.max(fx,fy);if(m>1)return;let hh=12+B.h*Math.pow(1-m,1.15);const face=fx>fy?(du>0?0:1):(dv>0?2:3),sh=[1.05,.62,.8,.55][face],c=ROOF[B.rf]||ROOF[0];let r=c[0]*sh,g=c[1]*sh,bb=c[2]*sh;{const T=(window.__TX2||{}).rcop;if(T&&!wn){const t=((((dv+b)*S*2)&255)*256+(((du+a)*S*2)&255))*3;r=T.R[t]*T.m[0]*sh*1.1;g=T.R[t+1]*T.m[1]*sh*1.1;bb=T.R[t+2]*T.m[2]*sh*1.1}}
     if(m>.9){r=.55;g=.3;bb=.22;hh=12+B.h*.06}if(m<.07){r=.95;g=.8;bb=.3;hh+=8}if(Math.abs(fx-fy)<.025&&m>.1){r*=.75;g*=.75;bb*=.75}if(hh<=HT[i])return;HT[i]=hh;setA(i,r,g,bb);SPEC[i]=.15;SIDE[i]=0;return}
    if(B.cone){const rd=Math.hypot(du,dv)/a;if(rd>1)return;const an=Math.atan2(dv,du),c=ROOF[B.rf]||ROOF[0],sh=.8+Math.cos(an+2.4)*.25;let hh=8+B.h*(1-rd),r=c[0]*sh,g=c[1]*sh,bb=c[2]*sh;if(Math.abs(Math.sin(an*6))<.05){r*=.8;g*=.8;bb*=.8}if(rd>.92){r=.55;g=.3;bb=.22;hh=10}if(hh<=HT[i])return;HT[i]=hh;setA(i,r,g,bb);SPEC[i]=.12;SIDE[i]=0;return}
    if(B.circus){const rd=Math.hypot(du,dv)/a;if(rd>1)return;const an=Math.atan2(dv,du),sg=(((an/6.2832+1)*B.circus)|0)&1;let hh=6+B.h*Math.pow(1-rd,.75),r,g,bb;if(sg){r=.84;g=.12;bb=.14}else{r=.96;g=.94;bb=.88}const sh=Math.cos(an+.8)*.08;r+=sh;g+=sh;bb+=sh;
@@ -92,7 +92,7 @@ function urbPaint(h,E){const{HT,SPEC,SIDE,TW,TH,S,setA,wn,WAm}=E,au=typeof AUT3!
    let hh=B.fl?B.h-6+(qu>.96||qv>.96?2:0):B.h+16*(1-qv);const tile=((Math.abs(dv)*S*1.3)|0)%3==0,n=hs3(x>>1,y>>1,61)*.07+fb3(x*.06,y*.06,62,2)*.06;let r=col[0]+n,g=col[1]+n,bb=col[2]+n;
    if(B.stand){const rw=((dv+b)*S/2.2)|0;r=rw%2?.75:.62;g=rw%2?.2:.18;bb=rw%2?.2:.18;hh=B.h*(.4+.6*(dv+b)/(2*b))}else if(B.glass){const gx=((du*S)/9|0)%2,gy=((dv*S)/9|0)%2,e=((du*S)%9)<1||((dv*S)%9)<1;r=.55+gx*.08;g=.75+gy*.06;bb=.86;if(e){r=.9;g=.92;bb=.94}if(qu>.95||qv>.95){r=.3;g=.55;bb=.75}}else if(B.stall){const st=((du*S*.55)|0)%2,c1=hexf(B.stall[0]),c2=hexf(B.stall[1]);hh=B.h+5*(1-qv);const cc=st?c1:c2;r=cc[0];g=cc[1];bb=cc[2];if(qv>.94||qu>.96){r*=.7;g*=.7;bb*=.7}}else if(B.train){if(qu>.985||Math.abs(qv-.7)<.12){r=.75;g=.12;bb=.12}else if(((du*S)|0)%14<1){r=g=bb=.6}}else if(B.wash){const f=(du+a)/(2*a)*4,e=f%1;r=.84;g=.86;bb=.9;if(e<.1||qv>.92){r=.16;g=.42;bb=.78}else if(qv<.1){r=.95;g=.95;bb=.97}}else if(B.paczka){if(((du*S*1.2)|0)%4<1){r=.35;g=.3;bb=.1}}else if(B.fl){if(qu>.96||qv>.96){r=g=bb=.5}else if(hs3((du/6)|0,(dv/6)|0,63)>.94){r=g=bb=.42;hh+=3}}else{if(tile){r*=.8;g*=.8;bb*=.8}if(qv<.04){r*=.75;g*=.75;bb*=.75}if(qu>.97){r*=.85;g*=.85;bb*=.85;hh+=1.5}}
    if(!B.fl&&hs3(B.rf*7+(du>0?1:0),(c[0]|0),64)>.7&&Math.abs(du-a*.4)<3&&Math.abs(dv-b*.4)<2.5){hh+=8;r=.5;g=.36;bb=.3}
-   if(!wn&&window.__G9!==false&&window.__TX&&window.__TX.roofr&&!B.stand&&!B.glass&&!B.stall&&!B.train&&!B.wash&&!B.paczka&&!B.canopy){const red=col[0]>col[2]*1.35,T=(red?window.__TX.roofr:window.__TX.roofg).R,t=((((dv+b)*S*(B.fl?3:5))&255)*256+(((du+a)*S*(B.fl?3:5))&255))*3;if(t>=0){const K=.75;r*=1+(T[t]-1)*K;g*=1+(T[t+1]-1)*K;bb*=1+(T[t+2]-1)*K}}
+   if(!wn&&window.__G9!==false&&window.__TX&&window.__TX.roofr&&!B.stand&&!B.glass&&!B.stall&&!B.train&&!B.wash&&!B.paczka&&!B.canopy){const red=col[0]>col[2]*1.35,X2=window.__TX2||{},hb=hs3(c[0]|0,c[1]|0,301),T0=B.fl?(X2.rbit||window.__TX.roofg):(!red&&hb>.72&&a<18&&X2.rsol)?X2.rsol:(B.rf==5&&X2.rcor)?X2.rcor:red&&X2.rtile?X2.rtile:(red?window.__TX.roofr:window.__TX.roofg),T=T0.R,sc0=T0===X2.rsol?2.2:B.fl?3:5,t=((((dv+b)*S*sc0)&255)*256+(((du+a)*S*sc0)&255))*3;if(T0===X2.rsol){const L=(T[t]+T[t+1]+T[t+2])/3;r=r*.25+T[t]*T0.m[0]*.75;g=g*.25+T[t+1]*T0.m[1]*.75;bb=bb*.25+T[t+2]*T0.m[2]*.75}else if(t>=0){const K=T0===X2.rbit||T0===X2.rtile?.9:.75;r*=1+(T[t]-1)*K;g*=1+(T[t+1]-1)*K;bb*=1+(T[t+2]-1)*K}}
    if(wn){const k=tile?.82:.93;r=k;g=k+.02;bb=k+.05}
    if(hh<=HT[i])return;HT[i]=hh;setA(i,r,g,bb);SPEC[i]=B.fl?.05:.12;SIDE[i]=7+B.fc})}
  /* schody do przejścia podziemnego */
@@ -403,6 +403,7 @@ const H12=(()=>{const K=3,P=mkP(K,160,330),PA=a=>a.map(p=>P(p[0],p[1])),M=K/8.55
  h.rel=(u,l)=>{let a0=0;for(let i=1;i<Q.length;i++){const sl=seg[i-1];if(u<=a0+sl||i==Q.length-1){const A=Q[i-1],B=Q[i],ux=(B[0]-A[0])/sl,uy=(B[1]-A[1])/sl,t=u-a0;return[A[0]+ux*t-uy*l,A[1]+uy*t+ux*l]}a0+=sl}return h.b};
  h.camDx=-25;return h})();
 const SW=[H1,H2,H3,H4,H5,H6,H7,H8,H9,H10,H11,H12];window.SW=SW;
+[1,3,6,10].forEach((k,j)=>{const h=SW[k];if(!h||!h.U)return;let best=null,bl=0;for(const r of h.U.roads||[]){const P=r.p;if(!P||P.length<2)continue;let l=0;for(let i=1;i<P.length;i++)l+=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);if(l>bl){bl=l;best=P}}if(best&&bl>120){h.U.scoot=best;h.U.scootPh=j*7}});
 /* ---------- życie na ulicach: przechodnie, rowerzyści, jadące auta, pociąg (dołek 4), kaczki (dołek 6) ---------- */
 const offL=(P,o)=>P.map((p,i)=>{const a=P[Math.max(0,i-1)],e=P[Math.min(P.length-1,i+1)],L=Math.hypot(e[0]-a[0],e[1]-a[1])||1;return[p[0]-(e[1]-a[1])/L*o,p[1]+(e[0]-a[0])/L*o]});
 const plenW=P=>{let l=0;for(let i=1;i<P.length;i++)l+=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);return l};
@@ -460,6 +461,35 @@ function drawQueue(B,t){const n=5,ux=B.u[0],uy=B.u[1],fx=-B.v[0],fy=-B.v[1],bx=B
  const P=[];for(let i=0;i<n;i++)P.push([bx+ux*(i*7-14)+fx*(i%2?1:-.5),by+uy*(i*7-14)+fy*(i%2?1:-.5)]);P.sort((a,b)=>a[1]-b[1]);
  for(let i=0;i<n;i++){try{PERSON(P[i][0],P[i][1],{s:.62,shirt:SHIRTS[(i*3+1)%SHIRTS.length],ph:i*1.3,talk:i==spk})}catch(e){}}
  const q=P[spk];g.save();g.font='800 5px system-ui';const w=g.measureText(line).width+6,x=q[0]-w/2,y=q[1]-30;g.fillStyle='rgba(255,255,255,.95)';g.beginPath();g.roundRect(x,y,w,9,3);g.fill();g.beginPath();g.moveTo(q[0]-2,y+9);g.lineTo(q[0],y+12);g.lineTo(q[0]+2,y+9);g.fill();g.fillStyle='#222';g.textAlign='center';g.textBaseline='middle';g.fillText(line,q[0],y+4.8);g.restore()}
+/* rzeczy na ulicach: latarnie, kosze, hydranty, przystanek, znaki, rowery, hulajnogi, donice, stoliki */
+function propPlan(h){if(h._props)return h._props;const U=h.U,R=rnd(Math.round(h.tee[0]*13+h.b[1]*7)),out=[];
+ const inB=(x,y,r)=>{for(const B of U.bld){const px=x-B.c[0],py=y-B.c[1];if(Math.abs(px*B.u[0]+py*B.u[1])<B.a+r&&Math.abs(px*B.v[0]+py*B.v[1])<B.b+r)return true}return false};
+ const onRoad=(x,y,r)=>{for(const q of U.roads||[])if(q.p&&dpl([x,y],q.p)<q.w/2+r)return true;return false};
+ const bad=(x,y,r)=>x<4||y<4||x>W-4||y>H-4||inB(x,y,r)||onRoad(x,y,r)||Math.hypot(x-h.tee[0],y-h.tee[1])<16||Math.hypot(x-h.b[0],y-h.b[1])<14||(U.lots||[]).some(P=>inPoly(x,y,P))||(U.cars||[]).some(c=>Math.hypot(c.x-x,c.y-y)<7+r)||out.some(o=>Math.hypot(o.x-x,o.y-y)<o.r+r+2)||(h.trees||[]).some(t=>Math.hypot(t[0]-x,t[1]-y)<t[2]*.7+r);
+ const add=(k,x,y,an,sz,r)=>{if(bad(x,y,r))return false;out.push({k,x,y,an,sz,r});return true};
+ let lampN=0,hyd=0;const roads=(U.roads||[]).filter(q=>q.p&&q.p.length>1).map(q=>{let L=0;for(let i=1;i<q.p.length;i++)L+=Math.hypot(q.p[i][0]-q.p[i-1][0],q.p[i][1]-q.p[i-1][1]);return{q,L}}).sort((a,b)=>b.L-a.L);
+ const at=(q,u,side,off)=>{const P=q.p;let a0=0;for(let i=1;i<P.length;i++){const l=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);if(u<=a0+l||i==P.length-1){const f=(u-a0)/l,dx=(P[i][0]-P[i-1][0])/l,dy=(P[i][1]-P[i-1][1])/l;return{x:P[i-1][0]+dx*l*f-dy*side*off,y:P[i-1][1]+dy*l*f+dx*side*off,an:Math.atan2(dy,dx)}}a0+=l}return null};
+ for(const{q,L}of roads){if(q.noOB&&!q.c)continue;const off=q.w/2+6;for(let u=18,s=1;u<L-10;u+=58,s=-s){const p=at(q,u,s,off);if(!p)continue;if(add('lamp',p.x,p.y,p.an,14,4)){lampN++;if(lampN%3==0){const p2=at(q,u+7,s,off+1);p2&&add('bin',p2.x,p2.y,0,8,3)}}
+   if(u%3==1||R()<.18){const p3=at(q,u+24,-s,off);if(p3&&hyd<3&&R()<.45&&add('hyd',p3.x,p3.y,0,7.5,3))hyd++}}}
+ if(roads[0]&&roads[0].L>140){const{q,L}=roads[0];for(const f of[.5,.35,.65]){const p=at(q,L*f,1,q.w/2+6);if(p&&add('stop',p.x,p.y,p.an,32,10))break}}
+ for(const{q,L}of roads.slice(0,3)){for(const u of[10,L-10]){const p=at(q,u,-1,q.w/2+3);p&&add('sign',p.x,p.y,0,10,3)}}
+ for(let n=0,k=0;n<40&&k<4;n++){const r0=roads[(R()*Math.min(3,roads.length))|0];if(!r0)break;const p=at(r0.q,10+R()*(r0.L-20),R()<.5?1:-1,r0.q.w/2+5);if(!p)continue;const bk=R()<.6;if(add(bk?'bike':'scoot',p.x,p.y,p.an+Math.PI/2+(R()-.5)*.3,bk?18:13,5))k++}
+ for(const P of U.plaza||[]){let cx=0,cy=0;for(const q of P){cx+=q[0];cy+=q[1]}cx/=P.length;cy/=P.length;for(let n=0,k=0;n<60&&k<6;n++){const q=P[(R()*P.length)|0],f=.55+R()*.3,x=cx+(q[0]-cx)*f,y=cy+(q[1]-cy)*f;if(!inPoly(x,y,P))continue;if(add(k<3&&h===SW[0]?'cafe':'pot',x,y,0,k<3&&h===SW[0]?24:12,k<3&&h===SW[0]?9:5))k++}}
+ return h._props=out}
+function drawProps(h){const S=window.__SPR;if(!S||!S.ok())return;const L=propPlan(h),wn=season=='winter';for(const o of L){if(wn&&(o.k=='cafe'||o.k=='pot'))continue;g.save();g.translate(o.x,o.y);g.fillStyle='rgba(0,0,0,.25)';g.beginPath();g.ellipse(o.sz*.12,o.sz*.16,o.sz*.42,o.sz*.3,o.an||0,0,7);g.fill();if(o.k=='lamp'){g.strokeStyle='rgba(0,0,0,.22)';g.lineWidth=1.2;g.beginPath();g.moveTo(.5,.5);g.lineTo(14,11);g.stroke()}g.rotate((o.k=='stop'||o.k=='bike'||o.k=='scoot')?o.an:0);g.drawImage(S.IM,S.M[o.k]*128+2,2,124,124,-o.sz/2,-o.sz/2,o.sz,o.sz);g.restore()}}
+/* hulajnogowiec z gangu Kukiriniarzy – jeździ po ulicy i krzyczy */
+const SCL=['GANG KUKIRINIARZY RZĄDZI!','Z drogi! Kukirin jedzie!','Kukirin G3, 45 na liczniku!','Odblokowany Kukirin, nie ma limitu!','Bateria 3%… dojadę!','Dysk? Ja wolę Kukirina!','Kukiriniarze, zbiórka pod Biedrą!','Uważaj, bo wjadę w kosz!','Patrz, bez trzymanki!','Kto nie ma Kukirina, ten pieszo!']
+const SC={say:'',until:0,next:0};
+function drawScoot(h,t){const P=h.U.scoot,n=P.length;let L=0;const seg=[];for(let i=1;i<n;i++){const l=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);seg.push(l);L+=l}
+ const sp=26,per=L/sp,ph=(t+h.U.scootPh)%(per*2),fw=ph<per,u=(fw?ph:per*2-ph)*sp;let a0=0,x=P[0][0],y=P[0][1],an=0;
+ for(let i=1;i<n;i++){const l=seg[i-1];if(u<=a0+l||i==n-1){const f=Math.min(1,(u-a0)/l);x=P[i-1][0]+(P[i][0]-P[i-1][0])*f;y=P[i-1][1]+(P[i][1]-P[i-1][1])*f;an=Math.atan2(P[i][1]-P[i-1][1],P[i][0]-P[i-1][0])+(fw?0:Math.PI);break}a0+=l}
+ const off=6,nx=-Math.sin(an),ny=Math.cos(an);x+=nx*off;y+=ny*off;
+ if(t>SC.next){SC.say=SCL[(Math.random()*SCL.length)|0];SC.until=t+4;SC.next=t+6+Math.random()*3}
+ if(disc&&!SC.d){SC.d=disc;SC.say=['Ej, uważaj z tym talerzem!','Gang Kukiriniarzy widzi twój rzut!','Rzuć w hulajnogę, odważny?'][(Math.random()*3)|0];SC.until=t+3;SC.next=t+8}if(!disc)SC.d=null;
+ const S=window.__SPR;g.save();g.fillStyle='rgba(0,0,0,.28)';g.beginPath();g.ellipse(x+1.5,y+2,7,3,an,0,7);g.fill();
+ if(S&&S.ok()){g.save();g.translate(x,y);g.rotate(an+Math.PI/2);g.drawImage(S.IM,S.M.scoot*128+2,2,124,124,-10,-10,20,20);g.restore()}
+ g.restore();try{PERSON(x,y+1,{s:.8,shirt:'#1b1b1b',pants:'#2c3444',hair:'#222',hat:'cap',talk:SC.until>t})}catch(e){}
+ if(SC.until>t){const line=SC.say;g.save();g.font='900 6px system-ui';const w=g.measureText(line).width+7,bx=x-w/2,by=y-38;g.fillStyle='rgba(20,20,20,.92)';g.beginPath();g.roundRect(bx,by,w,11,3);g.fill();g.beginPath();g.moveTo(x-2,by+11);g.lineTo(x,by+14);g.lineTo(x+2,by+11);g.fill();g.fillStyle='#ffd23f';g.textAlign='center';g.textBaseline='middle';g.fillText(line,x,by+5.8);g.restore()}}
 /* dzieciaki grające w piłkę (OSiR) – krzyczą, gdy lecisz dyskiem */
 const KTHR=['Ej, rzuć do nas!','Uwaga, leci talerz!','Panie, tu się gra w piłkę!','Trafisz w bramkę?','Co to za frisbee?','Ale poleciał!'],KNEAR=['Prawie w nas!','Gol! A nie, to dysk…','Oddamy, jak wygramy!','Ej, to nasza połowa!','Mój tata też tak rzuca!'];
 const KS={d:null,say:null,who:0,until:0,landed:0};
@@ -475,7 +505,9 @@ const _dwX=drawWorld;drawWorld=function(){_dwX.apply(this,arguments);try{const h
  for(const G of h.U.goals||[]){g.save();g.translate(G[0],G[1]);g.rotate(G[2]+Math.PI/2);g.fillStyle='rgba(0,0,0,.3)';g.fillRect(-1,2,3,9);g.fillStyle='#3a3f48';g.fillRect(-.8,-2,1.6,12);g.fillStyle='#f4f4f2';g.fillRect(-7,-3,14,2.2);g.strokeStyle='#d8382c';g.lineWidth=.5;g.strokeRect(-2.4,-3,4.8,2.2);g.strokeStyle='#e8701a';g.lineWidth=.8;g.beginPath();g.ellipse(0,-5.6,2.6,1.6,0,0,7);g.stroke();g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=.25;for(let k=-2;k<=2;k++){g.beginPath();g.moveTo(k*1.1,-5);g.lineTo(k*.6,-2.6);g.stroke()}g.restore()}
  for(const F of h.U.fire||[])drawFire(F[0],F[1],t);
  if(h.U.queue)drawQueue(h.U.queue,t);
+ drawProps(h);
  if(h.U.kids)drawKids(h,t);
+ if(h.U.scoot&&season!='winter')drawScoot(h,t);
  if(h.U.neptun)drawNeptun(h.U.neptun[0],h.U.neptun[1],t);
  g.restore()}catch(e){}};
 /* ekran ładowania Street: tabliczka WRC Wągrowiec z własnym emblematem (bez Złotowa i DiscGolfPark) */
