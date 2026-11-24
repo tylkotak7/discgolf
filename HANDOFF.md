@@ -15,7 +15,7 @@ Plik dla Claude'a w nowym oknie. Przeczytaj w całości przed pracą.
 - Odpowiadaj po polsku, krótko i konkretnie.
 - Zawsze `git pull` przed edycją (użytkownik pracuje w kilku oknach).
 - Każde wypchnięcie: podbij wersję w `sw.js` (`discgolf-vN`) i w
-  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v271**.
+  `<meta name="dgv" content="N · dd.mm.yyyy">`. Ostatnia: **v272**.
 - „Co nowego” (`const CHG=[...]`): własne, krótkie zdania, bez procentów. Nie wpisuj tam
   rzeczy, o które użytkownik prosił, by ich nie ogłaszać (np. ukryty panel 6666, teksty NPC).
 - Eksperymenty / duże zmiany grafiki → najpierw plik TESTOWY (np. `discgolf_TEST_x.html`)

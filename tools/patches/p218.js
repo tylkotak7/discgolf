@@ -17,7 +17,7 @@
  const ix=wn=>typeof bgIdx=='function'?bgIdx(wn):(wn?1:0);
  let gen=0;
  const _mb=menuBg;
- menuBg=function(){const h=ZL&&ZL[0];if(!h||!window.__prebuild||BGC.get(h)?.[ix(season=='winter')])return _mb.apply(this,arguments);
+ menuBg=function(){const h=ZL&&ZL[0];if(!h||!window.__prebuild||(window.__MBG&&window.__MBG[season])||BGC.get(h)?.[ix(season=='winter')])return _mb.apply(this,arguments);
   const my=++gen,se=season;const t=TXT[se]||TXT.summer;SL.querySelector('.d').textContent=t[0];SL.querySelector('b').textContent=t[1];const bt=document.getElementById('boot');const bootOn=bt&&bt.isConnected&&getComputedStyle(bt).display!='none'&&getComputedStyle(bt).opacity!='0';if(!bootOn)SL.classList.add('on');window.__sBusy=1;
   (async()=>{try{for(let n=0;n<200&&my===gen&&!BGC.get(h)?.[ix(se=='winter')];n++){await window.__prebuild(h);if(!BGC.get(h)?.[ix(se=='winter')])await new Promise(r=>setTimeout(r,150))}}catch(e){}
    if(my!==gen)return;try{_mb()}catch(e){}setTimeout(()=>{if(my===gen){SL.classList.remove('on');window.__sBusy=0}},250)})()};
