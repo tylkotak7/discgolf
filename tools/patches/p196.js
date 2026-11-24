@@ -463,10 +463,11 @@ function drawQueue(B,t){const n=5,ux=B.u[0],uy=B.u[1],fx=-B.v[0],fy=-B.v[1],bx=B
  const q=P[spk];g.save();g.font='800 5px system-ui';const w=g.measureText(line).width+6,x=q[0]-w/2,y=q[1]-30;g.fillStyle='rgba(255,255,255,.95)';g.beginPath();g.roundRect(x,y,w,9,3);g.fill();g.beginPath();g.moveTo(q[0]-2,y+9);g.lineTo(q[0],y+12);g.lineTo(q[0]+2,y+9);g.fill();g.fillStyle='#222';g.textAlign='center';g.textBaseline='middle';g.fillText(line,q[0],y+4.8);g.restore()}
 /* rzeczy na ulicach: latarnie, kosze, hydranty, przystanek, znaki, rowery, hulajnogi, donice, stoliki */
 function propPlan(h){if(h._props)return h._props;const U=h.U,R=rnd(Math.round(h.tee[0]*13+h.b[1]*7)),out=[];
- const inB=(x,y,r)=>{for(const B of U.bld){const px=x-B.c[0],py=y-B.c[1];if(Math.abs(px*B.u[0]+py*B.u[1])<B.a+r&&Math.abs(px*B.v[0]+py*B.v[1])<B.b+r)return true}return false};
+ const inB=(x,y,r)=>{for(const B of U.bld){const px=x-B.c[0],py=y-B.c[1];if(Math.abs(px*B.u[0]+py*B.u[1])<B.a+r+4&&Math.abs(px*B.v[0]+py*B.v[1])<B.b+r+4)return true}return false};
  const onRoad=(x,y,r)=>{for(const q of U.roads||[])if(q.p&&dpl([x,y],q.p)<q.w/2+r)return true;return false};
  const bad=(x,y,r)=>x<4||y<4||x>W-4||y>H-4||inB(x,y,r)||onRoad(x,y,r)||Math.hypot(x-h.tee[0],y-h.tee[1])<16||Math.hypot(x-h.b[0],y-h.b[1])<14||(U.lots||[]).some(P=>inPoly(x,y,P))||(U.cars||[]).some(c=>Math.hypot(c.x-x,c.y-y)<7+r)||out.some(o=>Math.hypot(o.x-x,o.y-y)<o.r+r+2)||(h.trees||[]).some(t=>Math.hypot(t[0]-x,t[1]-y)<t[2]*.7+r);
- const add=(k,x,y,an,sz,r)=>{if(bad(x,y,r))return false;out.push({k,x,y,an,sz,r});return true};
+ const UM=h._UM,US=UM?Math.round(Math.sqrt(UM.length/(W*H))):0,side=(x,y)=>{if(!UM||!US)return true;for(const[dx,dy]of[[0,0],[2,0],[-2,0],[0,2],[0,-2]]){const v=UM[(((y+dy)*US)|0)*W*US+(((x+dx)*US)|0)];if(v!==1)return false}return true};
+ const add=(k,x,y,an,sz,r)=>{if(bad(x,y,r))return false;if(k!='pot'&&!side(x,y))return false;out.push({k,x,y,an,sz,r});return true};
  let lampN=0,hyd=0;const roads=(U.roads||[]).filter(q=>q.p&&q.p.length>1).map(q=>{let L=0;for(let i=1;i<q.p.length;i++)L+=Math.hypot(q.p[i][0]-q.p[i-1][0],q.p[i][1]-q.p[i-1][1]);return{q,L}}).sort((a,b)=>b.L-a.L);
  const at=(q,u,side,off)=>{const P=q.p;let a0=0;for(let i=1;i<P.length;i++){const l=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);if(u<=a0+l||i==P.length-1){const f=(u-a0)/l,dx=(P[i][0]-P[i-1][0])/l,dy=(P[i][1]-P[i-1][1])/l;return{x:P[i-1][0]+dx*l*f-dy*side*off,y:P[i-1][1]+dy*l*f+dx*side*off,an:Math.atan2(dy,dx)}}a0+=l}return null};
  for(const{q,L}of roads){if(q.noOB&&!q.c)continue;const off=q.w/2+6;for(let u=18,s=1;u<L-10;u+=58,s=-s){const p=at(q,u,s,off);if(!p)continue;if(add('lamp',p.x,p.y,p.an,14,4)){lampN++;if(lampN%3==0){const p2=at(q,u+7,s,off+1);p2&&add('bin',p2.x,p2.y,0,8,3)}}
@@ -474,21 +475,23 @@ function propPlan(h){if(h._props)return h._props;const U=h.U,R=rnd(Math.round(h.
  if(roads[0]&&roads[0].L>140){const{q,L}=roads[0];for(const f of[.5,.35,.65]){const p=at(q,L*f,1,q.w/2+6);if(p&&add('stop',p.x,p.y,p.an,32,10))break}}
  for(const{q,L}of roads.slice(0,3)){for(const u of[10,L-10]){const p=at(q,u,-1,q.w/2+3);p&&add('sign',p.x,p.y,0,10,3)}}
  for(let n=0,k=0;n<40&&k<4;n++){const r0=roads[(R()*Math.min(3,roads.length))|0];if(!r0)break;const p=at(r0.q,10+R()*(r0.L-20),R()<.5?1:-1,r0.q.w/2+5);if(!p)continue;const bk=R()<.6;if(add(bk?'bike':'scoot',p.x,p.y,p.an+Math.PI/2+(R()-.5)*.3,bk?18:13,5))k++}
- for(const P of U.plaza||[]){let cx=0,cy=0;for(const q of P){cx+=q[0];cy+=q[1]}cx/=P.length;cy/=P.length;for(let n=0,k=0;n<60&&k<6;n++){const q=P[(R()*P.length)|0],f=.55+R()*.3,x=cx+(q[0]-cx)*f,y=cy+(q[1]-cy)*f;if(!inPoly(x,y,P))continue;if(add(k<3&&h===SW[0]?'cafe':'pot',x,y,0,k<3&&h===SW[0]?24:12,k<3&&h===SW[0]?9:5))k++}}
+ for(const P of U.plaza||[]){let cx=0,cy=0;for(const q of P){cx+=q[0];cy+=q[1]}cx/=P.length;cy/=P.length;for(let n=0,k=0;n<60&&k<6;n++){const q=P[(R()*P.length)|0],f=.55+R()*.3,x=cx+(q[0]-cx)*f,y=cy+(q[1]-cy)*f;if(!inPoly(x,y,P))continue;if(k<2&&add('pot',x,y,0,12,5))k++}}
  return h._props=out}
 function drawProps(h){const S=window.__SPR;if(!S||!S.ok())return;const L=propPlan(h),wn=season=='winter';for(const o of L){if(wn&&(o.k=='cafe'||o.k=='pot'))continue;g.save();g.translate(o.x,o.y);g.fillStyle='rgba(0,0,0,.25)';g.beginPath();g.ellipse(o.sz*.12,o.sz*.16,o.sz*.42,o.sz*.3,o.an||0,0,7);g.fill();if(o.k=='lamp'){g.strokeStyle='rgba(0,0,0,.22)';g.lineWidth=1.2;g.beginPath();g.moveTo(.5,.5);g.lineTo(14,11);g.stroke()}g.rotate((o.k=='stop'||o.k=='bike'||o.k=='scoot')?o.an:0);g.drawImage(S.IM,S.M[o.k]*128+2,2,124,124,-o.sz/2,-o.sz/2,o.sz,o.sz);g.restore()}}
+/* uderzenie w budynek: bez liści i ptaków */
+window.__nearBld=(x,y)=>{try{const h=holes[hi];if(!h||!h.U||!h.U.bld)return false;let td=1e9;for(const t of (h.trees||[]).concat(h._fill||[]))td=Math.min(td,Math.hypot(t[0]-x,t[1]-y)-(t[2]||8));if(td<2)return false;for(const B of h.U.bld){const px=x-B.c[0],py=y-B.c[1],du=Math.abs(px*B.u[0]+py*B.u[1])-B.a,dv=Math.abs(px*B.v[0]+py*B.v[1])-B.b;if(Math.max(du,dv)<6)return true}return false}catch(e){return false}};
 /* hulajnogowiec z gangu Kukiriniarzy – jeździ po ulicy i krzyczy */
 const SCL=['GANG KUKIRINIARZY RZĄDZI!','Z drogi! Kukirin jedzie!','Kukirin G3, 45 na liczniku!','Odblokowany Kukirin, nie ma limitu!','Bateria 3%… dojadę!','Dysk? Ja wolę Kukirina!','Kukiriniarze, zbiórka pod Biedrą!','Uważaj, bo wjadę w kosz!','Patrz, bez trzymanki!','Kto nie ma Kukirina, ten pieszo!']
 const SC={say:'',until:0,next:0};
 function drawScoot(h,t){const P=h.U.scoot,n=P.length;let L=0;const seg=[];for(let i=1;i<n;i++){const l=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);seg.push(l);L+=l}
  const sp=26,per=L/sp,ph=(t+h.U.scootPh)%(per*2),fw=ph<per,u=(fw?ph:per*2-ph)*sp;let a0=0,x=P[0][0],y=P[0][1],an=0;
  for(let i=1;i<n;i++){const l=seg[i-1];if(u<=a0+l||i==n-1){const f=Math.min(1,(u-a0)/l);x=P[i-1][0]+(P[i][0]-P[i-1][0])*f;y=P[i-1][1]+(P[i][1]-P[i-1][1])*f;an=Math.atan2(P[i][1]-P[i-1][1],P[i][0]-P[i-1][0])+(fw?0:Math.PI);break}a0+=l}
- const off=6,nx=-Math.sin(an),ny=Math.cos(an);x+=nx*off;y+=ny*off;
+ const off=6,nx=-Math.sin(an),ny=Math.cos(an);x+=nx*off;y+=ny*off;window.__scP=[x,y];
  if(t>SC.next){SC.say=SCL[(Math.random()*SCL.length)|0];SC.until=t+4;SC.next=t+6+Math.random()*3}
  if(disc&&!SC.d){SC.d=disc;SC.say=['Ej, uważaj z tym talerzem!','Gang Kukiriniarzy widzi twój rzut!','Rzuć w hulajnogę, odważny?'][(Math.random()*3)|0];SC.until=t+3;SC.next=t+8}if(!disc)SC.d=null;
  const S=window.__SPR;g.save();g.fillStyle='rgba(0,0,0,.28)';g.beginPath();g.ellipse(x+1.5,y+2,7,3,an,0,7);g.fill();
  if(S&&S.ok()){g.save();g.translate(x,y);g.rotate(an+Math.PI/2);g.drawImage(S.IM,S.M.scoot*128+2,2,124,124,-10,-10,20,20);g.restore()}
- g.restore();try{PERSON(x,y+1,{s:.8,shirt:'#1b1b1b',pants:'#2c3444',hair:'#222',hat:'cap',talk:SC.until>t})}catch(e){}
+ g.restore();const sk=.8,shY=-28.8;g.save();g.translate(x,y+1);g.scale(sk,sk);g.strokeStyle='#2a2a2a';g.lineCap='round';g.lineWidth=1.4;g.beginPath();g.moveTo(0,-1);g.lineTo(.6,shY+7.6);g.stroke();g.restore();try{PERSON(x,y+1,{s:sk,shirt:'#1b1b1b',pants:'#2c3444',hair:'#222',hat:'cap',arms:'bar',talk:SC.until>t})}catch(e){}g.save();g.translate(x,y+1);g.scale(sk,sk);g.strokeStyle='#111';g.lineCap='round';g.lineWidth=1.5;g.beginPath();g.moveTo(-7,shY+7.6);g.lineTo(7,shY+7.6);g.stroke();g.fillStyle='#c0392b';g.fillRect(-7.8,shY+6.8,1.6,1.6);g.fillRect(6.2,shY+6.8,1.6,1.6);g.restore();
  if(SC.until>t){const line=SC.say;g.save();g.font='900 6px system-ui';const w=g.measureText(line).width+7,bx=x-w/2,by=y-38;g.fillStyle='rgba(20,20,20,.92)';g.beginPath();g.roundRect(bx,by,w,11,3);g.fill();g.beginPath();g.moveTo(x-2,by+11);g.lineTo(x,by+14);g.lineTo(x+2,by+11);g.fill();g.fillStyle='#ffd23f';g.textAlign='center';g.textBaseline='middle';g.fillText(line,x,by+5.8);g.restore()}}
 /* dzieciaki grające w piłkę (OSiR) – krzyczą, gdy lecisz dyskiem */
 const KTHR=['Ej, rzuć do nas!','Uwaga, leci talerz!','Panie, tu się gra w piłkę!','Trafisz w bramkę?','Co to za frisbee?','Ale poleciał!'],KNEAR=['Prawie w nas!','Gol! A nie, to dysk…','Oddamy, jak wygramy!','Ej, to nasza połowa!','Mój tata też tak rzuca!'];
