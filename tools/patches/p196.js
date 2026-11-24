@@ -366,11 +366,11 @@ const H11=(()=>{const K=3,P=mkP(K,0,260),PA=a=>a.map(p=>P(p[0],p[1])),M=K/10,k=1
  const trees=[T(120,700,11,0),T(300,780,10,6),T(60,1080,12,0),T(380,1080,10,6),T(200,1340,9,0),T(1080,520,10,6),T(1090,1350,11,0),T(960,1400,10,6),T(140,290,9,0),T(410,290,10,6),T(760,300,9,0),T(1065,1730,12,0),T(990,1760,11,6),T(1060,1900,10,0)];
  return mkU({tee:P(300,1340),b:P(965,740),par:3,trees,U,M,w:60,teeA:.86,txt:'Osiedle Wschód – przez plac pełen aut, obok cyrku. Namiot cyrku, wozy i bloki to OB.'})})();
 /* ================= DOŁEK 12 – LICEUM: DOGLEG KOŁO KOŚCIOŁA, KOSZ PRZY BOISKU ================= */
-const H12=(()=>{const K=3,P=mkP(K,160,330),PA=a=>a.map(p=>P(p[0],p[1])),M=K/8.55,k=1/K,R=rnd(1212);
+const H12=(()=>{const K=3,P=mkP(K,235,330),PA=a=>a.map(p=>P(p[0],p[1])),M=K/8.55,k=1/K,R=rnd(1212);
  const U={park:1,thin:.5,roads:[{p:PA([[90,880],[1300,880]]),w:46*k,c:1},{p:PA([[540,320],[1060,850],[1120,880]]),w:50*k,c:1},{p:PA([[890,900],[890,1085]]),w:30*k,noOB:1}],
   lots:[PA([[728,1078],[962,1078],[962,1172],[728,1172]])],
   plaza:[PA([[240,1000],[490,1000],[490,1160],[240,1160]])],
-  dirt:[PA([[215,1175],[305,1175],[305,1245],[215,1245]]),PA([[300,1385],[420,1385],[420,1455],[300,1455]]),PA([[1000,1450],[1240,1450],[1240,1595],[1000,1595]])],
+  dirt:[PA([[215,1175],[305,1175],[305,1245],[215,1245]]),PA([[385,1385],[505,1385],[505,1455],[385,1455]]),PA([[1000,1450],[1240,1450],[1240,1595],[1000,1595]])],
   courts:[PA([[715,1405],[985,1412],[978,1548],[708,1540]])],
   paths:[{p:PA([[1000,905],[1004,1150],[1010,1440]]),w:15*k}],
   clear:[PA([[150,890],[1110,890],[1110,975],[150,975]]),PA([[955,975],[1065,975],[1065,1445],[955,1445]]),PA([[150,1280],[1065,1280],[1065,1445],[870,1500],[110,1492]]),PA([[920,740],[1000,740],[1000,860],[920,860]])],
@@ -393,7 +393,7 @@ const H12=(()=>{const K=3,P=mkP(K,160,330),PA=a=>a.map(p=>P(p[0],p[1])),M=K/8.55
  const T=(x,y,r,ty)=>[...P(x,y),r,ty];
  const trees=[T(240,1110,14,0),T(380,1228,9,6),T(1050,1010,12,0),T(1110,1100,11,6),T(1110,1400,10,6),T(400,760,10,0),T(520,750,9,6),T(1150,1000,12,0)];
  for(let i=0;i<=11;i++){const t=i/11;trees.push(T(110+760*t,1500+150*t+(i%2?6:-6),7+(i%3),i%2?6:0))}
- const h=mkU({tee:P(968,800),b:P(245,1395),par:4,trees,U,M,w:60,teeA:3.05,txt:'Liceum – z parkingu w dół koło kościoła, potem w lewo wzdłuż boiska. Budynki to OB.'});
+ const h=mkU({tee:P(968,800),b:P(440,1395),par:4,trees,U,M,w:60,teeA:3.05,txt:'Liceum – z parkingu w dół koło kościoła, potem w lewo wzdłuż boiska. Budynki to OB.'});
  /* dogleg: tor gry po łamanej */
  const Q=[h.tee,P(1005,1130),P(1008,1395),h.b],seg=[];let L=0;for(let i=1;i<Q.length;i++){const l=Math.hypot(Q[i][0]-Q[i-1][0],Q[i][1]-Q[i-1][1]);seg.push(l);L+=l}
  const pts=[],pf=[];let acc=0;for(let i=1;i<Q.length;i++){const n=Math.max(4,Math.round(seg[i-1]/6));for(let j=(i==1?0:1);j<=n;j++){const f=j/n;pts.push([Q[i-1][0]+(Q[i][0]-Q[i-1][0])*f,Q[i-1][1]+(Q[i][1]-Q[i-1][1])*f]);pf.push((acc+seg[i-1]*f)/L)}acc+=seg[i-1]}
